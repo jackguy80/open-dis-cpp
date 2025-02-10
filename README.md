@@ -22,7 +22,7 @@ These options are passed to cmake as arguments. Example: `cmake -DBUILD_SHARED_L
 
 #### Linux / GNU Makefiles (UNTESTED)
 
-Note that the examples make use of <winsock2> to implement the DIS server connection. This will not work on Linux.
+Note that the examples make use of `winsock2` to implement the DIS server connection. This will not work on Linux.
 
 1. Run `mkdir build`
 1. Run `cd build`

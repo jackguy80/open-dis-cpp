@@ -1,4 +1,4 @@
-#include <dis6/MinefieldFamilyPdu.h>
+#include "MinefieldFamilyPdu.h"
 
 using namespace DIS;
 
@@ -6,7 +6,7 @@ using namespace DIS;
 MinefieldFamilyPdu::MinefieldFamilyPdu() : Pdu()
 
 {
-    setProtocolFamily( 8 );
+    protocolFamily = 8;
 }
 
 MinefieldFamilyPdu::~MinefieldFamilyPdu()

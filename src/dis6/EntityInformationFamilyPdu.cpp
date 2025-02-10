@@ -1,4 +1,4 @@
-#include <dis6/EntityInformationFamilyPdu.h>
+#include "EntityInformationFamilyPdu.h"
 
 using namespace DIS;
 
@@ -6,7 +6,7 @@ using namespace DIS;
 EntityInformationFamilyPdu::EntityInformationFamilyPdu() : Pdu()
 
 {
-    setProtocolFamily( 1 );
+    protocolFamily = 1;
 }
 
 EntityInformationFamilyPdu::~EntityInformationFamilyPdu()

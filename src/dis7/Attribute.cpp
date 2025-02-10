@@ -1,12 +1,12 @@
-#include <dis7/Attribute.h>
+#include "Attribute.h"
 
 using namespace DIS;
 
 
 Attribute::Attribute():
-   _recordType(0), 
-   _recordLength(0), 
-   _recordSpecificFields(0)
+   recordType(0), 
+   recordLength(0), 
+   recordSpecificFields(0)
 {
 }
 
@@ -14,48 +14,18 @@ Attribute::~Attribute()
 {
 }
 
-unsigned int Attribute::getRecordType() const
-{
-    return _recordType;
-}
-
-void Attribute::setRecordType(unsigned int pX)
-{
-    _recordType = pX;
-}
-
-unsigned short Attribute::getRecordLength() const
-{
-    return _recordLength;
-}
-
-void Attribute::setRecordLength(unsigned short pX)
-{
-    _recordLength = pX;
-}
-
-long long Attribute::getRecordSpecificFields() const
-{
-    return _recordSpecificFields;
-}
-
-void Attribute::setRecordSpecificFields(long long pX)
-{
-    _recordSpecificFields = pX;
-}
-
 void Attribute::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _recordLength;
-    dataStream << _recordSpecificFields;
+    dataStream << recordType;
+    dataStream << recordLength;
+    dataStream << recordSpecificFields;
 }
 
 void Attribute::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _recordLength;
-    dataStream >> _recordSpecificFields;
+    dataStream >> recordType;
+    dataStream >> recordLength;
+    dataStream >> recordSpecificFields;
 }
 
 
@@ -63,9 +33,9 @@ bool Attribute::operator ==(const Attribute& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_recordLength == rhs._recordLength) ) ivarsEqual = false;
-     if( ! (_recordSpecificFields == rhs._recordSpecificFields) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (recordLength == rhs.recordLength) ) ivarsEqual = false;
+     if( ! (recordSpecificFields == rhs.recordSpecificFields) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int Attribute::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _recordType
-   marshalSize = marshalSize + 1;  // _recordLength
-   marshalSize = marshalSize + 8;  // _recordSpecificFields
+   marshalSize = marshalSize + 4;  // recordType
+   marshalSize = marshalSize + 2;  // recordLength
+   marshalSize = marshalSize + 8;  // recordSpecificFields
     return marshalSize;
 }
 

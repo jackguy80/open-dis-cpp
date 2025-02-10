@@ -1,15 +1,15 @@
-#include <dis6/AggregateMarking.h>
+#include "AggregateMarking.h"
 
 using namespace DIS;
 
 
 AggregateMarking::AggregateMarking():
-   _characterSet(0)
+   characterSet(0)
 {
      // Initialize fixed length array
      for(int lengthcharacters= 0; lengthcharacters < 31; lengthcharacters++)
      {
-         _characters[lengthcharacters] = 0;
+         characters[lengthcharacters] = 0;
      }
 
 }
@@ -18,52 +18,24 @@ AggregateMarking::~AggregateMarking()
 {
 }
 
-unsigned char AggregateMarking::getCharacterSet() const
-{
-    return _characterSet;
-}
-
-void AggregateMarking::setCharacterSet(unsigned char pX)
-{
-    _characterSet = pX;
-}
-
-char* AggregateMarking::getCharacters() 
-{
-    return _characters;
-}
-
-const char* AggregateMarking::getCharacters() const
-{
-    return _characters;
-}
-
-void AggregateMarking::setCharacters(const char* x)
-{
-   for(int i = 0; i < 31; i++)
-   {
-        _characters[i] = x[i];
-   }
-}
-
 void AggregateMarking::marshal(DataStream& dataStream) const
 {
-    dataStream << _characterSet;
+    dataStream << characterSet;
 
      for(size_t idx = 0; idx < 31; idx++)
      {
-        dataStream << _characters[idx];
+        dataStream << characters[idx];
      }
 
 }
 
 void AggregateMarking::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _characterSet;
+    dataStream >> characterSet;
 
      for(size_t idx = 0; idx < 31; idx++)
      {
-        dataStream >> _characters[idx];
+        dataStream >> characters[idx];
      }
 
 }
@@ -73,11 +45,11 @@ bool AggregateMarking::operator ==(const AggregateMarking& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_characterSet == rhs._characterSet) ) ivarsEqual = false;
+     if( ! (characterSet == rhs.characterSet) ) ivarsEqual = false;
 
-     for(unsigned char idx = 0; idx < 31; idx++)
+     for(int idx = 0; idx < 31; idx++)
      {
-          if(!(_characters[idx] == rhs._characters[idx]) ) ivarsEqual = false;
+          if(!(characters[idx] == rhs.characters[idx]) ) ivarsEqual = false;
      }
 
 
@@ -88,8 +60,8 @@ int AggregateMarking::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _characterSet
-   marshalSize = marshalSize + 31 * 1;  // _characters
+   marshalSize = marshalSize + 1;  // characterSet
+   marshalSize = marshalSize + 31 * 1;  // characters
     return marshalSize;
 }
 

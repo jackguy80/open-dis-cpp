@@ -1,49 +1,39 @@
 #pragma once
 
-#include <dis7/RecordSpecificationElement.h>
-#include <vector>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "RecordSpecificationElement.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// This record shall specify the number of record sets contained in the Record Specification record and the record details. Section 6.2.72.
+// This record shall specify the number of record sets contained in the Record Specification record and the record details. Section 6.2.73.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT RecordSpecification
+struct EXPORT_MACRO RecordSpecification
 {
-protected:
   /** The number of record sets */
-  unsigned int _numberOfRecordSets; 
+  unsigned int numberOfRecordSets;
 
   /** variable length list record specifications. */
-  std::vector<RecordSpecificationElement> _recordSets; 
+  RecordSpecificationElement recordSets;
 
-
- public:
     RecordSpecification();
     virtual ~RecordSpecification();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getNumberOfRecordSets() const; 
 
-    std::vector<RecordSpecificationElement>& getRecordSets(); 
-    const std::vector<RecordSpecificationElement>& getRecordSets() const; 
-    void setRecordSets(const std::vector<RecordSpecificationElement>&    pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RecordSpecification& rhs) const;
+     bool operator ==(const RecordSpecification& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,11 +1,11 @@
-#include <dis6/VectoringNozzleSystemData.h>
+#include "VectoringNozzleSystemData.h"
 
 using namespace DIS;
 
 
 VectoringNozzleSystemData::VectoringNozzleSystemData():
-   _horizontalDeflectionAngle(0.0), 
-   _verticalDeflectionAngle(0.0)
+   horizontalDeflectionAngle(0.0), 
+   verticalDeflectionAngle(0.0)
 {
 }
 
@@ -13,36 +13,16 @@ VectoringNozzleSystemData::~VectoringNozzleSystemData()
 {
 }
 
-float VectoringNozzleSystemData::getHorizontalDeflectionAngle() const
-{
-    return _horizontalDeflectionAngle;
-}
-
-void VectoringNozzleSystemData::setHorizontalDeflectionAngle(float pX)
-{
-    _horizontalDeflectionAngle = pX;
-}
-
-float VectoringNozzleSystemData::getVerticalDeflectionAngle() const
-{
-    return _verticalDeflectionAngle;
-}
-
-void VectoringNozzleSystemData::setVerticalDeflectionAngle(float pX)
-{
-    _verticalDeflectionAngle = pX;
-}
-
 void VectoringNozzleSystemData::marshal(DataStream& dataStream) const
 {
-    dataStream << _horizontalDeflectionAngle;
-    dataStream << _verticalDeflectionAngle;
+    dataStream << horizontalDeflectionAngle;
+    dataStream << verticalDeflectionAngle;
 }
 
 void VectoringNozzleSystemData::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _horizontalDeflectionAngle;
-    dataStream >> _verticalDeflectionAngle;
+    dataStream >> horizontalDeflectionAngle;
+    dataStream >> verticalDeflectionAngle;
 }
 
 
@@ -50,8 +30,8 @@ bool VectoringNozzleSystemData::operator ==(const VectoringNozzleSystemData& rhs
  {
      bool ivarsEqual = true;
 
-     if( ! (_horizontalDeflectionAngle == rhs._horizontalDeflectionAngle) ) ivarsEqual = false;
-     if( ! (_verticalDeflectionAngle == rhs._verticalDeflectionAngle) ) ivarsEqual = false;
+     if( ! (horizontalDeflectionAngle == rhs.horizontalDeflectionAngle) ) ivarsEqual = false;
+     if( ! (verticalDeflectionAngle == rhs.verticalDeflectionAngle) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -60,8 +40,8 @@ int VectoringNozzleSystemData::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _horizontalDeflectionAngle
-   marshalSize = marshalSize + 4;  // _verticalDeflectionAngle
+   marshalSize = marshalSize + 4;  // horizontalDeflectionAngle
+   marshalSize = marshalSize + 4;  // verticalDeflectionAngle
     return marshalSize;
 }
 

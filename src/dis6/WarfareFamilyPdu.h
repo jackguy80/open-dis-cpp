@@ -1,52 +1,41 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/Pdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "Pdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.4. abstract superclass for fire and detonation pdus that have shared information. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT WarfareFamilyPdu : public Pdu
+struct EXPORT_MACRO WarfareFamilyPdu : public Pdu
 {
-protected:
   /** ID of the entity that shot */
-  EntityID _firingEntityID; 
+  EntityID firingEntityID;
 
   /** ID of the entity that is being shot at */
-  EntityID _targetEntityID; 
+  EntityID targetEntityID;
 
-
- public:
     WarfareFamilyPdu();
     virtual ~WarfareFamilyPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getFiringEntityID(); 
-    const EntityID&  getFiringEntityID() const; 
-    void setFiringEntityID(const EntityID    &pX);
 
-    EntityID& getTargetEntityID(); 
-    const EntityID&  getTargetEntityID() const; 
-    void setTargetEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const WarfareFamilyPdu& rhs) const;
+     bool operator ==(const WarfareFamilyPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

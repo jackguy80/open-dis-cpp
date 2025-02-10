@@ -1,119 +1,78 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityType.h>
-#include <dis6/Vector3Double.h>
-#include <dis6/Orientation.h>
-#include <dis6/Point.h>
-#include <dis6/EntityType.h>
+#include "EntityID.h"
+#include "EntityType.h"
+#include "Vector3Double.h"
+#include "Orientation.h"
+#include "Point.h"
+#include "EntityType.h"
 #include <vector>
-#include <dis6/MinefieldFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "MinefieldFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.10.1 Abstract superclass for PDUs relating to minefields. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT MinefieldStatePdu : public MinefieldFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO MinefieldStatePdu : public MinefieldFamilyPdu
 {
-protected:
   /** Minefield ID */
-  EntityID _minefieldID; 
+  EntityID minefieldID;
 
   /** Minefield sequence */
-  unsigned short _minefieldSequence; 
+  unsigned short minefieldSequence;
 
   /** force ID */
-  unsigned char _forceID; 
+  unsigned char forceID;
 
   /** Number of permieter points */
-  unsigned char _numberOfPerimeterPoints; 
+  unsigned char numberOfPerimeterPoints;
 
   /** type of minefield */
-  EntityType _minefieldType; 
+  EntityType minefieldType;
 
   /** how many mine types */
-  unsigned short _numberOfMineTypes; 
+  unsigned short numberOfMineTypes;
 
   /** location of minefield in world coords */
-  Vector3Double _minefieldLocation; 
+  Vector3Double minefieldLocation;
 
   /** orientation of minefield */
-  Orientation _minefieldOrientation; 
+  Orientation minefieldOrientation;
 
   /** appearance bitflags */
-  unsigned short _appearance; 
+  unsigned short appearance;
 
   /** protocolMode */
-  unsigned short _protocolMode; 
+  unsigned short protocolMode;
 
   /** perimeter points for the minefield */
-  std::vector<Point> _perimeterPoints; 
+  std::vector<Point> perimeterPoints;
 
   /** Type of mines */
-  std::vector<EntityType> _mineType; 
+  std::vector<EntityType> mineType;
 
-
- public:
     MinefieldStatePdu();
     virtual ~MinefieldStatePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getMinefieldID(); 
-    const EntityID&  getMinefieldID() const; 
-    void setMinefieldID(const EntityID    &pX);
 
-    unsigned short getMinefieldSequence() const; 
-    void setMinefieldSequence(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getForceID() const; 
-    void setForceID(unsigned char pX); 
-
-    unsigned char getNumberOfPerimeterPoints() const; 
-
-    EntityType& getMinefieldType(); 
-    const EntityType&  getMinefieldType() const; 
-    void setMinefieldType(const EntityType    &pX);
-
-    unsigned short getNumberOfMineTypes() const; 
-
-    Vector3Double& getMinefieldLocation(); 
-    const Vector3Double&  getMinefieldLocation() const; 
-    void setMinefieldLocation(const Vector3Double    &pX);
-
-    Orientation& getMinefieldOrientation(); 
-    const Orientation&  getMinefieldOrientation() const; 
-    void setMinefieldOrientation(const Orientation    &pX);
-
-    unsigned short getAppearance() const; 
-    void setAppearance(unsigned short pX); 
-
-    unsigned short getProtocolMode() const; 
-    void setProtocolMode(unsigned short pX); 
-
-    std::vector<Point>& getPerimeterPoints(); 
-    const std::vector<Point>& getPerimeterPoints() const; 
-    void setPerimeterPoints(const std::vector<Point>&    pX);
-
-    std::vector<EntityType>& getMineType(); 
-    const std::vector<EntityType>& getMineType() const; 
-    void setMineType(const std::vector<EntityType>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const MinefieldStatePdu& rhs) const;
+     bool operator ==(const MinefieldStatePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

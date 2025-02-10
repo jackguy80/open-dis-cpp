@@ -1,62 +1,46 @@
 #pragma once
 
-#include <dis7/FixedDatum.h>
-#include <dis7/VariableDatum.h>
-#include <vector>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "FixedDatum.h"
+#include "VariableDatum.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// List of fixed and variable datum records. Section 6.2.19 
+// List of fixed and variable datum records. Section 6.2.18 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT DatumSpecification
+struct EXPORT_MACRO DatumSpecification
 {
-protected:
   /** Number of fixed datums */
-  unsigned int _numberOfFixedDatums; 
+  unsigned int numberOfFixedDatums;
 
   /** Number of variable datums */
-  unsigned int _numberOfVariableDatums; 
+  unsigned int numberOfVariableDatums;
 
   /** variable length list fixed datums */
-  std::vector<FixedDatum> _fixedDatumIDList; 
+  FixedDatum fixedDatumIDList;
 
-  /** variable length list variable datums */
-  std::vector<VariableDatum> _variableDatumIDList; 
+  /** variable length list variable datums. See 6.2.93 */
+  VariableDatum variableDatumIDList;
 
-
- public:
     DatumSpecification();
     virtual ~DatumSpecification();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getNumberOfFixedDatums() const; 
 
-    unsigned int getNumberOfVariableDatums() const; 
+     virtual int getMarshalledSize() const;
 
-    std::vector<FixedDatum>& getFixedDatumIDList(); 
-    const std::vector<FixedDatum>& getFixedDatumIDList() const; 
-    void setFixedDatumIDList(const std::vector<FixedDatum>&    pX);
-
-    std::vector<VariableDatum>& getVariableDatumIDList(); 
-    const std::vector<VariableDatum>& getVariableDatumIDList() const; 
-    void setVariableDatumIDList(const std::vector<VariableDatum>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DatumSpecification& rhs) const;
+     bool operator ==(const DatumSpecification& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

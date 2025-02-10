@@ -1,131 +1,80 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/EntityType.h>
-#include <dis7/EntityType.h>
-#include <dis7/Vector3Float.h>
-#include <dis7/Vector3Double.h>
-#include <dis7/EulerAngles.h>
-#include <dis7/DeadReckoningParameters.h>
-#include <dis7/EntityMarking.h>
-#include <dis7/VariableParameter.h>
-#include <vector>
-#include <dis7/EntityInformationFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "EntityType.h"
+#include "EntityType.h"
+#include "Vector3Float.h"
+#include "Vector3Double.h"
+#include "EulerAngles.h"
+#include "DeadReckoningParameters.h"
+#include "EntityMarking.h"
+#include "VariableParameter.h"
+#include "EntityInformationFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Represents the postion and state of one entity in the world. Section 7.2.2. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT EntityStatePdu : public EntityInformationFamilyPdu
+struct EXPORT_MACRO EntityStatePdu : public EntityInformationFamilyPdu
 {
-protected:
   /** Unique ID for an entity that is tied to this state information */
-  EntityID _entityID; 
+  EntityID entityID;
 
   /** What force this entity is affiliated with, eg red, blue, neutral, etc */
-  unsigned char _forceId; 
+  unsigned char forceId;
 
   /** How many variable parameters are in the variable length list. In earlier versions of DIS these were known as articulation parameters */
-  unsigned char _numberOfVariableParameters; 
+  unsigned char numberOfVariableParameters;
 
   /** Describes the type of entity in the world */
-  EntityType _entityType; 
+  EntityType entityType;
 
-  EntityType _alternativeEntityType; 
+  EntityType alternativeEntityType;
 
   /** Describes the speed of the entity in the world */
-  Vector3Float _entityLinearVelocity; 
+  Vector3Float entityLinearVelocity;
 
   /** describes the location of the entity in the world */
-  Vector3Double _entityLocation; 
+  Vector3Double entityLocation;
 
   /** describes the orientation of the entity, in euler angles */
-  EulerAngles _entityOrientation; 
+  EulerAngles entityOrientation;
 
   /** a series of bit flags that are used to help draw the entity, such as smoking, on fire, etc. */
-  unsigned int _entityAppearance; 
+  unsigned int entityAppearance;
 
   /** parameters used for dead reckoning */
-  DeadReckoningParameters _deadReckoningParameters; 
+  DeadReckoningParameters deadReckoningParameters;
 
   /** characters that can be used for debugging, or to draw unique strings on the side of entities in the world */
-  EntityMarking _marking; 
+  EntityMarking marking;
 
   /** a series of bit flags */
-  unsigned int _capabilities; 
+  unsigned int capabilities;
 
   /** variable length list of variable parameters. In earlier DIS versions this was articulation parameters. */
-  std::vector<VariableParameter> _variableParameters; 
+  VariableParameter variableParameters;
 
-
- public:
     EntityStatePdu();
     virtual ~EntityStatePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getEntityID(); 
-    const EntityID&  getEntityID() const; 
-    void setEntityID(const EntityID    &pX);
 
-    unsigned char getForceId() const; 
-    void setForceId(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getNumberOfVariableParameters() const; 
-
-    EntityType& getEntityType(); 
-    const EntityType&  getEntityType() const; 
-    void setEntityType(const EntityType    &pX);
-
-    EntityType& getAlternativeEntityType(); 
-    const EntityType&  getAlternativeEntityType() const; 
-    void setAlternativeEntityType(const EntityType    &pX);
-
-    Vector3Float& getEntityLinearVelocity(); 
-    const Vector3Float&  getEntityLinearVelocity() const; 
-    void setEntityLinearVelocity(const Vector3Float    &pX);
-
-    Vector3Double& getEntityLocation(); 
-    const Vector3Double&  getEntityLocation() const; 
-    void setEntityLocation(const Vector3Double    &pX);
-
-    EulerAngles& getEntityOrientation(); 
-    const EulerAngles&  getEntityOrientation() const; 
-    void setEntityOrientation(const EulerAngles    &pX);
-
-    unsigned int getEntityAppearance() const; 
-    void setEntityAppearance(unsigned int pX); 
-
-    DeadReckoningParameters& getDeadReckoningParameters(); 
-    const DeadReckoningParameters&  getDeadReckoningParameters() const; 
-    void setDeadReckoningParameters(const DeadReckoningParameters    &pX);
-
-    EntityMarking& getMarking(); 
-    const EntityMarking&  getMarking() const; 
-    void setMarking(const EntityMarking    &pX);
-
-    unsigned int getCapabilities() const; 
-    void setCapabilities(unsigned int pX); 
-
-    std::vector<VariableParameter>& getVariableParameters(); 
-    const std::vector<VariableParameter>& getVariableParameters() const; 
-    void setVariableParameters(const std::vector<VariableParameter>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EntityStatePdu& rhs) const;
+     bool operator ==(const EntityStatePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

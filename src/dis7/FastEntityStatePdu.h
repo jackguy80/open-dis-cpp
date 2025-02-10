@@ -1,276 +1,149 @@
 #pragma once
 
-#include <dis7/VariableParameter.h>
-#include <vector>
-#include <dis7/EntityInformationFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "VariableParameter.h"
+#include "EntityInformationFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Represents the postion and state of one entity in the world. This is identical in function to entity state pdu, but generates less garbage to collect in the Java world. Section 7.2.2. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT FastEntityStatePdu : public EntityInformationFamilyPdu
+struct EXPORT_MACRO FastEntityStatePdu : public EntityInformationFamilyPdu
 {
-protected:
   /** The site ID */
-  unsigned short _site; 
+  unsigned short site;
 
   /** The application ID */
-  unsigned short _application; 
+  unsigned short application;
 
   /** the entity ID */
-  unsigned short _entity; 
+  unsigned short entity;
 
   /** what force this entity is affiliated with, eg red, blue, neutral, etc */
-  unsigned char _forceId; 
+  unsigned char forceId;
 
   /** How many variable (nee articulation) parameters are in the variable length list */
-  unsigned char _numberOfVariableParameters; 
+  char numberOfVariableParameters;
 
   /** Kind of entity */
-  unsigned char _entityKind; 
+  unsigned char entityKind;
 
   /** Domain of entity (air, surface, subsurface, space, etc) */
-  unsigned char _domain; 
+  unsigned char domain;
 
   /** country to which the design of the entity is attributed */
-  unsigned short _country; 
+  unsigned short country;
 
   /** category of entity */
-  unsigned char _category; 
+  unsigned char category;
 
   /** subcategory of entity */
-  unsigned char _subcategory; 
+  unsigned char subcategory;
 
   /** specific info based on subcategory field */
-  unsigned char _specific; 
+  unsigned char specific;
 
-  unsigned char _extra; 
+  unsigned char extra;
 
   /** Kind of entity */
-  unsigned char _altEntityKind; 
+  unsigned char altEntityKind;
 
   /** Domain of entity (air, surface, subsurface, space, etc) */
-  unsigned char _altDomain; 
+  unsigned char altDomain;
 
   /** country to which the design of the entity is attributed */
-  unsigned short _altCountry; 
+  unsigned short altCountry;
 
   /** category of entity */
-  unsigned char _altCategory; 
+  unsigned char altCategory;
 
   /** subcategory of entity */
-  unsigned char _altSubcategory; 
+  unsigned char altSubcategory;
 
   /** specific info based on subcategory field */
-  unsigned char _altSpecific; 
+  unsigned char altSpecific;
 
-  unsigned char _altExtra; 
+  unsigned char altExtra;
 
   /** X velo */
-  float _xVelocity; 
+  float xVelocity;
 
   /** y Value */
-  float _yVelocity; 
+  float yVelocity;
 
   /** Z value */
-  float _zVelocity; 
+  float zVelocity;
 
   /** X value */
-  double _xLocation; 
+  double xLocation;
 
   /** y Value */
-  double _yLocation; 
+  double yLocation;
 
   /** Z value */
-  double _zLocation; 
+  double zLocation;
 
-  float _psi; 
+  float psi;
 
-  float _theta; 
+  float theta;
 
-  float _phi; 
+  float phi;
 
   /** a series of bit flags that are used to help draw the entity, such as smoking, on fire, etc. */
-  int _entityAppearance; 
+  int entityAppearance;
 
   /** enumeration of what dead reckoning algorighm to use */
-  unsigned char _deadReckoningAlgorithm; 
+  unsigned char deadReckoningAlgorithm;
 
   /** other parameters to use in the dead reckoning algorithm */
-  char _otherParameters[15]; 
+  char otherParameters;
 
   /** X value */
-  float _xAcceleration; 
+  float xAcceleration;
 
   /** y Value */
-  float _yAcceleration; 
+  float yAcceleration;
 
   /** Z value */
-  float _zAcceleration; 
+  float zAcceleration;
 
   /** X value */
-  float _xAngularVelocity; 
+  float xAngularVelocity;
 
   /** y Value */
-  float _yAngularVelocity; 
+  float yAngularVelocity;
 
   /** Z value */
-  float _zAngularVelocity; 
+  float zAngularVelocity;
 
   /** characters that can be used for debugging, or to draw unique strings on the side of entities in the world */
-  char _marking[12]; 
+  char marking;
 
   /** a series of bit flags */
-  int _capabilities; 
+  int capabilities;
 
   /** variable length list of variable parameters. In earlier versions of DIS these were known as articulation parameters */
-  std::vector<VariableParameter> _variableParameters; 
+  VariableParameter variableParameters;
 
-
- public:
     FastEntityStatePdu();
     virtual ~FastEntityStatePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSite() const; 
-    void setSite(unsigned short pX); 
 
-    unsigned short getApplication() const; 
-    void setApplication(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getEntity() const; 
-    void setEntity(unsigned short pX); 
-
-    unsigned char getForceId() const; 
-    void setForceId(unsigned char pX); 
-
-    char getNumberOfVariableParameters() const; 
-
-    unsigned char getEntityKind() const; 
-    void setEntityKind(unsigned char pX); 
-
-    unsigned char getDomain() const; 
-    void setDomain(unsigned char pX); 
-
-    unsigned short getCountry() const; 
-    void setCountry(unsigned short pX); 
-
-    unsigned char getCategory() const; 
-    void setCategory(unsigned char pX); 
-
-    unsigned char getSubcategory() const; 
-    void setSubcategory(unsigned char pX); 
-
-    unsigned char getSpecific() const; 
-    void setSpecific(unsigned char pX); 
-
-    unsigned char getExtra() const; 
-    void setExtra(unsigned char pX); 
-
-    unsigned char getAltEntityKind() const; 
-    void setAltEntityKind(unsigned char pX); 
-
-    unsigned char getAltDomain() const; 
-    void setAltDomain(unsigned char pX); 
-
-    unsigned short getAltCountry() const; 
-    void setAltCountry(unsigned short pX); 
-
-    unsigned char getAltCategory() const; 
-    void setAltCategory(unsigned char pX); 
-
-    unsigned char getAltSubcategory() const; 
-    void setAltSubcategory(unsigned char pX); 
-
-    unsigned char getAltSpecific() const; 
-    void setAltSpecific(unsigned char pX); 
-
-    unsigned char getAltExtra() const; 
-    void setAltExtra(unsigned char pX); 
-
-    float getXVelocity() const; 
-    void setXVelocity(float pX); 
-
-    float getYVelocity() const; 
-    void setYVelocity(float pX); 
-
-    float getZVelocity() const; 
-    void setZVelocity(float pX); 
-
-    double getXLocation() const; 
-    void setXLocation(double pX); 
-
-    double getYLocation() const; 
-    void setYLocation(double pX); 
-
-    double getZLocation() const; 
-    void setZLocation(double pX); 
-
-    float getPsi() const; 
-    void setPsi(float pX); 
-
-    float getTheta() const; 
-    void setTheta(float pX); 
-
-    float getPhi() const; 
-    void setPhi(float pX); 
-
-    int getEntityAppearance() const; 
-    void setEntityAppearance(int pX); 
-
-    unsigned char getDeadReckoningAlgorithm() const; 
-    void setDeadReckoningAlgorithm(unsigned char pX); 
-
-    char*  getOtherParameters(); 
-    const char*  getOtherParameters() const; 
-    void setOtherParameters( const char*    pX);
-
-    float getXAcceleration() const; 
-    void setXAcceleration(float pX); 
-
-    float getYAcceleration() const; 
-    void setYAcceleration(float pX); 
-
-    float getZAcceleration() const; 
-    void setZAcceleration(float pX); 
-
-    float getXAngularVelocity() const; 
-    void setXAngularVelocity(float pX); 
-
-    float getYAngularVelocity() const; 
-    void setYAngularVelocity(float pX); 
-
-    float getZAngularVelocity() const; 
-    void setZAngularVelocity(float pX); 
-
-    char*  getMarking(); 
-    const char*  getMarking() const; 
-    void setMarking( const char*    pX);
-    void setByStringMarking(const char* pX);
-
-    int getCapabilities() const; 
-    void setCapabilities(int pX); 
-
-    std::vector<VariableParameter>& getVariableParameters(); 
-    const std::vector<VariableParameter>& getVariableParameters() const; 
-    void setVariableParameters(const std::vector<VariableParameter>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const FastEntityStatePdu& rhs) const;
+     bool operator ==(const FastEntityStatePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

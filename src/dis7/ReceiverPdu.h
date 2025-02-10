@@ -1,68 +1,49 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/RadioCommunicationsFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "RadioCommunicationsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 //  Communication of a receiver state. Section 7.7.4 COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ReceiverPdu : public RadioCommunicationsFamilyPdu
+struct EXPORT_MACRO ReceiverPdu : public RadioCommunicationsFamilyPdu
 {
-protected:
   /** encoding scheme used, and enumeration */
-  unsigned short _receiverState; 
+  unsigned short receiverState;
 
   /** padding */
-  unsigned short _padding1; 
+  unsigned short padding1;
 
   /** received power */
-  float _receivedPower; 
+  float receivedPower;
 
   /** ID of transmitter */
-  EntityID _transmitterEntityId; 
+  EntityID transmitterEntityId;
 
   /** ID of transmitting radio */
-  unsigned short _transmitterRadioId; 
+  unsigned short transmitterRadioId;
 
-
- public:
     ReceiverPdu();
     virtual ~ReceiverPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getReceiverState() const; 
-    void setReceiverState(unsigned short pX); 
 
-    unsigned short getPadding1() const; 
-    void setPadding1(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    float getReceivedPower() const; 
-    void setReceivedPower(float pX); 
-
-    EntityID& getTransmitterEntityId(); 
-    const EntityID&  getTransmitterEntityId() const; 
-    void setTransmitterEntityId(const EntityID    &pX);
-
-    unsigned short getTransmitterRadioId() const; 
-    void setTransmitterRadioId(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ReceiverPdu& rhs) const;
+     bool operator ==(const ReceiverPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

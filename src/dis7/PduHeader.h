@@ -1,83 +1,56 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Not used. The PDU Header Record is directly incoroporated into the PDU class. Here for completness only. Section 6.2.66
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT PduHeader
+struct EXPORT_MACRO PduHeader
 {
-protected:
   /** The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2009. */
-  unsigned char _protocolVersion; 
+  unsigned char protocolVersion;
 
   /** Exercise ID */
-  unsigned char _exerciseID; 
+  unsigned char exerciseID;
 
   /** Type of pdu, unique for each PDU class */
-  unsigned char _pduType; 
+  unsigned char pduType;
 
   /** value that refers to the protocol family, eg SimulationManagement, etc */
-  unsigned char _protocolFamily; 
+  unsigned char protocolFamily;
 
   /** Timestamp value */
-  unsigned int _timestamp; 
+  unsigned int timestamp;
 
   /** Length, in bytes, of the PDU. Changed name from length to avoid use of Hibernate QL reserved word. */
-  unsigned char _pduLength; 
+  unsigned short pduLength;
 
   /** PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions  */
-  unsigned short _pduStatus; 
+  unsigned char pduStatus;
 
   /** zero filled array of padding */
-  unsigned char _padding; 
+  unsigned char padding;
 
-
- public:
     PduHeader();
     virtual ~PduHeader();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getProtocolVersion() const; 
-    void setProtocolVersion(unsigned char pX); 
 
-    unsigned char getExerciseID() const; 
-    void setExerciseID(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getPduType() const; 
-    void setPduType(unsigned char pX); 
-
-    unsigned char getProtocolFamily() const; 
-    void setProtocolFamily(unsigned char pX); 
-
-    unsigned int getTimestamp() const; 
-    void setTimestamp(unsigned int pX); 
-
-    unsigned char getPduLength() const; 
-    void setPduLength(unsigned char pX); 
-
-    unsigned short getPduStatus() const; 
-    void setPduStatus(unsigned short pX); 
-
-    unsigned char getPadding() const; 
-    void setPadding(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const PduHeader& rhs) const;
+     bool operator ==(const PduHeader& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

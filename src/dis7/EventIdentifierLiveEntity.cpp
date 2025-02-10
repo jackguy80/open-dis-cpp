@@ -1,12 +1,12 @@
-#include <dis7/EventIdentifierLiveEntity.h>
+#include "EventIdentifierLiveEntity.h"
 
 using namespace DIS;
 
 
 EventIdentifierLiveEntity::EventIdentifierLiveEntity():
-   _siteNumber(0), 
-   _applicationNumber(0), 
-   _eventNumber(0)
+   siteNumber(0), 
+   applicationNumber(0), 
+   eventNumber(0)
 {
 }
 
@@ -14,48 +14,18 @@ EventIdentifierLiveEntity::~EventIdentifierLiveEntity()
 {
 }
 
-unsigned char EventIdentifierLiveEntity::getSiteNumber() const
-{
-    return _siteNumber;
-}
-
-void EventIdentifierLiveEntity::setSiteNumber(unsigned char pX)
-{
-    _siteNumber = pX;
-}
-
-unsigned char EventIdentifierLiveEntity::getApplicationNumber() const
-{
-    return _applicationNumber;
-}
-
-void EventIdentifierLiveEntity::setApplicationNumber(unsigned char pX)
-{
-    _applicationNumber = pX;
-}
-
-unsigned short EventIdentifierLiveEntity::getEventNumber() const
-{
-    return _eventNumber;
-}
-
-void EventIdentifierLiveEntity::setEventNumber(unsigned short pX)
-{
-    _eventNumber = pX;
-}
-
 void EventIdentifierLiveEntity::marshal(DataStream& dataStream) const
 {
-    dataStream << _siteNumber;
-    dataStream << _applicationNumber;
-    dataStream << _eventNumber;
+    dataStream << siteNumber;
+    dataStream << applicationNumber;
+    dataStream << eventNumber;
 }
 
 void EventIdentifierLiveEntity::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _siteNumber;
-    dataStream >> _applicationNumber;
-    dataStream >> _eventNumber;
+    dataStream >> siteNumber;
+    dataStream >> applicationNumber;
+    dataStream >> eventNumber;
 }
 
 
@@ -63,9 +33,9 @@ bool EventIdentifierLiveEntity::operator ==(const EventIdentifierLiveEntity& rhs
  {
      bool ivarsEqual = true;
 
-     if( ! (_siteNumber == rhs._siteNumber) ) ivarsEqual = false;
-     if( ! (_applicationNumber == rhs._applicationNumber) ) ivarsEqual = false;
-     if( ! (_eventNumber == rhs._eventNumber) ) ivarsEqual = false;
+     if( ! (siteNumber == rhs.siteNumber) ) ivarsEqual = false;
+     if( ! (applicationNumber == rhs.applicationNumber) ) ivarsEqual = false;
+     if( ! (eventNumber == rhs.eventNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int EventIdentifierLiveEntity::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _siteNumber
-   marshalSize = marshalSize + 1;  // _applicationNumber
-   marshalSize = marshalSize + 2;  // _eventNumber
+   marshalSize = marshalSize + 1;  // siteNumber
+   marshalSize = marshalSize + 1;  // applicationNumber
+   marshalSize = marshalSize + 2;  // eventNumber
     return marshalSize;
 }
 

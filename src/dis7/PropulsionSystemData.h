@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // contains information describing the propulsion systems of the entity. This information shall be provided for each active propulsion system defined. Section 6.2.68
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT PropulsionSystemData
+struct EXPORT_MACRO PropulsionSystemData
 {
-protected:
   /** powerSetting */
-  float _powerSetting; 
+  float powerSetting;
 
   /** engine RPMs */
-  float _engineRpm; 
+  float engineRpm;
 
-
- public:
     PropulsionSystemData();
     virtual ~PropulsionSystemData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    float getPowerSetting() const; 
-    void setPowerSetting(float pX); 
 
-    float getEngineRpm() const; 
-    void setEngineRpm(float pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const PropulsionSystemData& rhs) const;
+     bool operator ==(const PropulsionSystemData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,79 +1,54 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Physical separation of an entity from another entity.  Section 6.2.93.6
+// Physical separation of an entity from another entity.  Section 6.2.94.6
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT SeparationVP
+struct EXPORT_MACRO SeparationVP
 {
-protected:
   /** the identification of the Variable Parameter record. Enumeration from EBV */
-  unsigned char _recordType; 
+  unsigned char recordType;
 
   /** Reason for separation. EBV */
-  unsigned char _reasonForSeparation; 
+  unsigned char reasonForSeparation;
 
   /** Whether the entity existed prior to separation EBV */
-  unsigned char _preEntityIndicator; 
+  unsigned char preEntityIndicator;
 
   /** padding */
-  unsigned char _padding1; 
+  unsigned char padding1;
 
   /** ID of parent */
-  EntityID _parentEntityID; 
+  EntityID parentEntityID;
 
   /** padding */
-  unsigned short _padding2; 
+  unsigned short padding2;
 
   /** Station separated from */
-  unsigned int _stationLocation; 
+  unsigned int stationLocation;
 
-
- public:
     SeparationVP();
     virtual ~SeparationVP();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getRecordType() const; 
-    void setRecordType(unsigned char pX); 
 
-    unsigned char getReasonForSeparation() const; 
-    void setReasonForSeparation(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getPreEntityIndicator() const; 
-    void setPreEntityIndicator(unsigned char pX); 
-
-    unsigned char getPadding1() const; 
-    void setPadding1(unsigned char pX); 
-
-    EntityID& getParentEntityID(); 
-    const EntityID&  getParentEntityID() const; 
-    void setParentEntityID(const EntityID    &pX);
-
-    unsigned short getPadding2() const; 
-    void setPadding2(unsigned short pX); 
-
-    unsigned int getStationLocation() const; 
-    void setStationLocation(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SeparationVP& rhs) const;
+     bool operator ==(const SeparationVP& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

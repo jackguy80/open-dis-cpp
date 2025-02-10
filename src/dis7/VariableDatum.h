@@ -1,64 +1,42 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
-#include <dis7/EightByteChunk.h>
-#include <vector>
+#include "OneByteChunk.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// the variable datum type, the datum length, and the value for that variable datum type. NOT COMPLETE. Section 6.2.92
+// the variable datum type, the datum length, and the value for that variable datum type. NOT COMPLETE. Section 6.2.93
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT VariableDatum
+struct EXPORT_MACRO VariableDatum
 {
-protected:
   /** Type of variable datum to be transmitted. 32 bit enumeration defined in EBV */
-  unsigned int _variableDatumID; 
+  unsigned int variableDatumID;
 
-  /** Length, in bits, of the variable datum. */
-  unsigned int _variableDatumLength; 
+  /** Length, IN BITS, of the variable datum. */
+  unsigned int variableDatumLength;
 
-  /** Variable datum. This can be any number of bits long, depending on the datum. */
-  unsigned int _variableDatumBits; 
+  /** Variable length data class */
+  OneByteChunk variableDatumData;
 
-  /** padding to put the record on a 64 bit boundary */
-  unsigned int _padding; 
-
-  // Variable Data
-  std::vector<EightByteChunk> _variableDatums;
-
-
- public:
     VariableDatum();
     virtual ~VariableDatum();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getVariableDatumID() const; 
-    void setVariableDatumID(unsigned int pX); 
 
-    unsigned int getVariableDatumLength() const; 
-    void setVariableDatumLength(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned int getVariableDatumBits() const; 
-    void setVariableDatumBits(unsigned int pX); 
-
-    unsigned int getPadding() const; 
-    void setPadding(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const VariableDatum& rhs) const;
+     bool operator ==(const VariableDatum& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

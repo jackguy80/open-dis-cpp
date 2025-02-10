@@ -1,11 +1,11 @@
-#include <dis7/MineEntityIdentifier.h>
+#include "MineEntityIdentifier.h"
 
 using namespace DIS;
 
 
 MineEntityIdentifier::MineEntityIdentifier():
-   _simulationAddress(), 
-   _mineEntityNumber(0)
+   simulationAddress(), 
+   mineEntityNumber(0)
 {
 }
 
@@ -13,41 +13,16 @@ MineEntityIdentifier::~MineEntityIdentifier()
 {
 }
 
-SimulationAddress& MineEntityIdentifier::getSimulationAddress() 
-{
-    return _simulationAddress;
-}
-
-const SimulationAddress& MineEntityIdentifier::getSimulationAddress() const
-{
-    return _simulationAddress;
-}
-
-void MineEntityIdentifier::setSimulationAddress(const SimulationAddress &pX)
-{
-    _simulationAddress = pX;
-}
-
-unsigned short MineEntityIdentifier::getMineEntityNumber() const
-{
-    return _mineEntityNumber;
-}
-
-void MineEntityIdentifier::setMineEntityNumber(unsigned short pX)
-{
-    _mineEntityNumber = pX;
-}
-
 void MineEntityIdentifier::marshal(DataStream& dataStream) const
 {
-    _simulationAddress.marshal(dataStream);
-    dataStream << _mineEntityNumber;
+    simulationAddress.marshal(dataStream);
+    dataStream << mineEntityNumber;
 }
 
 void MineEntityIdentifier::unmarshal(DataStream& dataStream)
 {
-    _simulationAddress.unmarshal(dataStream);
-    dataStream >> _mineEntityNumber;
+    simulationAddress.unmarshal(dataStream);
+    dataStream >> mineEntityNumber;
 }
 
 
@@ -55,8 +30,8 @@ bool MineEntityIdentifier::operator ==(const MineEntityIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_simulationAddress == rhs._simulationAddress) ) ivarsEqual = false;
-     if( ! (_mineEntityNumber == rhs._mineEntityNumber) ) ivarsEqual = false;
+     if( ! (simulationAddress == rhs.simulationAddress) ) ivarsEqual = false;
+     if( ! (mineEntityNumber == rhs.mineEntityNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int MineEntityIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _simulationAddress.getMarshalledSize();  // _simulationAddress
-   marshalSize = marshalSize + 2;  // _mineEntityNumber
+   marshalSize = marshalSize + simulationAddress.getMarshalledSize();  // simulationAddress
+   marshalSize = marshalSize + 2;  // mineEntityNumber
     return marshalSize;
 }
 

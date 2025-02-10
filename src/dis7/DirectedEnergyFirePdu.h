@@ -1,140 +1,85 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/ClockTime.h>
-#include <dis7/Vector3Float.h>
-#include <dis7/StandardVariableSpecification.h>
-#include <vector>
-#include <dis7/WarfareFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityType.h"
+#include "ClockTime.h"
+#include "Vector3Float.h"
+#include "StandardVariableSpecification.h"
+#include "WarfareFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Firing of a directed energy weapon shall be communicated by issuing a Directed Energy Fire PDU Section 7.3.4  COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT DirectedEnergyFirePdu : public WarfareFamilyPdu
+struct EXPORT_MACRO DirectedEnergyFirePdu : public WarfareFamilyPdu
 {
-protected:
   /** Field shall identify the munition type enumeration for the DE weapon beam, Section 7.3.4  */
-  EntityType _munitionType; 
+  EntityType munitionType;
 
   /** Field shall indicate the simulation time at start of the shot, Section 7.3.4  */
-  ClockTime _shotStartTime; 
+  ClockTime shotStartTime;
 
   /** Field shall indicate the current cumulative duration of the shot, Section 7.3.4  */
-  float _commulativeShotTime; 
+  float commulativeShotTime;
 
   /** Field shall identify the location of the DE weapon aperture/emitter, Section 7.3.4  */
-  Vector3Float _ApertureEmitterLocation; 
+  Vector3Float ApertureEmitterLocation;
 
   /** Field shall identify the beam diameter at the aperture/emitter, Section 7.3.4  */
-  float _apertureDiameter; 
+  float apertureDiameter;
 
   /** Field shall identify the emissions wavelength in units of meters, Section 7.3.4  */
-  float _wavelength; 
+  float wavelength;
 
   /** Field shall identify the current peak irradiance of emissions in units of Watts per square meter, Section 7.3.4  */
-  float _peakIrradiance; 
+  float peakIrradiance;
 
   /** field shall identify the current pulse repetition frequency in units of cycles per second (Hertz), Section 7.3.4  */
-  float _pulseRepetitionFrequency; 
+  float pulseRepetitionFrequency;
 
   /** field shall identify the pulse width emissions in units of seconds, Section 7.3.4 */
-  int _pulseWidth; 
+  int pulseWidth;
 
   /** 16bit Boolean field shall contain various flags to indicate status information needed to process a DE, Section 7.3.4  */
-  int _flags; 
+  int flags;
 
   /** Field shall identify the pulse shape and shall be represented as an 8-bit enumeration, Section 7.3.4  */
-  char _pulseShape; 
+  char pulseShape;
 
   /** padding, Section 7.3.4  */
-  unsigned char _padding1; 
+  unsigned char padding1;
 
   /** padding, Section 7.3.4  */
-  unsigned int _padding2; 
+  unsigned int padding2;
 
   /** padding, Section 7.3.4  */
-  unsigned short _padding3; 
+  unsigned short padding3;
 
   /** Field shall specify the number of DE records, Section 7.3.4  */
-  unsigned short _numberOfDERecords; 
+  unsigned short numberOfDERecords;
 
   /** Fields shall contain one or more DE records, records shall conform to the variable record format (Section6.2.82), Section 7.3.4 */
-  std::vector<StandardVariableSpecification> _dERecords; 
+  StandardVariableSpecification dERecords;
 
-
- public:
     DirectedEnergyFirePdu();
     virtual ~DirectedEnergyFirePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getMunitionType(); 
-    const EntityType&  getMunitionType() const; 
-    void setMunitionType(const EntityType    &pX);
 
-    ClockTime& getShotStartTime(); 
-    const ClockTime&  getShotStartTime() const; 
-    void setShotStartTime(const ClockTime    &pX);
+     virtual int getMarshalledSize() const;
 
-    float getCommulativeShotTime() const; 
-    void setCommulativeShotTime(float pX); 
-
-    Vector3Float& getApertureEmitterLocation(); 
-    const Vector3Float&  getApertureEmitterLocation() const; 
-    void setApertureEmitterLocation(const Vector3Float    &pX);
-
-    float getApertureDiameter() const; 
-    void setApertureDiameter(float pX); 
-
-    float getWavelength() const; 
-    void setWavelength(float pX); 
-
-    float getPeakIrradiance() const; 
-    void setPeakIrradiance(float pX); 
-
-    float getPulseRepetitionFrequency() const; 
-    void setPulseRepetitionFrequency(float pX); 
-
-    int getPulseWidth() const; 
-    void setPulseWidth(int pX); 
-
-    int getFlags() const; 
-    void setFlags(int pX); 
-
-    char getPulseShape() const; 
-    void setPulseShape(char pX); 
-
-    unsigned char getPadding1() const; 
-    void setPadding1(unsigned char pX); 
-
-    unsigned int getPadding2() const; 
-    void setPadding2(unsigned int pX); 
-
-    unsigned short getPadding3() const; 
-    void setPadding3(unsigned short pX); 
-
-    unsigned short getNumberOfDERecords() const; 
-
-    std::vector<StandardVariableSpecification>& getDERecords(); 
-    const std::vector<StandardVariableSpecification>& getDERecords() const; 
-    void setDERecords(const std::vector<StandardVariableSpecification>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DirectedEnergyFirePdu& rhs) const;
+     bool operator ==(const DirectedEnergyFirePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

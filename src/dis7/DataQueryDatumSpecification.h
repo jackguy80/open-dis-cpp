@@ -1,62 +1,46 @@
 #pragma once
 
-#include <dis7/UnsignedDISInteger.h>
-#include <dis7/UnsignedDISInteger.h>
-#include <vector>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "UnsignedDISInteger.h"
+#include "UnsignedDISInteger.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// List of fixed and variable datum records. Section 6.2.18 
+// List of fixed and variable datum ID records. Section 6.2.17 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT DataQueryDatumSpecification
+struct EXPORT_MACRO DataQueryDatumSpecification
 {
-protected:
-  /** Number of fixed datums */
-  unsigned int _numberOfFixedDatums; 
+  /** Number of fixed datum IDs */
+  unsigned int numberOfFixedDatums;
 
-  /** Number of variable datums */
-  unsigned int _numberOfVariableDatums; 
+  /** Number of variable datum IDs */
+  unsigned int numberOfVariableDatums;
 
   /** variable length list fixed datum IDs */
-  std::vector<UnsignedDISInteger> _fixedDatumIDList; 
+  UnsignedDISInteger fixedDatumIDList;
 
   /** variable length list variable datum IDs */
-  std::vector<UnsignedDISInteger> _variableDatumIDList; 
+  UnsignedDISInteger variableDatumIDList;
 
-
- public:
     DataQueryDatumSpecification();
     virtual ~DataQueryDatumSpecification();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getNumberOfFixedDatums() const; 
 
-    unsigned int getNumberOfVariableDatums() const; 
+     virtual int getMarshalledSize() const;
 
-    std::vector<UnsignedDISInteger>& getFixedDatumIDList(); 
-    const std::vector<UnsignedDISInteger>& getFixedDatumIDList() const; 
-    void setFixedDatumIDList(const std::vector<UnsignedDISInteger>&    pX);
-
-    std::vector<UnsignedDISInteger>& getVariableDatumIDList(); 
-    const std::vector<UnsignedDISInteger>& getVariableDatumIDList() const; 
-    void setVariableDatumIDList(const std::vector<UnsignedDISInteger>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DataQueryDatumSpecification& rhs) const;
+     bool operator ==(const DataQueryDatumSpecification& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 5.2.56. Purpose for joinging two entities
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT Relationship
+struct EXPORT_MACRO Relationship
 {
-protected:
   /** Nature of join */
-  unsigned short _nature; 
+  unsigned short nature;
 
   /** position of join */
-  unsigned short _position; 
+  unsigned short position;
 
-
- public:
     Relationship();
     virtual ~Relationship();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getNature() const; 
-    void setNature(unsigned short pX); 
 
-    unsigned short getPosition() const; 
-    void setPosition(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const Relationship& rhs) const;
+     bool operator ==(const Relationship& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

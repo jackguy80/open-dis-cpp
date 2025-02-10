@@ -1,71 +1,50 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.40. Information about a geometry, a state associated with a geometry, a bounding volume, or an associated entity ID. NOTE: this class requires hand coding.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT Environment
+struct EXPORT_MACRO Environment
 {
-protected:
   /** Record type */
-  unsigned int _environmentType; 
+  unsigned int environmentType;
 
   /** length, in bits */
-  unsigned char _length; 
+  unsigned char length;
 
   /** Identify the sequentially numbered record index */
-  unsigned char _index; 
+  unsigned char recordIndex;
 
   /** padding */
-  unsigned char _padding1; 
+  unsigned char padding1;
 
   /** Geometry or state record */
-  unsigned char _geometry; 
+  unsigned char geometry;
 
   /** padding to bring the total size up to a 64 bit boundry */
-  unsigned char _padding2; 
+  unsigned char padding2;
 
-
- public:
     Environment();
     virtual ~Environment();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getEnvironmentType() const; 
-    void setEnvironmentType(unsigned int pX); 
 
-    unsigned char getLength() const; 
-    void setLength(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getIndex() const; 
-    void setIndex(unsigned char pX); 
-
-    unsigned char getPadding1() const; 
-    void setPadding1(unsigned char pX); 
-
-    unsigned char getGeometry() const; 
-    void setGeometry(unsigned char pX); 
-
-    unsigned char getPadding2() const; 
-    void setPadding2(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const Environment& rhs) const;
+     bool operator ==(const Environment& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

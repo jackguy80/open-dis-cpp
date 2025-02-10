@@ -1,18 +1,18 @@
-#include <dis7/EntityAssociation.h>
+#include "EntityAssociation.h"
 
 using namespace DIS;
 
 
 EntityAssociation::EntityAssociation():
-   _recordType(2), 
-   _changeIndicator(0), 
-   _associationStatus(0), 
-   _associationType(0), 
-   _entityID(), 
-   _owsSttionLocation(0), 
-   _physicalConnectionType(0), 
-   _groupMemberType(0), 
-   _groupNumber(0)
+   recordType(4), 
+   changeIndicator(0), 
+   associationStatus(0), 
+   associationType(0), 
+   entityID(), 
+   ownStationLocation(0), 
+   physicalConnectionType(0), 
+   groupMemberType(0), 
+   groupNumber(0)
 {
 }
 
@@ -20,125 +20,30 @@ EntityAssociation::~EntityAssociation()
 {
 }
 
-unsigned char EntityAssociation::getRecordType() const
-{
-    return _recordType;
-}
-
-void EntityAssociation::setRecordType(unsigned char pX)
-{
-    _recordType = pX;
-}
-
-unsigned char EntityAssociation::getChangeIndicator() const
-{
-    return _changeIndicator;
-}
-
-void EntityAssociation::setChangeIndicator(unsigned char pX)
-{
-    _changeIndicator = pX;
-}
-
-unsigned char EntityAssociation::getAssociationStatus() const
-{
-    return _associationStatus;
-}
-
-void EntityAssociation::setAssociationStatus(unsigned char pX)
-{
-    _associationStatus = pX;
-}
-
-unsigned char EntityAssociation::getAssociationType() const
-{
-    return _associationType;
-}
-
-void EntityAssociation::setAssociationType(unsigned char pX)
-{
-    _associationType = pX;
-}
-
-EntityID& EntityAssociation::getEntityID() 
-{
-    return _entityID;
-}
-
-const EntityID& EntityAssociation::getEntityID() const
-{
-    return _entityID;
-}
-
-void EntityAssociation::setEntityID(const EntityID &pX)
-{
-    _entityID = pX;
-}
-
-unsigned short EntityAssociation::getOwsSttionLocation() const
-{
-    return _owsSttionLocation;
-}
-
-void EntityAssociation::setOwsSttionLocation(unsigned short pX)
-{
-    _owsSttionLocation = pX;
-}
-
-unsigned short EntityAssociation::getPhysicalConnectionType() const
-{
-    return _physicalConnectionType;
-}
-
-void EntityAssociation::setPhysicalConnectionType(unsigned short pX)
-{
-    _physicalConnectionType = pX;
-}
-
-unsigned char EntityAssociation::getGroupMemberType() const
-{
-    return _groupMemberType;
-}
-
-void EntityAssociation::setGroupMemberType(unsigned char pX)
-{
-    _groupMemberType = pX;
-}
-
-unsigned short EntityAssociation::getGroupNumber() const
-{
-    return _groupNumber;
-}
-
-void EntityAssociation::setGroupNumber(unsigned short pX)
-{
-    _groupNumber = pX;
-}
-
 void EntityAssociation::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _changeIndicator;
-    dataStream << _associationStatus;
-    dataStream << _associationType;
-    _entityID.marshal(dataStream);
-    dataStream << _owsSttionLocation;
-    dataStream << _physicalConnectionType;
-    dataStream << _groupMemberType;
-    dataStream << _groupNumber;
+    dataStream << recordType;
+    dataStream << changeIndicator;
+    dataStream << associationStatus;
+    dataStream << associationType;
+    entityID.marshal(dataStream);
+    dataStream << ownStationLocation;
+    dataStream << physicalConnectionType;
+    dataStream << groupMemberType;
+    dataStream << groupNumber;
 }
 
 void EntityAssociation::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _changeIndicator;
-    dataStream >> _associationStatus;
-    dataStream >> _associationType;
-    _entityID.unmarshal(dataStream);
-    dataStream >> _owsSttionLocation;
-    dataStream >> _physicalConnectionType;
-    dataStream >> _groupMemberType;
-    dataStream >> _groupNumber;
+    dataStream >> recordType;
+    dataStream >> changeIndicator;
+    dataStream >> associationStatus;
+    dataStream >> associationType;
+    entityID.unmarshal(dataStream);
+    dataStream >> ownStationLocation;
+    dataStream >> physicalConnectionType;
+    dataStream >> groupMemberType;
+    dataStream >> groupNumber;
 }
 
 
@@ -146,15 +51,15 @@ bool EntityAssociation::operator ==(const EntityAssociation& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_changeIndicator == rhs._changeIndicator) ) ivarsEqual = false;
-     if( ! (_associationStatus == rhs._associationStatus) ) ivarsEqual = false;
-     if( ! (_associationType == rhs._associationType) ) ivarsEqual = false;
-     if( ! (_entityID == rhs._entityID) ) ivarsEqual = false;
-     if( ! (_owsSttionLocation == rhs._owsSttionLocation) ) ivarsEqual = false;
-     if( ! (_physicalConnectionType == rhs._physicalConnectionType) ) ivarsEqual = false;
-     if( ! (_groupMemberType == rhs._groupMemberType) ) ivarsEqual = false;
-     if( ! (_groupNumber == rhs._groupNumber) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (changeIndicator == rhs.changeIndicator) ) ivarsEqual = false;
+     if( ! (associationStatus == rhs.associationStatus) ) ivarsEqual = false;
+     if( ! (associationType == rhs.associationType) ) ivarsEqual = false;
+     if( ! (entityID == rhs.entityID) ) ivarsEqual = false;
+     if( ! (ownStationLocation == rhs.ownStationLocation) ) ivarsEqual = false;
+     if( ! (physicalConnectionType == rhs.physicalConnectionType) ) ivarsEqual = false;
+     if( ! (groupMemberType == rhs.groupMemberType) ) ivarsEqual = false;
+     if( ! (groupNumber == rhs.groupNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -163,15 +68,15 @@ int EntityAssociation::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _recordType
-   marshalSize = marshalSize + 1;  // _changeIndicator
-   marshalSize = marshalSize + 1;  // _associationStatus
-   marshalSize = marshalSize + 1;  // _associationType
-   marshalSize = marshalSize + _entityID.getMarshalledSize();  // _entityID
-   marshalSize = marshalSize + 2;  // _owsSttionLocation
-   marshalSize = marshalSize + 2;  // _physicalConnectionType
-   marshalSize = marshalSize + 1;  // _groupMemberType
-   marshalSize = marshalSize + 2;  // _groupNumber
+   marshalSize = marshalSize + 1;  // recordType
+   marshalSize = marshalSize + 1;  // changeIndicator
+   marshalSize = marshalSize + 1;  // associationStatus
+   marshalSize = marshalSize + 1;  // associationType
+   marshalSize = marshalSize + entityID.getMarshalledSize();  // entityID
+   marshalSize = marshalSize + 2;  // ownStationLocation
+   marshalSize = marshalSize + 1;  // physicalConnectionType
+   marshalSize = marshalSize + 1;  // groupMemberType
+   marshalSize = marshalSize + 2;  // groupNumber
     return marshalSize;
 }
 

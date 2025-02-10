@@ -1,12 +1,12 @@
-#include <dis7/SimulationManagementPduHeader.h>
+#include "SimulationManagementPduHeader.h"
 
 using namespace DIS;
 
 
 SimulationManagementPduHeader::SimulationManagementPduHeader():
-   _pduHeader(), 
-   _originatingID(), 
-   _recevingID()
+   pduHeader(), 
+   originatingID(), 
+   receivingID()
 {
 }
 
@@ -14,63 +14,18 @@ SimulationManagementPduHeader::~SimulationManagementPduHeader()
 {
 }
 
-PduHeader& SimulationManagementPduHeader::getPduHeader() 
-{
-    return _pduHeader;
-}
-
-const PduHeader& SimulationManagementPduHeader::getPduHeader() const
-{
-    return _pduHeader;
-}
-
-void SimulationManagementPduHeader::setPduHeader(const PduHeader &pX)
-{
-    _pduHeader = pX;
-}
-
-EntityID& SimulationManagementPduHeader::getOriginatingID() 
-{
-    return _originatingID;
-}
-
-const EntityID& SimulationManagementPduHeader::getOriginatingID() const
-{
-    return _originatingID;
-}
-
-void SimulationManagementPduHeader::setOriginatingID(const EntityID &pX)
-{
-    _originatingID = pX;
-}
-
-EntityID& SimulationManagementPduHeader::getRecevingID() 
-{
-    return _recevingID;
-}
-
-const EntityID& SimulationManagementPduHeader::getRecevingID() const
-{
-    return _recevingID;
-}
-
-void SimulationManagementPduHeader::setRecevingID(const EntityID &pX)
-{
-    _recevingID = pX;
-}
-
 void SimulationManagementPduHeader::marshal(DataStream& dataStream) const
 {
-    _pduHeader.marshal(dataStream);
-    _originatingID.marshal(dataStream);
-    _recevingID.marshal(dataStream);
+    pduHeader.marshal(dataStream);
+    originatingID.marshal(dataStream);
+    receivingID.marshal(dataStream);
 }
 
 void SimulationManagementPduHeader::unmarshal(DataStream& dataStream)
 {
-    _pduHeader.unmarshal(dataStream);
-    _originatingID.unmarshal(dataStream);
-    _recevingID.unmarshal(dataStream);
+    pduHeader.unmarshal(dataStream);
+    originatingID.unmarshal(dataStream);
+    receivingID.unmarshal(dataStream);
 }
 
 
@@ -78,9 +33,9 @@ bool SimulationManagementPduHeader::operator ==(const SimulationManagementPduHea
  {
      bool ivarsEqual = true;
 
-     if( ! (_pduHeader == rhs._pduHeader) ) ivarsEqual = false;
-     if( ! (_originatingID == rhs._originatingID) ) ivarsEqual = false;
-     if( ! (_recevingID == rhs._recevingID) ) ivarsEqual = false;
+     if( ! (pduHeader == rhs.pduHeader) ) ivarsEqual = false;
+     if( ! (originatingID == rhs.originatingID) ) ivarsEqual = false;
+     if( ! (receivingID == rhs.receivingID) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -89,9 +44,9 @@ int SimulationManagementPduHeader::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _pduHeader.getMarshalledSize();  // _pduHeader
-   marshalSize = marshalSize + _originatingID.getMarshalledSize();  // _originatingID
-   marshalSize = marshalSize + _recevingID.getMarshalledSize();  // _recevingID
+   marshalSize = marshalSize + pduHeader.getMarshalledSize();  // pduHeader
+   marshalSize = marshalSize + originatingID.getMarshalledSize();  // originatingID
+   marshalSize = marshalSize + receivingID.getMarshalledSize();  // receivingID
     return marshalSize;
 }
 

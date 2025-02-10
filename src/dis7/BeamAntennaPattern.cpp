@@ -1,19 +1,19 @@
-#include <dis7/BeamAntennaPattern.h>
+#include "BeamAntennaPattern.h"
 
 using namespace DIS;
 
 
 BeamAntennaPattern::BeamAntennaPattern():
-   _beamDirection(), 
-   _azimuthBeamwidth(0), 
-   _elevationBeamwidth(0), 
-   _referenceSystem(0), 
-   _padding1(0), 
-   _padding2(0), 
-   _ez(0.0), 
-   _ex(0.0), 
-   _phase(0.0), 
-   _padding3(0)
+   beamDirection(), 
+   azimuthBeamwidth(0), 
+   elevationBeamwidth(0), 
+   referenceSystem(0), 
+   padding1(0), 
+   padding2(0), 
+   ez(0.0), 
+   ex(0.0), 
+   phase(0.0), 
+   padding3(0)
 {
 }
 
@@ -21,137 +21,32 @@ BeamAntennaPattern::~BeamAntennaPattern()
 {
 }
 
-EulerAngles& BeamAntennaPattern::getBeamDirection() 
-{
-    return _beamDirection;
-}
-
-const EulerAngles& BeamAntennaPattern::getBeamDirection() const
-{
-    return _beamDirection;
-}
-
-void BeamAntennaPattern::setBeamDirection(const EulerAngles &pX)
-{
-    _beamDirection = pX;
-}
-
-float BeamAntennaPattern::getAzimuthBeamwidth() const
-{
-    return _azimuthBeamwidth;
-}
-
-void BeamAntennaPattern::setAzimuthBeamwidth(float pX)
-{
-    _azimuthBeamwidth = pX;
-}
-
-float BeamAntennaPattern::getElevationBeamwidth() const
-{
-    return _elevationBeamwidth;
-}
-
-void BeamAntennaPattern::setElevationBeamwidth(float pX)
-{
-    _elevationBeamwidth = pX;
-}
-
-float BeamAntennaPattern::getReferenceSystem() const
-{
-    return _referenceSystem;
-}
-
-void BeamAntennaPattern::setReferenceSystem(float pX)
-{
-    _referenceSystem = pX;
-}
-
-unsigned char BeamAntennaPattern::getPadding1() const
-{
-    return _padding1;
-}
-
-void BeamAntennaPattern::setPadding1(unsigned char pX)
-{
-    _padding1 = pX;
-}
-
-unsigned short BeamAntennaPattern::getPadding2() const
-{
-    return _padding2;
-}
-
-void BeamAntennaPattern::setPadding2(unsigned short pX)
-{
-    _padding2 = pX;
-}
-
-float BeamAntennaPattern::getEz() const
-{
-    return _ez;
-}
-
-void BeamAntennaPattern::setEz(float pX)
-{
-    _ez = pX;
-}
-
-float BeamAntennaPattern::getEx() const
-{
-    return _ex;
-}
-
-void BeamAntennaPattern::setEx(float pX)
-{
-    _ex = pX;
-}
-
-float BeamAntennaPattern::getPhase() const
-{
-    return _phase;
-}
-
-void BeamAntennaPattern::setPhase(float pX)
-{
-    _phase = pX;
-}
-
-unsigned int BeamAntennaPattern::getPadding3() const
-{
-    return _padding3;
-}
-
-void BeamAntennaPattern::setPadding3(unsigned int pX)
-{
-    _padding3 = pX;
-}
-
 void BeamAntennaPattern::marshal(DataStream& dataStream) const
 {
-    _beamDirection.marshal(dataStream);
-    dataStream << _azimuthBeamwidth;
-    dataStream << _elevationBeamwidth;
-    dataStream << _referenceSystem;
-    dataStream << _padding1;
-    dataStream << _padding2;
-    dataStream << _ez;
-    dataStream << _ex;
-    dataStream << _phase;
-    dataStream << _padding3;
+    beamDirection.marshal(dataStream);
+    dataStream << azimuthBeamwidth;
+    dataStream << elevationBeamwidth;
+    dataStream << referenceSystem;
+    dataStream << padding1;
+    dataStream << padding2;
+    dataStream << ez;
+    dataStream << ex;
+    dataStream << phase;
+    dataStream << padding3;
 }
 
 void BeamAntennaPattern::unmarshal(DataStream& dataStream)
 {
-    _beamDirection.unmarshal(dataStream);
-    dataStream >> _azimuthBeamwidth;
-    dataStream >> _elevationBeamwidth;
-    dataStream >> _referenceSystem;
-    dataStream >> _padding1;
-    dataStream >> _padding2;
-    dataStream >> _ez;
-    dataStream >> _ex;
-    dataStream >> _phase;
-    dataStream >> _padding3;
+    beamDirection.unmarshal(dataStream);
+    dataStream >> azimuthBeamwidth;
+    dataStream >> elevationBeamwidth;
+    dataStream >> referenceSystem;
+    dataStream >> padding1;
+    dataStream >> padding2;
+    dataStream >> ez;
+    dataStream >> ex;
+    dataStream >> phase;
+    dataStream >> padding3;
 }
 
 
@@ -159,16 +54,16 @@ bool BeamAntennaPattern::operator ==(const BeamAntennaPattern& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_beamDirection == rhs._beamDirection) ) ivarsEqual = false;
-     if( ! (_azimuthBeamwidth == rhs._azimuthBeamwidth) ) ivarsEqual = false;
-     if( ! (_elevationBeamwidth == rhs._elevationBeamwidth) ) ivarsEqual = false;
-     if( ! (_referenceSystem == rhs._referenceSystem) ) ivarsEqual = false;
-     if( ! (_padding1 == rhs._padding1) ) ivarsEqual = false;
-     if( ! (_padding2 == rhs._padding2) ) ivarsEqual = false;
-     if( ! (_ez == rhs._ez) ) ivarsEqual = false;
-     if( ! (_ex == rhs._ex) ) ivarsEqual = false;
-     if( ! (_phase == rhs._phase) ) ivarsEqual = false;
-     if( ! (_padding3 == rhs._padding3) ) ivarsEqual = false;
+     if( ! (beamDirection == rhs.beamDirection) ) ivarsEqual = false;
+     if( ! (azimuthBeamwidth == rhs.azimuthBeamwidth) ) ivarsEqual = false;
+     if( ! (elevationBeamwidth == rhs.elevationBeamwidth) ) ivarsEqual = false;
+     if( ! (referenceSystem == rhs.referenceSystem) ) ivarsEqual = false;
+     if( ! (padding1 == rhs.padding1) ) ivarsEqual = false;
+     if( ! (padding2 == rhs.padding2) ) ivarsEqual = false;
+     if( ! (ez == rhs.ez) ) ivarsEqual = false;
+     if( ! (ex == rhs.ex) ) ivarsEqual = false;
+     if( ! (phase == rhs.phase) ) ivarsEqual = false;
+     if( ! (padding3 == rhs.padding3) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -177,16 +72,16 @@ int BeamAntennaPattern::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _beamDirection.getMarshalledSize();  // _beamDirection
-   marshalSize = marshalSize + 4;  // _azimuthBeamwidth
-   marshalSize = marshalSize + 4;  // _elevationBeamwidth
-   marshalSize = marshalSize + 4;  // _referenceSystem
-   marshalSize = marshalSize + 1;  // _padding1
-   marshalSize = marshalSize + 2;  // _padding2
-   marshalSize = marshalSize + 4;  // _ez
-   marshalSize = marshalSize + 4;  // _ex
-   marshalSize = marshalSize + 4;  // _phase
-   marshalSize = marshalSize + 4;  // _padding3
+   marshalSize = marshalSize + beamDirection.getMarshalledSize();  // beamDirection
+   marshalSize = marshalSize + 4;  // azimuthBeamwidth
+   marshalSize = marshalSize + 4;  // elevationBeamwidth
+   marshalSize = marshalSize + 1;  // referenceSystem
+   marshalSize = marshalSize + 1;  // padding1
+   marshalSize = marshalSize + 2;  // padding2
+   marshalSize = marshalSize + 4;  // ez
+   marshalSize = marshalSize + 4;  // ex
+   marshalSize = marshalSize + 4;  // phase
+   marshalSize = marshalSize + 4;  // padding3
     return marshalSize;
 }
 

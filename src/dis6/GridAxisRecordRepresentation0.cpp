@@ -1,80 +1,84 @@
-#include <dis6/GridAxisRecordRepresentation0.h>
+#include "GridAxisRecordRepresentation0.h"
 
 using namespace DIS;
 
-GridAxisRecordRepresentation0::GridAxisRecordRepresentation0()
-    : GridAxisRecord(), _numberOfBytes(0) {}
 
-GridAxisRecordRepresentation0::~GridAxisRecordRepresentation0() {
-  _dataValues.clear();
+GridAxisRecordRepresentation0::GridAxisRecordRepresentation0() : GridAxisRecord(),
+   numberOfBytes(0), 
+   dataValues(0)
+{
 }
 
-unsigned short GridAxisRecordRepresentation0::getNumberOfBytes() const {
-  return _dataValues.size();
+GridAxisRecordRepresentation0::~GridAxisRecordRepresentation0()
+{
+    dataValues.clear();
 }
 
-std::vector<uint8_t> &GridAxisRecordRepresentation0::getDataValues() {
-  return _dataValues;
+void GridAxisRecordRepresentation0::marshal(DataStream& dataStream) const
+{
+    GridAxisRecord::marshal(dataStream); // Marshal information in superclass first
+    dataStream << ( unsigned short )dataValues.size();
+
+     for(size_t idx = 0; idx < dataValues.size(); idx++)
+     {
+        OneByteChunk x = dataValues[idx];
+        x.marshal(dataStream);
+     }
+
 }
 
-const std::vector<uint8_t> &
-GridAxisRecordRepresentation0::getDataValues() const {
-  return _dataValues;
+void GridAxisRecordRepresentation0::unmarshal(DataStream& dataStream)
+{
+    GridAxisRecord::unmarshal(dataStream); // unmarshal information in superclass first
+    dataStream >> numberOfBytes;
+
+     dataValues.clear();
+     for(size_t idx = 0; idx < numberOfBytes; idx++)
+     {
+        OneByteChunk x;
+        x.unmarshal(dataStream);
+        dataValues.push_back(x);
+     }
 }
 
-void GridAxisRecordRepresentation0::setDataValues(
-    const std::vector<uint8_t> &pX) {
-  _dataValues = pX;
-}
 
-void GridAxisRecordRepresentation0::marshal(DataStream &dataStream) const {
-  GridAxisRecord::marshal(
-      dataStream); // Marshal information in superclass first
-  dataStream << (unsigned short)_dataValues.size();
+bool GridAxisRecordRepresentation0::operator ==(const GridAxisRecordRepresentation0& rhs) const
+ {
+     bool ivarsEqual = true;
 
-  for (auto &byte : _dataValues) {
-    dataStream << byte;
-  }
-}
+     ivarsEqual = GridAxisRecord::operator==(rhs);
 
-void GridAxisRecordRepresentation0::unmarshal(DataStream &dataStream) {
-  GridAxisRecord::unmarshal(
-      dataStream); // unmarshal information in superclass first
-  dataStream >> _numberOfBytes;
 
-  _dataValues.clear();
-  for (auto idx = 0; idx < _numberOfBytes; ++idx) {
-    uint8_t x;
-    dataStream >> x;
-    _dataValues.push_back(x);
-  }
-}
+     for(size_t idx = 0; idx < dataValues.size(); idx++)
+     {
+        if( ! ( dataValues[idx] == rhs.dataValues[idx]) ) ivarsEqual = false;
+     }
 
-bool GridAxisRecordRepresentation0::operator==(
-    const GridAxisRecordRepresentation0 &rhs) const {
-  auto ivarsEqual = true;
 
-  ivarsEqual =
-      GridAxisRecord::operator==(rhs) && _dataValues == rhs._dataValues;
+    return ivarsEqual;
+ }
 
-  return ivarsEqual;
-}
+int GridAxisRecordRepresentation0::getMarshalledSize() const
+{
+   int marshalSize = 0;
 
-int GridAxisRecordRepresentation0::getMarshalledSize() const {
-  auto marshalSize = 0;
+   marshalSize = GridAxisRecord::getMarshalledSize();
+   marshalSize = marshalSize + 2;  // numberOfBytes
 
-  marshalSize = GridAxisRecord::getMarshalledSize();
-  marshalSize += 2; // _numberOfBytes
-  marshalSize += _dataValues.size();
+   for(int idx=0; idx < dataValues.size(); idx++)
+   {
+        OneByteChunk listElement = dataValues[idx];
+        marshalSize = marshalSize + listElement.getMarshalledSize();
+    }
 
-  return marshalSize;
+    return marshalSize;
 }
 
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
 //  are met:
-//
+// 
 //  * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 // * Redistributions in binary form must reproduce the above copyright
@@ -87,7 +91,7 @@ int GridAxisRecordRepresentation0::getMarshalledSize() const {
 // nor the names of its contributors may be used to endorse or
 //  promote products derived from this software without specific
 // prior written permission.
-//
+// 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS

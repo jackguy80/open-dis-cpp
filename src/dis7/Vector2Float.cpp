@@ -1,11 +1,11 @@
-#include <dis7/Vector2Float.h>
+#include "Vector2Float.h"
 
 using namespace DIS;
 
 
 Vector2Float::Vector2Float():
-   _x(0.0), 
-   _y(0.0)
+   x(0.0), 
+   y(0.0)
 {
 }
 
@@ -13,36 +13,16 @@ Vector2Float::~Vector2Float()
 {
 }
 
-float Vector2Float::getX() const
-{
-    return _x;
-}
-
-void Vector2Float::setX(float pX)
-{
-    _x = pX;
-}
-
-float Vector2Float::getY() const
-{
-    return _y;
-}
-
-void Vector2Float::setY(float pX)
-{
-    _y = pX;
-}
-
 void Vector2Float::marshal(DataStream& dataStream) const
 {
-    dataStream << _x;
-    dataStream << _y;
+    dataStream << x;
+    dataStream << y;
 }
 
 void Vector2Float::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _x;
-    dataStream >> _y;
+    dataStream >> x;
+    dataStream >> y;
 }
 
 
@@ -50,8 +30,8 @@ bool Vector2Float::operator ==(const Vector2Float& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_x == rhs._x) ) ivarsEqual = false;
-     if( ! (_y == rhs._y) ) ivarsEqual = false;
+     if( ! (x == rhs.x) ) ivarsEqual = false;
+     if( ! (y == rhs.y) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -60,8 +40,8 @@ int Vector2Float::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _x
-   marshalSize = marshalSize + 4;  // _y
+   marshalSize = marshalSize + 4;  // x
+   marshalSize = marshalSize + 4;  // y
     return marshalSize;
 }
 

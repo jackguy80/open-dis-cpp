@@ -1,138 +1,84 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/EventID.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/EntityInformationFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "EventID.h"
+#include "Vector3Float.h"
+#include "Vector3Float.h"
+#include "Vector3Float.h"
+#include "EntityInformationFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 5.3.3.3. Information about elastic collisions in a DIS exercise shall be communicated using a Collision-Elastic PDU. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT CollisionElasticPdu : public EntityInformationFamilyPdu
+struct EXPORT_MACRO CollisionElasticPdu : public EntityInformationFamilyPdu
 {
-protected:
   /** ID of the entity that issued the collision PDU */
-  EntityID _issuingEntityID; 
+  EntityID issuingEntityID;
 
   /** ID of entity that has collided with the issuing entity ID */
-  EntityID _collidingEntityID; 
+  EntityID collidingEntityID;
 
   /** ID of event */
-  EventID _collisionEventID; 
+  EventID collisionEventID;
 
   /** some padding */
-  short _pad; 
+  short pad;
 
   /** velocity at collision */
-  Vector3Float _contactVelocity; 
+  Vector3Float contactVelocity;
 
   /** mass of issuing entity */
-  float _mass; 
+  float mass;
 
   /** Location with respect to entity the issuing entity collided with */
-  Vector3Float _location; 
+  Vector3Float location;
 
   /** tensor values */
-  float _collisionResultXX; 
+  float collisionResultXX;
 
   /** tensor values */
-  float _collisionResultXY; 
+  float collisionResultXY;
 
   /** tensor values */
-  float _collisionResultXZ; 
+  float collisionResultXZ;
 
   /** tensor values */
-  float _collisionResultYY; 
+  float collisionResultYY;
 
   /** tensor values */
-  float _collisionResultYZ; 
+  float collisionResultYZ;
 
   /** tensor values */
-  float _collisionResultZZ; 
+  float collisionResultZZ;
 
   /** This record shall represent the normal vector to the surface at the point of collision detection. The surface normal shall be represented in world coordinates. */
-  Vector3Float _unitSurfaceNormal; 
+  Vector3Float unitSurfaceNormal;
 
   /** This field shall represent the degree to which energy is conserved in a collision */
-  float _coefficientOfRestitution; 
+  float coefficientOfRestitution;
 
-
- public:
     CollisionElasticPdu();
     virtual ~CollisionElasticPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getIssuingEntityID(); 
-    const EntityID&  getIssuingEntityID() const; 
-    void setIssuingEntityID(const EntityID    &pX);
 
-    EntityID& getCollidingEntityID(); 
-    const EntityID&  getCollidingEntityID() const; 
-    void setCollidingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    EventID& getCollisionEventID(); 
-    const EventID&  getCollisionEventID() const; 
-    void setCollisionEventID(const EventID    &pX);
-
-    short getPad() const; 
-    void setPad(short pX); 
-
-    Vector3Float& getContactVelocity(); 
-    const Vector3Float&  getContactVelocity() const; 
-    void setContactVelocity(const Vector3Float    &pX);
-
-    float getMass() const; 
-    void setMass(float pX); 
-
-    Vector3Float& getLocation(); 
-    const Vector3Float&  getLocation() const; 
-    void setLocation(const Vector3Float    &pX);
-
-    float getCollisionResultXX() const; 
-    void setCollisionResultXX(float pX); 
-
-    float getCollisionResultXY() const; 
-    void setCollisionResultXY(float pX); 
-
-    float getCollisionResultXZ() const; 
-    void setCollisionResultXZ(float pX); 
-
-    float getCollisionResultYY() const; 
-    void setCollisionResultYY(float pX); 
-
-    float getCollisionResultYZ() const; 
-    void setCollisionResultYZ(float pX); 
-
-    float getCollisionResultZZ() const; 
-    void setCollisionResultZZ(float pX); 
-
-    Vector3Float& getUnitSurfaceNormal(); 
-    const Vector3Float&  getUnitSurfaceNormal() const; 
-    void setUnitSurfaceNormal(const Vector3Float    &pX);
-
-    float getCoefficientOfRestitution() const; 
-    void setCoefficientOfRestitution(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const CollisionElasticPdu& rhs) const;
+     bool operator ==(const CollisionElasticPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

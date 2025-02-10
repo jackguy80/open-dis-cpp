@@ -13,8 +13,8 @@ if(NOT TARGET OpenDIS6)
 endif()
 
 # SDL2 is required to build the examples
-find_package(SDL2 REQUIRED)
-find_package(SDL2_net REQUIRED)
+#find_package(SDL2 REQUIRED)
+#find_package(SDL2_net REQUIRED)
 
 # create list of ExampleSender source files
 set(examplesender_src
@@ -28,7 +28,7 @@ set(examplesender_src
 add_executable(ExampleSender ${examplesender_src})
 
 # Link OpenDIS into ExampleSender
-target_link_libraries(ExampleSender PRIVATE OpenDIS6 SDL2::Main SDL2::Net)
+target_link_libraries(ExampleSender PRIVATE OpenDIS6 Ws2_32 Mswsock AdvApi32)
 
 # create list of ExampleReceiver source files
 set(examplereceiver_src
@@ -43,7 +43,7 @@ set(examplereceiver_src
 add_executable(ExampleReceiver ${examplereceiver_src})
 
 # Link OpenDIS into ExampleReceiver
-target_link_libraries(ExampleReceiver PRIVATE OpenDIS6 SDL2::Main SDL2::Net)
+target_link_libraries(ExampleReceiver PRIVATE OpenDIS6 Ws2_32 Mswsock AdvApi32)
 
 # if Windows add M_PI definition
 # - issues occurred during testing in Visual Studio

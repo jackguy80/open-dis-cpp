@@ -1,65 +1,47 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Information about an entity's engine fuel. Section 6.2.83.
+// Information about an entity's engine fuel. Section 6.2.84.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT StorageFuel
+struct EXPORT_MACRO StorageFuel
 {
-protected:
   /** Fuel quantity, units specified by next field */
-  unsigned int _fuelQuantity; 
+  unsigned int fuelQuantity;
 
   /** Units in which the fuel is measured */
-  unsigned char _fuelMeasurementUnits; 
+  unsigned char fuelMeasurementUnits;
 
   /** Type of fuel */
-  unsigned char _fuelType; 
+  unsigned char fuelType;
 
   /** Location of fuel as related to entity. See section 14 of EBV document */
-  unsigned char _fuelLocation; 
+  unsigned char fuelLocation;
 
   /** padding */
-  unsigned char _padding; 
+  unsigned char padding;
 
-
- public:
     StorageFuel();
     virtual ~StorageFuel();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getFuelQuantity() const; 
-    void setFuelQuantity(unsigned int pX); 
 
-    unsigned char getFuelMeasurementUnits() const; 
-    void setFuelMeasurementUnits(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getFuelType() const; 
-    void setFuelType(unsigned char pX); 
-
-    unsigned char getFuelLocation() const; 
-    void setFuelLocation(unsigned char pX); 
-
-    unsigned char getPadding() const; 
-    void setPadding(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StorageFuel& rhs) const;
+     bool operator ==(const StorageFuel& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

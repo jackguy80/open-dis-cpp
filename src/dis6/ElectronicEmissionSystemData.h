@@ -1,77 +1,56 @@
 #pragma once
 
-#include <dis6/EmitterSystem.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/ElectromagneticEmissionBeamData.h>
+#include "EmitterSystem.h"
+#include "Vector3Float.h"
+#include "ElectronicEmissionBeamData.h"
 #include <vector>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Data about one electronic system
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT ElectromagneticEmissionSystemData
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO ElectronicEmissionSystemData
 {
-protected:
-  /** This field shall specify the length of this emitter system�s data (including beam data and its track/jam information) in 32-bit words. The length shall include the System Data Length field.  */
-  unsigned char _systemDataLength; 
+  /** This field shall specify the length of this emitter system?s data (including beam data and its track/jam information) in 32-bit words. The length shall include the System Data Length field.  */
+  unsigned char systemDataLength;
 
   /** This field shall specify the number of beams being described in the current PDU for the system being described.  */
-  unsigned char _numberOfBeams; 
+  unsigned char numberOfBeams;
 
   /** padding. */
-  unsigned short _emissionsPadding2; 
+  unsigned short emissionsPadding2;
 
   /** This field shall specify information about a particular emitter system */
-  EmitterSystem _emitterSystem; 
+  EmitterSystem emitterSystem;
 
   /** Location with respect to the entity */
-  Vector3Float _location; 
+  Vector3Float location;
 
-  /** variable length list of beam data records */
-  std::vector<ElectromagneticEmissionBeamData> _beamDataRecords; 
+  /** variable length variablelist of beam data records */
+  std::vector<ElectronicEmissionBeamData> beamDataRecords;
 
-
- public:
-    ElectromagneticEmissionSystemData();
-    virtual ~ElectromagneticEmissionSystemData();
+    ElectronicEmissionSystemData();
+    virtual ~ElectronicEmissionSystemData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getSystemDataLength() const; 
-    void setSystemDataLength(unsigned char pX); 
 
-    unsigned char getNumberOfBeams() const; 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getEmissionsPadding2() const; 
-    void setEmissionsPadding2(unsigned short pX); 
-
-    EmitterSystem& getEmitterSystem(); 
-    const EmitterSystem&  getEmitterSystem() const; 
-    void setEmitterSystem(const EmitterSystem    &pX);
-
-    Vector3Float& getLocation(); 
-    const Vector3Float&  getLocation() const; 
-    void setLocation(const Vector3Float    &pX);
-
-    std::vector<ElectromagneticEmissionBeamData>& getBeamDataRecords(); 
-    const std::vector<ElectromagneticEmissionBeamData>& getBeamDataRecords() const; 
-    void setBeamDataRecords(const std::vector<ElectromagneticEmissionBeamData>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ElectromagneticEmissionSystemData& rhs) const;
+     bool operator ==(const ElectronicEmissionSystemData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

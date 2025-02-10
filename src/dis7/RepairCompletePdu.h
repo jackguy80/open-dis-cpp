@@ -1,64 +1,47 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/EntityID.h>
-#include <dis7/LogisticsFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "LogisticsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 7.4.6. Service Request PDU is received and repair is complete. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT RepairCompletePdu : public LogisticsFamilyPdu
+struct EXPORT_MACRO RepairCompletePdu : public LogisticsFamilyPdu
 {
-protected:
   /** Entity that is receiving service.  See 6.2.28 */
-  EntityID _receivingEntityID; 
+  EntityID receivingEntityID;
 
   /** Entity that is supplying.  See 6.2.28 */
-  EntityID _repairingEntityID; 
+  EntityID repairingEntityID;
 
   /** Enumeration for type of repair.  See 6.2.74 */
-  unsigned short _repair; 
+  unsigned short repair;
 
   /** padding, number prevents conflict with superclass ivar name */
-  short _padding4; 
+  short padding4;
 
-
- public:
     RepairCompletePdu();
     virtual ~RepairCompletePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getReceivingEntityID(); 
-    const EntityID&  getReceivingEntityID() const; 
-    void setReceivingEntityID(const EntityID    &pX);
 
-    EntityID& getRepairingEntityID(); 
-    const EntityID&  getRepairingEntityID() const; 
-    void setRepairingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned short getRepair() const; 
-    void setRepair(unsigned short pX); 
-
-    short getPadding4() const; 
-    void setPadding4(short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RepairCompletePdu& rhs) const;
+     bool operator ==(const RepairCompletePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

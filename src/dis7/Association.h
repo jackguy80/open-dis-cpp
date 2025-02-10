@@ -1,61 +1,46 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/Vector3Double.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "Vector3Double.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// An entity's associations with other entities and/or locations. For each association, this record shall specify the type of the association, the associated entity's EntityID and/or the associated location's world coordinates. This record may be used (optionally) in a transfer transaction to send internal state data from the divesting simulation to the acquiring simulation (see 5.9.4). This record may also be used for other purposes. Section 6.2.10
+// An entity's associations with other entities and/or locations. For each association, this record shall specify the type of the association, the associated entity's EntityID and/or the associated location's world coordinates. This record may be used (optionally) in a transfer transaction to send internal state data from the divesting simulation to the acquiring simulation (see 5.9.4). This record may also be used for other purposes. Section 6.2.9
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT Association
+struct EXPORT_MACRO Association
 {
-protected:
-  unsigned char _associationType; 
+  /** This field shall indicate the type of association. It shall be represented by an 8-bit enumeration. Values for this field are found in Section 14 of SISO-REF-010 */
+  unsigned char associationType;
 
-  unsigned char _padding4; 
+  /** Padding */
+  unsigned char padding4;
 
   /** identity of associated entity. If none, NO_SPECIFIC_ENTITY */
-  EntityID _associatedEntityID; 
+  EntityID associatedEntityID;
 
   /** location, in world coordinates */
-  Vector3Double _associatedLocation; 
+  Vector3Double associatedLocation;
 
-
- public:
     Association();
     virtual ~Association();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getAssociationType() const; 
-    void setAssociationType(unsigned char pX); 
 
-    unsigned char getPadding4() const; 
-    void setPadding4(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    EntityID& getAssociatedEntityID(); 
-    const EntityID&  getAssociatedEntityID() const; 
-    void setAssociatedEntityID(const EntityID    &pX);
-
-    Vector3Double& getAssociatedLocation(); 
-    const Vector3Double&  getAssociatedLocation() const; 
-    void setAssociatedLocation(const Vector3Double    &pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const Association& rhs) const;
+     bool operator ==(const Association& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

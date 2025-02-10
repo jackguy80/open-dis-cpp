@@ -1,49 +1,37 @@
 #pragma once
 
-#include <dis7/SimulationAddress.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "SimulationAddress.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The unique designation of a mine contained in the Minefield Data PDU. No espdus are issued for mine entities.  Section 6.2.56 
+// The unique designation of a mine contained in the Minefield Data PDU. No espdus are issued for mine entities.  Section 6.2.55 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT MineEntityIdentifier
+struct EXPORT_MACRO MineEntityIdentifier
 {
-protected:
-  /**  */
-  SimulationAddress _simulationAddress; 
+  SimulationAddress simulationAddress;
 
-  /**  */
-  unsigned short _mineEntityNumber; 
+  unsigned short mineEntityNumber;
 
-
- public:
     MineEntityIdentifier();
     virtual ~MineEntityIdentifier();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    SimulationAddress& getSimulationAddress(); 
-    const SimulationAddress&  getSimulationAddress() const; 
-    void setSimulationAddress(const SimulationAddress    &pX);
 
-    unsigned short getMineEntityNumber() const; 
-    void setMineEntityNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const MineEntityIdentifier& rhs) const;
+     bool operator ==(const MineEntityIdentifier& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

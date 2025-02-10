@@ -1,11 +1,11 @@
-#include <dis7/VariableTransmitterParameters.h>
+#include "VariableTransmitterParameters.h"
 
 using namespace DIS;
 
 
 VariableTransmitterParameters::VariableTransmitterParameters():
-   _recordType(4), 
-   _recordLength(4)
+   recordType(0), 
+   recordLength(4)
 {
 }
 
@@ -13,36 +13,16 @@ VariableTransmitterParameters::~VariableTransmitterParameters()
 {
 }
 
-unsigned int VariableTransmitterParameters::getRecordType() const
-{
-    return _recordType;
-}
-
-void VariableTransmitterParameters::setRecordType(unsigned int pX)
-{
-    _recordType = pX;
-}
-
-unsigned int VariableTransmitterParameters::getRecordLength() const
-{
-    return _recordLength;
-}
-
-void VariableTransmitterParameters::setRecordLength(unsigned int pX)
-{
-    _recordLength = pX;
-}
-
 void VariableTransmitterParameters::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _recordLength;
+    dataStream << recordType;
+    dataStream << recordLength;
 }
 
 void VariableTransmitterParameters::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _recordLength;
+    dataStream >> recordType;
+    dataStream >> recordLength;
 }
 
 
@@ -50,8 +30,8 @@ bool VariableTransmitterParameters::operator ==(const VariableTransmitterParamet
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_recordLength == rhs._recordLength) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (recordLength == rhs.recordLength) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -60,8 +40,8 @@ int VariableTransmitterParameters::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _recordType
-   marshalSize = marshalSize + 4;  // _recordLength
+   marshalSize = marshalSize + 4;  // recordType
+   marshalSize = marshalSize + 4;  // recordLength
     return marshalSize;
 }
 

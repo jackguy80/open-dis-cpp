@@ -1,55 +1,42 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 //  Track-Jam data Section 6.2.89
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT TrackJamData
+struct EXPORT_MACRO TrackJamData
 {
-protected:
   /** the entity tracked or illumated, or an emitter beam targeted with jamming */
-  EntityID _entityID; 
+  EntityID entityID;
 
   /** Emitter system associated with the entity */
-  unsigned char _emitterNumber; 
+  unsigned char emitterNumber;
 
   /** Beam associated with the entity */
-  unsigned char _beamNumber; 
+  unsigned char beamNumber;
 
-
- public:
     TrackJamData();
     virtual ~TrackJamData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getEntityID(); 
-    const EntityID&  getEntityID() const; 
-    void setEntityID(const EntityID    &pX);
 
-    unsigned char getEmitterNumber() const; 
-    void setEmitterNumber(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getBeamNumber() const; 
-    void setBeamNumber(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const TrackJamData& rhs) const;
+     bool operator ==(const TrackJamData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

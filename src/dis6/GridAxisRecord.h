@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 5.2.44: Grid data record, a common abstract superclass for several subtypes 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT GridAxisRecord
+struct EXPORT_MACRO GridAxisRecord
 {
-protected:
   /** type of environmental sample */
-  unsigned short _sampleType; 
+  unsigned short sampleType;
 
   /** value that describes data representation */
-  unsigned short _dataRepresentation; 
+  unsigned short dataRepresentation;
 
-
- public:
     GridAxisRecord();
     virtual ~GridAxisRecord();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSampleType() const; 
-    void setSampleType(unsigned short pX); 
 
-    unsigned short getDataRepresentation() const; 
-    void setDataRepresentation(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const GridAxisRecord& rhs) const;
+     bool operator ==(const GridAxisRecord& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

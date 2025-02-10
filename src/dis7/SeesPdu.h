@@ -1,89 +1,60 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/PropulsionSystemData.h>
-#include <dis7/VectoringNozzleSystem.h>
-#include <vector>
-#include <dis7/DistributedEmissionsFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "PropulsionSystemData.h"
+#include "VectoringNozzleSystem.h"
+#include "DistributedEmissionsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 //  SEES PDU, supplemental emissions entity state information. Section 7.6.6 COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT SeesPdu : public DistributedEmissionsFamilyPdu
+struct EXPORT_MACRO SeesPdu : public DistributedEmissionsFamilyPdu
 {
-protected:
   /** Originating entity ID */
-  EntityID _orginatingEntityID; 
+  EntityID orginatingEntityID;
 
   /** IR Signature representation index */
-  unsigned short _infraredSignatureRepresentationIndex; 
+  unsigned short infraredSignatureRepresentationIndex;
 
   /** acoustic Signature representation index */
-  unsigned short _acousticSignatureRepresentationIndex; 
+  unsigned short acousticSignatureRepresentationIndex;
 
   /** radar cross section representation index */
-  unsigned short _radarCrossSectionSignatureRepresentationIndex; 
+  unsigned short radarCrossSectionSignatureRepresentationIndex;
 
   /** how many propulsion systems */
-  unsigned short _numberOfPropulsionSystems; 
+  unsigned short numberOfPropulsionSystems;
 
   /** how many vectoring nozzle systems */
-  unsigned short _numberOfVectoringNozzleSystems; 
+  unsigned short numberOfVectoringNozzleSystems;
 
   /** variable length list of propulsion system data */
-  std::vector<PropulsionSystemData> _propulsionSystemData; 
+  PropulsionSystemData propulsionSystemData;
 
   /** variable length list of vectoring system data */
-  std::vector<VectoringNozzleSystem> _vectoringSystemData; 
+  VectoringNozzleSystem vectoringSystemData;
 
-
- public:
     SeesPdu();
     virtual ~SeesPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getOrginatingEntityID(); 
-    const EntityID&  getOrginatingEntityID() const; 
-    void setOrginatingEntityID(const EntityID    &pX);
 
-    unsigned short getInfraredSignatureRepresentationIndex() const; 
-    void setInfraredSignatureRepresentationIndex(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getAcousticSignatureRepresentationIndex() const; 
-    void setAcousticSignatureRepresentationIndex(unsigned short pX); 
-
-    unsigned short getRadarCrossSectionSignatureRepresentationIndex() const; 
-    void setRadarCrossSectionSignatureRepresentationIndex(unsigned short pX); 
-
-    unsigned short getNumberOfPropulsionSystems() const; 
-
-    unsigned short getNumberOfVectoringNozzleSystems() const; 
-
-    std::vector<PropulsionSystemData>& getPropulsionSystemData(); 
-    const std::vector<PropulsionSystemData>& getPropulsionSystemData() const; 
-    void setPropulsionSystemData(const std::vector<PropulsionSystemData>&    pX);
-
-    std::vector<VectoringNozzleSystem>& getVectoringSystemData(); 
-    const std::vector<VectoringNozzleSystem>& getVectoringSystemData() const; 
-    void setVectoringSystemData(const std::vector<VectoringNozzleSystem>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SeesPdu& rhs) const;
+     bool operator ==(const SeesPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

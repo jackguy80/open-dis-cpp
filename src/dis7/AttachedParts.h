@@ -1,65 +1,47 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Removable parts that may be attached to an entity.  Section 6.2.94.3
+// Removable parts that may be attached to an entity.  Section 6.2.93.3
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT AttachedParts
+struct EXPORT_MACRO AttachedParts
 {
-protected:
   /** the identification of the Variable Parameter record. Enumeration from EBV */
-  unsigned char _recordType; 
+  unsigned char recordType;
 
   /** 0 = attached, 1 = detached. See I.2.3.1 for state transition diagram */
-  unsigned char _detachedIndicator; 
+  unsigned char detachedIndicator;
 
   /** the identification of the articulated part to which this articulation parameter is attached. This field shall be specified by a 16-bit unsigned integer. This field shall contain the value zero if the articulated part is attached directly to the entity. */
-  unsigned short _partAttachedTo; 
+  unsigned short partAttachedTo;
 
   /** The location or station to which the part is attached */
-  unsigned int _parameterType; 
+  unsigned int parameterType;
 
   /** The definition of the 64 bits shall be determined based on the type of parameter specified in the Parameter Type field  */
-  unsigned long long _attachedPartType;
+  long parameterValue;
 
-
- public:
     AttachedParts();
     virtual ~AttachedParts();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getRecordType() const; 
-    void setRecordType(unsigned char pX); 
 
-    unsigned char getDetachedIndicator() const; 
-    void setDetachedIndicator(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPartAttachedTo() const; 
-    void setPartAttachedTo(unsigned short pX); 
-
-    unsigned int getParameterType() const; 
-    void setParameterType(unsigned int pX); 
-
-    unsigned long long getAttachedPartType() const;
-    void setAttachedPartType(unsigned long long pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AttachedParts& rhs) const;
+     bool operator ==(const AttachedParts& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

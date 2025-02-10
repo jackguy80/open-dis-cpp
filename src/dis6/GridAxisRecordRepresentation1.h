@@ -1,62 +1,49 @@
 #pragma once
 
-#include <dis6/TwoByteChunk.h>
+#include "TwoByteChunk.h"
 #include <vector>
-#include <dis6/GridAxisRecord.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "GridAxisRecord.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 5.2.44: Grid data record, representation 1
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT GridAxisRecordRepresentation1 : public GridAxisRecord
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO GridAxisRecordRepresentation1 : public GridAxisRecord
 {
-protected:
   /** constant scale factor */
-  float _fieldScale; 
+  float fieldScale;
 
   /** constant offset used to scale grid data */
-  float _fieldOffset; 
+  float fieldOffset;
 
   /** Number of data values */
-  unsigned short _numberOfValues; 
+  unsigned short numberOfValues;
 
   /** variable length list of data parameters ^^^this is wrong--need padding as well */
-  std::vector<TwoByteChunk> _dataValues; 
+  std::vector<TwoByteChunk> dataValues;
 
-
- public:
     GridAxisRecordRepresentation1();
     virtual ~GridAxisRecordRepresentation1();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    float getFieldScale() const; 
-    void setFieldScale(float pX); 
 
-    float getFieldOffset() const; 
-    void setFieldOffset(float pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getNumberOfValues() const; 
-
-    std::vector<TwoByteChunk>& getDataValues(); 
-    const std::vector<TwoByteChunk>& getDataValues() const; 
-    void setDataValues(const std::vector<TwoByteChunk>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const GridAxisRecordRepresentation1& rhs) const;
+     bool operator ==(const GridAxisRecordRepresentation1& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

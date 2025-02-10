@@ -1,61 +1,45 @@
 #pragma once
 
-#include <dis6/AcousticBeamFundamentalParameter.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "AcousticBeamFundamentalParameter.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Used in UA PDU
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT AcousticBeamData
+struct EXPORT_MACRO AcousticBeamData
 {
-protected:
   /** beam data length */
-  unsigned char _beamDataLength; 
+  unsigned short beamDataLength;
 
   /** beamIDNumber */
-  unsigned char _beamIDNumber; 
+  unsigned char beamIDNumber;
 
   /** padding */
-  unsigned short _pad2; 
+  unsigned short pad2;
 
   /** fundamental data parameters */
-  AcousticBeamFundamentalParameter _fundamentalDataParameters; 
+  AcousticBeamFundamentalParameter fundamentalDataParameters;
 
-
- public:
     AcousticBeamData();
     virtual ~AcousticBeamData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getBeamDataLength() const; 
-    void setBeamDataLength(unsigned short pX); 
 
-    unsigned char getBeamIDNumber() const; 
-    void setBeamIDNumber(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPad2() const; 
-    void setPad2(unsigned short pX); 
-
-    AcousticBeamFundamentalParameter& getFundamentalDataParameters(); 
-    const AcousticBeamFundamentalParameter&  getFundamentalDataParameters() const; 
-    void setFundamentalDataParameters(const AcousticBeamFundamentalParameter    &pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AcousticBeamData& rhs) const;
+     bool operator ==(const AcousticBeamData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

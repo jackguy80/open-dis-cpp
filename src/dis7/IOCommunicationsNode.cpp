@@ -1,15 +1,14 @@
-#include <dis7/IOCommunicationsNode.h>
+#include "IOCommunicationsNode.h"
 
 using namespace DIS;
 
 
 IOCommunicationsNode::IOCommunicationsNode():
-   _recordType(5501), 
-   _recordLength(16), 
-   _communcationsNodeType(0), 
-   _padding(0), 
-   _communicationsNode(), 
-   _elementID(0)
+   recordType(5501), 
+   recordLength(16), 
+   communcationsNodeType(0), 
+   padding(0), 
+   communicationsNodeID()
 {
 }
 
@@ -17,89 +16,22 @@ IOCommunicationsNode::~IOCommunicationsNode()
 {
 }
 
-unsigned int IOCommunicationsNode::getRecordType() const
-{
-    return _recordType;
-}
-
-void IOCommunicationsNode::setRecordType(unsigned int pX)
-{
-    _recordType = pX;
-}
-
-unsigned short IOCommunicationsNode::getRecordLength() const
-{
-    return _recordLength;
-}
-
-void IOCommunicationsNode::setRecordLength(unsigned short pX)
-{
-    _recordLength = pX;
-}
-
-unsigned char IOCommunicationsNode::getCommuncationsNodeType() const
-{
-    return _communcationsNodeType;
-}
-
-void IOCommunicationsNode::setCommuncationsNodeType(unsigned char pX)
-{
-    _communcationsNodeType = pX;
-}
-
-unsigned char IOCommunicationsNode::getPadding() const
-{
-    return _padding;
-}
-
-void IOCommunicationsNode::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
-EntityID& IOCommunicationsNode::getCommunicationsNode() 
-{
-    return _communicationsNode;
-}
-
-const EntityID& IOCommunicationsNode::getCommunicationsNode() const
-{
-    return _communicationsNode;
-}
-
-void IOCommunicationsNode::setCommunicationsNode(const EntityID &pX)
-{
-    _communicationsNode = pX;
-}
-
-unsigned short IOCommunicationsNode::getElementID() const
-{
-    return _elementID;
-}
-
-void IOCommunicationsNode::setElementID(unsigned short pX)
-{
-    _elementID = pX;
-}
-
 void IOCommunicationsNode::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _recordLength;
-    dataStream << _communcationsNodeType;
-    dataStream << _padding;
-    _communicationsNode.marshal(dataStream);
-    dataStream << _elementID;
+    dataStream << recordType;
+    dataStream << recordLength;
+    dataStream << communcationsNodeType;
+    dataStream << padding;
+    communicationsNodeID.marshal(dataStream);
 }
 
 void IOCommunicationsNode::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _recordLength;
-    dataStream >> _communcationsNodeType;
-    dataStream >> _padding;
-    _communicationsNode.unmarshal(dataStream);
-    dataStream >> _elementID;
+    dataStream >> recordType;
+    dataStream >> recordLength;
+    dataStream >> communcationsNodeType;
+    dataStream >> padding;
+    communicationsNodeID.unmarshal(dataStream);
 }
 
 
@@ -107,12 +39,11 @@ bool IOCommunicationsNode::operator ==(const IOCommunicationsNode& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_recordLength == rhs._recordLength) ) ivarsEqual = false;
-     if( ! (_communcationsNodeType == rhs._communcationsNodeType) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
-     if( ! (_communicationsNode == rhs._communicationsNode) ) ivarsEqual = false;
-     if( ! (_elementID == rhs._elementID) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (recordLength == rhs.recordLength) ) ivarsEqual = false;
+     if( ! (communcationsNodeType == rhs.communcationsNodeType) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
+     if( ! (communicationsNodeID == rhs.communicationsNodeID) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -121,12 +52,11 @@ int IOCommunicationsNode::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _recordType
-   marshalSize = marshalSize + 2;  // _recordLength
-   marshalSize = marshalSize + 1;  // _communcationsNodeType
-   marshalSize = marshalSize + 1;  // _padding
-   marshalSize = marshalSize + _communicationsNode.getMarshalledSize();  // _communicationsNode
-   marshalSize = marshalSize + 2;  // _elementID
+   marshalSize = marshalSize + 4;  // recordType
+   marshalSize = marshalSize + 2;  // recordLength
+   marshalSize = marshalSize + 1;  // communcationsNodeType
+   marshalSize = marshalSize + 1;  // padding
+   marshalSize = marshalSize + communicationsNodeID.getMarshalledSize();  // communicationsNodeID
     return marshalSize;
 }
 

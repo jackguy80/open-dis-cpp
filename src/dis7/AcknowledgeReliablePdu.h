@@ -1,54 +1,42 @@
 #pragma once
 
-#include <dis7/SimulationManagementWithReliabilityFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "SimulationManagementWithReliabilityFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.12.5: Ack receipt of a start-resume, stop-freeze, create-entity or remove enitty (reliable) pdus. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT AcknowledgeReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
+struct EXPORT_MACRO AcknowledgeReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
 {
-protected:
   /** ack flags */
-  unsigned short _acknowledgeFlag; 
+  unsigned short acknowledgeFlag;
 
   /** response flags */
-  unsigned short _responseFlag; 
+  unsigned short responseFlag;
 
   /** Request ID */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     AcknowledgeReliablePdu();
     virtual ~AcknowledgeReliablePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getAcknowledgeFlag() const; 
-    void setAcknowledgeFlag(unsigned short pX); 
 
-    unsigned short getResponseFlag() const; 
-    void setResponseFlag(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AcknowledgeReliablePdu& rhs) const;
+     bool operator ==(const AcknowledgeReliablePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

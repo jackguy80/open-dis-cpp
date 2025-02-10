@@ -1,13 +1,13 @@
-#include <dis7/Association.h>
+#include "Association.h"
 
 using namespace DIS;
 
 
 Association::Association():
-   _associationType(0), 
-   _padding4(0), 
-   _associatedEntityID(), 
-   _associatedLocation()
+   associationType(0), 
+   padding4(0), 
+   associatedEntityID(), 
+   associatedLocation()
 {
 }
 
@@ -15,70 +15,20 @@ Association::~Association()
 {
 }
 
-unsigned char Association::getAssociationType() const
-{
-    return _associationType;
-}
-
-void Association::setAssociationType(unsigned char pX)
-{
-    _associationType = pX;
-}
-
-unsigned char Association::getPadding4() const
-{
-    return _padding4;
-}
-
-void Association::setPadding4(unsigned char pX)
-{
-    _padding4 = pX;
-}
-
-EntityID& Association::getAssociatedEntityID() 
-{
-    return _associatedEntityID;
-}
-
-const EntityID& Association::getAssociatedEntityID() const
-{
-    return _associatedEntityID;
-}
-
-void Association::setAssociatedEntityID(const EntityID &pX)
-{
-    _associatedEntityID = pX;
-}
-
-Vector3Double& Association::getAssociatedLocation() 
-{
-    return _associatedLocation;
-}
-
-const Vector3Double& Association::getAssociatedLocation() const
-{
-    return _associatedLocation;
-}
-
-void Association::setAssociatedLocation(const Vector3Double &pX)
-{
-    _associatedLocation = pX;
-}
-
 void Association::marshal(DataStream& dataStream) const
 {
-    dataStream << _associationType;
-    dataStream << _padding4;
-    _associatedEntityID.marshal(dataStream);
-    _associatedLocation.marshal(dataStream);
+    dataStream << associationType;
+    dataStream << padding4;
+    associatedEntityID.marshal(dataStream);
+    associatedLocation.marshal(dataStream);
 }
 
 void Association::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _associationType;
-    dataStream >> _padding4;
-    _associatedEntityID.unmarshal(dataStream);
-    _associatedLocation.unmarshal(dataStream);
+    dataStream >> associationType;
+    dataStream >> padding4;
+    associatedEntityID.unmarshal(dataStream);
+    associatedLocation.unmarshal(dataStream);
 }
 
 
@@ -86,10 +36,10 @@ bool Association::operator ==(const Association& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_associationType == rhs._associationType) ) ivarsEqual = false;
-     if( ! (_padding4 == rhs._padding4) ) ivarsEqual = false;
-     if( ! (_associatedEntityID == rhs._associatedEntityID) ) ivarsEqual = false;
-     if( ! (_associatedLocation == rhs._associatedLocation) ) ivarsEqual = false;
+     if( ! (associationType == rhs.associationType) ) ivarsEqual = false;
+     if( ! (padding4 == rhs.padding4) ) ivarsEqual = false;
+     if( ! (associatedEntityID == rhs.associatedEntityID) ) ivarsEqual = false;
+     if( ! (associatedLocation == rhs.associatedLocation) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -98,10 +48,10 @@ int Association::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _associationType
-   marshalSize = marshalSize + 1;  // _padding4
-   marshalSize = marshalSize + _associatedEntityID.getMarshalledSize();  // _associatedEntityID
-   marshalSize = marshalSize + _associatedLocation.getMarshalledSize();  // _associatedLocation
+   marshalSize = marshalSize + 1;  // associationType
+   marshalSize = marshalSize + 1;  // padding4
+   marshalSize = marshalSize + associatedEntityID.getMarshalledSize();  // associatedEntityID
+   marshalSize = marshalSize + associatedLocation.getMarshalledSize();  // associatedLocation
     return marshalSize;
 }
 

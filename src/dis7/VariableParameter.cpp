@@ -1,14 +1,14 @@
-#include <dis7/VariableParameter.h>
+#include "VariableParameter.h"
 
 using namespace DIS;
 
 
 VariableParameter::VariableParameter():
-   _recordType(0), 
-   _variableParameterFields1(0.0), 
-   _variableParameterFields2(0), 
-   _variableParameterFields3(0), 
-   _variableParameterFields4(0)
+   recordType(0), 
+   variableParameterFields1(0.0), 
+   variableParameterFields2(0), 
+   variableParameterFields3(0), 
+   variableParameterFields4(0)
 {
 }
 
@@ -16,72 +16,22 @@ VariableParameter::~VariableParameter()
 {
 }
 
-unsigned char VariableParameter::getRecordType() const
-{
-    return _recordType;
-}
-
-void VariableParameter::setRecordType(unsigned char pX)
-{
-    _recordType = pX;
-}
-
-double VariableParameter::getVariableParameterFields1() const
-{
-    return _variableParameterFields1;
-}
-
-void VariableParameter::setVariableParameterFields1(double pX)
-{
-    _variableParameterFields1 = pX;
-}
-
-unsigned int VariableParameter::getVariableParameterFields2() const
-{
-    return _variableParameterFields2;
-}
-
-void VariableParameter::setVariableParameterFields2(unsigned int pX)
-{
-    _variableParameterFields2 = pX;
-}
-
-unsigned short VariableParameter::getVariableParameterFields3() const
-{
-    return _variableParameterFields3;
-}
-
-void VariableParameter::setVariableParameterFields3(unsigned short pX)
-{
-    _variableParameterFields3 = pX;
-}
-
-unsigned char VariableParameter::getVariableParameterFields4() const
-{
-    return _variableParameterFields4;
-}
-
-void VariableParameter::setVariableParameterFields4(unsigned char pX)
-{
-    _variableParameterFields4 = pX;
-}
-
 void VariableParameter::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _variableParameterFields1;
-    dataStream << _variableParameterFields2;
-    dataStream << _variableParameterFields3;
-    dataStream << _variableParameterFields4;
+    dataStream << recordType;
+    dataStream << variableParameterFields1;
+    dataStream << variableParameterFields2;
+    dataStream << variableParameterFields3;
+    dataStream << variableParameterFields4;
 }
 
 void VariableParameter::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _variableParameterFields1;
-    dataStream >> _variableParameterFields2;
-    dataStream >> _variableParameterFields3;
-    dataStream >> _variableParameterFields4;
+    dataStream >> recordType;
+    dataStream >> variableParameterFields1;
+    dataStream >> variableParameterFields2;
+    dataStream >> variableParameterFields3;
+    dataStream >> variableParameterFields4;
 }
 
 
@@ -89,11 +39,11 @@ bool VariableParameter::operator ==(const VariableParameter& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_variableParameterFields1 == rhs._variableParameterFields1) ) ivarsEqual = false;
-     if( ! (_variableParameterFields2 == rhs._variableParameterFields2) ) ivarsEqual = false;
-     if( ! (_variableParameterFields3 == rhs._variableParameterFields3) ) ivarsEqual = false;
-     if( ! (_variableParameterFields4 == rhs._variableParameterFields4) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (variableParameterFields1 == rhs.variableParameterFields1) ) ivarsEqual = false;
+     if( ! (variableParameterFields2 == rhs.variableParameterFields2) ) ivarsEqual = false;
+     if( ! (variableParameterFields3 == rhs.variableParameterFields3) ) ivarsEqual = false;
+     if( ! (variableParameterFields4 == rhs.variableParameterFields4) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -102,11 +52,11 @@ int VariableParameter::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _recordType
-   marshalSize = marshalSize + 8;  // _variableParameterFields1
-   marshalSize = marshalSize + 4;  // _variableParameterFields2
-   marshalSize = marshalSize + 2;  // _variableParameterFields3
-   marshalSize = marshalSize + 1;  // _variableParameterFields4
+   marshalSize = marshalSize + 1;  // recordType
+   marshalSize = marshalSize + 8;  // variableParameterFields1
+   marshalSize = marshalSize + 4;  // variableParameterFields2
+   marshalSize = marshalSize + 2;  // variableParameterFields3
+   marshalSize = marshalSize + 1;  // variableParameterFields4
     return marshalSize;
 }
 

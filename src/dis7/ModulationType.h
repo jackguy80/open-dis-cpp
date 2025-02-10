@@ -1,59 +1,44 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Information about the type of modulation used for radio transmission. 6.2.59 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ModulationType
+struct EXPORT_MACRO ModulationType
 {
-protected:
-  /** This field shall indicate the spread spectrum technique or combination of spread spectrum techniques in use. Bt field. */
-  unsigned short _spreadSpectrum; 
+  /** This field shall indicate the spread spectrum technique or combination of spread spectrum techniques in use. Bit field. 0=freq hopping, 1=psuedo noise, time hopping=2, reamining bits unused */
+  unsigned short spreadSpectrum;
 
   /** the major classification of the modulation type.  */
-  unsigned short _majorModulation; 
+  unsigned short majorModulation;
 
   /** provide certain detailed information depending upon the major modulation type */
-  unsigned short _detail; 
+  unsigned short detail;
 
   /** the radio system associated with this Transmitter PDU and shall be used as the basis to interpret other fields whose values depend on a specific radio system. */
-  unsigned short _radioSystem; 
+  unsigned short radioSystem;
 
-
- public:
     ModulationType();
     virtual ~ModulationType();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSpreadSpectrum() const; 
-    void setSpreadSpectrum(unsigned short pX); 
 
-    unsigned short getMajorModulation() const; 
-    void setMajorModulation(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getDetail() const; 
-    void setDetail(unsigned short pX); 
-
-    unsigned short getRadioSystem() const; 
-    void setRadioSystem(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ModulationType& rhs) const;
+     bool operator ==(const ModulationType& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

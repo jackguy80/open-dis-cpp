@@ -1,82 +1,51 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Effect of IO on an entity. Section 6.2.49.3
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT IOEffect
+struct EXPORT_MACRO IOEffect
 {
-protected:
-  unsigned int _recordType; 
+  unsigned int recordType;
 
-  unsigned short _recordLength; 
+  unsigned short recordLength;
 
-  unsigned char _ioStatus; 
+  unsigned char ioStatus;
 
-  unsigned char _ioLinkType; 
+  unsigned char ioLinkType;
 
-  EntityID _ioEffect; 
+  EntityID ioEffect;
 
-  unsigned char _ioEffectDutyCycle; 
+  unsigned char ioEffectDutyCycle;
 
-  unsigned short _ioEffectDuration; 
+  unsigned short ioEffectDuration;
 
-  unsigned short _ioProcess; 
+  unsigned short ioProcess;
 
-  unsigned short _padding; 
+  unsigned short padding;
 
-
- public:
     IOEffect();
     virtual ~IOEffect();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordType() const; 
-    void setRecordType(unsigned int pX); 
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getIoStatus() const; 
-    void setIoStatus(unsigned char pX); 
-
-    unsigned char getIoLinkType() const; 
-    void setIoLinkType(unsigned char pX); 
-
-    EntityID& getIoEffect(); 
-    const EntityID&  getIoEffect() const; 
-    void setIoEffect(const EntityID    &pX);
-
-    unsigned char getIoEffectDutyCycle() const; 
-    void setIoEffectDutyCycle(unsigned char pX); 
-
-    unsigned short getIoEffectDuration() const; 
-    void setIoEffectDuration(unsigned short pX); 
-
-    unsigned short getIoProcess() const; 
-    void setIoProcess(unsigned short pX); 
-
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IOEffect& rhs) const;
+     bool operator ==(const IOEffect& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

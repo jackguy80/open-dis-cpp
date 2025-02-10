@@ -1,198 +1,55 @@
-#include <dis7/DetonationPdu.h>
+#include "DetonationPdu.h"
 
 using namespace DIS;
 
 
 DetonationPdu::DetonationPdu() : WarfareFamilyPdu(),
-   _explodingEntityID(), 
-   _eventID(), 
-   _velocity(), 
-   _locationInWorldCoordinates(), 
-   _descriptor(), 
-   _locationOfEntityCoordinates(), 
-   _detonationResult(0), 
-   _numberOfVariableParameters(0), 
-   _pad(0)
+   explodingEntityID(), 
+   eventID(), 
+   velocity(), 
+   locationInWorldCoordinates(), 
+   descriptor(), 
+   locationOfEntityCoordinates(), 
+   detonationResult(0), 
+   numberOfVariableParameters(0), 
+   pad(0), 
+   variableParameters()
 {
-    setPduType( 3 );
+    pduType = 3;
 }
 
 DetonationPdu::~DetonationPdu()
 {
-    _variableParameters.clear();
-}
-
-EntityID& DetonationPdu::getExplodingEntityID() 
-{
-    return _explodingEntityID;
-}
-
-const EntityID& DetonationPdu::getExplodingEntityID() const
-{
-    return _explodingEntityID;
-}
-
-void DetonationPdu::setExplodingEntityID(const EntityID &pX)
-{
-    _explodingEntityID = pX;
-}
-
-EventIdentifier& DetonationPdu::getEventID() 
-{
-    return _eventID;
-}
-
-const EventIdentifier& DetonationPdu::getEventID() const
-{
-    return _eventID;
-}
-
-void DetonationPdu::setEventID(const EventIdentifier &pX)
-{
-    _eventID = pX;
-}
-
-Vector3Float& DetonationPdu::getVelocity() 
-{
-    return _velocity;
-}
-
-const Vector3Float& DetonationPdu::getVelocity() const
-{
-    return _velocity;
-}
-
-void DetonationPdu::setVelocity(const Vector3Float &pX)
-{
-    _velocity = pX;
-}
-
-Vector3Double& DetonationPdu::getLocationInWorldCoordinates() 
-{
-    return _locationInWorldCoordinates;
-}
-
-const Vector3Double& DetonationPdu::getLocationInWorldCoordinates() const
-{
-    return _locationInWorldCoordinates;
-}
-
-void DetonationPdu::setLocationInWorldCoordinates(const Vector3Double &pX)
-{
-    _locationInWorldCoordinates = pX;
-}
-
-MunitionDescriptor& DetonationPdu::getDescriptor() 
-{
-    return _descriptor;
-}
-
-const MunitionDescriptor& DetonationPdu::getDescriptor() const
-{
-    return _descriptor;
-}
-
-void DetonationPdu::setDescriptor(const MunitionDescriptor &pX)
-{
-    _descriptor = pX;
-}
-
-Vector3Float& DetonationPdu::getLocationOfEntityCoordinates() 
-{
-    return _locationOfEntityCoordinates;
-}
-
-const Vector3Float& DetonationPdu::getLocationOfEntityCoordinates() const
-{
-    return _locationOfEntityCoordinates;
-}
-
-void DetonationPdu::setLocationOfEntityCoordinates(const Vector3Float &pX)
-{
-    _locationOfEntityCoordinates = pX;
-}
-
-unsigned char DetonationPdu::getDetonationResult() const
-{
-    return _detonationResult;
-}
-
-void DetonationPdu::setDetonationResult(unsigned char pX)
-{
-    _detonationResult = pX;
-}
-
-unsigned char DetonationPdu::getNumberOfVariableParameters() const
-{
-   return _variableParameters.size();
-}
-
-unsigned short DetonationPdu::getPad() const
-{
-    return _pad;
-}
-
-void DetonationPdu::setPad(unsigned short pX)
-{
-    _pad = pX;
-}
-
-std::vector<VariableParameter>& DetonationPdu::getVariableParameters() 
-{
-    return _variableParameters;
-}
-
-const std::vector<VariableParameter>& DetonationPdu::getVariableParameters() const
-{
-    return _variableParameters;
-}
-
-void DetonationPdu::setVariableParameters(const std::vector<VariableParameter>& pX)
-{
-     _variableParameters = pX;
 }
 
 void DetonationPdu::marshal(DataStream& dataStream) const
 {
     WarfareFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _explodingEntityID.marshal(dataStream);
-    _eventID.marshal(dataStream);
-    _velocity.marshal(dataStream);
-    _locationInWorldCoordinates.marshal(dataStream);
-    _descriptor.marshal(dataStream);
-    _locationOfEntityCoordinates.marshal(dataStream);
-    dataStream << _detonationResult;
-    dataStream << ( unsigned char )_variableParameters.size();
-    dataStream << _pad;
-
-     for(size_t idx = 0; idx < _variableParameters.size(); idx++)
-     {
-        VariableParameter x = _variableParameters[idx];
-        x.marshal(dataStream);
-     }
-
+    explodingEntityID.marshal(dataStream);
+    eventID.marshal(dataStream);
+    velocity.marshal(dataStream);
+    locationInWorldCoordinates.marshal(dataStream);
+    descriptor.marshal(dataStream);
+    locationOfEntityCoordinates.marshal(dataStream);
+    dataStream << detonationResult;
+    dataStream << numberOfVariableParameters;
+    dataStream << pad;
+    variableParameters.marshal(dataStream);
 }
 
 void DetonationPdu::unmarshal(DataStream& dataStream)
 {
     WarfareFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _explodingEntityID.unmarshal(dataStream);
-    _eventID.unmarshal(dataStream);
-    _velocity.unmarshal(dataStream);
-    _locationInWorldCoordinates.unmarshal(dataStream);
-    _descriptor.unmarshal(dataStream);
-    _locationOfEntityCoordinates.unmarshal(dataStream);
-    dataStream >> _detonationResult;
-    dataStream >> _numberOfVariableParameters;
-    dataStream >> _pad;
-
-     _variableParameters.clear();
-     for(size_t idx = 0; idx < _numberOfVariableParameters; idx++)
-     {
-        VariableParameter x;
-        x.unmarshal(dataStream);
-        _variableParameters.push_back(x);
-     }
+    explodingEntityID.unmarshal(dataStream);
+    eventID.unmarshal(dataStream);
+    velocity.unmarshal(dataStream);
+    locationInWorldCoordinates.unmarshal(dataStream);
+    descriptor.unmarshal(dataStream);
+    locationOfEntityCoordinates.unmarshal(dataStream);
+    dataStream >> detonationResult;
+    dataStream >> numberOfVariableParameters;
+    dataStream >> pad;
+    variableParameters.unmarshal(dataStream);
 }
 
 
@@ -202,20 +59,16 @@ bool DetonationPdu::operator ==(const DetonationPdu& rhs) const
 
      ivarsEqual = WarfareFamilyPdu::operator==(rhs);
 
-     if( ! (_explodingEntityID == rhs._explodingEntityID) ) ivarsEqual = false;
-     if( ! (_eventID == rhs._eventID) ) ivarsEqual = false;
-     if( ! (_velocity == rhs._velocity) ) ivarsEqual = false;
-     if( ! (_locationInWorldCoordinates == rhs._locationInWorldCoordinates) ) ivarsEqual = false;
-     if( ! (_descriptor == rhs._descriptor) ) ivarsEqual = false;
-     if( ! (_locationOfEntityCoordinates == rhs._locationOfEntityCoordinates) ) ivarsEqual = false;
-     if( ! (_detonationResult == rhs._detonationResult) ) ivarsEqual = false;
-     if( ! (_pad == rhs._pad) ) ivarsEqual = false;
-
-     for(size_t idx = 0; idx < _variableParameters.size(); idx++)
-     {
-        if( ! ( _variableParameters[idx] == rhs._variableParameters[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (explodingEntityID == rhs.explodingEntityID) ) ivarsEqual = false;
+     if( ! (eventID == rhs.eventID) ) ivarsEqual = false;
+     if( ! (velocity == rhs.velocity) ) ivarsEqual = false;
+     if( ! (locationInWorldCoordinates == rhs.locationInWorldCoordinates) ) ivarsEqual = false;
+     if( ! (descriptor == rhs.descriptor) ) ivarsEqual = false;
+     if( ! (locationOfEntityCoordinates == rhs.locationOfEntityCoordinates) ) ivarsEqual = false;
+     if( ! (detonationResult == rhs.detonationResult) ) ivarsEqual = false;
+     if( ! (numberOfVariableParameters == rhs.numberOfVariableParameters) ) ivarsEqual = false;
+     if( ! (pad == rhs.pad) ) ivarsEqual = false;
+     if( ! (variableParameters == rhs.variableParameters) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -225,22 +78,16 @@ int DetonationPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = WarfareFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _explodingEntityID.getMarshalledSize();  // _explodingEntityID
-   marshalSize = marshalSize + _eventID.getMarshalledSize();  // _eventID
-   marshalSize = marshalSize + _velocity.getMarshalledSize();  // _velocity
-   marshalSize = marshalSize + _locationInWorldCoordinates.getMarshalledSize();  // _locationInWorldCoordinates
-   marshalSize = marshalSize + _descriptor.getMarshalledSize();  // _descriptor
-   marshalSize = marshalSize + _locationOfEntityCoordinates.getMarshalledSize();  // _locationOfEntityCoordinates
-   marshalSize = marshalSize + 1;  // _detonationResult
-   marshalSize = marshalSize + 1;  // _numberOfVariableParameters
-   marshalSize = marshalSize + 2;  // _pad
-
-   for(unsigned long long idx=0; idx < _variableParameters.size(); idx++)
-   {
-        VariableParameter listElement = _variableParameters[idx];
-        marshalSize = marshalSize + listElement.getMarshalledSize();
-    }
-
+   marshalSize = marshalSize + explodingEntityID.getMarshalledSize();  // explodingEntityID
+   marshalSize = marshalSize + eventID.getMarshalledSize();  // eventID
+   marshalSize = marshalSize + velocity.getMarshalledSize();  // velocity
+   marshalSize = marshalSize + locationInWorldCoordinates.getMarshalledSize();  // locationInWorldCoordinates
+   marshalSize = marshalSize + descriptor.getMarshalledSize();  // descriptor
+   marshalSize = marshalSize + locationOfEntityCoordinates.getMarshalledSize();  // locationOfEntityCoordinates
+   marshalSize = marshalSize + 1;  // detonationResult
+   marshalSize = marshalSize + 1;  // numberOfVariableParameters
+   marshalSize = marshalSize + 2;  // pad
+   marshalSize = marshalSize + variableParameters.getMarshalledSize();  // variableParameters
     return marshalSize;
 }
 

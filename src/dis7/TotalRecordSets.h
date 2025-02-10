@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Total number of record sets contained in a logical set of one or more PDUs. Used to transfer ownership, etc Section 6.2.88
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT TotalRecordSets
+struct EXPORT_MACRO TotalRecordSets
 {
-protected:
   /** Total number of record sets */
-  unsigned short _totalRecordSets; 
+  unsigned short totalRecordSets;
 
   /** padding */
-  unsigned short _padding; 
+  unsigned short padding;
 
-
- public:
     TotalRecordSets();
     virtual ~TotalRecordSets();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getTotalRecordSets() const; 
-    void setTotalRecordSets(unsigned short pX); 
 
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const TotalRecordSets& rhs) const;
+     bool operator ==(const TotalRecordSets& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

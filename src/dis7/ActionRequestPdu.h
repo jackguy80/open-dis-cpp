@@ -1,91 +1,53 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/EntityID.h>
-#include <dis7/FixedDatum.h>
-#include <dis7/VariableDatum.h>
-#include <vector>
-#include <dis7/SimulationManagementFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "FixedDatum.h"
+#include "VariableDatum.h"
+#include "SimulationManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 7.5.7. Request from simulation manager to a managed entity to perform a specified action. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ActionRequestPdu : public SimulationManagementFamilyPdu
+struct EXPORT_MACRO ActionRequestPdu : public SimulationManagementFamilyPdu
 {
-protected:
-  /** Identifier for originating entity(or simulation) */
-  EntityID _originatingID; 
-
-  /** Identifier for the receiving entity(or simulation) */
-  EntityID _receivingID; 
-
   /** identifies the request being made by the simulaton manager */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
   /** identifies the particular action being requested(see Section 7 of SISO-REF-010). */
-  unsigned int _actionID; 
+  unsigned int actionID;
 
   /** Number of fixed datum records */
-  unsigned int _numberOfFixedDatumRecords; 
+  unsigned int numberOfFixedDatumRecords;
 
   /** Number of variable datum records */
-  unsigned int _numberOfVariableDatumRecords; 
+  unsigned int numberOfVariableDatumRecords;
 
   /** variable length list of fixed datums */
-  std::vector<FixedDatum> _fixedDatums; 
+  FixedDatum fixedDatums;
 
   /** variable length list of variable length datums */
-  std::vector<VariableDatum> _variableDatums; 
+  VariableDatum variableDatums;
 
-
- public:
     ActionRequestPdu();
     virtual ~ActionRequestPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getOriginatingID(); 
-    const EntityID&  getOriginatingID() const; 
-    void setOriginatingID(const EntityID    &pX);
 
-    EntityID& getReceivingID(); 
-    const EntityID&  getReceivingID() const; 
-    void setReceivingID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-    unsigned int getActionID() const; 
-    void setActionID(unsigned int pX); 
-
-    unsigned int getNumberOfFixedDatumRecords() const; 
-
-    unsigned int getNumberOfVariableDatumRecords() const; 
-
-    std::vector<FixedDatum>& getFixedDatums(); 
-    const std::vector<FixedDatum>& getFixedDatums() const; 
-    void setFixedDatums(const std::vector<FixedDatum>&    pX);
-
-    std::vector<VariableDatum>& getVariableDatums(); 
-    const std::vector<VariableDatum>& getVariableDatums() const; 
-    void setVariableDatums(const std::vector<VariableDatum>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ActionRequestPdu& rhs) const;
+     bool operator ==(const ActionRequestPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

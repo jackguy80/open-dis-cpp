@@ -1,4 +1,4 @@
-#include <dis7/DistributedEmissionsFamilyPdu.h>
+#include "DistributedEmissionsFamilyPdu.h"
 
 using namespace DIS;
 
@@ -6,7 +6,7 @@ using namespace DIS;
 DistributedEmissionsFamilyPdu::DistributedEmissionsFamilyPdu() : Pdu()
 
 {
-    setProtocolFamily( 6 );
+    protocolFamily = 6;
 }
 
 DistributedEmissionsFamilyPdu::~DistributedEmissionsFamilyPdu()

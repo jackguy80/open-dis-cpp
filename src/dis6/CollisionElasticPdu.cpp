@@ -1,251 +1,71 @@
-#include <dis6/CollisionElasticPdu.h>
+#include "CollisionElasticPdu.h"
 
 using namespace DIS;
 
 
 CollisionElasticPdu::CollisionElasticPdu() : EntityInformationFamilyPdu(),
-   _issuingEntityID(), 
-   _collidingEntityID(), 
-   _collisionEventID(), 
-   _pad(0), 
-   _contactVelocity(), 
-   _mass(0.0), 
-   _location(), 
-   _collisionResultXX(0.0), 
-   _collisionResultXY(0.0), 
-   _collisionResultXZ(0.0), 
-   _collisionResultYY(0.0), 
-   _collisionResultYZ(0.0), 
-   _collisionResultZZ(0.0), 
-   _unitSurfaceNormal(), 
-   _coefficientOfRestitution(0.0)
+   issuingEntityID(), 
+   collidingEntityID(), 
+   collisionEventID(), 
+   pad(0), 
+   contactVelocity(), 
+   mass(0.0), 
+   location(), 
+   collisionResultXX(0.0), 
+   collisionResultXY(0.0), 
+   collisionResultXZ(0.0), 
+   collisionResultYY(0.0), 
+   collisionResultYZ(0.0), 
+   collisionResultZZ(0.0), 
+   unitSurfaceNormal(), 
+   coefficientOfRestitution(0.0)
 {
-    setPduType( 66 );
-    setProtocolFamily( 1 );
+    pduType = 66;
+    protocolFamily = 1;
 }
 
 CollisionElasticPdu::~CollisionElasticPdu()
 {
 }
 
-EntityID& CollisionElasticPdu::getIssuingEntityID() 
-{
-    return _issuingEntityID;
-}
-
-const EntityID& CollisionElasticPdu::getIssuingEntityID() const
-{
-    return _issuingEntityID;
-}
-
-void CollisionElasticPdu::setIssuingEntityID(const EntityID &pX)
-{
-    _issuingEntityID = pX;
-}
-
-EntityID& CollisionElasticPdu::getCollidingEntityID() 
-{
-    return _collidingEntityID;
-}
-
-const EntityID& CollisionElasticPdu::getCollidingEntityID() const
-{
-    return _collidingEntityID;
-}
-
-void CollisionElasticPdu::setCollidingEntityID(const EntityID &pX)
-{
-    _collidingEntityID = pX;
-}
-
-EventID& CollisionElasticPdu::getCollisionEventID() 
-{
-    return _collisionEventID;
-}
-
-const EventID& CollisionElasticPdu::getCollisionEventID() const
-{
-    return _collisionEventID;
-}
-
-void CollisionElasticPdu::setCollisionEventID(const EventID &pX)
-{
-    _collisionEventID = pX;
-}
-
-short CollisionElasticPdu::getPad() const
-{
-    return _pad;
-}
-
-void CollisionElasticPdu::setPad(short pX)
-{
-    _pad = pX;
-}
-
-Vector3Float& CollisionElasticPdu::getContactVelocity() 
-{
-    return _contactVelocity;
-}
-
-const Vector3Float& CollisionElasticPdu::getContactVelocity() const
-{
-    return _contactVelocity;
-}
-
-void CollisionElasticPdu::setContactVelocity(const Vector3Float &pX)
-{
-    _contactVelocity = pX;
-}
-
-float CollisionElasticPdu::getMass() const
-{
-    return _mass;
-}
-
-void CollisionElasticPdu::setMass(float pX)
-{
-    _mass = pX;
-}
-
-Vector3Float& CollisionElasticPdu::getLocation() 
-{
-    return _location;
-}
-
-const Vector3Float& CollisionElasticPdu::getLocation() const
-{
-    return _location;
-}
-
-void CollisionElasticPdu::setLocation(const Vector3Float &pX)
-{
-    _location = pX;
-}
-
-float CollisionElasticPdu::getCollisionResultXX() const
-{
-    return _collisionResultXX;
-}
-
-void CollisionElasticPdu::setCollisionResultXX(float pX)
-{
-    _collisionResultXX = pX;
-}
-
-float CollisionElasticPdu::getCollisionResultXY() const
-{
-    return _collisionResultXY;
-}
-
-void CollisionElasticPdu::setCollisionResultXY(float pX)
-{
-    _collisionResultXY = pX;
-}
-
-float CollisionElasticPdu::getCollisionResultXZ() const
-{
-    return _collisionResultXZ;
-}
-
-void CollisionElasticPdu::setCollisionResultXZ(float pX)
-{
-    _collisionResultXZ = pX;
-}
-
-float CollisionElasticPdu::getCollisionResultYY() const
-{
-    return _collisionResultYY;
-}
-
-void CollisionElasticPdu::setCollisionResultYY(float pX)
-{
-    _collisionResultYY = pX;
-}
-
-float CollisionElasticPdu::getCollisionResultYZ() const
-{
-    return _collisionResultYZ;
-}
-
-void CollisionElasticPdu::setCollisionResultYZ(float pX)
-{
-    _collisionResultYZ = pX;
-}
-
-float CollisionElasticPdu::getCollisionResultZZ() const
-{
-    return _collisionResultZZ;
-}
-
-void CollisionElasticPdu::setCollisionResultZZ(float pX)
-{
-    _collisionResultZZ = pX;
-}
-
-Vector3Float& CollisionElasticPdu::getUnitSurfaceNormal() 
-{
-    return _unitSurfaceNormal;
-}
-
-const Vector3Float& CollisionElasticPdu::getUnitSurfaceNormal() const
-{
-    return _unitSurfaceNormal;
-}
-
-void CollisionElasticPdu::setUnitSurfaceNormal(const Vector3Float &pX)
-{
-    _unitSurfaceNormal = pX;
-}
-
-float CollisionElasticPdu::getCoefficientOfRestitution() const
-{
-    return _coefficientOfRestitution;
-}
-
-void CollisionElasticPdu::setCoefficientOfRestitution(float pX)
-{
-    _coefficientOfRestitution = pX;
-}
-
 void CollisionElasticPdu::marshal(DataStream& dataStream) const
 {
     EntityInformationFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _issuingEntityID.marshal(dataStream);
-    _collidingEntityID.marshal(dataStream);
-    _collisionEventID.marshal(dataStream);
-    dataStream << _pad;
-    _contactVelocity.marshal(dataStream);
-    dataStream << _mass;
-    _location.marshal(dataStream);
-    dataStream << _collisionResultXX;
-    dataStream << _collisionResultXY;
-    dataStream << _collisionResultXZ;
-    dataStream << _collisionResultYY;
-    dataStream << _collisionResultYZ;
-    dataStream << _collisionResultZZ;
-    _unitSurfaceNormal.marshal(dataStream);
-    dataStream << _coefficientOfRestitution;
+    issuingEntityID.marshal(dataStream);
+    collidingEntityID.marshal(dataStream);
+    collisionEventID.marshal(dataStream);
+    dataStream << pad;
+    contactVelocity.marshal(dataStream);
+    dataStream << mass;
+    location.marshal(dataStream);
+    dataStream << collisionResultXX;
+    dataStream << collisionResultXY;
+    dataStream << collisionResultXZ;
+    dataStream << collisionResultYY;
+    dataStream << collisionResultYZ;
+    dataStream << collisionResultZZ;
+    unitSurfaceNormal.marshal(dataStream);
+    dataStream << coefficientOfRestitution;
 }
 
 void CollisionElasticPdu::unmarshal(DataStream& dataStream)
 {
     EntityInformationFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _issuingEntityID.unmarshal(dataStream);
-    _collidingEntityID.unmarshal(dataStream);
-    _collisionEventID.unmarshal(dataStream);
-    dataStream >> _pad;
-    _contactVelocity.unmarshal(dataStream);
-    dataStream >> _mass;
-    _location.unmarshal(dataStream);
-    dataStream >> _collisionResultXX;
-    dataStream >> _collisionResultXY;
-    dataStream >> _collisionResultXZ;
-    dataStream >> _collisionResultYY;
-    dataStream >> _collisionResultYZ;
-    dataStream >> _collisionResultZZ;
-    _unitSurfaceNormal.unmarshal(dataStream);
-    dataStream >> _coefficientOfRestitution;
+    issuingEntityID.unmarshal(dataStream);
+    collidingEntityID.unmarshal(dataStream);
+    collisionEventID.unmarshal(dataStream);
+    dataStream >> pad;
+    contactVelocity.unmarshal(dataStream);
+    dataStream >> mass;
+    location.unmarshal(dataStream);
+    dataStream >> collisionResultXX;
+    dataStream >> collisionResultXY;
+    dataStream >> collisionResultXZ;
+    dataStream >> collisionResultYY;
+    dataStream >> collisionResultYZ;
+    dataStream >> collisionResultZZ;
+    unitSurfaceNormal.unmarshal(dataStream);
+    dataStream >> coefficientOfRestitution;
 }
 
 
@@ -255,21 +75,21 @@ bool CollisionElasticPdu::operator ==(const CollisionElasticPdu& rhs) const
 
      ivarsEqual = EntityInformationFamilyPdu::operator==(rhs);
 
-     if( ! (_issuingEntityID == rhs._issuingEntityID) ) ivarsEqual = false;
-     if( ! (_collidingEntityID == rhs._collidingEntityID) ) ivarsEqual = false;
-     if( ! (_collisionEventID == rhs._collisionEventID) ) ivarsEqual = false;
-     if( ! (_pad == rhs._pad) ) ivarsEqual = false;
-     if( ! (_contactVelocity == rhs._contactVelocity) ) ivarsEqual = false;
-     if( ! (_mass == rhs._mass) ) ivarsEqual = false;
-     if( ! (_location == rhs._location) ) ivarsEqual = false;
-     if( ! (_collisionResultXX == rhs._collisionResultXX) ) ivarsEqual = false;
-     if( ! (_collisionResultXY == rhs._collisionResultXY) ) ivarsEqual = false;
-     if( ! (_collisionResultXZ == rhs._collisionResultXZ) ) ivarsEqual = false;
-     if( ! (_collisionResultYY == rhs._collisionResultYY) ) ivarsEqual = false;
-     if( ! (_collisionResultYZ == rhs._collisionResultYZ) ) ivarsEqual = false;
-     if( ! (_collisionResultZZ == rhs._collisionResultZZ) ) ivarsEqual = false;
-     if( ! (_unitSurfaceNormal == rhs._unitSurfaceNormal) ) ivarsEqual = false;
-     if( ! (_coefficientOfRestitution == rhs._coefficientOfRestitution) ) ivarsEqual = false;
+     if( ! (issuingEntityID == rhs.issuingEntityID) ) ivarsEqual = false;
+     if( ! (collidingEntityID == rhs.collidingEntityID) ) ivarsEqual = false;
+     if( ! (collisionEventID == rhs.collisionEventID) ) ivarsEqual = false;
+     if( ! (pad == rhs.pad) ) ivarsEqual = false;
+     if( ! (contactVelocity == rhs.contactVelocity) ) ivarsEqual = false;
+     if( ! (mass == rhs.mass) ) ivarsEqual = false;
+     if( ! (location == rhs.location) ) ivarsEqual = false;
+     if( ! (collisionResultXX == rhs.collisionResultXX) ) ivarsEqual = false;
+     if( ! (collisionResultXY == rhs.collisionResultXY) ) ivarsEqual = false;
+     if( ! (collisionResultXZ == rhs.collisionResultXZ) ) ivarsEqual = false;
+     if( ! (collisionResultYY == rhs.collisionResultYY) ) ivarsEqual = false;
+     if( ! (collisionResultYZ == rhs.collisionResultYZ) ) ivarsEqual = false;
+     if( ! (collisionResultZZ == rhs.collisionResultZZ) ) ivarsEqual = false;
+     if( ! (unitSurfaceNormal == rhs.unitSurfaceNormal) ) ivarsEqual = false;
+     if( ! (coefficientOfRestitution == rhs.coefficientOfRestitution) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -279,21 +99,21 @@ int CollisionElasticPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = EntityInformationFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _issuingEntityID.getMarshalledSize();  // _issuingEntityID
-   marshalSize = marshalSize + _collidingEntityID.getMarshalledSize();  // _collidingEntityID
-   marshalSize = marshalSize + _collisionEventID.getMarshalledSize();  // _collisionEventID
-   marshalSize = marshalSize + 2;  // _pad
-   marshalSize = marshalSize + _contactVelocity.getMarshalledSize();  // _contactVelocity
-   marshalSize = marshalSize + 4;  // _mass
-   marshalSize = marshalSize + _location.getMarshalledSize();  // _location
-   marshalSize = marshalSize + 4;  // _collisionResultXX
-   marshalSize = marshalSize + 4;  // _collisionResultXY
-   marshalSize = marshalSize + 4;  // _collisionResultXZ
-   marshalSize = marshalSize + 4;  // _collisionResultYY
-   marshalSize = marshalSize + 4;  // _collisionResultYZ
-   marshalSize = marshalSize + 4;  // _collisionResultZZ
-   marshalSize = marshalSize + _unitSurfaceNormal.getMarshalledSize();  // _unitSurfaceNormal
-   marshalSize = marshalSize + 4;  // _coefficientOfRestitution
+   marshalSize = marshalSize + issuingEntityID.getMarshalledSize();  // issuingEntityID
+   marshalSize = marshalSize + collidingEntityID.getMarshalledSize();  // collidingEntityID
+   marshalSize = marshalSize + collisionEventID.getMarshalledSize();  // collisionEventID
+   marshalSize = marshalSize + 2;  // pad
+   marshalSize = marshalSize + contactVelocity.getMarshalledSize();  // contactVelocity
+   marshalSize = marshalSize + 4;  // mass
+   marshalSize = marshalSize + location.getMarshalledSize();  // location
+   marshalSize = marshalSize + 4;  // collisionResultXX
+   marshalSize = marshalSize + 4;  // collisionResultXY
+   marshalSize = marshalSize + 4;  // collisionResultXZ
+   marshalSize = marshalSize + 4;  // collisionResultYY
+   marshalSize = marshalSize + 4;  // collisionResultYZ
+   marshalSize = marshalSize + 4;  // collisionResultZZ
+   marshalSize = marshalSize + unitSurfaceNormal.getMarshalledSize();  // unitSurfaceNormal
+   marshalSize = marshalSize + 4;  // coefficientOfRestitution
     return marshalSize;
 }
 

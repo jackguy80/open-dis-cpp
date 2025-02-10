@@ -1,58 +1,36 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/EntityID.h>
-#include <dis7/SimulationManagementFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "SimulationManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 7.5.2. Create a new entity. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT CreateEntityPdu : public SimulationManagementFamilyPdu
+struct EXPORT_MACRO CreateEntityPdu : public SimulationManagementFamilyPdu
 {
-protected:
-  /** Identifier for the request */
-  EntityID _originatingID; 
-
-  /** Identifier for the request */
-  EntityID _receivingID; 
-
   /** Identifier for the request.  See 6.2.75 */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     CreateEntityPdu();
     virtual ~CreateEntityPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getOriginatingID(); 
-    const EntityID&  getOriginatingID() const; 
-    void setOriginatingID(const EntityID    &pX);
 
-    EntityID& getReceivingID(); 
-    const EntityID&  getReceivingID() const; 
-    void setReceivingID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const CreateEntityPdu& rhs) const;
+     bool operator ==(const CreateEntityPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

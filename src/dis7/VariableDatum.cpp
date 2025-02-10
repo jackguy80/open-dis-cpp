@@ -1,13 +1,12 @@
-#include <dis7/VariableDatum.h>
+#include "VariableDatum.h"
 
 using namespace DIS;
 
 
 VariableDatum::VariableDatum():
-   _variableDatumID(0), 
-   _variableDatumLength(0), 
-   _variableDatumBits(0), 
-   _padding(0)
+   variableDatumID(0), 
+   variableDatumLength(0), 
+   variableDatumData()
 {
 }
 
@@ -15,72 +14,18 @@ VariableDatum::~VariableDatum()
 {
 }
 
-unsigned int VariableDatum::getVariableDatumID() const
-{
-    return _variableDatumID;
-}
-
-void VariableDatum::setVariableDatumID(unsigned int pX)
-{
-    _variableDatumID = pX;
-}
-
-unsigned int VariableDatum::getVariableDatumLength() const
-{
-    return _variableDatumLength;
-}
-
-void VariableDatum::setVariableDatumLength(unsigned int pX)
-{
-    _variableDatumLength = pX;
-}
-
-unsigned int VariableDatum::getVariableDatumBits() const
-{
-    return _variableDatumBits;
-}
-
-void VariableDatum::setVariableDatumBits(unsigned int pX)
-{
-    _variableDatumBits = pX;
-}
-
-unsigned int VariableDatum::getPadding() const
-{
-    return _padding;
-}
-
-void VariableDatum::setPadding(unsigned int pX)
-{
-    _padding = pX;
-}
-
 void VariableDatum::marshal(DataStream& dataStream) const
 {
-    dataStream << _variableDatumID;
-    dataStream << ( unsigned int )_variableDatums.size() * 64;
-
-     for(size_t idx = 0; idx < _variableDatums.size(); idx++)
-     {
-        EightByteChunk x = _variableDatums[idx];
-        x.marshal(dataStream);
-     }
-
+    dataStream << variableDatumID;
+    dataStream << variableDatumLength;
+    variableDatumData.marshal(dataStream);
 }
 
 void VariableDatum::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _variableDatumID;
-    dataStream >> _variableDatumLength;
-    _variableDatumLength = (_variableDatumLength / 64) + ((_variableDatumLength % 64) > 0);
-
-     _variableDatums.clear();
-     for(size_t idx = 0; idx < _variableDatumLength; idx++)
-     {
-        EightByteChunk x;
-        x.unmarshal(dataStream);
-        _variableDatums.push_back(x);
-     }
+    dataStream >> variableDatumID;
+    dataStream >> variableDatumLength;
+    variableDatumData.unmarshal(dataStream);
 }
 
 
@@ -88,10 +33,9 @@ bool VariableDatum::operator ==(const VariableDatum& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_variableDatumID == rhs._variableDatumID) ) ivarsEqual = false;
-     if( ! (_variableDatumLength == rhs._variableDatumLength) ) ivarsEqual = false;
-     if( ! (_variableDatumBits == rhs._variableDatumBits) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (variableDatumID == rhs.variableDatumID) ) ivarsEqual = false;
+     if( ! (variableDatumLength == rhs.variableDatumLength) ) ivarsEqual = false;
+     if( ! (variableDatumData == rhs.variableDatumData) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -100,10 +44,9 @@ int VariableDatum::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _variableDatumID
-   marshalSize = marshalSize + 4;  // _variableDatumLength
-   marshalSize = marshalSize + 4;  // _variableDatumBits
-   marshalSize = marshalSize + 4;  // _padding
+   marshalSize = marshalSize + 4;  // variableDatumID
+   marshalSize = marshalSize + 4;  // variableDatumLength
+   marshalSize = marshalSize + variableDatumData.getMarshalledSize();  // variableDatumData
     return marshalSize;
 }
 

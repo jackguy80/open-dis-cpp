@@ -1,55 +1,40 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Unique designation of an attached or unattached intercom in an event or exercirse. Section 6.2.48
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT IntercomIdentifier
+struct EXPORT_MACRO IntercomIdentifier
 {
-protected:
-  unsigned short _siteNumber; 
+  unsigned short siteNumber;
 
-  unsigned short _applicationNumber; 
+  unsigned short applicationNumber;
 
-  unsigned short _referenceNumber; 
+  unsigned short referenceNumber;
 
-  unsigned short _intercomNumber; 
+  unsigned short intercomNumber;
 
-
- public:
     IntercomIdentifier();
     virtual ~IntercomIdentifier();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSiteNumber() const; 
-    void setSiteNumber(unsigned short pX); 
 
-    unsigned short getApplicationNumber() const; 
-    void setApplicationNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getReferenceNumber() const; 
-    void setReferenceNumber(unsigned short pX); 
-
-    unsigned short getIntercomNumber() const; 
-    void setIntercomNumber(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IntercomIdentifier& rhs) const;
+     bool operator ==(const IntercomIdentifier& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

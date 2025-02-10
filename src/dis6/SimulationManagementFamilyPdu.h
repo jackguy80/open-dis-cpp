@@ -1,52 +1,41 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/Pdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "Pdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.6. Abstract superclass for PDUs relating to the simulation itself. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT SimulationManagementFamilyPdu : public Pdu
+struct EXPORT_MACRO SimulationManagementFamilyPdu : public Pdu
 {
-protected:
   /** Entity that is sending message */
-  EntityID _originatingEntityID; 
+  EntityID originatingEntityID;
 
   /** Entity that is intended to receive message */
-  EntityID _receivingEntityID; 
+  EntityID receivingEntityID;
 
-
- public:
     SimulationManagementFamilyPdu();
     virtual ~SimulationManagementFamilyPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getOriginatingEntityID(); 
-    const EntityID&  getOriginatingEntityID() const; 
-    void setOriginatingEntityID(const EntityID    &pX);
 
-    EntityID& getReceivingEntityID(); 
-    const EntityID&  getReceivingEntityID() const; 
-    void setReceivingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SimulationManagementFamilyPdu& rhs) const;
+     bool operator ==(const SimulationManagementFamilyPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

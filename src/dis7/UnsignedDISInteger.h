@@ -1,41 +1,35 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // container class not in specification
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT UnsignedDISInteger
+struct EXPORT_MACRO UnsignedDISInteger
 {
-protected:
   /** unsigned integer */
-  unsigned int _val; 
+  unsigned int val;
 
-
- public:
     UnsignedDISInteger();
     virtual ~UnsignedDISInteger();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getVal() const; 
-    void setVal(unsigned int pX); 
 
+     virtual int getMarshalledSize() const;
 
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const UnsignedDISInteger& rhs) const;
+     bool operator ==(const UnsignedDISInteger& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,71 +1,50 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Regeneration parameters for active emission systems that are variable throughout a scenario. Section 6.2.90
+// Regeneration parameters for active emission systems that are variable throughout a scenario. Section 6.2.91
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT UAFundamentalParameter
+struct EXPORT_MACRO UAFundamentalParameter
 {
-protected:
   /** Which database record shall be used. An enumeration from EBV document */
-  unsigned short _activeEmissionParameterIndex; 
+  unsigned short activeEmissionParameterIndex;
 
   /** The type of scan pattern, If not used, zero. An enumeration from EBV document */
-  unsigned short _scanPattern; 
+  unsigned short scanPattern;
 
   /** center azimuth bearing of th emain beam. In radians. */
-  float _beamCenterAzimuthHorizontal; 
+  float beamCenterAzimuthHorizontal;
 
   /** Horizontal beamwidth of th emain beam Meastued at the 3dB down point of peak radiated power. In radians. */
-  float _azimuthalBeamwidthHorizontal; 
+  float azimuthalBeamwidthHorizontal;
 
   /** center of the d/e angle of th emain beam relative to the stablised de angle of the target. In radians. */
-  float _beamCenterDepressionElevation; 
+  float beamCenterDepressionElevation;
 
   /** vertical beamwidth of the main beam. Meastured at the 3dB down point of peak radiated power. In radians. */
-  float _beamwidthDownElevation; 
+  float beamwidthDownElevation;
 
-
- public:
     UAFundamentalParameter();
     virtual ~UAFundamentalParameter();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getActiveEmissionParameterIndex() const; 
-    void setActiveEmissionParameterIndex(unsigned short pX); 
 
-    unsigned short getScanPattern() const; 
-    void setScanPattern(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    float getBeamCenterAzimuthHorizontal() const; 
-    void setBeamCenterAzimuthHorizontal(float pX); 
-
-    float getAzimuthalBeamwidthHorizontal() const; 
-    void setAzimuthalBeamwidthHorizontal(float pX); 
-
-    float getBeamCenterDepressionElevation() const; 
-    void setBeamCenterDepressionElevation(float pX); 
-
-    float getBeamwidthDownElevation() const; 
-    void setBeamwidthDownElevation(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const UAFundamentalParameter& rhs) const;
+     bool operator ==(const UAFundamentalParameter& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

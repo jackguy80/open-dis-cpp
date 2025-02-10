@@ -1,14 +1,14 @@
-#include <dis7/AttachedParts.h>
+#include "AttachedParts.h"
 
 using namespace DIS;
 
 
 AttachedParts::AttachedParts():
-   _recordType(1), 
-   _detachedIndicator(0), 
-   _partAttachedTo(0), 
-   _parameterType(0), 
-   _attachedPartType(0)
+   recordType(1), 
+   detachedIndicator(0), 
+   partAttachedTo(0), 
+   parameterType(0), 
+   parameterValue(0)
 {
 }
 
@@ -16,72 +16,22 @@ AttachedParts::~AttachedParts()
 {
 }
 
-unsigned char AttachedParts::getRecordType() const
-{
-    return _recordType;
-}
-
-void AttachedParts::setRecordType(unsigned char pX)
-{
-    _recordType = pX;
-}
-
-unsigned char AttachedParts::getDetachedIndicator() const
-{
-    return _detachedIndicator;
-}
-
-void AttachedParts::setDetachedIndicator(unsigned char pX)
-{
-    _detachedIndicator = pX;
-}
-
-unsigned short AttachedParts::getPartAttachedTo() const
-{
-    return _partAttachedTo;
-}
-
-void AttachedParts::setPartAttachedTo(unsigned short pX)
-{
-    _partAttachedTo = pX;
-}
-
-unsigned int AttachedParts::getParameterType() const
-{
-    return _parameterType;
-}
-
-void AttachedParts::setParameterType(unsigned int pX)
-{
-    _parameterType = pX;
-}
-
-unsigned long long AttachedParts::getAttachedPartType() const
-{
-    return _attachedPartType;
-}
-
-void AttachedParts::setAttachedPartType(unsigned long long pX)
-{
-    _attachedPartType = pX;
-}
-
 void AttachedParts::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _detachedIndicator;
-    dataStream << _partAttachedTo;
-    dataStream << _parameterType;
-    dataStream << _attachedPartType;
+    dataStream << recordType;
+    dataStream << detachedIndicator;
+    dataStream << partAttachedTo;
+    dataStream << parameterType;
+    dataStream << parameterValue;
 }
 
 void AttachedParts::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _detachedIndicator;
-    dataStream >> _partAttachedTo;
-    dataStream >> _parameterType;
-    dataStream >> _attachedPartType;
+    dataStream >> recordType;
+    dataStream >> detachedIndicator;
+    dataStream >> partAttachedTo;
+    dataStream >> parameterType;
+    dataStream >> parameterValue;
 }
 
 
@@ -89,11 +39,11 @@ bool AttachedParts::operator ==(const AttachedParts& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_detachedIndicator == rhs._detachedIndicator) ) ivarsEqual = false;
-     if( ! (_partAttachedTo == rhs._partAttachedTo) ) ivarsEqual = false;
-     if( ! (_parameterType == rhs._parameterType) ) ivarsEqual = false;
-     if( ! (_attachedPartType == rhs._attachedPartType) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (detachedIndicator == rhs.detachedIndicator) ) ivarsEqual = false;
+     if( ! (partAttachedTo == rhs.partAttachedTo) ) ivarsEqual = false;
+     if( ! (parameterType == rhs.parameterType) ) ivarsEqual = false;
+     if( ! (parameterValue == rhs.parameterValue) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -102,11 +52,11 @@ int AttachedParts::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _recordType
-   marshalSize = marshalSize + 1;  // _detachedIndicator
-   marshalSize = marshalSize + 2;  // _partAttachedTo
-   marshalSize = marshalSize + 4;  // _parameterType
-   marshalSize = marshalSize + 8;  // _attachedPartType
+   marshalSize = marshalSize + 1;  // recordType
+   marshalSize = marshalSize + 1;  // detachedIndicator
+   marshalSize = marshalSize + 2;  // partAttachedTo
+   marshalSize = marshalSize + 4;  // parameterType
+   marshalSize = marshalSize + 8;  // parameterValue
     return marshalSize;
 }
 

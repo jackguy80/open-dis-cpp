@@ -1,59 +1,44 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Radio modulation
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT ModulationType
+struct EXPORT_MACRO ModulationType
 {
-protected:
   /** spread spectrum, 16 bit boolean array */
-  unsigned short _spreadSpectrum; 
+  unsigned short spreadSpectrum;
 
   /** major */
-  unsigned short _major; 
+  unsigned short major;
 
   /** detail */
-  unsigned short _detail; 
+  unsigned short detail;
 
   /** system */
-  unsigned short _system; 
+  unsigned short system;
 
-
- public:
     ModulationType();
     virtual ~ModulationType();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSpreadSpectrum() const; 
-    void setSpreadSpectrum(unsigned short pX); 
 
-    unsigned short getMajor() const; 
-    void setMajor(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getDetail() const; 
-    void setDetail(unsigned short pX); 
-
-    unsigned short getSystem() const; 
-    void setSystem(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ModulationType& rhs) const;
+     bool operator ==(const ModulationType& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,11 +1,11 @@
-#include <dis7/MinefieldIdentifier.h>
+#include "MinefieldIdentifier.h"
 
 using namespace DIS;
 
 
 MinefieldIdentifier::MinefieldIdentifier():
-   _simulationAddress(), 
-   _minefieldNumber(0)
+   simulationAddress(), 
+   minefieldNumber(0)
 {
 }
 
@@ -13,41 +13,16 @@ MinefieldIdentifier::~MinefieldIdentifier()
 {
 }
 
-SimulationAddress& MinefieldIdentifier::getSimulationAddress() 
-{
-    return _simulationAddress;
-}
-
-const SimulationAddress& MinefieldIdentifier::getSimulationAddress() const
-{
-    return _simulationAddress;
-}
-
-void MinefieldIdentifier::setSimulationAddress(const SimulationAddress &pX)
-{
-    _simulationAddress = pX;
-}
-
-unsigned short MinefieldIdentifier::getMinefieldNumber() const
-{
-    return _minefieldNumber;
-}
-
-void MinefieldIdentifier::setMinefieldNumber(unsigned short pX)
-{
-    _minefieldNumber = pX;
-}
-
 void MinefieldIdentifier::marshal(DataStream& dataStream) const
 {
-    _simulationAddress.marshal(dataStream);
-    dataStream << _minefieldNumber;
+    simulationAddress.marshal(dataStream);
+    dataStream << minefieldNumber;
 }
 
 void MinefieldIdentifier::unmarshal(DataStream& dataStream)
 {
-    _simulationAddress.unmarshal(dataStream);
-    dataStream >> _minefieldNumber;
+    simulationAddress.unmarshal(dataStream);
+    dataStream >> minefieldNumber;
 }
 
 
@@ -55,8 +30,8 @@ bool MinefieldIdentifier::operator ==(const MinefieldIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_simulationAddress == rhs._simulationAddress) ) ivarsEqual = false;
-     if( ! (_minefieldNumber == rhs._minefieldNumber) ) ivarsEqual = false;
+     if( ! (simulationAddress == rhs.simulationAddress) ) ivarsEqual = false;
+     if( ! (minefieldNumber == rhs.minefieldNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int MinefieldIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _simulationAddress.getMarshalledSize();  // _simulationAddress
-   marshalSize = marshalSize + 2;  // _minefieldNumber
+   marshalSize = marshalSize + simulationAddress.getMarshalledSize();  // simulationAddress
+   marshalSize = marshalSize + 2;  // minefieldNumber
     return marshalSize;
 }
 

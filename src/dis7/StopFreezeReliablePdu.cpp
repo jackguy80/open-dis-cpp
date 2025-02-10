@@ -1,108 +1,43 @@
-#include <dis7/StopFreezeReliablePdu.h>
+#include "StopFreezeReliablePdu.h"
 
 using namespace DIS;
 
 
 StopFreezeReliablePdu::StopFreezeReliablePdu() : SimulationManagementWithReliabilityFamilyPdu(),
-   _realWorldTime(), 
-   _reason(0), 
-   _frozenBehavior(0), 
-   _requiredReliablityService(0), 
-   _pad1(0), 
-   _requestID(0)
+   realWorldTime(), 
+   reason(0), 
+   frozenBehavior(0), 
+   requiredReliablityService(0), 
+   pad1(0), 
+   requestID(0)
 {
-    setPduType( 54 );
+    pduType = 54;
 }
 
 StopFreezeReliablePdu::~StopFreezeReliablePdu()
 {
 }
 
-ClockTime& StopFreezeReliablePdu::getRealWorldTime() 
-{
-    return _realWorldTime;
-}
-
-const ClockTime& StopFreezeReliablePdu::getRealWorldTime() const
-{
-    return _realWorldTime;
-}
-
-void StopFreezeReliablePdu::setRealWorldTime(const ClockTime &pX)
-{
-    _realWorldTime = pX;
-}
-
-unsigned char StopFreezeReliablePdu::getReason() const
-{
-    return _reason;
-}
-
-void StopFreezeReliablePdu::setReason(unsigned char pX)
-{
-    _reason = pX;
-}
-
-unsigned char StopFreezeReliablePdu::getFrozenBehavior() const
-{
-    return _frozenBehavior;
-}
-
-void StopFreezeReliablePdu::setFrozenBehavior(unsigned char pX)
-{
-    _frozenBehavior = pX;
-}
-
-unsigned char StopFreezeReliablePdu::getRequiredReliablityService() const
-{
-    return _requiredReliablityService;
-}
-
-void StopFreezeReliablePdu::setRequiredReliablityService(unsigned char pX)
-{
-    _requiredReliablityService = pX;
-}
-
-unsigned char StopFreezeReliablePdu::getPad1() const
-{
-    return _pad1;
-}
-
-void StopFreezeReliablePdu::setPad1(unsigned char pX)
-{
-    _pad1 = pX;
-}
-
-unsigned int StopFreezeReliablePdu::getRequestID() const
-{
-    return _requestID;
-}
-
-void StopFreezeReliablePdu::setRequestID(unsigned int pX)
-{
-    _requestID = pX;
-}
-
 void StopFreezeReliablePdu::marshal(DataStream& dataStream) const
 {
     SimulationManagementWithReliabilityFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _realWorldTime.marshal(dataStream);
-    dataStream << _reason;
-    dataStream << _frozenBehavior;
-    dataStream << _requiredReliablityService;
-    dataStream << _pad1;
-    dataStream << _requestID;
+    realWorldTime.marshal(dataStream);
+    dataStream << reason;
+    dataStream << frozenBehavior;
+    dataStream << requiredReliablityService;
+    dataStream << pad1;
+    dataStream << requestID;
 }
 
 void StopFreezeReliablePdu::unmarshal(DataStream& dataStream)
 {
     SimulationManagementWithReliabilityFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _realWorldTime.unmarshal(dataStream);
-    dataStream >> _reason;
-    dataStream >> _frozenBehavior;
-    dataStream >> _requiredReliablityService;
-    dataStream >> _pad1;
-    dataStream >> _requestID;
+    realWorldTime.unmarshal(dataStream);
+    dataStream >> reason;
+    dataStream >> frozenBehavior;
+    dataStream >> requiredReliablityService;
+    dataStream >> pad1;
+    dataStream >> requestID;
 }
 
 
@@ -112,12 +47,12 @@ bool StopFreezeReliablePdu::operator ==(const StopFreezeReliablePdu& rhs) const
 
      ivarsEqual = SimulationManagementWithReliabilityFamilyPdu::operator==(rhs);
 
-     if( ! (_realWorldTime == rhs._realWorldTime) ) ivarsEqual = false;
-     if( ! (_reason == rhs._reason) ) ivarsEqual = false;
-     if( ! (_frozenBehavior == rhs._frozenBehavior) ) ivarsEqual = false;
-     if( ! (_requiredReliablityService == rhs._requiredReliablityService) ) ivarsEqual = false;
-     if( ! (_pad1 == rhs._pad1) ) ivarsEqual = false;
-     if( ! (_requestID == rhs._requestID) ) ivarsEqual = false;
+     if( ! (realWorldTime == rhs.realWorldTime) ) ivarsEqual = false;
+     if( ! (reason == rhs.reason) ) ivarsEqual = false;
+     if( ! (frozenBehavior == rhs.frozenBehavior) ) ivarsEqual = false;
+     if( ! (requiredReliablityService == rhs.requiredReliablityService) ) ivarsEqual = false;
+     if( ! (pad1 == rhs.pad1) ) ivarsEqual = false;
+     if( ! (requestID == rhs.requestID) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -127,12 +62,12 @@ int StopFreezeReliablePdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = SimulationManagementWithReliabilityFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _realWorldTime.getMarshalledSize();  // _realWorldTime
-   marshalSize = marshalSize + 1;  // _reason
-   marshalSize = marshalSize + 1;  // _frozenBehavior
-   marshalSize = marshalSize + 1;  // _requiredReliablityService
-   marshalSize = marshalSize + 1;  // _pad1
-   marshalSize = marshalSize + 4;  // _requestID
+   marshalSize = marshalSize + realWorldTime.getMarshalledSize();  // realWorldTime
+   marshalSize = marshalSize + 1;  // reason
+   marshalSize = marshalSize + 1;  // frozenBehavior
+   marshalSize = marshalSize + 1;  // requiredReliablityService
+   marshalSize = marshalSize + 1;  // pad1
+   marshalSize = marshalSize + 4;  // requestID
     return marshalSize;
 }
 

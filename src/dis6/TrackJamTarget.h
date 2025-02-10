@@ -1,55 +1,42 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityID.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // One track/jam target
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT TrackJamTarget
+struct EXPORT_MACRO TrackJamTarget
 {
-protected:
   /** track/jam target */
-  EntityID _trackJam; 
+  EntityID trackJam;
 
   /** Emitter ID */
-  unsigned char _emitterID; 
+  unsigned char emitterID;
 
   /** beam ID */
-  unsigned char _beamID; 
+  unsigned char beamID;
 
-
- public:
     TrackJamTarget();
     virtual ~TrackJamTarget();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getTrackJam(); 
-    const EntityID&  getTrackJam() const; 
-    void setTrackJam(const EntityID    &pX);
 
-    unsigned char getEmitterID() const; 
-    void setEmitterID(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getBeamID() const; 
-    void setBeamID(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const TrackJamTarget& rhs) const;
+     bool operator ==(const TrackJamTarget& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

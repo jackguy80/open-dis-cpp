@@ -1,63 +1,44 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // An entity's expendable (chaff, flares, etc) information. Section 6.2.36
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT Expendable
+struct EXPORT_MACRO Expendable
 {
-protected:
   /** Type of expendable */
-  EntityType _expendable; 
+  EntityType expendable;
 
-  unsigned int _station; 
+  unsigned int station;
 
-  unsigned short _quantity; 
+  unsigned short quantity;
 
-  unsigned char _expendableStatus; 
+  unsigned char expendableStatus;
 
-  unsigned char _padding; 
+  unsigned char padding;
 
-
- public:
     Expendable();
     virtual ~Expendable();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getExpendable(); 
-    const EntityType&  getExpendable() const; 
-    void setExpendable(const EntityType    &pX);
 
-    unsigned int getStation() const; 
-    void setStation(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getQuantity() const; 
-    void setQuantity(unsigned short pX); 
-
-    unsigned char getExpendableStatus() const; 
-    void setExpendableStatus(unsigned char pX); 
-
-    unsigned char getPadding() const; 
-    void setPadding(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const Expendable& rhs) const;
+     bool operator ==(const Expendable& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

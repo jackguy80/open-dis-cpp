@@ -1,52 +1,86 @@
+#define WIN32_LEAN_AND_MEAN
+
 #include "Connection.h"
 #include "Logging.h"
 
 #include <sstream>
 #include <cstring>
 
-#include <SDL.h>
-#include <SDL_net.h>
+#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 using namespace Example;
 
 
 void Connection::Connect(unsigned int port, const std::string& host, bool listening)
 {
-   bool success = SDL_Init(0) != -1 && SDLNet_Init() != -1;
-   if (!success)
-   {
-      HandleError();
-      return;
-   }
+    WSADATA wsaData;
+    struct addrinfo* result = NULL,
+        * ptr = NULL,
+        hints;
 
-   if (SDLNet_ResolveHost(&mAddr, host.c_str(), port) == -1 )
-   {
-      std::ostringstream strm;
-      strm << "Can't get address for : " + host + ". "
-           << "Error:" << SDLNet_GetError()
-		       << "\n. System: " <<  SDL_GetError();
-      LOG_ERROR( strm.str() );
-   }
+    ZeroMemory(&hints, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = IPPROTO_UDP;
 
-   if (listening) {
-      mSocket = SDLNet_UDP_Open(port);
-   } else {
-      mSocket = SDLNet_UDP_Open(0);
-   }
+    // Initialize Winsock
+    int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
+    if (iResult != 0) {
+        return;
+    }
+    
+    iResult = getaddrinfo(host.c_str(), std::to_string(port).c_str(), &hints, &result);
+    if (iResult != 0) {
+        printf("getaddrinfo failed with error: %d\n", iResult);
+        WSACleanup();
+        return;
+    }
 
-   if(!mSocket)
-   {
-      std::ostringstream strm;
-      strm << "Can't open socket: " << SDLNet_GetError();
-      LOG_ERROR( strm.str() )
-   }
+    // Attempt to connect to an address until one succeeds
+    for (ptr = result; ptr != NULL; ptr = ptr->ai_next) {
 
+        // Create a SOCKET for connecting to server
+        mSocket = socket(ptr->ai_family, ptr->ai_socktype,
+            ptr->ai_protocol);
+        if (mSocket == INVALID_SOCKET) {
+            printf("socket failed with error: %ld\n", WSAGetLastError());
+            WSACleanup();
+            return;
+        }
+
+        // Connect to server.
+        iResult = connect(mSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
+        if (iResult == SOCKET_ERROR) {
+            closesocket(mSocket);
+            mSocket = INVALID_SOCKET;
+            continue;
+        }
+        break;
+    }
+
+    freeaddrinfo(result);
+
+    if (mSocket == INVALID_SOCKET) {
+        printf("Unable to connect to server!\n");
+        WSACleanup();
+        return;
+    }
 }
 
 void Connection::Disconnect()
 {
-   SDLNet_UDP_Close(mSocket);
-   SDLNet_Quit();
+    // shutdown the connection since no more data will be sent
+    int iResult = shutdown(mSocket, SD_SEND);
+    if (iResult == SOCKET_ERROR) {
+        printf("shutdown failed with error: %d\n", WSAGetLastError());
+        closesocket(mSocket);
+        WSACleanup();
+        return;
+    }
 }
 
 void Connection::Send(const char* buf, size_t numbytes)
@@ -56,44 +90,22 @@ void Connection::Send(const char* buf, size_t numbytes)
       return;
    }
 
-   UDPpacket * packet = SDLNet_AllocPacket(numbytes);
-   if (!packet)
-   {
-      HandleError();
-   }
-   else
-   {
-      memcpy(packet->data, buf, numbytes);
-      packet->address = mAddr;
-      packet->len = numbytes;
-      int ret = SDLNet_UDP_Send(mSocket, -1, packet);
-      if (ret == 0)
-      {
-         HandleError();
-      }
-      SDLNet_FreePacket(packet);
-   }
+    int iResult = send( mSocket, buf, numbytes, 0 );
+    if (iResult == SOCKET_ERROR) {
+        printf("send failed with error: %d\n", WSAGetLastError());
+        closesocket(mSocket);
+        WSACleanup();
+        return;
+    }
 }
 
 size_t Connection::Receive(char* buf)
 {
-   UDPpacket* packet = SDLNet_AllocPacket(MTU_SIZE);
-   int packetRecvd = SDLNet_UDP_Recv(mSocket, packet);
-
-   if ( packetRecvd != 1 )
-   {
-      if (packetRecvd == -1) {
-         HandleError();
-      }
-      return 0;
-   }
-   memcpy(buf, packet->data, packet->len);
-   return packet->len;
+    char recvbuf[512];
+    int recvbuflen = 0;
+    int iResult = recv(mSocket, recvbuf, recvbuflen, 0);
+    if ( recvbuflen > 0 )
+   	memcpy(buf, recvbuf, recvbuflen);
+   return recvbuflen;
 }
 
-void Connection::HandleError()
-{
-   const char* errorString = SDLNet_GetError();
-
-   LOG_ERROR("A network error occurred: " + std::string(errorString));
-}

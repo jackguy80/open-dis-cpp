@@ -1,73 +1,51 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // indicate weapons (munitions) previously communicated via the Munition record. Section 6.2.61 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT MunitionReload
+struct EXPORT_MACRO MunitionReload
 {
-protected:
   /**  This field shall identify the entity type of the munition. See section 6.2.30. */
-  EntityType _munitionType; 
+  EntityType munitionType;
 
   /** the station or launcher to which the munition is assigned. See Annex I */
-  unsigned int _station; 
+  unsigned int station;
 
   /** the standard quantity of this munition type normally loaded at this station/launcher if a station/launcher is specified. */
-  unsigned short _standardQuantity; 
+  unsigned short standardQuantity;
 
   /** the maximum quantity of this munition type that this station/launcher is capable of holding when a station/launcher is specified  */
-  unsigned short _maximumQuantity; 
+  unsigned short maximumQuantity;
 
-  /** the station name within the host at which the part entity is located. */
-  unsigned short _stationName; 
+  /** numer of seconds of sim time required to reload the std qty */
+  unsigned int standardQuantityReloadTime;
 
-  /** the number of the particular wing station, cargo hold etc., at which the part is attached. */
-  unsigned short _stationNumber; 
+  /** the number of seconds of sim time required to reload the max possible quantity */
+  unsigned int maximumQuantityReloadTime;
 
-
- public:
     MunitionReload();
     virtual ~MunitionReload();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getMunitionType(); 
-    const EntityType&  getMunitionType() const; 
-    void setMunitionType(const EntityType    &pX);
 
-    unsigned int getStation() const; 
-    void setStation(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getStandardQuantity() const; 
-    void setStandardQuantity(unsigned short pX); 
-
-    unsigned short getMaximumQuantity() const; 
-    void setMaximumQuantity(unsigned short pX); 
-
-    unsigned short getStationName() const; 
-    void setStationName(unsigned short pX); 
-
-    unsigned short getStationNumber() const; 
-    void setStationNumber(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const MunitionReload& rhs) const;
+     bool operator ==(const MunitionReload& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

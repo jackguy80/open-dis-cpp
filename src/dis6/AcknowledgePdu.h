@@ -1,54 +1,42 @@
 #pragma once
 
-#include <dis6/SimulationManagementFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "SimulationManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.6.5. Acknowledge the receiptof a start/resume, stop/freeze, or RemoveEntityPDU. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT AcknowledgePdu : public SimulationManagementFamilyPdu
+struct EXPORT_MACRO AcknowledgePdu : public SimulationManagementFamilyPdu
 {
-protected:
   /** type of message being acknowledged */
-  unsigned short _acknowledgeFlag; 
+  unsigned short acknowledgeFlag;
 
   /** Whether or not the receiving entity was able to comply with the request */
-  unsigned short _responseFlag; 
+  unsigned short responseFlag;
 
   /** Request ID that is unique */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     AcknowledgePdu();
     virtual ~AcknowledgePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getAcknowledgeFlag() const; 
-    void setAcknowledgeFlag(unsigned short pX); 
 
-    unsigned short getResponseFlag() const; 
-    void setResponseFlag(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AcknowledgePdu& rhs) const;
+     bool operator ==(const AcknowledgePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

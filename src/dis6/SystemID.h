@@ -1,59 +1,44 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 5.2.58. Used in IFF ATC PDU
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT SystemID
+struct EXPORT_MACRO SystemID
 {
-protected:
   /** System Type */
-  unsigned short _systemType; 
+  unsigned short systemType;
 
   /** System name, an enumeration */
-  unsigned short _systemName; 
+  unsigned short systemName;
 
   /** System mode */
-  unsigned char _systemMode; 
+  unsigned char systemMode;
 
   /** Change Options */
-  unsigned char _changeOptions; 
+  unsigned char changeOptions;
 
-
- public:
     SystemID();
     virtual ~SystemID();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSystemType() const; 
-    void setSystemType(unsigned short pX); 
 
-    unsigned short getSystemName() const; 
-    void setSystemName(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getSystemMode() const; 
-    void setSystemMode(unsigned char pX); 
-
-    unsigned char getChangeOptions() const; 
-    void setChangeOptions(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SystemID& rhs) const;
+     bool operator ==(const SystemID& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

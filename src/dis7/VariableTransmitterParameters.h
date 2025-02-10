@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Relates to radios. NOT COMPLETE. Section 6.2.94
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT VariableTransmitterParameters
+struct EXPORT_MACRO VariableTransmitterParameters
 {
-protected:
   /** Type of VTP. Enumeration from EBV */
-  unsigned int _recordType; 
+  unsigned int recordType;
 
   /** Length, in bytes */
-  unsigned int _recordLength; 
+  unsigned int recordLength;
 
-
- public:
     VariableTransmitterParameters();
     virtual ~VariableTransmitterParameters();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordType() const; 
-    void setRecordType(unsigned int pX); 
 
-    unsigned int getRecordLength() const; 
-    void setRecordLength(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const VariableTransmitterParameters& rhs) const;
+     bool operator ==(const VariableTransmitterParameters& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

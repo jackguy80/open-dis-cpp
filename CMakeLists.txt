@@ -3,7 +3,7 @@ project(OpenDIS VERSION 1.0.1)
 
 # Build options
 option(BUILD_SHARED_LIBS "build shared libraries" ON)
-option(BUILD_EXAMPLES "build example sender/receiver applications" OFF)
+option(BUILD_EXAMPLES "build example sender/receiver applications" ON)
 option(BUILD_TESTS "build unit tests" OFF)
 
 # Enforce a C++11 compliant compiler
@@ -17,6 +17,8 @@ include(GNUInstallDirs)
 # Define OpenDIS6 Library
 add_library(OpenDIS6 "")
 
+target_compile_definitions(OpenDIS6 PUBLIC EXPORT_LIBRARY)
+
 # Add src/ to the include directories to OpenDIS6
 target_include_directories(OpenDIS6
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
@@ -25,6 +27,8 @@ target_include_directories(OpenDIS6
 
 # Define OpenDIS7 Library
 add_library(OpenDIS7 "")
+
+target_compile_definitions(OpenDIS7 PUBLIC EXPORT_LIBRARY)
 
 # Add src/ to the include directories to DIS7
 target_include_directories(OpenDIS7

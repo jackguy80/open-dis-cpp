@@ -1,52 +1,48 @@
 #pragma once
 
-#include "dis6/GridAxisRecord.h"
-#include "dis6/opendis6_export.h"
-#include "dis6/utils/DataStream.h"
-#include <cstdint>
+#include "OneByteChunk.h"
 #include <vector>
+#include "GridAxisRecord.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
-namespace DIS {
+
+namespace DIS
+{
 // 5.2.44: Grid data record, representation 0
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All
-// rights reserved.
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT GridAxisRecordRepresentation0 : public GridAxisRecord {
-protected:
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO GridAxisRecordRepresentation0 : public GridAxisRecord
+{
   /** number of bytes of environmental state data */
-  unsigned short _numberOfBytes;
+  unsigned short numberOfBytes;
 
-  /** variable length list of data parameters ^^^this is wrong--need padding as
-   * well */
-  std::vector<uint8_t> _dataValues;
+  /** variable length variablelist of data parameters ^^^this is wrong--need padding as well */
+  std::vector<OneByteChunk> dataValues;
 
-public:
-  GridAxisRecordRepresentation0();
-  virtual ~GridAxisRecordRepresentation0();
+    GridAxisRecordRepresentation0();
+    virtual ~GridAxisRecordRepresentation0();
 
-  virtual void marshal(DataStream &dataStream) const;
-  virtual void unmarshal(DataStream &dataStream);
+    virtual void marshal(DataStream& dataStream) const;
+    virtual void unmarshal(DataStream& dataStream);
 
-  unsigned short getNumberOfBytes() const;
 
-  std::vector<uint8_t> &getDataValues();
-  const std::vector<uint8_t> &getDataValues() const;
-  void setDataValues(const std::vector<uint8_t> &pX);
+     virtual int getMarshalledSize() const;
 
-  virtual int getMarshalledSize() const;
-
-  bool operator==(const GridAxisRecordRepresentation0 &rhs) const;
+     bool operator ==(const GridAxisRecordRepresentation0& rhs) const;
 };
-} // namespace DIS
-
+}
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
 //  are met:
-//
+// 
 //  * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 // * Redistributions in binary form must reproduce the above copyright
@@ -59,7 +55,7 @@ public:
 // nor the names of its contributors may be used to endorse or
 //  promote products derived from this software without specific
 // prior written permission.
-//
+// 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS

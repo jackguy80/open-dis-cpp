@@ -1,76 +1,84 @@
-#include <dis6/IntercomCommunicationsParameters.h>
+#include "IntercomCommunicationsParameters.h"
 
 using namespace DIS;
 
-IntercomCommunicationsParameters::IntercomCommunicationsParameters()
-    : _recordType(0), _recordLength(0), _recordSpecificField(0) {}
 
-IntercomCommunicationsParameters::~IntercomCommunicationsParameters() {}
-
-unsigned short IntercomCommunicationsParameters::getRecordType() const {
-  return _recordType;
+IntercomCommunicationsParameters::IntercomCommunicationsParameters():
+   recordType(0), 
+   recordLength(0), 
+   parameterValues(0)
+{
 }
 
-void IntercomCommunicationsParameters::setRecordType(unsigned short pX) {
-  _recordType = pX;
+IntercomCommunicationsParameters::~IntercomCommunicationsParameters()
+{
+    parameterValues.clear();
 }
 
-unsigned short IntercomCommunicationsParameters::getRecordLength() const {
-  return _recordLength;
+void IntercomCommunicationsParameters::marshal(DataStream& dataStream) const
+{
+    dataStream << recordType;
+    dataStream << ( unsigned short )parameterValues.size();
+
+     for(size_t idx = 0; idx < parameterValues.size(); idx++)
+     {
+        OneByteChunk x = parameterValues[idx];
+        x.marshal(dataStream);
+     }
+
 }
 
-void IntercomCommunicationsParameters::setRecordLength(unsigned short pX) {
-  _recordLength = pX;
+void IntercomCommunicationsParameters::unmarshal(DataStream& dataStream)
+{
+    dataStream >> recordType;
+    dataStream >> recordLength;
+
+     parameterValues.clear();
+     for(size_t idx = 0; idx < recordLength; idx++)
+     {
+        OneByteChunk x;
+        x.unmarshal(dataStream);
+        parameterValues.push_back(x);
+     }
 }
 
-unsigned int IntercomCommunicationsParameters::getRecordSpecificField() const {
-  return _recordSpecificField;
-}
 
-void IntercomCommunicationsParameters::setRecordSpecificField(unsigned int pX) {
-  _recordSpecificField = pX;
-}
+bool IntercomCommunicationsParameters::operator ==(const IntercomCommunicationsParameters& rhs) const
+ {
+     bool ivarsEqual = true;
 
-void IntercomCommunicationsParameters::marshal(DataStream &dataStream) const {
-  dataStream << _recordType;
-  dataStream << _recordLength;
-  dataStream << _recordSpecificField;
-}
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
 
-void IntercomCommunicationsParameters::unmarshal(DataStream &dataStream) {
-  dataStream >> _recordType;
-  dataStream >> _recordLength;
-  dataStream >> _recordSpecificField;
-}
+     for(size_t idx = 0; idx < parameterValues.size(); idx++)
+     {
+        if( ! ( parameterValues[idx] == rhs.parameterValues[idx]) ) ivarsEqual = false;
+     }
 
-bool IntercomCommunicationsParameters::operator==(
-    const IntercomCommunicationsParameters &rhs) const {
-  auto ivarsEqual = true;
 
-  if (!(_recordType == rhs._recordType))
-    ivarsEqual = false;
-  if (!(_recordLength == rhs._recordLength))
-    ivarsEqual = false;
-  if (!(_recordSpecificField == rhs._recordSpecificField))
-    ivarsEqual = false;
+    return ivarsEqual;
+ }
 
-  return ivarsEqual;
-}
+int IntercomCommunicationsParameters::getMarshalledSize() const
+{
+   int marshalSize = 0;
 
-int IntercomCommunicationsParameters::getMarshalledSize() const {
-  auto marshalSize = 0;
+   marshalSize = marshalSize + 2;  // recordType
+   marshalSize = marshalSize + 2;  // recordLength
 
-  marshalSize = marshalSize + 2; // _recordType
-  marshalSize = marshalSize + 2; // _recordLength
-  marshalSize = marshalSize + 4; // _recordSpecificField
-  return marshalSize;
+   for(int idx=0; idx < parameterValues.size(); idx++)
+   {
+        OneByteChunk listElement = parameterValues[idx];
+        marshalSize = marshalSize + listElement.getMarshalledSize();
+    }
+
+    return marshalSize;
 }
 
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
 //  are met:
-//
+// 
 //  * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 // * Redistributions in binary form must reproduce the above copyright
@@ -83,7 +91,7 @@ int IntercomCommunicationsParameters::getMarshalledSize() const {
 // nor the names of its contributors may be used to endorse or
 //  promote products derived from this software without specific
 // prior written permission.
-//
+// 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS

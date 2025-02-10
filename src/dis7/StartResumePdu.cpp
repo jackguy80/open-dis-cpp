@@ -1,110 +1,34 @@
-#include <dis7/StartResumePdu.h>
+#include "StartResumePdu.h"
 
 using namespace DIS;
 
 
 StartResumePdu::StartResumePdu() : SimulationManagementFamilyPdu(),
-   _originatingID(), 
-   _receivingID(), 
-   _realWorldTime(), 
-   _simulationTime(), 
-   _requestID(0)
+   realWorldTime(), 
+   simulationTime(), 
+   requestID(0)
 {
-    setPduType( 13 );
+    pduType = 13;
 }
 
 StartResumePdu::~StartResumePdu()
 {
 }
 
-EntityID& StartResumePdu::getOriginatingID() 
-{
-    return _originatingID;
-}
-
-const EntityID& StartResumePdu::getOriginatingID() const
-{
-    return _originatingID;
-}
-
-void StartResumePdu::setOriginatingID(const EntityID &pX)
-{
-    _originatingID = pX;
-}
-
-EntityID& StartResumePdu::getReceivingID() 
-{
-    return _receivingID;
-}
-
-const EntityID& StartResumePdu::getReceivingID() const
-{
-    return _receivingID;
-}
-
-void StartResumePdu::setReceivingID(const EntityID &pX)
-{
-    _receivingID = pX;
-}
-
-ClockTime& StartResumePdu::getRealWorldTime() 
-{
-    return _realWorldTime;
-}
-
-const ClockTime& StartResumePdu::getRealWorldTime() const
-{
-    return _realWorldTime;
-}
-
-void StartResumePdu::setRealWorldTime(const ClockTime &pX)
-{
-    _realWorldTime = pX;
-}
-
-ClockTime& StartResumePdu::getSimulationTime() 
-{
-    return _simulationTime;
-}
-
-const ClockTime& StartResumePdu::getSimulationTime() const
-{
-    return _simulationTime;
-}
-
-void StartResumePdu::setSimulationTime(const ClockTime &pX)
-{
-    _simulationTime = pX;
-}
-
-unsigned int StartResumePdu::getRequestID() const
-{
-    return _requestID;
-}
-
-void StartResumePdu::setRequestID(unsigned int pX)
-{
-    _requestID = pX;
-}
-
 void StartResumePdu::marshal(DataStream& dataStream) const
 {
     SimulationManagementFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _originatingID.marshal(dataStream);
-    _receivingID.marshal(dataStream);
-    _realWorldTime.marshal(dataStream);
-    _simulationTime.marshal(dataStream);
-    dataStream << _requestID;
+    realWorldTime.marshal(dataStream);
+    simulationTime.marshal(dataStream);
+    dataStream << requestID;
 }
 
 void StartResumePdu::unmarshal(DataStream& dataStream)
 {
     SimulationManagementFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _originatingID.unmarshal(dataStream);
-    _receivingID.unmarshal(dataStream);
-    _realWorldTime.unmarshal(dataStream);
-    _simulationTime.unmarshal(dataStream);
-    dataStream >> _requestID;
+    realWorldTime.unmarshal(dataStream);
+    simulationTime.unmarshal(dataStream);
+    dataStream >> requestID;
 }
 
 
@@ -114,11 +38,9 @@ bool StartResumePdu::operator ==(const StartResumePdu& rhs) const
 
      ivarsEqual = SimulationManagementFamilyPdu::operator==(rhs);
 
-     if( ! (_originatingID == rhs._originatingID) ) ivarsEqual = false;
-     if( ! (_receivingID == rhs._receivingID) ) ivarsEqual = false;
-     if( ! (_realWorldTime == rhs._realWorldTime) ) ivarsEqual = false;
-     if( ! (_simulationTime == rhs._simulationTime) ) ivarsEqual = false;
-     if( ! (_requestID == rhs._requestID) ) ivarsEqual = false;
+     if( ! (realWorldTime == rhs.realWorldTime) ) ivarsEqual = false;
+     if( ! (simulationTime == rhs.simulationTime) ) ivarsEqual = false;
+     if( ! (requestID == rhs.requestID) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -128,11 +50,9 @@ int StartResumePdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = SimulationManagementFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _originatingID.getMarshalledSize();  // _originatingID
-   marshalSize = marshalSize + _receivingID.getMarshalledSize();  // _receivingID
-   marshalSize = marshalSize + _realWorldTime.getMarshalledSize();  // _realWorldTime
-   marshalSize = marshalSize + _simulationTime.getMarshalledSize();  // _simulationTime
-   marshalSize = marshalSize + 4;  // _requestID
+   marshalSize = marshalSize + realWorldTime.getMarshalledSize();  // realWorldTime
+   marshalSize = marshalSize + simulationTime.getMarshalledSize();  // simulationTime
+   marshalSize = marshalSize + 4;  // requestID
     return marshalSize;
 }
 

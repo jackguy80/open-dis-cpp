@@ -1,112 +1,38 @@
-#include <dis6/IsGroupOfPdu.h>
+#include "IsGroupOfPdu.h"
 
 using namespace DIS;
 
 
 IsGroupOfPdu::IsGroupOfPdu() : EntityManagementFamilyPdu(),
-   _groupEntityID(), 
-   _groupedEntityCategory(0), 
-   _numberOfGroupedEntities(0), 
-   _pad2(0), 
-   _latitude(0.0), 
-   _longitude(0.0)
+   groupEntityID(), 
+   groupedEntityCategory(0), 
+   numberOfGroupedEntities(0), 
+   pad2(0), 
+   latitude(0.0), 
+   longitude(0.0), 
+   groupedEntityDescriptions(0)
 {
-    setPduType( 34 );
+    pduType = 34;
 }
 
 IsGroupOfPdu::~IsGroupOfPdu()
 {
-    _groupedEntityDescriptions.clear();
-}
-
-EntityID& IsGroupOfPdu::getGroupEntityID() 
-{
-    return _groupEntityID;
-}
-
-const EntityID& IsGroupOfPdu::getGroupEntityID() const
-{
-    return _groupEntityID;
-}
-
-void IsGroupOfPdu::setGroupEntityID(const EntityID &pX)
-{
-    _groupEntityID = pX;
-}
-
-unsigned char IsGroupOfPdu::getGroupedEntityCategory() const
-{
-    return _groupedEntityCategory;
-}
-
-void IsGroupOfPdu::setGroupedEntityCategory(unsigned char pX)
-{
-    _groupedEntityCategory = pX;
-}
-
-unsigned char IsGroupOfPdu::getNumberOfGroupedEntities() const
-{
-   return _groupedEntityDescriptions.size();
-}
-
-unsigned int IsGroupOfPdu::getPad2() const
-{
-    return _pad2;
-}
-
-void IsGroupOfPdu::setPad2(unsigned int pX)
-{
-    _pad2 = pX;
-}
-
-double IsGroupOfPdu::getLatitude() const
-{
-    return _latitude;
-}
-
-void IsGroupOfPdu::setLatitude(double pX)
-{
-    _latitude = pX;
-}
-
-double IsGroupOfPdu::getLongitude() const
-{
-    return _longitude;
-}
-
-void IsGroupOfPdu::setLongitude(double pX)
-{
-    _longitude = pX;
-}
-
-std::vector<VariableDatum>& IsGroupOfPdu::getGroupedEntityDescriptions() 
-{
-    return _groupedEntityDescriptions;
-}
-
-const std::vector<VariableDatum>& IsGroupOfPdu::getGroupedEntityDescriptions() const
-{
-    return _groupedEntityDescriptions;
-}
-
-void IsGroupOfPdu::setGroupedEntityDescriptions(const std::vector<VariableDatum>& pX)
-{
-     _groupedEntityDescriptions = pX;
+    groupedEntityDescriptions.clear();
 }
 
 void IsGroupOfPdu::marshal(DataStream& dataStream) const
 {
     EntityManagementFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _groupEntityID.marshal(dataStream);
-    dataStream << _groupedEntityCategory;
-    dataStream << ( unsigned char )_groupedEntityDescriptions.size();
-    dataStream << _pad2;
-    dataStream << _latitude;
-    dataStream << _longitude;
+    groupEntityID.marshal(dataStream);
+    dataStream << groupedEntityCategory;
+    dataStream << ( unsigned char )groupedEntityDescriptions.size();
+    dataStream << pad2;
+    dataStream << latitude;
+    dataStream << longitude;
 
-     for(size_t idx = 0; idx < _groupedEntityDescriptions.size(); idx++)
+     for(size_t idx = 0; idx < groupedEntityDescriptions.size(); idx++)
      {
-        VariableDatum x = _groupedEntityDescriptions[idx];
+        VariableDatum x = groupedEntityDescriptions[idx];
         x.marshal(dataStream);
      }
 
@@ -115,19 +41,19 @@ void IsGroupOfPdu::marshal(DataStream& dataStream) const
 void IsGroupOfPdu::unmarshal(DataStream& dataStream)
 {
     EntityManagementFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _groupEntityID.unmarshal(dataStream);
-    dataStream >> _groupedEntityCategory;
-    dataStream >> _numberOfGroupedEntities;
-    dataStream >> _pad2;
-    dataStream >> _latitude;
-    dataStream >> _longitude;
+    groupEntityID.unmarshal(dataStream);
+    dataStream >> groupedEntityCategory;
+    dataStream >> numberOfGroupedEntities;
+    dataStream >> pad2;
+    dataStream >> latitude;
+    dataStream >> longitude;
 
-     _groupedEntityDescriptions.clear();
-     for(size_t idx = 0; idx < _numberOfGroupedEntities; idx++)
+     groupedEntityDescriptions.clear();
+     for(size_t idx = 0; idx < numberOfGroupedEntities; idx++)
      {
         VariableDatum x;
         x.unmarshal(dataStream);
-        _groupedEntityDescriptions.push_back(x);
+        groupedEntityDescriptions.push_back(x);
      }
 }
 
@@ -138,15 +64,15 @@ bool IsGroupOfPdu::operator ==(const IsGroupOfPdu& rhs) const
 
      ivarsEqual = EntityManagementFamilyPdu::operator==(rhs);
 
-     if( ! (_groupEntityID == rhs._groupEntityID) ) ivarsEqual = false;
-     if( ! (_groupedEntityCategory == rhs._groupedEntityCategory) ) ivarsEqual = false;
-     if( ! (_pad2 == rhs._pad2) ) ivarsEqual = false;
-     if( ! (_latitude == rhs._latitude) ) ivarsEqual = false;
-     if( ! (_longitude == rhs._longitude) ) ivarsEqual = false;
+     if( ! (groupEntityID == rhs.groupEntityID) ) ivarsEqual = false;
+     if( ! (groupedEntityCategory == rhs.groupedEntityCategory) ) ivarsEqual = false;
+     if( ! (pad2 == rhs.pad2) ) ivarsEqual = false;
+     if( ! (latitude == rhs.latitude) ) ivarsEqual = false;
+     if( ! (longitude == rhs.longitude) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _groupedEntityDescriptions.size(); idx++)
+     for(size_t idx = 0; idx < groupedEntityDescriptions.size(); idx++)
      {
-        if( ! ( _groupedEntityDescriptions[idx] == rhs._groupedEntityDescriptions[idx]) ) ivarsEqual = false;
+        if( ! ( groupedEntityDescriptions[idx] == rhs.groupedEntityDescriptions[idx]) ) ivarsEqual = false;
      }
 
 
@@ -158,16 +84,16 @@ int IsGroupOfPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = EntityManagementFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _groupEntityID.getMarshalledSize();  // _groupEntityID
-   marshalSize = marshalSize + 1;  // _groupedEntityCategory
-   marshalSize = marshalSize + 1;  // _numberOfGroupedEntities
-   marshalSize = marshalSize + 4;  // _pad2
-   marshalSize = marshalSize + 8;  // _latitude
-   marshalSize = marshalSize + 8;  // _longitude
+   marshalSize = marshalSize + groupEntityID.getMarshalledSize();  // groupEntityID
+   marshalSize = marshalSize + 1;  // groupedEntityCategory
+   marshalSize = marshalSize + 1;  // numberOfGroupedEntities
+   marshalSize = marshalSize + 4;  // pad2
+   marshalSize = marshalSize + 8;  // latitude
+   marshalSize = marshalSize + 8;  // longitude
 
-   for(unsigned long long idx=0; idx < _groupedEntityDescriptions.size(); idx++)
+   for(int idx=0; idx < groupedEntityDescriptions.size(); idx++)
    {
-        VariableDatum listElement = _groupedEntityDescriptions[idx];
+        VariableDatum listElement = groupedEntityDescriptions[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

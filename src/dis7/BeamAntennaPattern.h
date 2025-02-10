@@ -1,92 +1,63 @@
 #pragma once
 
-#include <dis7/EulerAngles.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EulerAngles.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Used when the antenna pattern type field has a value of 1. Specifies the direction, pattern, and polarization of radiation from an antenna. Section 6.2.9.2
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT BeamAntennaPattern
+struct EXPORT_MACRO BeamAntennaPattern
 {
-protected:
   /** The rotation that transforms the reference coordinate sytem into the beam coordinate system. Either world coordinates or entity coordinates may be used as the reference coordinate system, as specified by the reference system field of the antenna pattern record. */
-  EulerAngles _beamDirection; 
+  EulerAngles beamDirection;
 
-  float _azimuthBeamwidth; 
+  /** Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32 bit floating point number in units of radians. */
+  float azimuthBeamwidth;
 
-  float _elevationBeamwidth; 
+  /** This field shall specify the full width of the beam to the –3 dB power density points in the x-z plane of the beam coordinate system. Elevation beamwidth shall be represented by a 32-bit floating point number in units of radians. */
+  float elevationBeamwidth;
 
-  float _referenceSystem; 
+  /** The reference coordinate system wrt which beam direction  is specified. This field should not change over the duration of an exercise. World coordindate systemis prefered for exercises. The entity coordinate system should be used only when highly directional antennas must be precisely modeled. */
+  unsigned char referenceSystem;
 
-  unsigned char _padding1; 
+  /** Padding */
+  unsigned char padding1;
 
-  unsigned short _padding2; 
+  /** Padding */
+  unsigned short padding2;
 
   /** This field shall specify the magnitude of the Z-component (in beam coordinates) of the Electrical field at some arbitrary single point in the main beam and in the far field of the antenna.  */
-  float _ez; 
+  float ez;
 
   /** This field shall specify the magnitude of the X-component (in beam coordinates) of the Electri- cal field at some arbitrary single point in the main beam and in the far field of the antenna. */
-  float _ex; 
+  float ex;
 
   /** This field shall specify the phase angle between EZ and EX in radians. If fully omni-direc- tional antenna is modeled using beam pattern type one, the omni-directional antenna shall be repre- sented by beam direction Euler angles psi, theta, and phi of zero, an azimuth beamwidth of 2PI, and an elevation beamwidth of PI */
-  float _phase; 
+  float phase;
 
   /** padding */
-  unsigned int _padding3; 
+  unsigned int padding3;
 
-
- public:
     BeamAntennaPattern();
     virtual ~BeamAntennaPattern();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EulerAngles& getBeamDirection(); 
-    const EulerAngles&  getBeamDirection() const; 
-    void setBeamDirection(const EulerAngles    &pX);
 
-    float getAzimuthBeamwidth() const; 
-    void setAzimuthBeamwidth(float pX); 
+     virtual int getMarshalledSize() const;
 
-    float getElevationBeamwidth() const; 
-    void setElevationBeamwidth(float pX); 
-
-    float getReferenceSystem() const; 
-    void setReferenceSystem(float pX); 
-
-    unsigned char getPadding1() const; 
-    void setPadding1(unsigned char pX); 
-
-    unsigned short getPadding2() const; 
-    void setPadding2(unsigned short pX); 
-
-    float getEz() const; 
-    void setEz(float pX); 
-
-    float getEx() const; 
-    void setEx(float pX); 
-
-    float getPhase() const; 
-    void setPhase(float pX); 
-
-    unsigned int getPadding3() const; 
-    void setPadding3(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const BeamAntennaPattern& rhs) const;
+     bool operator ==(const BeamAntennaPattern& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

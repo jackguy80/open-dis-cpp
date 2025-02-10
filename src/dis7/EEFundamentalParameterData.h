@@ -1,65 +1,47 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Contains electromagnetic emmission regeneration parameters that are variable throught a scenario. Section 6.2.22.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT EEFundamentalParameterData
+struct EXPORT_MACRO EEFundamentalParameterData
 {
-protected:
   /** center frequency of the emission in hertz. */
-  float _frequency; 
+  float frequency;
 
   /** Bandwidth of the frequencies corresponding to the fequency field. */
-  float _frequencyRange; 
+  float frequencyRange;
 
   /** Effective radiated power for the emission in DdBm. For a radar noise jammer, indicates the peak of the transmitted power. */
-  float _effectiveRadiatedPower; 
+  float effectiveRadiatedPower;
 
   /** Average repetition frequency of the emission in hertz. */
-  float _pulseRepetitionFrequency; 
+  float pulseRepetitionFrequency;
 
   /** Average pulse width  of the emission in microseconds. */
-  float _pulseWidth; 
+  float pulseWidth;
 
-
- public:
     EEFundamentalParameterData();
     virtual ~EEFundamentalParameterData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    float getFrequency() const; 
-    void setFrequency(float pX); 
 
-    float getFrequencyRange() const; 
-    void setFrequencyRange(float pX); 
+     virtual int getMarshalledSize() const;
 
-    float getEffectiveRadiatedPower() const; 
-    void setEffectiveRadiatedPower(float pX); 
-
-    float getPulseRepetitionFrequency() const; 
-    void setPulseRepetitionFrequency(float pX); 
-
-    float getPulseWidth() const; 
-    void setPulseWidth(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EEFundamentalParameterData& rhs) const;
+     bool operator ==(const EEFundamentalParameterData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

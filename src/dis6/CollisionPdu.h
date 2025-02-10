@@ -1,94 +1,62 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/EventID.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/EntityInformationFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "EventID.h"
+#include "Vector3Float.h"
+#include "Vector3Float.h"
+#include "EntityInformationFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.3.2. Information about a collision. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT CollisionPdu : public EntityInformationFamilyPdu
+struct EXPORT_MACRO CollisionPdu : public EntityInformationFamilyPdu
 {
-protected:
   /** ID of the entity that issued the collision PDU */
-  EntityID _issuingEntityID; 
+  EntityID issuingEntityID;
 
   /** ID of entity that has collided with the issuing entity ID */
-  EntityID _collidingEntityID; 
+  EntityID collidingEntityID;
 
   /** ID of event */
-  EventID _eventID; 
+  EventID eventID;
 
   /** ID of event */
-  unsigned char _collisionType; 
+  unsigned char collisionType;
 
   /** some padding */
-  char _pad; 
+  char pad;
 
   /** velocity at collision */
-  Vector3Float _velocity; 
+  Vector3Float velocity;
 
   /** mass of issuing entity */
-  float _mass; 
+  float mass;
 
   /** Location with respect to entity the issuing entity collided with */
-  Vector3Float _location; 
+  Vector3Float location;
 
-
- public:
     CollisionPdu();
     virtual ~CollisionPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getIssuingEntityID(); 
-    const EntityID&  getIssuingEntityID() const; 
-    void setIssuingEntityID(const EntityID    &pX);
 
-    EntityID& getCollidingEntityID(); 
-    const EntityID&  getCollidingEntityID() const; 
-    void setCollidingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    EventID& getEventID(); 
-    const EventID&  getEventID() const; 
-    void setEventID(const EventID    &pX);
-
-    unsigned char getCollisionType() const; 
-    void setCollisionType(unsigned char pX); 
-
-    char getPad() const; 
-    void setPad(char pX); 
-
-    Vector3Float& getVelocity(); 
-    const Vector3Float&  getVelocity() const; 
-    void setVelocity(const Vector3Float    &pX);
-
-    float getMass() const; 
-    void setMass(float pX); 
-
-    Vector3Float& getLocation(); 
-    const Vector3Float&  getLocation() const; 
-    void setLocation(const Vector3Float    &pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const CollisionPdu& rhs) const;
+     bool operator ==(const CollisionPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,19 +1,20 @@
-#include <dis7/LinearSegmentParameter.h>
+#include "LinearSegmentParameter.h"
 
 using namespace DIS;
 
 
 LinearSegmentParameter::LinearSegmentParameter():
-   _segmentNumber(0), 
-   _segmentModification(0), 
-   _generalSegmentAppearance(0), 
-   _specificSegmentAppearance(0), 
-   _segmentLocation(), 
-   _segmentOrientation(), 
-   _segmentLength(0), 
-   _segmentWidth(0), 
-   _segmentHeight(0), 
-   _segmentDepth(0)
+   segmentNumber(0), 
+   segmentModification(0), 
+   generalSegmentAppearance(0), 
+   specificSegmentAppearance(0), 
+   segmentLocation(), 
+   segmentOrientation(), 
+   segmentLength(0.0), 
+   segmentWidth(0.0), 
+   segmentHeight(0.0), 
+   segmentDepth(0.0), 
+   padding(0)
 {
 }
 
@@ -21,142 +22,34 @@ LinearSegmentParameter::~LinearSegmentParameter()
 {
 }
 
-unsigned char LinearSegmentParameter::getSegmentNumber() const
-{
-    return _segmentNumber;
-}
-
-void LinearSegmentParameter::setSegmentNumber(unsigned char pX)
-{
-    _segmentNumber = pX;
-}
-
-unsigned char LinearSegmentParameter::getSegmentModification() const
-{
-    return _segmentModification;
-}
-
-void LinearSegmentParameter::setSegmentModification(unsigned char pX)
-{
-    _segmentModification = pX;
-}
-
-unsigned short LinearSegmentParameter::getGeneralSegmentAppearance() const
-{
-    return _generalSegmentAppearance;
-}
-
-void LinearSegmentParameter::setGeneralSegmentAppearance(unsigned short pX)
-{
-    _generalSegmentAppearance = pX;
-}
-
-unsigned short LinearSegmentParameter::getSpecificSegmentAppearance() const
-{
-    return _specificSegmentAppearance;
-}
-
-void LinearSegmentParameter::setSpecificSegmentAppearance(unsigned short pX)
-{
-    _specificSegmentAppearance = pX;
-}
-
-Vector3Double& LinearSegmentParameter::getSegmentLocation() 
-{
-    return _segmentLocation;
-}
-
-const Vector3Double& LinearSegmentParameter::getSegmentLocation() const
-{
-    return _segmentLocation;
-}
-
-void LinearSegmentParameter::setSegmentLocation(const Vector3Double &pX)
-{
-    _segmentLocation = pX;
-}
-
-EulerAngles& LinearSegmentParameter::getSegmentOrientation() 
-{
-    return _segmentOrientation;
-}
-
-const EulerAngles& LinearSegmentParameter::getSegmentOrientation() const
-{
-    return _segmentOrientation;
-}
-
-void LinearSegmentParameter::setSegmentOrientation(const EulerAngles &pX)
-{
-    _segmentOrientation = pX;
-}
-
-unsigned short LinearSegmentParameter::getSegmentLength() const
-{
-    return _segmentLength;
-}
-
-void LinearSegmentParameter::setSegmentLength(unsigned short pX)
-{
-    _segmentLength = pX;
-}
-
-unsigned short LinearSegmentParameter::getSegmentWidth() const
-{
-    return _segmentWidth;
-}
-
-void LinearSegmentParameter::setSegmentWidth(unsigned short pX)
-{
-    _segmentWidth = pX;
-}
-
-unsigned short LinearSegmentParameter::getSegmentHeight() const
-{
-    return _segmentHeight;
-}
-
-void LinearSegmentParameter::setSegmentHeight(unsigned short pX)
-{
-    _segmentHeight = pX;
-}
-
-unsigned short LinearSegmentParameter::getSegmentDepth() const
-{
-    return _segmentDepth;
-}
-
-void LinearSegmentParameter::setSegmentDepth(unsigned short pX)
-{
-    _segmentDepth = pX;
-}
-
 void LinearSegmentParameter::marshal(DataStream& dataStream) const
 {
-    dataStream << _segmentNumber;
-    dataStream << _segmentModification;
-    dataStream << _generalSegmentAppearance;
-    dataStream << _specificSegmentAppearance;
-    _segmentLocation.marshal(dataStream);
-    _segmentOrientation.marshal(dataStream);
-    dataStream << _segmentLength;
-    dataStream << _segmentWidth;
-    dataStream << _segmentHeight;
-    dataStream << _segmentDepth;
+    dataStream << segmentNumber;
+    dataStream << segmentModification;
+    dataStream << generalSegmentAppearance;
+    dataStream << specificSegmentAppearance;
+    segmentLocation.marshal(dataStream);
+    segmentOrientation.marshal(dataStream);
+    dataStream << segmentLength;
+    dataStream << segmentWidth;
+    dataStream << segmentHeight;
+    dataStream << segmentDepth;
+    dataStream << padding;
 }
 
 void LinearSegmentParameter::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _segmentNumber;
-    dataStream >> _segmentModification;
-    dataStream >> _generalSegmentAppearance;
-    dataStream >> _specificSegmentAppearance;
-    _segmentLocation.unmarshal(dataStream);
-    _segmentOrientation.unmarshal(dataStream);
-    dataStream >> _segmentLength;
-    dataStream >> _segmentWidth;
-    dataStream >> _segmentHeight;
-    dataStream >> _segmentDepth;
+    dataStream >> segmentNumber;
+    dataStream >> segmentModification;
+    dataStream >> generalSegmentAppearance;
+    dataStream >> specificSegmentAppearance;
+    segmentLocation.unmarshal(dataStream);
+    segmentOrientation.unmarshal(dataStream);
+    dataStream >> segmentLength;
+    dataStream >> segmentWidth;
+    dataStream >> segmentHeight;
+    dataStream >> segmentDepth;
+    dataStream >> padding;
 }
 
 
@@ -164,16 +57,17 @@ bool LinearSegmentParameter::operator ==(const LinearSegmentParameter& rhs) cons
  {
      bool ivarsEqual = true;
 
-     if( ! (_segmentNumber == rhs._segmentNumber) ) ivarsEqual = false;
-     if( ! (_segmentModification == rhs._segmentModification) ) ivarsEqual = false;
-     if( ! (_generalSegmentAppearance == rhs._generalSegmentAppearance) ) ivarsEqual = false;
-     if( ! (_specificSegmentAppearance == rhs._specificSegmentAppearance) ) ivarsEqual = false;
-     if( ! (_segmentLocation == rhs._segmentLocation) ) ivarsEqual = false;
-     if( ! (_segmentOrientation == rhs._segmentOrientation) ) ivarsEqual = false;
-     if( ! (_segmentLength == rhs._segmentLength) ) ivarsEqual = false;
-     if( ! (_segmentWidth == rhs._segmentWidth) ) ivarsEqual = false;
-     if( ! (_segmentHeight == rhs._segmentHeight) ) ivarsEqual = false;
-     if( ! (_segmentDepth == rhs._segmentDepth) ) ivarsEqual = false;
+     if( ! (segmentNumber == rhs.segmentNumber) ) ivarsEqual = false;
+     if( ! (segmentModification == rhs.segmentModification) ) ivarsEqual = false;
+     if( ! (generalSegmentAppearance == rhs.generalSegmentAppearance) ) ivarsEqual = false;
+     if( ! (specificSegmentAppearance == rhs.specificSegmentAppearance) ) ivarsEqual = false;
+     if( ! (segmentLocation == rhs.segmentLocation) ) ivarsEqual = false;
+     if( ! (segmentOrientation == rhs.segmentOrientation) ) ivarsEqual = false;
+     if( ! (segmentLength == rhs.segmentLength) ) ivarsEqual = false;
+     if( ! (segmentWidth == rhs.segmentWidth) ) ivarsEqual = false;
+     if( ! (segmentHeight == rhs.segmentHeight) ) ivarsEqual = false;
+     if( ! (segmentDepth == rhs.segmentDepth) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -182,16 +76,17 @@ int LinearSegmentParameter::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _segmentNumber
-   marshalSize = marshalSize + 1;  // _segmentModification
-   marshalSize = marshalSize + 2;  // _generalSegmentAppearance
-   marshalSize = marshalSize + 2;  // _specificSegmentAppearance
-   marshalSize = marshalSize + _segmentLocation.getMarshalledSize();  // _segmentLocation
-   marshalSize = marshalSize + _segmentOrientation.getMarshalledSize();  // _segmentOrientation
-   marshalSize = marshalSize + 2;  // _segmentLength
-   marshalSize = marshalSize + 2;  // _segmentWidth
-   marshalSize = marshalSize + 2;  // _segmentHeight
-   marshalSize = marshalSize + 2;  // _segmentDepth
+   marshalSize = marshalSize + 1;  // segmentNumber
+   marshalSize = marshalSize + 1;  // segmentModification
+   marshalSize = marshalSize + 2;  // generalSegmentAppearance
+   marshalSize = marshalSize + 4;  // specificSegmentAppearance
+   marshalSize = marshalSize + segmentLocation.getMarshalledSize();  // segmentLocation
+   marshalSize = marshalSize + segmentOrientation.getMarshalledSize();  // segmentOrientation
+   marshalSize = marshalSize + 4;  // segmentLength
+   marshalSize = marshalSize + 4;  // segmentWidth
+   marshalSize = marshalSize + 4;  // segmentHeight
+   marshalSize = marshalSize + 4;  // segmentDepth
+   marshalSize = marshalSize + 4;  // padding
     return marshalSize;
 }
 

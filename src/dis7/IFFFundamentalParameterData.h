@@ -1,78 +1,53 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Fundamental IFF atc data. Section 6.2.45
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT IFFFundamentalParameterData
+struct EXPORT_MACRO IFFFundamentalParameterData
 {
-protected:
   /** ERP */
-  float _erp; 
+  float erp;
 
   /** frequency */
-  float _frequency; 
+  float frequency;
 
   /** pgrf */
-  float _pgrf; 
+  float pgrf;
 
   /** Pulse width */
-  float _pulseWidth; 
+  float pulseWidth;
 
   /** Burst length */
-  unsigned int _burstLength; 
+  unsigned int burstLength;
 
   /** Applicable modes enumeration */
-  unsigned char _applicableModes; 
+  unsigned char applicableModes;
 
   /** System-specific data */
-  unsigned char _systemSpecificData[3]; 
+  unsigned char systemSpecificData;
 
-
- public:
     IFFFundamentalParameterData();
     virtual ~IFFFundamentalParameterData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    float getErp() const; 
-    void setErp(float pX); 
 
-    float getFrequency() const; 
-    void setFrequency(float pX); 
+     virtual int getMarshalledSize() const;
 
-    float getPgrf() const; 
-    void setPgrf(float pX); 
-
-    float getPulseWidth() const; 
-    void setPulseWidth(float pX); 
-
-    unsigned int getBurstLength() const; 
-    void setBurstLength(unsigned int pX); 
-
-    unsigned char getApplicableModes() const; 
-    void setApplicableModes(unsigned char pX); 
-
-    unsigned char*  getSystemSpecificData(); 
-    const unsigned char*  getSystemSpecificData() const; 
-    void setSystemSpecificData( const unsigned char*    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IFFFundamentalParameterData& rhs) const;
+     bool operator ==(const IFFFundamentalParameterData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,52 +1,40 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The identification of the additional information layer number, layer-specific information, and the length of the layer. Section 6.2.52
+// The identification of the additional information layer number, layer-specific information, and the length of the layer. Section 6.2.51
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT LayerHeader
+struct EXPORT_MACRO LayerHeader
 {
-protected:
-  unsigned char _layerNumber; 
+  unsigned char layerNumber;
 
   /** field shall specify layer-specific information that varies by System Type (see 6.2.86) and Layer Number. */
-  unsigned char _layerSpecificInformation; 
+  unsigned char layerSpecificInformation;
 
   /** This field shall specify the length in octets of the layer, including the Layer Header record */
-  unsigned short _length; 
+  unsigned short length;
 
-
- public:
     LayerHeader();
     virtual ~LayerHeader();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getLayerNumber() const; 
-    void setLayerNumber(unsigned char pX); 
 
-    unsigned char getLayerSpecificInformation() const; 
-    void setLayerSpecificInformation(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getLength() const; 
-    void setLength(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const LayerHeader& rhs) const;
+     bool operator ==(const LayerHeader& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

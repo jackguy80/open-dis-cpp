@@ -1,70 +1,49 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.25. Identifies the type of radio
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT RadioEntityType
+struct EXPORT_MACRO RadioEntityType
 {
-protected:
   /** Kind of entity */
-  unsigned char _entityKind; 
+  unsigned char entityKind;
 
   /** Domain of entity (air, surface, subsurface, space, etc) */
-  unsigned char _domain; 
+  unsigned char domain;
 
   /** country to which the design of the entity is attributed */
-  unsigned short _country; 
+  unsigned short country;
 
   /** category of entity */
-  unsigned char _category; 
+  unsigned char category;
 
   /** specific info based on subcategory field */
-  unsigned char _nomenclatureVersion; 
+  unsigned char nomenclatureVersion;
 
-  unsigned short _nomenclature; 
+  unsigned short nomenclature;
 
-
- public:
     RadioEntityType();
     virtual ~RadioEntityType();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getEntityKind() const; 
-    void setEntityKind(unsigned char pX); 
 
-    unsigned char getDomain() const; 
-    void setDomain(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getCountry() const; 
-    void setCountry(unsigned short pX); 
-
-    unsigned char getCategory() const; 
-    void setCategory(unsigned char pX); 
-
-    unsigned char getNomenclatureVersion() const; 
-    void setNomenclatureVersion(unsigned char pX); 
-
-    unsigned short getNomenclature() const; 
-    void setNomenclature(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RadioEntityType& rhs) const;
+     bool operator ==(const RadioEntityType& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

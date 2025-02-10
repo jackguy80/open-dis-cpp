@@ -1,75 +1,56 @@
 #pragma once
 
-#include <dis6/FixedDatum.h>
-#include <dis6/VariableDatum.h>
+#include "FixedDatum.h"
+#include "VariableDatum.h"
 #include <vector>
-#include <dis6/SimulationManagementWithReliabilityFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "SimulationManagementWithReliabilityFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.12.11: reports the occurance of a significatnt event to the simulation manager. Needs manual     intervention to fix padding in variable datums. UNFINISHED.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT EventReportReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO EventReportReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
 {
-protected:
   /** Event type */
-  unsigned short _eventType; 
+  unsigned short eventType;
 
   /** padding */
-  unsigned int _pad1; 
+  unsigned int pad1;
 
   /** Fixed datum record count */
-  unsigned int _numberOfFixedDatumRecords; 
+  unsigned int numberOfFixedDatumRecords;
 
   /** variable datum record count */
-  unsigned int _numberOfVariableDatumRecords; 
+  unsigned int numberOfVariableDatumRecords;
 
   /** Fixed datum records */
-  std::vector<FixedDatum> _fixedDatumRecords; 
+  std::vector<FixedDatum> fixedDatumRecords;
 
   /** Variable datum records */
-  std::vector<VariableDatum> _variableDatumRecords; 
+  std::vector<VariableDatum> variableDatumRecords;
 
-
- public:
     EventReportReliablePdu();
     virtual ~EventReportReliablePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getEventType() const; 
-    void setEventType(unsigned short pX); 
 
-    unsigned int getPad1() const; 
-    void setPad1(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned int getNumberOfFixedDatumRecords() const; 
-
-    unsigned int getNumberOfVariableDatumRecords() const; 
-
-    std::vector<FixedDatum>& getFixedDatumRecords(); 
-    const std::vector<FixedDatum>& getFixedDatumRecords() const; 
-    void setFixedDatumRecords(const std::vector<FixedDatum>&    pX);
-
-    std::vector<VariableDatum>& getVariableDatumRecords(); 
-    const std::vector<VariableDatum>& getVariableDatumRecords() const; 
-    void setVariableDatumRecords(const std::vector<VariableDatum>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EventReportReliablePdu& rhs) const;
+     bool operator ==(const EventReportReliablePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

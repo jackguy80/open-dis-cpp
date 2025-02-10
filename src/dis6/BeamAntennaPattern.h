@@ -1,81 +1,60 @@
 #pragma once
 
-#include <dis6/Orientation.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "Orientation.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.4.2. Used when the antenna pattern type field has a value of 1. Specifies           the direction, patter, and polarization of radiation from an antenna.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT BeamAntennaPattern
+struct EXPORT_MACRO BeamAntennaPattern
 {
-protected:
   /** The rotation that transformst he reference coordinate sytem     into the beam coordinate system. Either world coordinates or entity coordinates may be used as the     reference coordinate system, as specified by teh reference system field of the antenna pattern record. */
-  Orientation _beamDirection; 
+  Orientation beamDirection;
 
-  float _azimuthBeamwidth; 
+  /** Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32 bit floating point number in units of radians. */
+  float azimuthBeamwidth;
 
-  float _referenceSystem; 
+  /** The full width of the beam to the –3 dB power density points in the x-z plane of the beam coordinate system. Elevation beamwidth shall be represented by a 32-bit floating point number in units of radians. */
+  float elevationBeamwidth;
 
-  short _padding1; 
+  /** The reference coordinate system wrt which beam direction      is specified. This field should not change over the duration of an exercise. World coordindate systemis      prefered for exercises. The entity coordinate system should be used only when highly directional antennas must be precisely modeled. */
+  float referenceSystem;
 
-  char _padding2; 
+  /** Padding */
+  short padding1;
+
+  /** Padding */
+  char padding2;
 
   /** Magnigute of the z-component in beam coordinates at some arbitrary      single point in the mainbeam      and in the far field of the antenna. */
-  float _ez; 
+  float ez;
 
   /** Magnigute of the x-component in beam coordinates at some arbitrary      single point in the mainbeam      and in the far field of the antenna. */
-  float _ex; 
+  float ex;
 
   /** THe phase angle between Ez and Ex in radians. */
-  float _phase; 
+  float phase;
 
-
- public:
     BeamAntennaPattern();
     virtual ~BeamAntennaPattern();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    Orientation& getBeamDirection(); 
-    const Orientation&  getBeamDirection() const; 
-    void setBeamDirection(const Orientation    &pX);
 
-    float getAzimuthBeamwidth() const; 
-    void setAzimuthBeamwidth(float pX); 
+     virtual int getMarshalledSize() const;
 
-    float getReferenceSystem() const; 
-    void setReferenceSystem(float pX); 
-
-    short getPadding1() const; 
-    void setPadding1(short pX); 
-
-    char getPadding2() const; 
-    void setPadding2(char pX); 
-
-    float getEz() const; 
-    void setEz(float pX); 
-
-    float getEx() const; 
-    void setEx(float pX); 
-
-    float getPhase() const; 
-    void setPhase(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const BeamAntennaPattern& rhs) const;
+     bool operator ==(const BeamAntennaPattern& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,11 +1,11 @@
-#include <dis7/NamedLocationIdentification.h>
+#include "NamedLocationIdentification.h"
 
 using namespace DIS;
 
 
 NamedLocationIdentification::NamedLocationIdentification():
-   _stationName(0), 
-   _stationNumber(0)
+   stationName(0), 
+   stationNumber(0)
 {
 }
 
@@ -13,36 +13,16 @@ NamedLocationIdentification::~NamedLocationIdentification()
 {
 }
 
-unsigned short NamedLocationIdentification::getStationName() const
-{
-    return _stationName;
-}
-
-void NamedLocationIdentification::setStationName(unsigned short pX)
-{
-    _stationName = pX;
-}
-
-unsigned short NamedLocationIdentification::getStationNumber() const
-{
-    return _stationNumber;
-}
-
-void NamedLocationIdentification::setStationNumber(unsigned short pX)
-{
-    _stationNumber = pX;
-}
-
 void NamedLocationIdentification::marshal(DataStream& dataStream) const
 {
-    dataStream << _stationName;
-    dataStream << _stationNumber;
+    dataStream << stationName;
+    dataStream << stationNumber;
 }
 
 void NamedLocationIdentification::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _stationName;
-    dataStream >> _stationNumber;
+    dataStream >> stationName;
+    dataStream >> stationNumber;
 }
 
 
@@ -50,8 +30,8 @@ bool NamedLocationIdentification::operator ==(const NamedLocationIdentification&
  {
      bool ivarsEqual = true;
 
-     if( ! (_stationName == rhs._stationName) ) ivarsEqual = false;
-     if( ! (_stationNumber == rhs._stationNumber) ) ivarsEqual = false;
+     if( ! (stationName == rhs.stationName) ) ivarsEqual = false;
+     if( ! (stationNumber == rhs.stationNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -60,8 +40,8 @@ int NamedLocationIdentification::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _stationName
-   marshalSize = marshalSize + 2;  // _stationNumber
+   marshalSize = marshalSize + 2;  // stationName
+   marshalSize = marshalSize + 2;  // stationNumber
     return marshalSize;
 }
 

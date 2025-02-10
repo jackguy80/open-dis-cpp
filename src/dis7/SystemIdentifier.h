@@ -1,59 +1,45 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "ChangeOptions.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The ID of the IFF emitting system. NOT COMPLETE. Section 6.2.86
+// The ID of the IFF emitting system. NOT COMPLETE. Section 6.2.87
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT SystemIdentifier
+struct EXPORT_MACRO SystemIdentifier
 {
-protected:
   /** general type of emitting system, an enumeration */
-  unsigned short _systemType; 
+  unsigned short systemType;
 
   /** named type of system, an enumeration */
-  unsigned short _systemName; 
+  unsigned short systemName;
 
   /** mode of operation for the system, an enumeration */
-  unsigned char _systemMode; 
+  unsigned short systemMode;
 
   /** status of this PDU, see section 6.2.15 */
-  unsigned char _changeOptions;
+  ChangeOptions changeOptions;
 
-
- public:
     SystemIdentifier();
     virtual ~SystemIdentifier();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSystemType() const; 
-    void setSystemType(unsigned short pX); 
 
-    unsigned short getSystemName() const; 
-    void setSystemName(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getSystemMode() const; 
-    void setSystemMode(unsigned char pX); 
-
-    unsigned char getChangeOptions() const;
-    void setChangeOptions(unsigned char pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SystemIdentifier& rhs) const;
+     bool operator ==(const SystemIdentifier& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

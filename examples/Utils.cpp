@@ -9,12 +9,11 @@
 #include <dis6/Orientation.h>
 #include <dis6/Vector3Float.h>
 #include <dis6/Vector3Double.h>
-#include <SDL_timer.h>
 
 ///\todo make cross platform solution
 void Example::sleep(unsigned int ms)
 {
-    SDL_Delay(ms);
+    //SDL_Delay(ms);
 }
 
 using namespace Example;
@@ -40,20 +39,20 @@ void HeloFlightDynamics::operator ()(double dt)
    float r_sin_rot = _radius * sin_rot;
 
    // set the position
-   position.setX( _ip.x + r_cos_rot );
-   position.setY( _ip.y );                    // hold this axis constant
-   position.setZ( _ip.z + r_sin_rot );
+   position.x =  _ip.x + r_cos_rot;
+   position.y = _ip.y;                    // hold this axis constant
+   position.z = _ip.z + r_sin_rot;
 
    // set the velocity vector
    float vx = -_angular_velocity * r_sin_rot;
-   velocity.setX( vx );
-   velocity.setY( 0.f );
-   velocity.setZ( _angular_velocity * r_cos_rot );
+   velocity.x = vx;
+   velocity.y = 0.f;
+   velocity.z = _angular_velocity * r_cos_rot;
 
    // set the orientation
-   orientation.setPsi( 0.f);
-   orientation.setTheta( 0.f);
-   orientation.setPhi( 30.f );
+   orientation.psi = 0.f;
+   orientation.theta = 0.f;
+   orientation.phi = 30.f;
    //if( vx < 0.f )
    //{
    //   orientation.setPhi( M_PI - acos(-vx) );

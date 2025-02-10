@@ -1,105 +1,36 @@
-#include <dis6/ServiceRequestPdu.h>
+#include "ServiceRequestPdu.h"
 
 using namespace DIS;
 
 
 ServiceRequestPdu::ServiceRequestPdu() : LogisticsFamilyPdu(),
-   _requestingEntityID(), 
-   _servicingEntityID(), 
-   _serviceTypeRequested(0), 
-   _numberOfSupplyTypes(0), 
-   _serviceRequestPadding(0)
+   requestingEntityID(), 
+   servicingEntityID(), 
+   serviceTypeRequested(0), 
+   numberOfSupplyTypes(0), 
+   serviceRequestPadding(0), 
+   supplies(0)
 {
-    setPduType( 5 );
+    pduType = 5;
 }
 
 ServiceRequestPdu::~ServiceRequestPdu()
 {
-    _supplies.clear();
-}
-
-EntityID& ServiceRequestPdu::getRequestingEntityID() 
-{
-    return _requestingEntityID;
-}
-
-const EntityID& ServiceRequestPdu::getRequestingEntityID() const
-{
-    return _requestingEntityID;
-}
-
-void ServiceRequestPdu::setRequestingEntityID(const EntityID &pX)
-{
-    _requestingEntityID = pX;
-}
-
-EntityID& ServiceRequestPdu::getServicingEntityID() 
-{
-    return _servicingEntityID;
-}
-
-const EntityID& ServiceRequestPdu::getServicingEntityID() const
-{
-    return _servicingEntityID;
-}
-
-void ServiceRequestPdu::setServicingEntityID(const EntityID &pX)
-{
-    _servicingEntityID = pX;
-}
-
-unsigned char ServiceRequestPdu::getServiceTypeRequested() const
-{
-    return _serviceTypeRequested;
-}
-
-void ServiceRequestPdu::setServiceTypeRequested(unsigned char pX)
-{
-    _serviceTypeRequested = pX;
-}
-
-unsigned char ServiceRequestPdu::getNumberOfSupplyTypes() const
-{
-   return _supplies.size();
-}
-
-short ServiceRequestPdu::getServiceRequestPadding() const
-{
-    return _serviceRequestPadding;
-}
-
-void ServiceRequestPdu::setServiceRequestPadding(short pX)
-{
-    _serviceRequestPadding = pX;
-}
-
-std::vector<SupplyQuantity>& ServiceRequestPdu::getSupplies() 
-{
-    return _supplies;
-}
-
-const std::vector<SupplyQuantity>& ServiceRequestPdu::getSupplies() const
-{
-    return _supplies;
-}
-
-void ServiceRequestPdu::setSupplies(const std::vector<SupplyQuantity>& pX)
-{
-     _supplies = pX;
+    supplies.clear();
 }
 
 void ServiceRequestPdu::marshal(DataStream& dataStream) const
 {
     LogisticsFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _requestingEntityID.marshal(dataStream);
-    _servicingEntityID.marshal(dataStream);
-    dataStream << _serviceTypeRequested;
-    dataStream << ( unsigned char )_supplies.size();
-    dataStream << _serviceRequestPadding;
+    requestingEntityID.marshal(dataStream);
+    servicingEntityID.marshal(dataStream);
+    dataStream << serviceTypeRequested;
+    dataStream << ( unsigned char )supplies.size();
+    dataStream << serviceRequestPadding;
 
-     for(size_t idx = 0; idx < _supplies.size(); idx++)
+     for(size_t idx = 0; idx < supplies.size(); idx++)
      {
-        SupplyQuantity x = _supplies[idx];
+        SupplyQuantity x = supplies[idx];
         x.marshal(dataStream);
      }
 
@@ -108,18 +39,18 @@ void ServiceRequestPdu::marshal(DataStream& dataStream) const
 void ServiceRequestPdu::unmarshal(DataStream& dataStream)
 {
     LogisticsFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _requestingEntityID.unmarshal(dataStream);
-    _servicingEntityID.unmarshal(dataStream);
-    dataStream >> _serviceTypeRequested;
-    dataStream >> _numberOfSupplyTypes;
-    dataStream >> _serviceRequestPadding;
+    requestingEntityID.unmarshal(dataStream);
+    servicingEntityID.unmarshal(dataStream);
+    dataStream >> serviceTypeRequested;
+    dataStream >> numberOfSupplyTypes;
+    dataStream >> serviceRequestPadding;
 
-     _supplies.clear();
-     for(size_t idx = 0; idx < _numberOfSupplyTypes; idx++)
+     supplies.clear();
+     for(size_t idx = 0; idx < numberOfSupplyTypes; idx++)
      {
         SupplyQuantity x;
         x.unmarshal(dataStream);
-        _supplies.push_back(x);
+        supplies.push_back(x);
      }
 }
 
@@ -130,14 +61,14 @@ bool ServiceRequestPdu::operator ==(const ServiceRequestPdu& rhs) const
 
      ivarsEqual = LogisticsFamilyPdu::operator==(rhs);
 
-     if( ! (_requestingEntityID == rhs._requestingEntityID) ) ivarsEqual = false;
-     if( ! (_servicingEntityID == rhs._servicingEntityID) ) ivarsEqual = false;
-     if( ! (_serviceTypeRequested == rhs._serviceTypeRequested) ) ivarsEqual = false;
-     if( ! (_serviceRequestPadding == rhs._serviceRequestPadding) ) ivarsEqual = false;
+     if( ! (requestingEntityID == rhs.requestingEntityID) ) ivarsEqual = false;
+     if( ! (servicingEntityID == rhs.servicingEntityID) ) ivarsEqual = false;
+     if( ! (serviceTypeRequested == rhs.serviceTypeRequested) ) ivarsEqual = false;
+     if( ! (serviceRequestPadding == rhs.serviceRequestPadding) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _supplies.size(); idx++)
+     for(size_t idx = 0; idx < supplies.size(); idx++)
      {
-        if( ! ( _supplies[idx] == rhs._supplies[idx]) ) ivarsEqual = false;
+        if( ! ( supplies[idx] == rhs.supplies[idx]) ) ivarsEqual = false;
      }
 
 
@@ -149,15 +80,15 @@ int ServiceRequestPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = LogisticsFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _requestingEntityID.getMarshalledSize();  // _requestingEntityID
-   marshalSize = marshalSize + _servicingEntityID.getMarshalledSize();  // _servicingEntityID
-   marshalSize = marshalSize + 1;  // _serviceTypeRequested
-   marshalSize = marshalSize + 1;  // _numberOfSupplyTypes
-   marshalSize = marshalSize + 2;  // _serviceRequestPadding
+   marshalSize = marshalSize + requestingEntityID.getMarshalledSize();  // requestingEntityID
+   marshalSize = marshalSize + servicingEntityID.getMarshalledSize();  // servicingEntityID
+   marshalSize = marshalSize + 1;  // serviceTypeRequested
+   marshalSize = marshalSize + 1;  // numberOfSupplyTypes
+   marshalSize = marshalSize + 2;  // serviceRequestPadding
 
-   for(unsigned long long idx=0; idx < _supplies.size(); idx++)
+   for(int idx=0; idx < supplies.size(); idx++)
    {
-        SupplyQuantity listElement = _supplies[idx];
+        SupplyQuantity listElement = supplies[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

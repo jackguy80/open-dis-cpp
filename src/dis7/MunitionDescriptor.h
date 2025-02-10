@@ -1,67 +1,48 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Represents the firing or detonation of a munition. Section 6.2.20.2
+// Represents the firing or detonation of a munition. Section 6.2.19.2
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT MunitionDescriptor
+struct EXPORT_MACRO MunitionDescriptor
 {
-protected:
   /** What munition was used in the burst */
-  EntityType _munitionType; 
+  EntityType munitionType;
 
-  /** type of warhead */
-  unsigned short _warhead; 
+  /** type of warhead enumeration */
+  unsigned short warhead;
 
-  /** type of fuse used */
-  unsigned short _fuse; 
+  /** type of fuse used enumeration */
+  unsigned short fuse;
 
   /** how many of the munition were fired */
-  unsigned short _quantity; 
+  unsigned short quantity;
 
   /** rate at which the munition was fired */
-  unsigned short _rate; 
+  unsigned short rate;
 
-
- public:
     MunitionDescriptor();
     virtual ~MunitionDescriptor();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getMunitionType(); 
-    const EntityType&  getMunitionType() const; 
-    void setMunitionType(const EntityType    &pX);
 
-    unsigned short getWarhead() const; 
-    void setWarhead(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getFuse() const; 
-    void setFuse(unsigned short pX); 
-
-    unsigned short getQuantity() const; 
-    void setQuantity(unsigned short pX); 
-
-    unsigned short getRate() const; 
-    void setRate(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const MunitionDescriptor& rhs) const;
+     bool operator ==(const MunitionDescriptor& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

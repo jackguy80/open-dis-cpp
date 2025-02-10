@@ -56,6 +56,7 @@ namespace DIS
       DataStream& operator <<(int c);
       DataStream& operator <<(unsigned int c);
       DataStream& operator <<(long long c);
+      DataStream& operator <<(long c);
       DataStream& operator <<(unsigned long long c);
       DataStream& operator <<(unsigned short c);
       DataStream& operator <<(short c);
@@ -69,6 +70,7 @@ namespace DIS
       DataStream& operator >>(int& c);
       DataStream& operator >>(unsigned int& c);
       DataStream& operator >>(long long& c);
+      DataStream& operator >>(long& c);
       DataStream& operator >>(unsigned long long& c);
       DataStream& operator >>(unsigned short& c);
       DataStream& operator >>(short& c);

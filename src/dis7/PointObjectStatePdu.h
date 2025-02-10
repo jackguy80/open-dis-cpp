@@ -1,122 +1,76 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/EntityID.h>
-#include <dis7/ObjectType.h>
-#include <dis7/Vector3Double.h>
-#include <dis7/EulerAngles.h>
-#include <dis7/SimulationAddress.h>
-#include <dis7/SimulationAddress.h>
-#include <dis7/SyntheticEnvironmentFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "ObjectType.h"
+#include "Vector3Double.h"
+#include "EulerAngles.h"
+#include "SimulationAddress.h"
+#include "SimulationAddress.h"
+#include "SyntheticEnvironmentFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // : Inormation abut the addition or modification of a synthecic enviroment object that is anchored to the terrain with a single point. Section 7.10.4 COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT PointObjectStatePdu : public SyntheticEnvironmentFamilyPdu
+struct EXPORT_MACRO PointObjectStatePdu : public SyntheticEnvironmentFamilyPdu
 {
-protected:
   /** Object in synthetic environment */
-  EntityID _objectID; 
+  EntityID objectID;
 
   /** Object with which this point object is associated */
-  EntityID _referencedObjectID; 
+  EntityID referencedObjectID;
 
   /** unique update number of each state transition of an object */
-  unsigned short _updateNumber; 
+  unsigned short updateNumber;
 
   /** force ID */
-  unsigned char _forceID; 
+  unsigned char forceID;
 
   /** modifications */
-  unsigned char _modifications; 
+  unsigned char modifications;
 
   /** Object type */
-  ObjectType _objectType; 
+  ObjectType objectType;
 
   /** Object location */
-  Vector3Double _objectLocation; 
+  Vector3Double objectLocation;
 
   /** Object orientation */
-  EulerAngles _objectOrientation; 
+  EulerAngles objectOrientation;
 
   /** Object apperance */
-  double _objectAppearance; 
+  double objectAppearance;
 
   /** requesterID */
-  SimulationAddress _requesterID; 
+  SimulationAddress requesterID;
 
   /** receiver ID */
-  SimulationAddress _receivingID; 
+  SimulationAddress receivingID;
 
   /** padding */
-  unsigned int _pad2; 
+  unsigned int pad2;
 
-
- public:
     PointObjectStatePdu();
     virtual ~PointObjectStatePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getObjectID(); 
-    const EntityID&  getObjectID() const; 
-    void setObjectID(const EntityID    &pX);
 
-    EntityID& getReferencedObjectID(); 
-    const EntityID&  getReferencedObjectID() const; 
-    void setReferencedObjectID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned short getUpdateNumber() const; 
-    void setUpdateNumber(unsigned short pX); 
-
-    unsigned char getForceID() const; 
-    void setForceID(unsigned char pX); 
-
-    unsigned char getModifications() const; 
-    void setModifications(unsigned char pX); 
-
-    ObjectType& getObjectType(); 
-    const ObjectType&  getObjectType() const; 
-    void setObjectType(const ObjectType    &pX);
-
-    Vector3Double& getObjectLocation(); 
-    const Vector3Double&  getObjectLocation() const; 
-    void setObjectLocation(const Vector3Double    &pX);
-
-    EulerAngles& getObjectOrientation(); 
-    const EulerAngles&  getObjectOrientation() const; 
-    void setObjectOrientation(const EulerAngles    &pX);
-
-    double getObjectAppearance() const; 
-    void setObjectAppearance(double pX); 
-
-    SimulationAddress& getRequesterID(); 
-    const SimulationAddress&  getRequesterID() const; 
-    void setRequesterID(const SimulationAddress    &pX);
-
-    SimulationAddress& getReceivingID(); 
-    const SimulationAddress&  getReceivingID() const; 
-    void setReceivingID(const SimulationAddress    &pX);
-
-    unsigned int getPad2() const; 
-    void setPad2(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const PointObjectStatePdu& rhs) const;
+     bool operator ==(const PointObjectStatePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

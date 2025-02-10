@@ -1,14 +1,14 @@
-#include <dis7/Expendable.h>
+#include "Expendable.h"
 
 using namespace DIS;
 
 
 Expendable::Expendable():
-   _expendable(), 
-   _station(0), 
-   _quantity(0), 
-   _expendableStatus(0), 
-   _padding(0)
+   expendable(), 
+   station(0), 
+   quantity(0), 
+   expendableStatus(0), 
+   padding(0)
 {
 }
 
@@ -16,77 +16,22 @@ Expendable::~Expendable()
 {
 }
 
-EntityType& Expendable::getExpendable() 
-{
-    return _expendable;
-}
-
-const EntityType& Expendable::getExpendable() const
-{
-    return _expendable;
-}
-
-void Expendable::setExpendable(const EntityType &pX)
-{
-    _expendable = pX;
-}
-
-unsigned int Expendable::getStation() const
-{
-    return _station;
-}
-
-void Expendable::setStation(unsigned int pX)
-{
-    _station = pX;
-}
-
-unsigned short Expendable::getQuantity() const
-{
-    return _quantity;
-}
-
-void Expendable::setQuantity(unsigned short pX)
-{
-    _quantity = pX;
-}
-
-unsigned char Expendable::getExpendableStatus() const
-{
-    return _expendableStatus;
-}
-
-void Expendable::setExpendableStatus(unsigned char pX)
-{
-    _expendableStatus = pX;
-}
-
-unsigned char Expendable::getPadding() const
-{
-    return _padding;
-}
-
-void Expendable::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
 void Expendable::marshal(DataStream& dataStream) const
 {
-    _expendable.marshal(dataStream);
-    dataStream << _station;
-    dataStream << _quantity;
-    dataStream << _expendableStatus;
-    dataStream << _padding;
+    expendable.marshal(dataStream);
+    dataStream << station;
+    dataStream << quantity;
+    dataStream << expendableStatus;
+    dataStream << padding;
 }
 
 void Expendable::unmarshal(DataStream& dataStream)
 {
-    _expendable.unmarshal(dataStream);
-    dataStream >> _station;
-    dataStream >> _quantity;
-    dataStream >> _expendableStatus;
-    dataStream >> _padding;
+    expendable.unmarshal(dataStream);
+    dataStream >> station;
+    dataStream >> quantity;
+    dataStream >> expendableStatus;
+    dataStream >> padding;
 }
 
 
@@ -94,11 +39,11 @@ bool Expendable::operator ==(const Expendable& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_expendable == rhs._expendable) ) ivarsEqual = false;
-     if( ! (_station == rhs._station) ) ivarsEqual = false;
-     if( ! (_quantity == rhs._quantity) ) ivarsEqual = false;
-     if( ! (_expendableStatus == rhs._expendableStatus) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (expendable == rhs.expendable) ) ivarsEqual = false;
+     if( ! (station == rhs.station) ) ivarsEqual = false;
+     if( ! (quantity == rhs.quantity) ) ivarsEqual = false;
+     if( ! (expendableStatus == rhs.expendableStatus) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -107,11 +52,11 @@ int Expendable::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _expendable.getMarshalledSize();  // _expendable
-   marshalSize = marshalSize + 4;  // _station
-   marshalSize = marshalSize + 2;  // _quantity
-   marshalSize = marshalSize + 1;  // _expendableStatus
-   marshalSize = marshalSize + 1;  // _padding
+   marshalSize = marshalSize + expendable.getMarshalledSize();  // expendable
+   marshalSize = marshalSize + 4;  // station
+   marshalSize = marshalSize + 2;  // quantity
+   marshalSize = marshalSize + 1;  // expendableStatus
+   marshalSize = marshalSize + 1;  // padding
     return marshalSize;
 }
 

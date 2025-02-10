@@ -1,12 +1,12 @@
-#include <dis7/AngularVelocityVector.h>
+#include "AngularVelocityVector.h"
 
 using namespace DIS;
 
 
 AngularVelocityVector::AngularVelocityVector():
-   _x(0), 
-   _y(0), 
-   _z(0)
+   x(0), 
+   y(0), 
+   z(0)
 {
 }
 
@@ -14,48 +14,18 @@ AngularVelocityVector::~AngularVelocityVector()
 {
 }
 
-float AngularVelocityVector::getX() const
-{
-    return _x;
-}
-
-void AngularVelocityVector::setX(float pX)
-{
-    _x = pX;
-}
-
-float AngularVelocityVector::getY() const
-{
-    return _y;
-}
-
-void AngularVelocityVector::setY(float pX)
-{
-    _y = pX;
-}
-
-float AngularVelocityVector::getZ() const
-{
-    return _z;
-}
-
-void AngularVelocityVector::setZ(float pX)
-{
-    _z = pX;
-}
-
 void AngularVelocityVector::marshal(DataStream& dataStream) const
 {
-    dataStream << _x;
-    dataStream << _y;
-    dataStream << _z;
+    dataStream << x;
+    dataStream << y;
+    dataStream << z;
 }
 
 void AngularVelocityVector::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _x;
-    dataStream >> _y;
-    dataStream >> _z;
+    dataStream >> x;
+    dataStream >> y;
+    dataStream >> z;
 }
 
 
@@ -63,9 +33,9 @@ bool AngularVelocityVector::operator ==(const AngularVelocityVector& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_x == rhs._x) ) ivarsEqual = false;
-     if( ! (_y == rhs._y) ) ivarsEqual = false;
-     if( ! (_z == rhs._z) ) ivarsEqual = false;
+     if( ! (x == rhs.x) ) ivarsEqual = false;
+     if( ! (y == rhs.y) ) ivarsEqual = false;
+     if( ! (z == rhs.z) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int AngularVelocityVector::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _x
-   marshalSize = marshalSize + 4;  // _y
-   marshalSize = marshalSize + 4;  // _z
+   marshalSize = marshalSize + 4;  // x
+   marshalSize = marshalSize + 4;  // y
+   marshalSize = marshalSize + 4;  // z
     return marshalSize;
 }
 

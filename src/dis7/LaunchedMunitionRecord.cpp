@@ -1,16 +1,16 @@
-#include <dis7/LaunchedMunitionRecord.h>
+#include "LaunchedMunitionRecord.h"
 
 using namespace DIS;
 
 
 LaunchedMunitionRecord::LaunchedMunitionRecord():
-   _fireEventID(), 
-   _padding(0), 
-   _firingEntityID(), 
-   _padding2(0), 
-   _targetEntityID(), 
-   _padding3(0), 
-   _targetLocation()
+   fireEventID(), 
+   padding(0), 
+   firingEntityID(), 
+   padding2(0), 
+   targetEntityID(), 
+   padding3(0), 
+   targetLocation()
 {
 }
 
@@ -18,116 +18,26 @@ LaunchedMunitionRecord::~LaunchedMunitionRecord()
 {
 }
 
-EventIdentifier& LaunchedMunitionRecord::getFireEventID() 
-{
-    return _fireEventID;
-}
-
-const EventIdentifier& LaunchedMunitionRecord::getFireEventID() const
-{
-    return _fireEventID;
-}
-
-void LaunchedMunitionRecord::setFireEventID(const EventIdentifier &pX)
-{
-    _fireEventID = pX;
-}
-
-unsigned short LaunchedMunitionRecord::getPadding() const
-{
-    return _padding;
-}
-
-void LaunchedMunitionRecord::setPadding(unsigned short pX)
-{
-    _padding = pX;
-}
-
-EventIdentifier& LaunchedMunitionRecord::getFiringEntityID() 
-{
-    return _firingEntityID;
-}
-
-const EventIdentifier& LaunchedMunitionRecord::getFiringEntityID() const
-{
-    return _firingEntityID;
-}
-
-void LaunchedMunitionRecord::setFiringEntityID(const EventIdentifier &pX)
-{
-    _firingEntityID = pX;
-}
-
-unsigned short LaunchedMunitionRecord::getPadding2() const
-{
-    return _padding2;
-}
-
-void LaunchedMunitionRecord::setPadding2(unsigned short pX)
-{
-    _padding2 = pX;
-}
-
-EventIdentifier& LaunchedMunitionRecord::getTargetEntityID() 
-{
-    return _targetEntityID;
-}
-
-const EventIdentifier& LaunchedMunitionRecord::getTargetEntityID() const
-{
-    return _targetEntityID;
-}
-
-void LaunchedMunitionRecord::setTargetEntityID(const EventIdentifier &pX)
-{
-    _targetEntityID = pX;
-}
-
-unsigned short LaunchedMunitionRecord::getPadding3() const
-{
-    return _padding3;
-}
-
-void LaunchedMunitionRecord::setPadding3(unsigned short pX)
-{
-    _padding3 = pX;
-}
-
-Vector3Double& LaunchedMunitionRecord::getTargetLocation() 
-{
-    return _targetLocation;
-}
-
-const Vector3Double& LaunchedMunitionRecord::getTargetLocation() const
-{
-    return _targetLocation;
-}
-
-void LaunchedMunitionRecord::setTargetLocation(const Vector3Double &pX)
-{
-    _targetLocation = pX;
-}
-
 void LaunchedMunitionRecord::marshal(DataStream& dataStream) const
 {
-    _fireEventID.marshal(dataStream);
-    dataStream << _padding;
-    _firingEntityID.marshal(dataStream);
-    dataStream << _padding2;
-    _targetEntityID.marshal(dataStream);
-    dataStream << _padding3;
-    _targetLocation.marshal(dataStream);
+    fireEventID.marshal(dataStream);
+    dataStream << padding;
+    firingEntityID.marshal(dataStream);
+    dataStream << padding2;
+    targetEntityID.marshal(dataStream);
+    dataStream << padding3;
+    targetLocation.marshal(dataStream);
 }
 
 void LaunchedMunitionRecord::unmarshal(DataStream& dataStream)
 {
-    _fireEventID.unmarshal(dataStream);
-    dataStream >> _padding;
-    _firingEntityID.unmarshal(dataStream);
-    dataStream >> _padding2;
-    _targetEntityID.unmarshal(dataStream);
-    dataStream >> _padding3;
-    _targetLocation.unmarshal(dataStream);
+    fireEventID.unmarshal(dataStream);
+    dataStream >> padding;
+    firingEntityID.unmarshal(dataStream);
+    dataStream >> padding2;
+    targetEntityID.unmarshal(dataStream);
+    dataStream >> padding3;
+    targetLocation.unmarshal(dataStream);
 }
 
 
@@ -135,13 +45,13 @@ bool LaunchedMunitionRecord::operator ==(const LaunchedMunitionRecord& rhs) cons
  {
      bool ivarsEqual = true;
 
-     if( ! (_fireEventID == rhs._fireEventID) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
-     if( ! (_firingEntityID == rhs._firingEntityID) ) ivarsEqual = false;
-     if( ! (_padding2 == rhs._padding2) ) ivarsEqual = false;
-     if( ! (_targetEntityID == rhs._targetEntityID) ) ivarsEqual = false;
-     if( ! (_padding3 == rhs._padding3) ) ivarsEqual = false;
-     if( ! (_targetLocation == rhs._targetLocation) ) ivarsEqual = false;
+     if( ! (fireEventID == rhs.fireEventID) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
+     if( ! (firingEntityID == rhs.firingEntityID) ) ivarsEqual = false;
+     if( ! (padding2 == rhs.padding2) ) ivarsEqual = false;
+     if( ! (targetEntityID == rhs.targetEntityID) ) ivarsEqual = false;
+     if( ! (padding3 == rhs.padding3) ) ivarsEqual = false;
+     if( ! (targetLocation == rhs.targetLocation) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -150,13 +60,13 @@ int LaunchedMunitionRecord::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _fireEventID.getMarshalledSize();  // _fireEventID
-   marshalSize = marshalSize + 2;  // _padding
-   marshalSize = marshalSize + _firingEntityID.getMarshalledSize();  // _firingEntityID
-   marshalSize = marshalSize + 2;  // _padding2
-   marshalSize = marshalSize + _targetEntityID.getMarshalledSize();  // _targetEntityID
-   marshalSize = marshalSize + 2;  // _padding3
-   marshalSize = marshalSize + _targetLocation.getMarshalledSize();  // _targetLocation
+   marshalSize = marshalSize + fireEventID.getMarshalledSize();  // fireEventID
+   marshalSize = marshalSize + 2;  // padding
+   marshalSize = marshalSize + firingEntityID.getMarshalledSize();  // firingEntityID
+   marshalSize = marshalSize + 2;  // padding2
+   marshalSize = marshalSize + targetEntityID.getMarshalledSize();  // targetEntityID
+   marshalSize = marshalSize + 2;  // padding3
+   marshalSize = marshalSize + targetLocation.getMarshalledSize();  // targetLocation
     return marshalSize;
 }
 

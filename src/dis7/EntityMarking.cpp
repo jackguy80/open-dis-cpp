@@ -1,80 +1,28 @@
-#include <dis7/EntityMarking.h>
-
-#include <cstring>
+#include "EntityMarking.h"
 
 using namespace DIS;
 
 
 EntityMarking::EntityMarking():
-   _characterSet(0)
+   characterSet(0), 
+   characters(0)
 {
-     // Initialize fixed length array
-     for(int lengthcharacters= 0; lengthcharacters < 11; lengthcharacters++)
-     {
-         _characters[lengthcharacters] = 0;
-     }
-
 }
 
 EntityMarking::~EntityMarking()
 {
 }
 
-unsigned char EntityMarking::getCharacterSet() const
-{
-    return _characterSet;
-}
-
-void EntityMarking::setCharacterSet(unsigned char pX)
-{
-    _characterSet = pX;
-}
-
-char* EntityMarking::getCharacters() 
-{
-    return _characters;
-}
-
-const char* EntityMarking::getCharacters() const
-{
-    return _characters;
-}
-
-void EntityMarking::setCharacters(const char* x)
-{
-   for(int i = 0; i < 11; i++)
-   {
-        _characters[i] = x[i];
-   }
-}
-
-// An alternate method to set the value if this could be a string. This is not strictly comnpliant with the DIS standard.
-void EntityMarking::setByStringCharacters(const char* x)
-{
-   std::strncpy(_characters, x, 11-1);
-   _characters[11 -1] = '\0';
-}
-
 void EntityMarking::marshal(DataStream& dataStream) const
 {
-    dataStream << _characterSet;
-
-     for(size_t idx = 0; idx < 11; idx++)
-     {
-        dataStream << _characters[idx];
-     }
-
+    dataStream << characterSet;
+    dataStream << characters;
 }
 
 void EntityMarking::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _characterSet;
-
-     for(size_t idx = 0; idx < 11; idx++)
-     {
-        dataStream >> _characters[idx];
-     }
-
+    dataStream >> characterSet;
+    dataStream >> characters;
 }
 
 
@@ -82,13 +30,8 @@ bool EntityMarking::operator ==(const EntityMarking& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_characterSet == rhs._characterSet) ) ivarsEqual = false;
-
-     for(unsigned char idx = 0; idx < 11; idx++)
-     {
-          if(!(_characters[idx] == rhs._characters[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (characterSet == rhs.characterSet) ) ivarsEqual = false;
+     if( ! (characters == rhs.characters) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -97,8 +40,8 @@ int EntityMarking::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _characterSet
-   marshalSize = marshalSize + 11 * 1;  // _characters
+   marshalSize = marshalSize + 1;  // characterSet
+   marshalSize = marshalSize + 1;  // characters
     return marshalSize;
 }
 

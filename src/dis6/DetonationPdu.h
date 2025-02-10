@@ -1,109 +1,72 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EventID.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/Vector3Double.h>
-#include <dis6/BurstDescriptor.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/ArticulationParameter.h>
+#include "EntityID.h"
+#include "EventID.h"
+#include "Vector3Float.h"
+#include "Vector3Double.h"
+#include "BurstDescriptor.h"
+#include "Vector3Float.h"
+#include "ArticulationParameter.h"
 #include <vector>
-#include <dis6/WarfareFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "WarfareFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.4.2. Information about stuff exploding. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT DetonationPdu : public WarfareFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO DetonationPdu : public WarfareFamilyPdu
 {
-protected:
   /** ID of muntion that was fired */
-  EntityID _munitionID; 
+  EntityID munitionID;
 
   /** ID firing event */
-  EventID _eventID; 
+  EventID eventID;
 
   /** ID firing event */
-  Vector3Float _velocity; 
+  Vector3Float velocity;
 
   /** where the detonation is, in world coordinates */
-  Vector3Double _locationInWorldCoordinates; 
+  Vector3Double locationInWorldCoordinates;
 
   /** Describes munition used */
-  BurstDescriptor _burstDescriptor; 
+  BurstDescriptor burstDescriptor;
 
   /** location of the detonation or impact in the target entity's coordinate system. This information should be used for damage assessment. */
-  Vector3Float _locationInEntityCoordinates; 
+  Vector3Float locationInEntityCoordinates;
 
   /** result of the explosion */
-  unsigned char _detonationResult; 
+  unsigned char detonationResult;
 
   /** How many articulation parameters we have */
-  unsigned char _numberOfArticulationParameters; 
+  unsigned char numberOfArticulationParameters;
 
   /** padding */
-  short _pad; 
+  short pad;
 
-  std::vector<ArticulationParameter> _articulationParameters; 
+  std::vector<ArticulationParameter> articulationParameters;
 
-
- public:
     DetonationPdu();
     virtual ~DetonationPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getMunitionID(); 
-    const EntityID&  getMunitionID() const; 
-    void setMunitionID(const EntityID    &pX);
 
-    EventID& getEventID(); 
-    const EventID&  getEventID() const; 
-    void setEventID(const EventID    &pX);
+     virtual int getMarshalledSize() const;
 
-    Vector3Float& getVelocity(); 
-    const Vector3Float&  getVelocity() const; 
-    void setVelocity(const Vector3Float    &pX);
-
-    Vector3Double& getLocationInWorldCoordinates(); 
-    const Vector3Double&  getLocationInWorldCoordinates() const; 
-    void setLocationInWorldCoordinates(const Vector3Double    &pX);
-
-    BurstDescriptor& getBurstDescriptor(); 
-    const BurstDescriptor&  getBurstDescriptor() const; 
-    void setBurstDescriptor(const BurstDescriptor    &pX);
-
-    Vector3Float& getLocationInEntityCoordinates(); 
-    const Vector3Float&  getLocationInEntityCoordinates() const; 
-    void setLocationInEntityCoordinates(const Vector3Float    &pX);
-
-    unsigned char getDetonationResult() const; 
-    void setDetonationResult(unsigned char pX); 
-
-    unsigned char getNumberOfArticulationParameters() const; 
-
-    short getPad() const; 
-    void setPad(short pX); 
-
-    std::vector<ArticulationParameter>& getArticulationParameters(); 
-    const std::vector<ArticulationParameter>& getArticulationParameters() const; 
-    void setArticulationParameters(const std::vector<ArticulationParameter>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DetonationPdu& rhs) const;
+     bool operator ==(const DetonationPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

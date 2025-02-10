@@ -1,50 +1,33 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/Pdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "Pdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 //  Abstract superclass for radio communications PDUs. Section 7.7
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT RadioCommunicationsFamilyPdu : public Pdu
+struct EXPORT_MACRO RadioCommunicationsFamilyPdu : public Pdu
 {
-protected:
-  /** ID of the entitythat is the source of the communication */
-  EntityID _entityId; 
-
-  /** particular radio within an entity */
-  unsigned short _radioId; 
-
-
- public:
     RadioCommunicationsFamilyPdu();
     virtual ~RadioCommunicationsFamilyPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getEntityId(); 
-    const EntityID&  getEntityId() const; 
-    void setEntityId(const EntityID    &pX);
 
-    unsigned short getRadioId() const; 
-    void setRadioId(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RadioCommunicationsFamilyPdu& rhs) const;
+     bool operator ==(const RadioCommunicationsFamilyPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

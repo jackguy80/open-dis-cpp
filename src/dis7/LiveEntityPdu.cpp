@@ -1,11 +1,11 @@
-#include <dis7/LiveEntityPdu.h>
+#include "LiveEntityPdu.h"
 
 using namespace DIS;
 
 
 LiveEntityPdu::LiveEntityPdu() : PduSuperclass(),
-   _subprotocolNumber(0), 
-   _padding(0)
+   subprotocolNumber(0), 
+   padding(0)
 {
 }
 
@@ -13,38 +13,18 @@ LiveEntityPdu::~LiveEntityPdu()
 {
 }
 
-unsigned short LiveEntityPdu::getSubprotocolNumber() const
-{
-    return _subprotocolNumber;
-}
-
-void LiveEntityPdu::setSubprotocolNumber(unsigned short pX)
-{
-    _subprotocolNumber = pX;
-}
-
-unsigned char LiveEntityPdu::getPadding() const
-{
-    return _padding;
-}
-
-void LiveEntityPdu::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
 void LiveEntityPdu::marshal(DataStream& dataStream) const
 {
     PduSuperclass::marshal(dataStream); // Marshal information in superclass first
-    dataStream << _subprotocolNumber;
-    dataStream << _padding;
+    dataStream << subprotocolNumber;
+    dataStream << padding;
 }
 
 void LiveEntityPdu::unmarshal(DataStream& dataStream)
 {
     PduSuperclass::unmarshal(dataStream); // unmarshal information in superclass first
-    dataStream >> _subprotocolNumber;
-    dataStream >> _padding;
+    dataStream >> subprotocolNumber;
+    dataStream >> padding;
 }
 
 
@@ -54,8 +34,8 @@ bool LiveEntityPdu::operator ==(const LiveEntityPdu& rhs) const
 
      ivarsEqual = PduSuperclass::operator==(rhs);
 
-     if( ! (_subprotocolNumber == rhs._subprotocolNumber) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (subprotocolNumber == rhs.subprotocolNumber) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +45,8 @@ int LiveEntityPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = PduSuperclass::getMarshalledSize();
-   marshalSize = marshalSize + 2;  // _subprotocolNumber
-   marshalSize = marshalSize + 1;  // _padding
+   marshalSize = marshalSize + 2;  // subprotocolNumber
+   marshalSize = marshalSize + 1;  // padding
     return marshalSize;
 }
 

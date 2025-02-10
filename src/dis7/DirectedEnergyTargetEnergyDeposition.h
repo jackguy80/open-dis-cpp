@@ -1,55 +1,42 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// DE energy depostion properties for a target entity. Section 6.2.21.4
+// DE energy depostion properties for a target entity. Section 6.2.20.4
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT DirectedEnergyTargetEnergyDeposition
+struct EXPORT_MACRO DirectedEnergyTargetEnergyDeposition
 {
-protected:
   /** Unique ID of the target entity. */
-  EntityID _targetEntityID; 
+  EntityID targetEntityID;
 
   /** padding */
-  unsigned short _padding; 
+  unsigned short padding;
 
   /** Peak irrandiance */
-  float _peakIrradiance; 
+  float peakIrradiance;
 
-
- public:
     DirectedEnergyTargetEnergyDeposition();
     virtual ~DirectedEnergyTargetEnergyDeposition();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getTargetEntityID(); 
-    const EntityID&  getTargetEntityID() const; 
-    void setTargetEntityID(const EntityID    &pX);
 
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    float getPeakIrradiance() const; 
-    void setPeakIrradiance(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DirectedEnergyTargetEnergyDeposition& rhs) const;
+     bool operator ==(const DirectedEnergyTargetEnergyDeposition& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

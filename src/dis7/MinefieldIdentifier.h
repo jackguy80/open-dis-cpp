@@ -1,49 +1,37 @@
 #pragma once
 
-#include <dis7/SimulationAddress.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "SimulationAddress.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The unique designation of a minefield Section 6.2.57 
+// The unique designation of a minefield Section 6.2.56 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT MinefieldIdentifier
+struct EXPORT_MACRO MinefieldIdentifier
 {
-protected:
-  /**  */
-  SimulationAddress _simulationAddress; 
+  SimulationAddress simulationAddress;
 
-  /**  */
-  unsigned short _minefieldNumber; 
+  unsigned short minefieldNumber;
 
-
- public:
     MinefieldIdentifier();
     virtual ~MinefieldIdentifier();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    SimulationAddress& getSimulationAddress(); 
-    const SimulationAddress&  getSimulationAddress() const; 
-    void setSimulationAddress(const SimulationAddress    &pX);
 
-    unsigned short getMinefieldNumber() const; 
-    void setMinefieldNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const MinefieldIdentifier& rhs) const;
+     bool operator ==(const MinefieldIdentifier& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

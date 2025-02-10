@@ -1,547 +1,124 @@
-#include <dis6/FastEntityStatePdu.h>
-#include <cstring>
+#include "FastEntityStatePdu.h"
 
 using namespace DIS;
 
 
 FastEntityStatePdu::FastEntityStatePdu() : EntityInformationFamilyPdu(),
-   _site(0), 
-   _application(0), 
-   _entity(0), 
-   _forceId(0), 
-   _numberOfArticulationParameters(0), 
-   _entityKind(0), 
-   _domain(0), 
-   _country(0), 
-   _category(0), 
-   _subcategory(0), 
-   _specific(0), 
-   _extra(0), 
-   _altEntityKind(0), 
-   _altDomain(0), 
-   _altCountry(0), 
-   _altCategory(0), 
-   _altSubcategory(0), 
-   _altSpecific(0), 
-   _altExtra(0), 
-   _xVelocity(0.0), 
-   _yVelocity(0.0), 
-   _zVelocity(0.0), 
-   _xLocation(0.0), 
-   _yLocation(0.0), 
-   _zLocation(0.0), 
-   _psi(0.0), 
-   _theta(0.0), 
-   _phi(0.0), 
-   _entityAppearance(0), 
-   _deadReckoningAlgorithm(0), 
-   _xAcceleration(0.0), 
-   _yAcceleration(0.0), 
-   _zAcceleration(0.0), 
-   _xAngularVelocity(0.0), 
-   _yAngularVelocity(0.0), 
-   _zAngularVelocity(0.0), 
-   _capabilities(0)
+   site(0), 
+   application(0), 
+   entity(0), 
+   forceId(0), 
+   numberOfArticulationParameters(0), 
+   entityKind(0), 
+   domain(0), 
+   country(0), 
+   category(0), 
+   subcategory(0), 
+   specif(0), 
+   extra(0), 
+   altEntityKind(0), 
+   altDomain(0), 
+   altCountry(0), 
+   altCategory(0), 
+   altSubcategory(0), 
+   altSpecific(0), 
+   altExtra(0), 
+   xVelocity(0.0), 
+   yVelocity(0.0), 
+   zVelocity(0.0), 
+   xLocation(0.0), 
+   yLocation(0.0), 
+   zLocation(0.0), 
+   psi(0.0), 
+   theta(0.0), 
+   phi(0.0), 
+   entityAppearance(0), 
+   deadReckoningAlgorithm(0), 
+   xAcceleration(0.0), 
+   yAcceleration(0.0), 
+   zAcceleration(0.0), 
+   xAngularVelocity(0.0), 
+   yAngularVelocity(0.0), 
+   zAngularVelocity(0.0), 
+   capabilities(0), 
+   articulationParameters(0)
 {
-    setPduType( 1 );
+    pduType = 1;
      // Initialize fixed length array
      for(int lengthotherParameters= 0; lengthotherParameters < 15; lengthotherParameters++)
      {
-         _otherParameters[lengthotherParameters] = 0;
+         otherParameters[lengthotherParameters] = 0;
      }
 
      // Initialize fixed length array
      for(int lengthmarking= 0; lengthmarking < 12; lengthmarking++)
      {
-         _marking[lengthmarking] = 0;
+         marking[lengthmarking] = 0;
      }
 
 }
 
 FastEntityStatePdu::~FastEntityStatePdu()
 {
-    _articulationParameters.clear();
-}
-
-unsigned short FastEntityStatePdu::getSite() const
-{
-    return _site;
-}
-
-void FastEntityStatePdu::setSite(unsigned short pX)
-{
-    _site = pX;
-}
-
-unsigned short FastEntityStatePdu::getApplication() const
-{
-    return _application;
-}
-
-void FastEntityStatePdu::setApplication(unsigned short pX)
-{
-    _application = pX;
-}
-
-unsigned short FastEntityStatePdu::getEntity() const
-{
-    return _entity;
-}
-
-void FastEntityStatePdu::setEntity(unsigned short pX)
-{
-    _entity = pX;
-}
-
-unsigned char FastEntityStatePdu::getForceId() const
-{
-    return _forceId;
-}
-
-void FastEntityStatePdu::setForceId(unsigned char pX)
-{
-    _forceId = pX;
-}
-
-unsigned char FastEntityStatePdu::getNumberOfArticulationParameters() const
-{
-   return _articulationParameters.size();
-}
-
-unsigned char FastEntityStatePdu::getEntityKind() const
-{
-    return _entityKind;
-}
-
-void FastEntityStatePdu::setEntityKind(unsigned char pX)
-{
-    _entityKind = pX;
-}
-
-unsigned char FastEntityStatePdu::getDomain() const
-{
-    return _domain;
-}
-
-void FastEntityStatePdu::setDomain(unsigned char pX)
-{
-    _domain = pX;
-}
-
-unsigned short FastEntityStatePdu::getCountry() const
-{
-    return _country;
-}
-
-void FastEntityStatePdu::setCountry(unsigned short pX)
-{
-    _country = pX;
-}
-
-unsigned char FastEntityStatePdu::getCategory() const
-{
-    return _category;
-}
-
-void FastEntityStatePdu::setCategory(unsigned char pX)
-{
-    _category = pX;
-}
-
-unsigned char FastEntityStatePdu::getSubcategory() const
-{
-    return _subcategory;
-}
-
-void FastEntityStatePdu::setSubcategory(unsigned char pX)
-{
-    _subcategory = pX;
-}
-
-unsigned char FastEntityStatePdu::getSpecific() const
-{
-    return _specific;
-}
-
-void FastEntityStatePdu::setSpecific(unsigned char pX)
-{
-    _specific = pX;
-}
-
-unsigned char FastEntityStatePdu::getExtra() const
-{
-    return _extra;
-}
-
-void FastEntityStatePdu::setExtra(unsigned char pX)
-{
-    _extra = pX;
-}
-
-unsigned char FastEntityStatePdu::getAltEntityKind() const
-{
-    return _altEntityKind;
-}
-
-void FastEntityStatePdu::setAltEntityKind(unsigned char pX)
-{
-    _altEntityKind = pX;
-}
-
-unsigned char FastEntityStatePdu::getAltDomain() const
-{
-    return _altDomain;
-}
-
-void FastEntityStatePdu::setAltDomain(unsigned char pX)
-{
-    _altDomain = pX;
-}
-
-unsigned short FastEntityStatePdu::getAltCountry() const
-{
-    return _altCountry;
-}
-
-void FastEntityStatePdu::setAltCountry(unsigned short pX)
-{
-    _altCountry = pX;
-}
-
-unsigned char FastEntityStatePdu::getAltCategory() const
-{
-    return _altCategory;
-}
-
-void FastEntityStatePdu::setAltCategory(unsigned char pX)
-{
-    _altCategory = pX;
-}
-
-unsigned char FastEntityStatePdu::getAltSubcategory() const
-{
-    return _altSubcategory;
-}
-
-void FastEntityStatePdu::setAltSubcategory(unsigned char pX)
-{
-    _altSubcategory = pX;
-}
-
-unsigned char FastEntityStatePdu::getAltSpecific() const
-{
-    return _altSpecific;
-}
-
-void FastEntityStatePdu::setAltSpecific(unsigned char pX)
-{
-    _altSpecific = pX;
-}
-
-unsigned char FastEntityStatePdu::getAltExtra() const
-{
-    return _altExtra;
-}
-
-void FastEntityStatePdu::setAltExtra(unsigned char pX)
-{
-    _altExtra = pX;
-}
-
-float FastEntityStatePdu::getXVelocity() const
-{
-    return _xVelocity;
-}
-
-void FastEntityStatePdu::setXVelocity(float pX)
-{
-    _xVelocity = pX;
-}
-
-float FastEntityStatePdu::getYVelocity() const
-{
-    return _yVelocity;
-}
-
-void FastEntityStatePdu::setYVelocity(float pX)
-{
-    _yVelocity = pX;
-}
-
-float FastEntityStatePdu::getZVelocity() const
-{
-    return _zVelocity;
-}
-
-void FastEntityStatePdu::setZVelocity(float pX)
-{
-    _zVelocity = pX;
-}
-
-double FastEntityStatePdu::getXLocation() const
-{
-    return _xLocation;
-}
-
-void FastEntityStatePdu::setXLocation(double pX)
-{
-    _xLocation = pX;
-}
-
-double FastEntityStatePdu::getYLocation() const
-{
-    return _yLocation;
-}
-
-void FastEntityStatePdu::setYLocation(double pX)
-{
-    _yLocation = pX;
-}
-
-double FastEntityStatePdu::getZLocation() const
-{
-    return _zLocation;
-}
-
-void FastEntityStatePdu::setZLocation(double pX)
-{
-    _zLocation = pX;
-}
-
-float FastEntityStatePdu::getPsi() const
-{
-    return _psi;
-}
-
-void FastEntityStatePdu::setPsi(float pX)
-{
-    _psi = pX;
-}
-
-float FastEntityStatePdu::getTheta() const
-{
-    return _theta;
-}
-
-void FastEntityStatePdu::setTheta(float pX)
-{
-    _theta = pX;
-}
-
-float FastEntityStatePdu::getPhi() const
-{
-    return _phi;
-}
-
-void FastEntityStatePdu::setPhi(float pX)
-{
-    _phi = pX;
-}
-
-int FastEntityStatePdu::getEntityAppearance() const
-{
-    return _entityAppearance;
-}
-
-void FastEntityStatePdu::setEntityAppearance(int pX)
-{
-    _entityAppearance = pX;
-}
-
-unsigned char FastEntityStatePdu::getDeadReckoningAlgorithm() const
-{
-    return _deadReckoningAlgorithm;
-}
-
-void FastEntityStatePdu::setDeadReckoningAlgorithm(unsigned char pX)
-{
-    _deadReckoningAlgorithm = pX;
-}
-
-char* FastEntityStatePdu::getOtherParameters() 
-{
-    return _otherParameters;
-}
-
-const char* FastEntityStatePdu::getOtherParameters() const
-{
-    return _otherParameters;
-}
-
-void FastEntityStatePdu::setOtherParameters(const char* x)
-{
-   for(int i = 0; i < 15; i++)
-   {
-        _otherParameters[i] = x[i];
-   }
-}
-
-float FastEntityStatePdu::getXAcceleration() const
-{
-    return _xAcceleration;
-}
-
-void FastEntityStatePdu::setXAcceleration(float pX)
-{
-    _xAcceleration = pX;
-}
-
-float FastEntityStatePdu::getYAcceleration() const
-{
-    return _yAcceleration;
-}
-
-void FastEntityStatePdu::setYAcceleration(float pX)
-{
-    _yAcceleration = pX;
-}
-
-float FastEntityStatePdu::getZAcceleration() const
-{
-    return _zAcceleration;
-}
-
-void FastEntityStatePdu::setZAcceleration(float pX)
-{
-    _zAcceleration = pX;
-}
-
-float FastEntityStatePdu::getXAngularVelocity() const
-{
-    return _xAngularVelocity;
-}
-
-void FastEntityStatePdu::setXAngularVelocity(float pX)
-{
-    _xAngularVelocity = pX;
-}
-
-float FastEntityStatePdu::getYAngularVelocity() const
-{
-    return _yAngularVelocity;
-}
-
-void FastEntityStatePdu::setYAngularVelocity(float pX)
-{
-    _yAngularVelocity = pX;
-}
-
-float FastEntityStatePdu::getZAngularVelocity() const
-{
-    return _zAngularVelocity;
-}
-
-void FastEntityStatePdu::setZAngularVelocity(float pX)
-{
-    _zAngularVelocity = pX;
-}
-
-char* FastEntityStatePdu::getMarking() 
-{
-    return _marking;
-}
-
-const char* FastEntityStatePdu::getMarking() const
-{
-    return _marking;
-}
-
-void FastEntityStatePdu::setMarking(const char* x)
-{
-   for(int i = 0; i < 12; i++)
-   {
-        _marking[i] = x[i];
-   }
-}
-
-// An alternate method to set the value if this could be a string. This is not strictly comnpliant with the DIS standard.
-void FastEntityStatePdu::setByStringMarking(const char* x)
-{
-   std::strncpy(_marking, x, 12-1);
-   _marking[12 -1] = '\0';
-}
-
-int FastEntityStatePdu::getCapabilities() const
-{
-    return _capabilities;
-}
-
-void FastEntityStatePdu::setCapabilities(int pX)
-{
-    _capabilities = pX;
-}
-
-std::vector<ArticulationParameter>& FastEntityStatePdu::getArticulationParameters() 
-{
-    return _articulationParameters;
-}
-
-const std::vector<ArticulationParameter>& FastEntityStatePdu::getArticulationParameters() const
-{
-    return _articulationParameters;
-}
-
-void FastEntityStatePdu::setArticulationParameters(const std::vector<ArticulationParameter>& pX)
-{
-     _articulationParameters = pX;
+    articulationParameters.clear();
 }
 
 void FastEntityStatePdu::marshal(DataStream& dataStream) const
 {
     EntityInformationFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    dataStream << _site;
-    dataStream << _application;
-    dataStream << _entity;
-    dataStream << _forceId;
-    dataStream << ( char )_articulationParameters.size();
-    dataStream << _entityKind;
-    dataStream << _domain;
-    dataStream << _country;
-    dataStream << _category;
-    dataStream << _subcategory;
-    dataStream << _specific;
-    dataStream << _extra;
-    dataStream << _altEntityKind;
-    dataStream << _altDomain;
-    dataStream << _altCountry;
-    dataStream << _altCategory;
-    dataStream << _altSubcategory;
-    dataStream << _altSpecific;
-    dataStream << _altExtra;
-    dataStream << _xVelocity;
-    dataStream << _yVelocity;
-    dataStream << _zVelocity;
-    dataStream << _xLocation;
-    dataStream << _yLocation;
-    dataStream << _zLocation;
-    dataStream << _psi;
-    dataStream << _theta;
-    dataStream << _phi;
-    dataStream << _entityAppearance;
-    dataStream << _deadReckoningAlgorithm;
+    dataStream << site;
+    dataStream << application;
+    dataStream << entity;
+    dataStream << forceId;
+    dataStream << ( char )articulationParameters.size();
+    dataStream << entityKind;
+    dataStream << domain;
+    dataStream << country;
+    dataStream << category;
+    dataStream << subcategory;
+    dataStream << specif;
+    dataStream << extra;
+    dataStream << altEntityKind;
+    dataStream << altDomain;
+    dataStream << altCountry;
+    dataStream << altCategory;
+    dataStream << altSubcategory;
+    dataStream << altSpecific;
+    dataStream << altExtra;
+    dataStream << xVelocity;
+    dataStream << yVelocity;
+    dataStream << zVelocity;
+    dataStream << xLocation;
+    dataStream << yLocation;
+    dataStream << zLocation;
+    dataStream << psi;
+    dataStream << theta;
+    dataStream << phi;
+    dataStream << entityAppearance;
+    dataStream << deadReckoningAlgorithm;
 
      for(size_t idx = 0; idx < 15; idx++)
      {
-        dataStream << _otherParameters[idx];
+        dataStream << otherParameters[idx];
      }
 
-    dataStream << _xAcceleration;
-    dataStream << _yAcceleration;
-    dataStream << _zAcceleration;
-    dataStream << _xAngularVelocity;
-    dataStream << _yAngularVelocity;
-    dataStream << _zAngularVelocity;
+    dataStream << xAcceleration;
+    dataStream << yAcceleration;
+    dataStream << zAcceleration;
+    dataStream << xAngularVelocity;
+    dataStream << yAngularVelocity;
+    dataStream << zAngularVelocity;
 
      for(size_t idx = 0; idx < 12; idx++)
      {
-        dataStream << _marking[idx];
+        dataStream << marking[idx];
      }
 
-    dataStream << _capabilities;
+    dataStream << capabilities;
 
-     for(size_t idx = 0; idx < _articulationParameters.size(); idx++)
+     for(size_t idx = 0; idx < articulationParameters.size(); idx++)
      {
-        ArticulationParameter x = _articulationParameters[idx];
+        ArticulationParameter x = articulationParameters[idx];
         x.marshal(dataStream);
      }
 
@@ -550,62 +127,62 @@ void FastEntityStatePdu::marshal(DataStream& dataStream) const
 void FastEntityStatePdu::unmarshal(DataStream& dataStream)
 {
     EntityInformationFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    dataStream >> _site;
-    dataStream >> _application;
-    dataStream >> _entity;
-    dataStream >> _forceId;
-    dataStream >> _numberOfArticulationParameters;
-    dataStream >> _entityKind;
-    dataStream >> _domain;
-    dataStream >> _country;
-    dataStream >> _category;
-    dataStream >> _subcategory;
-    dataStream >> _specific;
-    dataStream >> _extra;
-    dataStream >> _altEntityKind;
-    dataStream >> _altDomain;
-    dataStream >> _altCountry;
-    dataStream >> _altCategory;
-    dataStream >> _altSubcategory;
-    dataStream >> _altSpecific;
-    dataStream >> _altExtra;
-    dataStream >> _xVelocity;
-    dataStream >> _yVelocity;
-    dataStream >> _zVelocity;
-    dataStream >> _xLocation;
-    dataStream >> _yLocation;
-    dataStream >> _zLocation;
-    dataStream >> _psi;
-    dataStream >> _theta;
-    dataStream >> _phi;
-    dataStream >> _entityAppearance;
-    dataStream >> _deadReckoningAlgorithm;
+    dataStream >> site;
+    dataStream >> application;
+    dataStream >> entity;
+    dataStream >> forceId;
+    dataStream >> numberOfArticulationParameters;
+    dataStream >> entityKind;
+    dataStream >> domain;
+    dataStream >> country;
+    dataStream >> category;
+    dataStream >> subcategory;
+    dataStream >> specif;
+    dataStream >> extra;
+    dataStream >> altEntityKind;
+    dataStream >> altDomain;
+    dataStream >> altCountry;
+    dataStream >> altCategory;
+    dataStream >> altSubcategory;
+    dataStream >> altSpecific;
+    dataStream >> altExtra;
+    dataStream >> xVelocity;
+    dataStream >> yVelocity;
+    dataStream >> zVelocity;
+    dataStream >> xLocation;
+    dataStream >> yLocation;
+    dataStream >> zLocation;
+    dataStream >> psi;
+    dataStream >> theta;
+    dataStream >> phi;
+    dataStream >> entityAppearance;
+    dataStream >> deadReckoningAlgorithm;
 
      for(size_t idx = 0; idx < 15; idx++)
      {
-        dataStream >> _otherParameters[idx];
+        dataStream >> otherParameters[idx];
      }
 
-    dataStream >> _xAcceleration;
-    dataStream >> _yAcceleration;
-    dataStream >> _zAcceleration;
-    dataStream >> _xAngularVelocity;
-    dataStream >> _yAngularVelocity;
-    dataStream >> _zAngularVelocity;
+    dataStream >> xAcceleration;
+    dataStream >> yAcceleration;
+    dataStream >> zAcceleration;
+    dataStream >> xAngularVelocity;
+    dataStream >> yAngularVelocity;
+    dataStream >> zAngularVelocity;
 
      for(size_t idx = 0; idx < 12; idx++)
      {
-        dataStream >> _marking[idx];
+        dataStream >> marking[idx];
      }
 
-    dataStream >> _capabilities;
+    dataStream >> capabilities;
 
-     _articulationParameters.clear();
-     for(unsigned char idx = 0; idx < _numberOfArticulationParameters; idx++)
+     articulationParameters.clear();
+     for(size_t idx = 0; idx < numberOfArticulationParameters; idx++)
      {
         ArticulationParameter x;
         x.unmarshal(dataStream);
-        _articulationParameters.push_back(x);
+        articulationParameters.push_back(x);
      }
 }
 
@@ -616,58 +193,58 @@ bool FastEntityStatePdu::operator ==(const FastEntityStatePdu& rhs) const
 
      ivarsEqual = EntityInformationFamilyPdu::operator==(rhs);
 
-     if( ! (_site == rhs._site) ) ivarsEqual = false;
-     if( ! (_application == rhs._application) ) ivarsEqual = false;
-     if( ! (_entity == rhs._entity) ) ivarsEqual = false;
-     if( ! (_forceId == rhs._forceId) ) ivarsEqual = false;
-     if( ! (_entityKind == rhs._entityKind) ) ivarsEqual = false;
-     if( ! (_domain == rhs._domain) ) ivarsEqual = false;
-     if( ! (_country == rhs._country) ) ivarsEqual = false;
-     if( ! (_category == rhs._category) ) ivarsEqual = false;
-     if( ! (_subcategory == rhs._subcategory) ) ivarsEqual = false;
-     if( ! (_specific == rhs._specific) ) ivarsEqual = false;
-     if( ! (_extra == rhs._extra) ) ivarsEqual = false;
-     if( ! (_altEntityKind == rhs._altEntityKind) ) ivarsEqual = false;
-     if( ! (_altDomain == rhs._altDomain) ) ivarsEqual = false;
-     if( ! (_altCountry == rhs._altCountry) ) ivarsEqual = false;
-     if( ! (_altCategory == rhs._altCategory) ) ivarsEqual = false;
-     if( ! (_altSubcategory == rhs._altSubcategory) ) ivarsEqual = false;
-     if( ! (_altSpecific == rhs._altSpecific) ) ivarsEqual = false;
-     if( ! (_altExtra == rhs._altExtra) ) ivarsEqual = false;
-     if( ! (_xVelocity == rhs._xVelocity) ) ivarsEqual = false;
-     if( ! (_yVelocity == rhs._yVelocity) ) ivarsEqual = false;
-     if( ! (_zVelocity == rhs._zVelocity) ) ivarsEqual = false;
-     if( ! (_xLocation == rhs._xLocation) ) ivarsEqual = false;
-     if( ! (_yLocation == rhs._yLocation) ) ivarsEqual = false;
-     if( ! (_zLocation == rhs._zLocation) ) ivarsEqual = false;
-     if( ! (_psi == rhs._psi) ) ivarsEqual = false;
-     if( ! (_theta == rhs._theta) ) ivarsEqual = false;
-     if( ! (_phi == rhs._phi) ) ivarsEqual = false;
-     if( ! (_entityAppearance == rhs._entityAppearance) ) ivarsEqual = false;
-     if( ! (_deadReckoningAlgorithm == rhs._deadReckoningAlgorithm) ) ivarsEqual = false;
+     if( ! (site == rhs.site) ) ivarsEqual = false;
+     if( ! (application == rhs.application) ) ivarsEqual = false;
+     if( ! (entity == rhs.entity) ) ivarsEqual = false;
+     if( ! (forceId == rhs.forceId) ) ivarsEqual = false;
+     if( ! (entityKind == rhs.entityKind) ) ivarsEqual = false;
+     if( ! (domain == rhs.domain) ) ivarsEqual = false;
+     if( ! (country == rhs.country) ) ivarsEqual = false;
+     if( ! (category == rhs.category) ) ivarsEqual = false;
+     if( ! (subcategory == rhs.subcategory) ) ivarsEqual = false;
+     if( ! (specif == rhs.specif) ) ivarsEqual = false;
+     if( ! (extra == rhs.extra) ) ivarsEqual = false;
+     if( ! (altEntityKind == rhs.altEntityKind) ) ivarsEqual = false;
+     if( ! (altDomain == rhs.altDomain) ) ivarsEqual = false;
+     if( ! (altCountry == rhs.altCountry) ) ivarsEqual = false;
+     if( ! (altCategory == rhs.altCategory) ) ivarsEqual = false;
+     if( ! (altSubcategory == rhs.altSubcategory) ) ivarsEqual = false;
+     if( ! (altSpecific == rhs.altSpecific) ) ivarsEqual = false;
+     if( ! (altExtra == rhs.altExtra) ) ivarsEqual = false;
+     if( ! (xVelocity == rhs.xVelocity) ) ivarsEqual = false;
+     if( ! (yVelocity == rhs.yVelocity) ) ivarsEqual = false;
+     if( ! (zVelocity == rhs.zVelocity) ) ivarsEqual = false;
+     if( ! (xLocation == rhs.xLocation) ) ivarsEqual = false;
+     if( ! (yLocation == rhs.yLocation) ) ivarsEqual = false;
+     if( ! (zLocation == rhs.zLocation) ) ivarsEqual = false;
+     if( ! (psi == rhs.psi) ) ivarsEqual = false;
+     if( ! (theta == rhs.theta) ) ivarsEqual = false;
+     if( ! (phi == rhs.phi) ) ivarsEqual = false;
+     if( ! (entityAppearance == rhs.entityAppearance) ) ivarsEqual = false;
+     if( ! (deadReckoningAlgorithm == rhs.deadReckoningAlgorithm) ) ivarsEqual = false;
 
-     for(unsigned char idx = 0; idx < 15; idx++)
+     for(int idx = 0; idx < 15; idx++)
      {
-          if(!(_otherParameters[idx] == rhs._otherParameters[idx]) ) ivarsEqual = false;
+          if(!(otherParameters[idx] == rhs.otherParameters[idx]) ) ivarsEqual = false;
      }
 
-     if( ! (_xAcceleration == rhs._xAcceleration) ) ivarsEqual = false;
-     if( ! (_yAcceleration == rhs._yAcceleration) ) ivarsEqual = false;
-     if( ! (_zAcceleration == rhs._zAcceleration) ) ivarsEqual = false;
-     if( ! (_xAngularVelocity == rhs._xAngularVelocity) ) ivarsEqual = false;
-     if( ! (_yAngularVelocity == rhs._yAngularVelocity) ) ivarsEqual = false;
-     if( ! (_zAngularVelocity == rhs._zAngularVelocity) ) ivarsEqual = false;
+     if( ! (xAcceleration == rhs.xAcceleration) ) ivarsEqual = false;
+     if( ! (yAcceleration == rhs.yAcceleration) ) ivarsEqual = false;
+     if( ! (zAcceleration == rhs.zAcceleration) ) ivarsEqual = false;
+     if( ! (xAngularVelocity == rhs.xAngularVelocity) ) ivarsEqual = false;
+     if( ! (yAngularVelocity == rhs.yAngularVelocity) ) ivarsEqual = false;
+     if( ! (zAngularVelocity == rhs.zAngularVelocity) ) ivarsEqual = false;
 
-     for(unsigned char idx = 0; idx < 12; idx++)
+     for(int idx = 0; idx < 12; idx++)
      {
-          if(!(_marking[idx] == rhs._marking[idx]) ) ivarsEqual = false;
+          if(!(marking[idx] == rhs.marking[idx]) ) ivarsEqual = false;
      }
 
-     if( ! (_capabilities == rhs._capabilities) ) ivarsEqual = false;
+     if( ! (capabilities == rhs.capabilities) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _articulationParameters.size(); idx++)
+     for(size_t idx = 0; idx < articulationParameters.size(); idx++)
      {
-        if( ! ( _articulationParameters[idx] == rhs._articulationParameters[idx]) ) ivarsEqual = false;
+        if( ! ( articulationParameters[idx] == rhs.articulationParameters[idx]) ) ivarsEqual = false;
      }
 
 
@@ -679,49 +256,49 @@ int FastEntityStatePdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = EntityInformationFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + 2;  // _site
-   marshalSize = marshalSize + 2;  // _application
-   marshalSize = marshalSize + 2;  // _entity
-   marshalSize = marshalSize + 1;  // _forceId
-   marshalSize = marshalSize + 1;  // _numberOfArticulationParameters
-   marshalSize = marshalSize + 1;  // _entityKind
-   marshalSize = marshalSize + 1;  // _domain
-   marshalSize = marshalSize + 2;  // _country
-   marshalSize = marshalSize + 1;  // _category
-   marshalSize = marshalSize + 1;  // _subcategory
-   marshalSize = marshalSize + 1;  // _specific
-   marshalSize = marshalSize + 1;  // _extra
-   marshalSize = marshalSize + 1;  // _altEntityKind
-   marshalSize = marshalSize + 1;  // _altDomain
-   marshalSize = marshalSize + 2;  // _altCountry
-   marshalSize = marshalSize + 1;  // _altCategory
-   marshalSize = marshalSize + 1;  // _altSubcategory
-   marshalSize = marshalSize + 1;  // _altSpecific
-   marshalSize = marshalSize + 1;  // _altExtra
-   marshalSize = marshalSize + 4;  // _xVelocity
-   marshalSize = marshalSize + 4;  // _yVelocity
-   marshalSize = marshalSize + 4;  // _zVelocity
-   marshalSize = marshalSize + 8;  // _xLocation
-   marshalSize = marshalSize + 8;  // _yLocation
-   marshalSize = marshalSize + 8;  // _zLocation
-   marshalSize = marshalSize + 4;  // _psi
-   marshalSize = marshalSize + 4;  // _theta
-   marshalSize = marshalSize + 4;  // _phi
-   marshalSize = marshalSize + 4;  // _entityAppearance
-   marshalSize = marshalSize + 1;  // _deadReckoningAlgorithm
-   marshalSize = marshalSize + 15 * 1;  // _otherParameters
-   marshalSize = marshalSize + 4;  // _xAcceleration
-   marshalSize = marshalSize + 4;  // _yAcceleration
-   marshalSize = marshalSize + 4;  // _zAcceleration
-   marshalSize = marshalSize + 4;  // _xAngularVelocity
-   marshalSize = marshalSize + 4;  // _yAngularVelocity
-   marshalSize = marshalSize + 4;  // _zAngularVelocity
-   marshalSize = marshalSize + 12 * 1;  // _marking
-   marshalSize = marshalSize + 4;  // _capabilities
+   marshalSize = marshalSize + 2;  // site
+   marshalSize = marshalSize + 2;  // application
+   marshalSize = marshalSize + 2;  // entity
+   marshalSize = marshalSize + 1;  // forceId
+   marshalSize = marshalSize + 1;  // numberOfArticulationParameters
+   marshalSize = marshalSize + 1;  // entityKind
+   marshalSize = marshalSize + 1;  // domain
+   marshalSize = marshalSize + 2;  // country
+   marshalSize = marshalSize + 1;  // category
+   marshalSize = marshalSize + 1;  // subcategory
+   marshalSize = marshalSize + 1;  // specif
+   marshalSize = marshalSize + 1;  // extra
+   marshalSize = marshalSize + 1;  // altEntityKind
+   marshalSize = marshalSize + 1;  // altDomain
+   marshalSize = marshalSize + 2;  // altCountry
+   marshalSize = marshalSize + 1;  // altCategory
+   marshalSize = marshalSize + 1;  // altSubcategory
+   marshalSize = marshalSize + 1;  // altSpecific
+   marshalSize = marshalSize + 1;  // altExtra
+   marshalSize = marshalSize + 4;  // xVelocity
+   marshalSize = marshalSize + 4;  // yVelocity
+   marshalSize = marshalSize + 4;  // zVelocity
+   marshalSize = marshalSize + 8;  // xLocation
+   marshalSize = marshalSize + 8;  // yLocation
+   marshalSize = marshalSize + 8;  // zLocation
+   marshalSize = marshalSize + 4;  // psi
+   marshalSize = marshalSize + 4;  // theta
+   marshalSize = marshalSize + 4;  // phi
+   marshalSize = marshalSize + 4;  // entityAppearance
+   marshalSize = marshalSize + 1;  // deadReckoningAlgorithm
+   marshalSize = marshalSize + 15 * 1;  // otherParameters
+   marshalSize = marshalSize + 4;  // xAcceleration
+   marshalSize = marshalSize + 4;  // yAcceleration
+   marshalSize = marshalSize + 4;  // zAcceleration
+   marshalSize = marshalSize + 4;  // xAngularVelocity
+   marshalSize = marshalSize + 4;  // yAngularVelocity
+   marshalSize = marshalSize + 4;  // zAngularVelocity
+   marshalSize = marshalSize + 12 * 1;  // marking
+   marshalSize = marshalSize + 4;  // capabilities
 
-   for(unsigned long long idx=0; idx < _articulationParameters.size(); idx++)
+   for(int idx=0; idx < articulationParameters.size(); idx++)
    {
-        ArticulationParameter listElement = _articulationParameters[idx];
+        ArticulationParameter listElement = articulationParameters[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

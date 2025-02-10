@@ -1,81 +1,67 @@
 #pragma once
 
-#include "dis6/RadioCommunicationsFamilyPdu.h"
-#include "dis6/opendis6_export.h"
-#include "dis6/utils/DataStream.h"
-#include <cstdint>
+#include "EntityID.h"
+#include "OneByteChunk.h"
 #include <vector>
+#include "RadioCommunicationsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
+
 
 namespace DIS
 {
-  // Section 5.3.8.2. Detailed information about a radio transmitter. This PDU
-  // requires        manually written code to complete. The encodingScheme field
-  // can be used in multiple        ways, which requires hand-written code to
-  // finish. UNFINISHED
+// Section 5.3.8.2. Detailed information about a radio transmitter. This PDU requires manually written code to complete. The encodingScheme field can be used in multiple ways, which requires hand-written code to finish. UNFINISHED
 
-  // Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All
-  // rights reserved.
-  //
-  // @author DMcG, jkg
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
+//
+// @author DMcG, jkg
 
-  class OPENDIS6_EXPORT SignalPdu : public RadioCommunicationsFamilyPdu
-  {
-  protected:
-    /** encoding scheme used, and enumeration */
-    unsigned short _encodingScheme;
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
 
-    /** tdl type */
-    unsigned short _tdlType;
+struct EXPORT_MACRO SignalPdu : public RadioCommunicationsFamilyPdu
+{
+  /** ID of the entity that is the source of the communication, ie contains the radio */
+  EntityID entityId;
 
-    /** sample rate */
-    unsigned int _sampleRate;
+  /** particular radio within an entity */
+  unsigned short radioId;
 
-    /** length od data */
-    short _dataLength;
+  /** encoding scheme used, and enumeration */
+  unsigned short encodingScheme;
 
-    /** number of samples */
-    short _samples;
+  /** tdl type */
+  unsigned short tdlType;
 
-    /** list of eight bit values */
-    std::vector<uint8_t> _data;
+  /** sample rate */
+  unsigned int sampleRate;
 
-  public:
+  /** length of data, in bits */
+  unsigned short dataLength;
+
+  /** number of samples. If the PDU contains encoded audio, this should be zero. */
+  unsigned short samples;
+
+  /** list of eight bit values. Must be padded to fall on a 32 bit boundary. */
+  std::vector<OneByteChunk> data;
+
     SignalPdu();
     virtual ~SignalPdu();
 
-    virtual void marshal(DataStream &dataStream) const;
-    virtual void unmarshal(DataStream &dataStream);
+    virtual void marshal(DataStream& dataStream) const;
+    virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getEncodingScheme() const;
-    void setEncodingScheme(unsigned short pX);
 
-    unsigned short getTdlType() const;
-    void setTdlType(unsigned short pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned int getSampleRate() const;
-    void setSampleRate(unsigned int pX);
-
-    short getDataLength() const;
-    void setDataLength(short pX);
-
-    short getSamples() const;
-    void setSamples(short pX);
-
-    std::vector<uint8_t> &getData();
-    const std::vector<uint8_t> &getData() const;
-    void setData(const std::vector<uint8_t> &pX);
-
-    virtual int getMarshalledSize() const;
-
-    bool operator==(const SignalPdu &rhs) const;
-  };
-} // namespace DIS
-
+     bool operator ==(const SignalPdu& rhs) const;
+};
+}
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
 //  are met:
-//
+// 
 //  * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 // * Redistributions in binary form must reproduce the above copyright
@@ -88,7 +74,7 @@ namespace DIS
 // nor the names of its contributors may be used to endorse or
 //  promote products derived from this software without specific
 // prior written permission.
-//
+// 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS

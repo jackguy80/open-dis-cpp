@@ -1,60 +1,42 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.5. Articulation parameters for  movable parts and attached parts of an entity. Specifes wether or not a change has occured,  the part identifcation of the articulated part to which it is attached, and the type and value of each parameter.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT ArticulationParameter
+struct EXPORT_MACRO ArticulationParameter
 {
-protected:
-  unsigned char _parameterTypeDesignator; 
+  unsigned char parameterTypeDesignator;
 
-  unsigned char _changeIndicator; 
+  unsigned char changeIndicator;
 
-  unsigned short _partAttachedTo; 
+  unsigned short partAttachedTo;
 
-  int _parameterType; 
+  int parameterType;
 
-  double _parameterValue; 
+  double parameterValue;
 
-
- public:
     ArticulationParameter();
     virtual ~ArticulationParameter();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getParameterTypeDesignator() const; 
-    void setParameterTypeDesignator(unsigned char pX); 
 
-    unsigned char getChangeIndicator() const; 
-    void setChangeIndicator(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPartAttachedTo() const; 
-    void setPartAttachedTo(unsigned short pX); 
-
-    int getParameterType() const; 
-    void setParameterType(int pX); 
-
-    double getParameterValue() const; 
-    void setParameterValue(double pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ArticulationParameter& rhs) const;
+     bool operator ==(const ArticulationParameter& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

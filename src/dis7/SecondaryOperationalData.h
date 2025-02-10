@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Additional operational data for an IFF emitting system and the number of IFF Fundamental Parameter Data records Section 6.2.76.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT SecondaryOperationalData
+struct EXPORT_MACRO SecondaryOperationalData
 {
-protected:
   /** additional operational characteristics of the IFF emitting system. Each 8-bit field will vary depending on the system type. */
-  unsigned char _operationalData1; 
+  unsigned char operationalData1;
 
   /** additional operational characteristics of the IFF emitting system. Each 8-bit field will vary depending on the system type. */
-  unsigned char _operationalData2; 
+  unsigned char operationalData2;
 
   /** the number of IFF Fundamental Parameter Data records that follow */
-  unsigned short _numberOfIFFFundamentalParameterRecords; 
+  unsigned short numberOfIFFFundamentalParameterRecords;
 
-
- public:
     SecondaryOperationalData();
     virtual ~SecondaryOperationalData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getOperationalData1() const; 
-    void setOperationalData1(unsigned char pX); 
 
-    unsigned char getOperationalData2() const; 
-    void setOperationalData2(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getNumberOfIFFFundamentalParameterRecords() const; 
-    void setNumberOfIFFFundamentalParameterRecords(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SecondaryOperationalData& rhs) const;
+     bool operator ==(const SecondaryOperationalData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

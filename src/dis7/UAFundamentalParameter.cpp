@@ -1,15 +1,15 @@
-#include <dis7/UAFundamentalParameter.h>
+#include "UAFundamentalParameter.h"
 
 using namespace DIS;
 
 
 UAFundamentalParameter::UAFundamentalParameter():
-   _activeEmissionParameterIndex(0), 
-   _scanPattern(0), 
-   _beamCenterAzimuthHorizontal(0.0), 
-   _azimuthalBeamwidthHorizontal(0.0), 
-   _beamCenterDepressionElevation(0.0), 
-   _beamwidthDownElevation(0.0)
+   activeEmissionParameterIndex(0), 
+   scanPattern(0), 
+   beamCenterAzimuthHorizontal(0.0), 
+   azimuthalBeamwidthHorizontal(0.0), 
+   beamCenterDepressionElevation(0.0), 
+   beamwidthDownElevation(0.0)
 {
 }
 
@@ -17,84 +17,24 @@ UAFundamentalParameter::~UAFundamentalParameter()
 {
 }
 
-unsigned short UAFundamentalParameter::getActiveEmissionParameterIndex() const
-{
-    return _activeEmissionParameterIndex;
-}
-
-void UAFundamentalParameter::setActiveEmissionParameterIndex(unsigned short pX)
-{
-    _activeEmissionParameterIndex = pX;
-}
-
-unsigned short UAFundamentalParameter::getScanPattern() const
-{
-    return _scanPattern;
-}
-
-void UAFundamentalParameter::setScanPattern(unsigned short pX)
-{
-    _scanPattern = pX;
-}
-
-float UAFundamentalParameter::getBeamCenterAzimuthHorizontal() const
-{
-    return _beamCenterAzimuthHorizontal;
-}
-
-void UAFundamentalParameter::setBeamCenterAzimuthHorizontal(float pX)
-{
-    _beamCenterAzimuthHorizontal = pX;
-}
-
-float UAFundamentalParameter::getAzimuthalBeamwidthHorizontal() const
-{
-    return _azimuthalBeamwidthHorizontal;
-}
-
-void UAFundamentalParameter::setAzimuthalBeamwidthHorizontal(float pX)
-{
-    _azimuthalBeamwidthHorizontal = pX;
-}
-
-float UAFundamentalParameter::getBeamCenterDepressionElevation() const
-{
-    return _beamCenterDepressionElevation;
-}
-
-void UAFundamentalParameter::setBeamCenterDepressionElevation(float pX)
-{
-    _beamCenterDepressionElevation = pX;
-}
-
-float UAFundamentalParameter::getBeamwidthDownElevation() const
-{
-    return _beamwidthDownElevation;
-}
-
-void UAFundamentalParameter::setBeamwidthDownElevation(float pX)
-{
-    _beamwidthDownElevation = pX;
-}
-
 void UAFundamentalParameter::marshal(DataStream& dataStream) const
 {
-    dataStream << _activeEmissionParameterIndex;
-    dataStream << _scanPattern;
-    dataStream << _beamCenterAzimuthHorizontal;
-    dataStream << _azimuthalBeamwidthHorizontal;
-    dataStream << _beamCenterDepressionElevation;
-    dataStream << _beamwidthDownElevation;
+    dataStream << activeEmissionParameterIndex;
+    dataStream << scanPattern;
+    dataStream << beamCenterAzimuthHorizontal;
+    dataStream << azimuthalBeamwidthHorizontal;
+    dataStream << beamCenterDepressionElevation;
+    dataStream << beamwidthDownElevation;
 }
 
 void UAFundamentalParameter::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _activeEmissionParameterIndex;
-    dataStream >> _scanPattern;
-    dataStream >> _beamCenterAzimuthHorizontal;
-    dataStream >> _azimuthalBeamwidthHorizontal;
-    dataStream >> _beamCenterDepressionElevation;
-    dataStream >> _beamwidthDownElevation;
+    dataStream >> activeEmissionParameterIndex;
+    dataStream >> scanPattern;
+    dataStream >> beamCenterAzimuthHorizontal;
+    dataStream >> azimuthalBeamwidthHorizontal;
+    dataStream >> beamCenterDepressionElevation;
+    dataStream >> beamwidthDownElevation;
 }
 
 
@@ -102,12 +42,12 @@ bool UAFundamentalParameter::operator ==(const UAFundamentalParameter& rhs) cons
  {
      bool ivarsEqual = true;
 
-     if( ! (_activeEmissionParameterIndex == rhs._activeEmissionParameterIndex) ) ivarsEqual = false;
-     if( ! (_scanPattern == rhs._scanPattern) ) ivarsEqual = false;
-     if( ! (_beamCenterAzimuthHorizontal == rhs._beamCenterAzimuthHorizontal) ) ivarsEqual = false;
-     if( ! (_azimuthalBeamwidthHorizontal == rhs._azimuthalBeamwidthHorizontal) ) ivarsEqual = false;
-     if( ! (_beamCenterDepressionElevation == rhs._beamCenterDepressionElevation) ) ivarsEqual = false;
-     if( ! (_beamwidthDownElevation == rhs._beamwidthDownElevation) ) ivarsEqual = false;
+     if( ! (activeEmissionParameterIndex == rhs.activeEmissionParameterIndex) ) ivarsEqual = false;
+     if( ! (scanPattern == rhs.scanPattern) ) ivarsEqual = false;
+     if( ! (beamCenterAzimuthHorizontal == rhs.beamCenterAzimuthHorizontal) ) ivarsEqual = false;
+     if( ! (azimuthalBeamwidthHorizontal == rhs.azimuthalBeamwidthHorizontal) ) ivarsEqual = false;
+     if( ! (beamCenterDepressionElevation == rhs.beamCenterDepressionElevation) ) ivarsEqual = false;
+     if( ! (beamwidthDownElevation == rhs.beamwidthDownElevation) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -116,12 +56,12 @@ int UAFundamentalParameter::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _activeEmissionParameterIndex
-   marshalSize = marshalSize + 2;  // _scanPattern
-   marshalSize = marshalSize + 4;  // _beamCenterAzimuthHorizontal
-   marshalSize = marshalSize + 4;  // _azimuthalBeamwidthHorizontal
-   marshalSize = marshalSize + 4;  // _beamCenterDepressionElevation
-   marshalSize = marshalSize + 4;  // _beamwidthDownElevation
+   marshalSize = marshalSize + 2;  // activeEmissionParameterIndex
+   marshalSize = marshalSize + 2;  // scanPattern
+   marshalSize = marshalSize + 4;  // beamCenterAzimuthHorizontal
+   marshalSize = marshalSize + 4;  // azimuthalBeamwidthHorizontal
+   marshalSize = marshalSize + 4;  // beamCenterDepressionElevation
+   marshalSize = marshalSize + 4;  // beamwidthDownElevation
     return marshalSize;
 }
 

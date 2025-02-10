@@ -1,92 +1,61 @@
 #pragma once
 
-#include <dis7/SimulationAddress.h>
-#include <dis7/EntityInformationFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "SimulationAddress.h"
+#include "EntityInformationFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Information about individual attributes for a particular entity, other object, or event may be communicated using an Attribute PDU. The Attribute PDU shall not be used to exchange data available in any other PDU except where explicitly mentioned in the PDU issuance instructions within this standard. See 5.3.6 for the information requirements and issuance and receipt rules for this PDU. Section 7.2.6. INCOMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT AttributePdu : public EntityInformationFamilyPdu
+struct EXPORT_MACRO AttributePdu : public EntityInformationFamilyPdu
 {
-protected:
   /** This field shall identify the simulation issuing the Attribute PDU. It shall be represented by a Simulation Address record (see 6.2.79). */
-  SimulationAddress _originatingSimulationAddress; 
+  SimulationAddress originatingSimulationAddress;
 
   /** Padding */
-  int _padding1; 
+  int padding1;
 
   /** Padding */
-  short _padding2; 
+  short padding2;
 
   /** This field shall represent the type of the PDU that is being extended or updated, if applicable. It shall be represented by an 8-bit enumeration. */
-  unsigned char _attributeRecordPduType; 
+  unsigned char attributeRecordPduType;
 
   /** This field shall indicate the Protocol Version associated with the Attribute Record PDU Type. It shall be represented by an 8-bit enumeration. */
-  unsigned char _attributeRecordProtocolVersion; 
+  unsigned char attributeRecordProtocolVersion;
 
   /** This field shall contain the Attribute record type of the Attribute records in the PDU if they all have the same Attribute record type. It shall be represented by a 32-bit enumeration. */
-  unsigned int _masterAttributeRecordType; 
+  unsigned int masterAttributeRecordType;
 
   /** This field shall identify the action code applicable to this Attribute PDU. The Action Code shall apply to all Attribute records contained in the PDU. It shall be represented by an 8-bit enumeration. */
-  unsigned char _actionCode; 
+  unsigned char actionCode;
 
   /** Padding */
-  char _padding3; 
+  char padding3;
 
   /** This field shall specify the number of Attribute Record Sets that make up the remainder of the PDU. It shall be represented by a 16-bit unsigned integer. */
-  unsigned short _numberAttributeRecordSet; 
+  unsigned short numberAttributeRecordSet;
 
-
- public:
     AttributePdu();
     virtual ~AttributePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    SimulationAddress& getOriginatingSimulationAddress(); 
-    const SimulationAddress&  getOriginatingSimulationAddress() const; 
-    void setOriginatingSimulationAddress(const SimulationAddress    &pX);
 
-    int getPadding1() const; 
-    void setPadding1(int pX); 
+     virtual int getMarshalledSize() const;
 
-    short getPadding2() const; 
-    void setPadding2(short pX); 
-
-    unsigned char getAttributeRecordPduType() const; 
-    void setAttributeRecordPduType(unsigned char pX); 
-
-    unsigned char getAttributeRecordProtocolVersion() const; 
-    void setAttributeRecordProtocolVersion(unsigned char pX); 
-
-    unsigned int getMasterAttributeRecordType() const; 
-    void setMasterAttributeRecordType(unsigned int pX); 
-
-    unsigned char getActionCode() const; 
-    void setActionCode(unsigned char pX); 
-
-    char getPadding3() const; 
-    void setPadding3(char pX); 
-
-    unsigned short getNumberAttributeRecordSet() const; 
-    void setNumberAttributeRecordSet(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AttributePdu& rhs) const;
+     bool operator ==(const AttributePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 5.3.35: Information about a particular UA emitter shall be represented using an Acoustic Emitter System record. This record shall consist of three fields: Acoustic Name, Function, and Acoustic ID Number
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT AcousticEmitterSystem
+struct EXPORT_MACRO AcousticEmitterSystem
 {
-protected:
   /** This field shall specify the system for a particular UA emitter. */
-  unsigned short _acousticName; 
+  unsigned short acousticName;
 
   /** This field shall describe the function of the acoustic system.  */
-  unsigned char _acousticFunction; 
+  unsigned char acousticFunction;
 
   /** This field shall specify the UA emitter identification number relative to a specific system. This field shall be represented by an 8-bit unsigned integer. This field allows the differentiation of multiple systems on an entity, even if in some instances two or more of the systems may be identical UA emitter types. Numbering of systems shall begin with the value 1.  */
-  unsigned char _acousticID; 
+  unsigned char acousticID;
 
-
- public:
     AcousticEmitterSystem();
     virtual ~AcousticEmitterSystem();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getAcousticName() const; 
-    void setAcousticName(unsigned short pX); 
 
-    unsigned char getAcousticFunction() const; 
-    void setAcousticFunction(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getAcousticID() const; 
-    void setAcousticID(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AcousticEmitterSystem& rhs) const;
+     bool operator ==(const AcousticEmitterSystem& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

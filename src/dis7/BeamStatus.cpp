@@ -1,10 +1,10 @@
-#include <dis7/BeamStatus.h>
+#include "BeamStatus.h"
 
 using namespace DIS;
 
 
 BeamStatus::BeamStatus():
-   _beamState(0)
+   beamState(0)
 {
 }
 
@@ -12,24 +12,14 @@ BeamStatus::~BeamStatus()
 {
 }
 
-unsigned char BeamStatus::getBeamState() const
-{
-    return _beamState;
-}
-
-void BeamStatus::setBeamState(unsigned char pX)
-{
-    _beamState = pX;
-}
-
 void BeamStatus::marshal(DataStream& dataStream) const
 {
-    dataStream << _beamState;
+    dataStream << beamState;
 }
 
 void BeamStatus::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _beamState;
+    dataStream >> beamState;
 }
 
 
@@ -37,7 +27,7 @@ bool BeamStatus::operator ==(const BeamStatus& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_beamState == rhs._beamState) ) ivarsEqual = false;
+     if( ! (beamState == rhs.beamState) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -46,7 +36,7 @@ int BeamStatus::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _beamState
+   marshalSize = marshalSize + 1;  // beamState
     return marshalSize;
 }
 

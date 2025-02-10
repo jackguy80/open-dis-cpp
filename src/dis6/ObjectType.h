@@ -1,65 +1,47 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Identifies type of object. This is a shorter version of EntityType that omits the specific and extra fields.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT ObjectType
+struct EXPORT_MACRO ObjectType
 {
-protected:
   /** Kind of entity */
-  unsigned char _entityKind; 
+  unsigned char entityKind;
 
   /** Domain of entity (air, surface, subsurface, space, etc) */
-  unsigned char _domain; 
+  unsigned char domain;
 
   /** country to which the design of the entity is attributed */
-  unsigned short _country; 
+  unsigned short country;
 
   /** category of entity */
-  unsigned char _category; 
+  unsigned char category;
 
   /** subcategory of entity */
-  unsigned char _subcategory; 
+  unsigned char subcategory;
 
-
- public:
     ObjectType();
     virtual ~ObjectType();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getEntityKind() const; 
-    void setEntityKind(unsigned char pX); 
 
-    unsigned char getDomain() const; 
-    void setDomain(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getCountry() const; 
-    void setCountry(unsigned short pX); 
-
-    unsigned char getCategory() const; 
-    void setCategory(unsigned char pX); 
-
-    unsigned char getSubcategory() const; 
-    void setSubcategory(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ObjectType& rhs) const;
+     bool operator ==(const ObjectType& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

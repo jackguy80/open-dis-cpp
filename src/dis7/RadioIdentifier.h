@@ -1,59 +1,44 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The unique designation of an attached or unattached radio in an event or exercise Section 6.2.69
+// The unique designation of an attached or unattached radio in an event or exercise Section 6.2.70
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT RadioIdentifier
+struct EXPORT_MACRO RadioIdentifier
 {
-protected:
   /**  site */
-  unsigned short _siteNumber; 
+  unsigned short siteNumber;
 
   /** application number */
-  unsigned short _applicationNumber; 
+  unsigned short applicationNumber;
 
   /**  reference number */
-  unsigned short _referenceNumber; 
+  unsigned short referenceNumber;
 
   /**  Radio number */
-  unsigned short _radioNumber; 
+  unsigned short radioNumber;
 
-
- public:
     RadioIdentifier();
     virtual ~RadioIdentifier();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSiteNumber() const; 
-    void setSiteNumber(unsigned short pX); 
 
-    unsigned short getApplicationNumber() const; 
-    void setApplicationNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getReferenceNumber() const; 
-    void setReferenceNumber(unsigned short pX); 
-
-    unsigned short getRadioNumber() const; 
-    void setRadioNumber(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RadioIdentifier& rhs) const;
+     bool operator ==(const RadioIdentifier& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,67 +1,48 @@
 #pragma once
 
-#include <dis6/EntityType.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.7. Specifies the type of muntion fired, the type of warhead, the         type of fuse, the number of rounds fired, and the rate at which the roudns are fired in         rounds per minute.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT BurstDescriptor
+struct EXPORT_MACRO BurstDescriptor
 {
-protected:
   /** What munition was used in the burst */
-  EntityType _munition; 
+  EntityType munition;
 
   /** type of warhead */
-  unsigned short _warhead; 
+  unsigned short warhead;
 
   /** type of fuse used */
-  unsigned short _fuse; 
+  unsigned short fuse;
 
   /** how many of the munition were fired */
-  unsigned short _quantity; 
+  unsigned short quantity;
 
   /** rate at which the munition was fired */
-  unsigned short _rate; 
+  unsigned short rate;
 
-
- public:
     BurstDescriptor();
     virtual ~BurstDescriptor();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getMunition(); 
-    const EntityType&  getMunition() const; 
-    void setMunition(const EntityType    &pX);
 
-    unsigned short getWarhead() const; 
-    void setWarhead(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getFuse() const; 
-    void setFuse(unsigned short pX); 
-
-    unsigned short getQuantity() const; 
-    void setQuantity(unsigned short pX); 
-
-    unsigned short getRate() const; 
-    void setRate(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const BurstDescriptor& rhs) const;
+     bool operator ==(const BurstDescriptor& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

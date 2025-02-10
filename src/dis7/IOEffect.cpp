@@ -1,18 +1,18 @@
-#include <dis7/IOEffect.h>
+#include "IOEffect.h"
 
 using namespace DIS;
 
 
 IOEffect::IOEffect():
-   _recordType(5500), 
-   _recordLength(16), 
-   _ioStatus(0), 
-   _ioLinkType(0), 
-   _ioEffect(), 
-   _ioEffectDutyCycle(0), 
-   _ioEffectDuration(0), 
-   _ioProcess(0), 
-   _padding(0)
+   recordType(5500), 
+   recordLength(16), 
+   ioStatus(0), 
+   ioLinkType(0), 
+   ioEffect(), 
+   ioEffectDutyCycle(0), 
+   ioEffectDuration(0), 
+   ioProcess(0), 
+   padding(0)
 {
 }
 
@@ -20,125 +20,30 @@ IOEffect::~IOEffect()
 {
 }
 
-unsigned int IOEffect::getRecordType() const
-{
-    return _recordType;
-}
-
-void IOEffect::setRecordType(unsigned int pX)
-{
-    _recordType = pX;
-}
-
-unsigned short IOEffect::getRecordLength() const
-{
-    return _recordLength;
-}
-
-void IOEffect::setRecordLength(unsigned short pX)
-{
-    _recordLength = pX;
-}
-
-unsigned char IOEffect::getIoStatus() const
-{
-    return _ioStatus;
-}
-
-void IOEffect::setIoStatus(unsigned char pX)
-{
-    _ioStatus = pX;
-}
-
-unsigned char IOEffect::getIoLinkType() const
-{
-    return _ioLinkType;
-}
-
-void IOEffect::setIoLinkType(unsigned char pX)
-{
-    _ioLinkType = pX;
-}
-
-EntityID& IOEffect::getIoEffect() 
-{
-    return _ioEffect;
-}
-
-const EntityID& IOEffect::getIoEffect() const
-{
-    return _ioEffect;
-}
-
-void IOEffect::setIoEffect(const EntityID &pX)
-{
-    _ioEffect = pX;
-}
-
-unsigned char IOEffect::getIoEffectDutyCycle() const
-{
-    return _ioEffectDutyCycle;
-}
-
-void IOEffect::setIoEffectDutyCycle(unsigned char pX)
-{
-    _ioEffectDutyCycle = pX;
-}
-
-unsigned short IOEffect::getIoEffectDuration() const
-{
-    return _ioEffectDuration;
-}
-
-void IOEffect::setIoEffectDuration(unsigned short pX)
-{
-    _ioEffectDuration = pX;
-}
-
-unsigned short IOEffect::getIoProcess() const
-{
-    return _ioProcess;
-}
-
-void IOEffect::setIoProcess(unsigned short pX)
-{
-    _ioProcess = pX;
-}
-
-unsigned short IOEffect::getPadding() const
-{
-    return _padding;
-}
-
-void IOEffect::setPadding(unsigned short pX)
-{
-    _padding = pX;
-}
-
 void IOEffect::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _recordLength;
-    dataStream << _ioStatus;
-    dataStream << _ioLinkType;
-    _ioEffect.marshal(dataStream);
-    dataStream << _ioEffectDutyCycle;
-    dataStream << _ioEffectDuration;
-    dataStream << _ioProcess;
-    dataStream << _padding;
+    dataStream << recordType;
+    dataStream << recordLength;
+    dataStream << ioStatus;
+    dataStream << ioLinkType;
+    ioEffect.marshal(dataStream);
+    dataStream << ioEffectDutyCycle;
+    dataStream << ioEffectDuration;
+    dataStream << ioProcess;
+    dataStream << padding;
 }
 
 void IOEffect::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _recordLength;
-    dataStream >> _ioStatus;
-    dataStream >> _ioLinkType;
-    _ioEffect.unmarshal(dataStream);
-    dataStream >> _ioEffectDutyCycle;
-    dataStream >> _ioEffectDuration;
-    dataStream >> _ioProcess;
-    dataStream >> _padding;
+    dataStream >> recordType;
+    dataStream >> recordLength;
+    dataStream >> ioStatus;
+    dataStream >> ioLinkType;
+    ioEffect.unmarshal(dataStream);
+    dataStream >> ioEffectDutyCycle;
+    dataStream >> ioEffectDuration;
+    dataStream >> ioProcess;
+    dataStream >> padding;
 }
 
 
@@ -146,15 +51,15 @@ bool IOEffect::operator ==(const IOEffect& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_recordLength == rhs._recordLength) ) ivarsEqual = false;
-     if( ! (_ioStatus == rhs._ioStatus) ) ivarsEqual = false;
-     if( ! (_ioLinkType == rhs._ioLinkType) ) ivarsEqual = false;
-     if( ! (_ioEffect == rhs._ioEffect) ) ivarsEqual = false;
-     if( ! (_ioEffectDutyCycle == rhs._ioEffectDutyCycle) ) ivarsEqual = false;
-     if( ! (_ioEffectDuration == rhs._ioEffectDuration) ) ivarsEqual = false;
-     if( ! (_ioProcess == rhs._ioProcess) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (recordLength == rhs.recordLength) ) ivarsEqual = false;
+     if( ! (ioStatus == rhs.ioStatus) ) ivarsEqual = false;
+     if( ! (ioLinkType == rhs.ioLinkType) ) ivarsEqual = false;
+     if( ! (ioEffect == rhs.ioEffect) ) ivarsEqual = false;
+     if( ! (ioEffectDutyCycle == rhs.ioEffectDutyCycle) ) ivarsEqual = false;
+     if( ! (ioEffectDuration == rhs.ioEffectDuration) ) ivarsEqual = false;
+     if( ! (ioProcess == rhs.ioProcess) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -163,15 +68,15 @@ int IOEffect::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _recordType
-   marshalSize = marshalSize + 2;  // _recordLength
-   marshalSize = marshalSize + 1;  // _ioStatus
-   marshalSize = marshalSize + 1;  // _ioLinkType
-   marshalSize = marshalSize + _ioEffect.getMarshalledSize();  // _ioEffect
-   marshalSize = marshalSize + 1;  // _ioEffectDutyCycle
-   marshalSize = marshalSize + 2;  // _ioEffectDuration
-   marshalSize = marshalSize + 2;  // _ioProcess
-   marshalSize = marshalSize + 2;  // _padding
+   marshalSize = marshalSize + 4;  // recordType
+   marshalSize = marshalSize + 2;  // recordLength
+   marshalSize = marshalSize + 1;  // ioStatus
+   marshalSize = marshalSize + 1;  // ioLinkType
+   marshalSize = marshalSize + ioEffect.getMarshalledSize();  // ioEffect
+   marshalSize = marshalSize + 1;  // ioEffectDutyCycle
+   marshalSize = marshalSize + 2;  // ioEffectDuration
+   marshalSize = marshalSize + 2;  // ioProcess
+   marshalSize = marshalSize + 2;  // padding
     return marshalSize;
 }
 

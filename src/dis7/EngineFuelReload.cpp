@@ -1,16 +1,16 @@
-#include <dis7/EngineFuelReload.h>
+#include "EngineFuelReload.h"
 
 using namespace DIS;
 
 
 EngineFuelReload::EngineFuelReload():
-   _standardQuantity(0), 
-   _maximumQuantity(0), 
-   _standardQuantityReloadTime(0), 
-   _maximumQuantityReloadTime(0), 
-   _fuelMeasurmentUnits(0), 
-   _fuelLocation(0), 
-   _padding(0)
+   standardQuantity(0), 
+   maximumQuantity(0), 
+   standardQuantityReloadTime(0), 
+   maximumQuantityReloadTime(0), 
+   fuelMeasurmentUnits(0), 
+   fuelLocation(0), 
+   padding(0)
 {
 }
 
@@ -18,96 +18,26 @@ EngineFuelReload::~EngineFuelReload()
 {
 }
 
-unsigned int EngineFuelReload::getStandardQuantity() const
-{
-    return _standardQuantity;
-}
-
-void EngineFuelReload::setStandardQuantity(unsigned int pX)
-{
-    _standardQuantity = pX;
-}
-
-unsigned int EngineFuelReload::getMaximumQuantity() const
-{
-    return _maximumQuantity;
-}
-
-void EngineFuelReload::setMaximumQuantity(unsigned int pX)
-{
-    _maximumQuantity = pX;
-}
-
-unsigned int EngineFuelReload::getStandardQuantityReloadTime() const
-{
-    return _standardQuantityReloadTime;
-}
-
-void EngineFuelReload::setStandardQuantityReloadTime(unsigned int pX)
-{
-    _standardQuantityReloadTime = pX;
-}
-
-unsigned int EngineFuelReload::getMaximumQuantityReloadTime() const
-{
-    return _maximumQuantityReloadTime;
-}
-
-void EngineFuelReload::setMaximumQuantityReloadTime(unsigned int pX)
-{
-    _maximumQuantityReloadTime = pX;
-}
-
-unsigned char EngineFuelReload::getFuelMeasurmentUnits() const
-{
-    return _fuelMeasurmentUnits;
-}
-
-void EngineFuelReload::setFuelMeasurmentUnits(unsigned char pX)
-{
-    _fuelMeasurmentUnits = pX;
-}
-
-unsigned char EngineFuelReload::getFuelLocation() const
-{
-    return _fuelLocation;
-}
-
-void EngineFuelReload::setFuelLocation(unsigned char pX)
-{
-    _fuelLocation = pX;
-}
-
-unsigned char EngineFuelReload::getPadding() const
-{
-    return _padding;
-}
-
-void EngineFuelReload::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
 void EngineFuelReload::marshal(DataStream& dataStream) const
 {
-    dataStream << _standardQuantity;
-    dataStream << _maximumQuantity;
-    dataStream << _standardQuantityReloadTime;
-    dataStream << _maximumQuantityReloadTime;
-    dataStream << _fuelMeasurmentUnits;
-    dataStream << _fuelLocation;
-    dataStream << _padding;
+    dataStream << standardQuantity;
+    dataStream << maximumQuantity;
+    dataStream << standardQuantityReloadTime;
+    dataStream << maximumQuantityReloadTime;
+    dataStream << fuelMeasurmentUnits;
+    dataStream << fuelLocation;
+    dataStream << padding;
 }
 
 void EngineFuelReload::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _standardQuantity;
-    dataStream >> _maximumQuantity;
-    dataStream >> _standardQuantityReloadTime;
-    dataStream >> _maximumQuantityReloadTime;
-    dataStream >> _fuelMeasurmentUnits;
-    dataStream >> _fuelLocation;
-    dataStream >> _padding;
+    dataStream >> standardQuantity;
+    dataStream >> maximumQuantity;
+    dataStream >> standardQuantityReloadTime;
+    dataStream >> maximumQuantityReloadTime;
+    dataStream >> fuelMeasurmentUnits;
+    dataStream >> fuelLocation;
+    dataStream >> padding;
 }
 
 
@@ -115,13 +45,13 @@ bool EngineFuelReload::operator ==(const EngineFuelReload& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_standardQuantity == rhs._standardQuantity) ) ivarsEqual = false;
-     if( ! (_maximumQuantity == rhs._maximumQuantity) ) ivarsEqual = false;
-     if( ! (_standardQuantityReloadTime == rhs._standardQuantityReloadTime) ) ivarsEqual = false;
-     if( ! (_maximumQuantityReloadTime == rhs._maximumQuantityReloadTime) ) ivarsEqual = false;
-     if( ! (_fuelMeasurmentUnits == rhs._fuelMeasurmentUnits) ) ivarsEqual = false;
-     if( ! (_fuelLocation == rhs._fuelLocation) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (standardQuantity == rhs.standardQuantity) ) ivarsEqual = false;
+     if( ! (maximumQuantity == rhs.maximumQuantity) ) ivarsEqual = false;
+     if( ! (standardQuantityReloadTime == rhs.standardQuantityReloadTime) ) ivarsEqual = false;
+     if( ! (maximumQuantityReloadTime == rhs.maximumQuantityReloadTime) ) ivarsEqual = false;
+     if( ! (fuelMeasurmentUnits == rhs.fuelMeasurmentUnits) ) ivarsEqual = false;
+     if( ! (fuelLocation == rhs.fuelLocation) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -130,13 +60,13 @@ int EngineFuelReload::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _standardQuantity
-   marshalSize = marshalSize + 4;  // _maximumQuantity
-   marshalSize = marshalSize + 4;  // _standardQuantityReloadTime
-   marshalSize = marshalSize + 4;  // _maximumQuantityReloadTime
-   marshalSize = marshalSize + 1;  // _fuelMeasurmentUnits
-   marshalSize = marshalSize + 1;  // _fuelLocation
-   marshalSize = marshalSize + 1;  // _padding
+   marshalSize = marshalSize + 4;  // standardQuantity
+   marshalSize = marshalSize + 4;  // maximumQuantity
+   marshalSize = marshalSize + 4;  // standardQuantityReloadTime
+   marshalSize = marshalSize + 4;  // maximumQuantityReloadTime
+   marshalSize = marshalSize + 1;  // fuelMeasurmentUnits
+   marshalSize = marshalSize + 1;  // fuelLocation
+   marshalSize = marshalSize + 1;  // padding
     return marshalSize;
 }
 

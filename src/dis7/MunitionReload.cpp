@@ -1,15 +1,15 @@
-#include <dis7/MunitionReload.h>
+#include "MunitionReload.h"
 
 using namespace DIS;
 
 
 MunitionReload::MunitionReload():
-   _munitionType(), 
-   _station(0), 
-   _standardQuantity(0), 
-   _maximumQuantity(0), 
-   _stationName(0), 
-   _stationNumber(0)
+   munitionType(), 
+   station(0), 
+   standardQuantity(0), 
+   maximumQuantity(0), 
+   standardQuantityReloadTime(0), 
+   maximumQuantityReloadTime(0)
 {
 }
 
@@ -17,89 +17,24 @@ MunitionReload::~MunitionReload()
 {
 }
 
-EntityType& MunitionReload::getMunitionType() 
-{
-    return _munitionType;
-}
-
-const EntityType& MunitionReload::getMunitionType() const
-{
-    return _munitionType;
-}
-
-void MunitionReload::setMunitionType(const EntityType &pX)
-{
-    _munitionType = pX;
-}
-
-unsigned int MunitionReload::getStation() const
-{
-    return _station;
-}
-
-void MunitionReload::setStation(unsigned int pX)
-{
-    _station = pX;
-}
-
-unsigned short MunitionReload::getStandardQuantity() const
-{
-    return _standardQuantity;
-}
-
-void MunitionReload::setStandardQuantity(unsigned short pX)
-{
-    _standardQuantity = pX;
-}
-
-unsigned short MunitionReload::getMaximumQuantity() const
-{
-    return _maximumQuantity;
-}
-
-void MunitionReload::setMaximumQuantity(unsigned short pX)
-{
-    _maximumQuantity = pX;
-}
-
-unsigned short MunitionReload::getStationName() const
-{
-    return _stationName;
-}
-
-void MunitionReload::setStationName(unsigned short pX)
-{
-    _stationName = pX;
-}
-
-unsigned short MunitionReload::getStationNumber() const
-{
-    return _stationNumber;
-}
-
-void MunitionReload::setStationNumber(unsigned short pX)
-{
-    _stationNumber = pX;
-}
-
 void MunitionReload::marshal(DataStream& dataStream) const
 {
-    _munitionType.marshal(dataStream);
-    dataStream << _station;
-    dataStream << _standardQuantity;
-    dataStream << _maximumQuantity;
-    dataStream << _stationName;
-    dataStream << _stationNumber;
+    munitionType.marshal(dataStream);
+    dataStream << station;
+    dataStream << standardQuantity;
+    dataStream << maximumQuantity;
+    dataStream << standardQuantityReloadTime;
+    dataStream << maximumQuantityReloadTime;
 }
 
 void MunitionReload::unmarshal(DataStream& dataStream)
 {
-    _munitionType.unmarshal(dataStream);
-    dataStream >> _station;
-    dataStream >> _standardQuantity;
-    dataStream >> _maximumQuantity;
-    dataStream >> _stationName;
-    dataStream >> _stationNumber;
+    munitionType.unmarshal(dataStream);
+    dataStream >> station;
+    dataStream >> standardQuantity;
+    dataStream >> maximumQuantity;
+    dataStream >> standardQuantityReloadTime;
+    dataStream >> maximumQuantityReloadTime;
 }
 
 
@@ -107,12 +42,12 @@ bool MunitionReload::operator ==(const MunitionReload& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_munitionType == rhs._munitionType) ) ivarsEqual = false;
-     if( ! (_station == rhs._station) ) ivarsEqual = false;
-     if( ! (_standardQuantity == rhs._standardQuantity) ) ivarsEqual = false;
-     if( ! (_maximumQuantity == rhs._maximumQuantity) ) ivarsEqual = false;
-     if( ! (_stationName == rhs._stationName) ) ivarsEqual = false;
-     if( ! (_stationNumber == rhs._stationNumber) ) ivarsEqual = false;
+     if( ! (munitionType == rhs.munitionType) ) ivarsEqual = false;
+     if( ! (station == rhs.station) ) ivarsEqual = false;
+     if( ! (standardQuantity == rhs.standardQuantity) ) ivarsEqual = false;
+     if( ! (maximumQuantity == rhs.maximumQuantity) ) ivarsEqual = false;
+     if( ! (standardQuantityReloadTime == rhs.standardQuantityReloadTime) ) ivarsEqual = false;
+     if( ! (maximumQuantityReloadTime == rhs.maximumQuantityReloadTime) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -121,12 +56,12 @@ int MunitionReload::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _munitionType.getMarshalledSize();  // _munitionType
-   marshalSize = marshalSize + 4;  // _station
-   marshalSize = marshalSize + 2;  // _standardQuantity
-   marshalSize = marshalSize + 2;  // _maximumQuantity
-   marshalSize = marshalSize + 2;  // _stationName
-   marshalSize = marshalSize + 2;  // _stationNumber
+   marshalSize = marshalSize + munitionType.getMarshalledSize();  // munitionType
+   marshalSize = marshalSize + 4;  // station
+   marshalSize = marshalSize + 2;  // standardQuantity
+   marshalSize = marshalSize + 2;  // maximumQuantity
+   marshalSize = marshalSize + 4;  // standardQuantityReloadTime
+   marshalSize = marshalSize + 4;  // maximumQuantityReloadTime
     return marshalSize;
 }
 

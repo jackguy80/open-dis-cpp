@@ -1,13 +1,13 @@
-#include <dis7/RadioIdentifier.h>
+#include "RadioIdentifier.h"
 
 using namespace DIS;
 
 
 RadioIdentifier::RadioIdentifier():
-   _siteNumber(0), 
-   _applicationNumber(0), 
-   _referenceNumber(0), 
-   _radioNumber(0)
+   siteNumber(0), 
+   applicationNumber(0), 
+   referenceNumber(0), 
+   radioNumber(0)
 {
 }
 
@@ -15,60 +15,20 @@ RadioIdentifier::~RadioIdentifier()
 {
 }
 
-unsigned short RadioIdentifier::getSiteNumber() const
-{
-    return _siteNumber;
-}
-
-void RadioIdentifier::setSiteNumber(unsigned short pX)
-{
-    _siteNumber = pX;
-}
-
-unsigned short RadioIdentifier::getApplicationNumber() const
-{
-    return _applicationNumber;
-}
-
-void RadioIdentifier::setApplicationNumber(unsigned short pX)
-{
-    _applicationNumber = pX;
-}
-
-unsigned short RadioIdentifier::getReferenceNumber() const
-{
-    return _referenceNumber;
-}
-
-void RadioIdentifier::setReferenceNumber(unsigned short pX)
-{
-    _referenceNumber = pX;
-}
-
-unsigned short RadioIdentifier::getRadioNumber() const
-{
-    return _radioNumber;
-}
-
-void RadioIdentifier::setRadioNumber(unsigned short pX)
-{
-    _radioNumber = pX;
-}
-
 void RadioIdentifier::marshal(DataStream& dataStream) const
 {
-    dataStream << _siteNumber;
-    dataStream << _applicationNumber;
-    dataStream << _referenceNumber;
-    dataStream << _radioNumber;
+    dataStream << siteNumber;
+    dataStream << applicationNumber;
+    dataStream << referenceNumber;
+    dataStream << radioNumber;
 }
 
 void RadioIdentifier::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _siteNumber;
-    dataStream >> _applicationNumber;
-    dataStream >> _referenceNumber;
-    dataStream >> _radioNumber;
+    dataStream >> siteNumber;
+    dataStream >> applicationNumber;
+    dataStream >> referenceNumber;
+    dataStream >> radioNumber;
 }
 
 
@@ -76,10 +36,10 @@ bool RadioIdentifier::operator ==(const RadioIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_siteNumber == rhs._siteNumber) ) ivarsEqual = false;
-     if( ! (_applicationNumber == rhs._applicationNumber) ) ivarsEqual = false;
-     if( ! (_referenceNumber == rhs._referenceNumber) ) ivarsEqual = false;
-     if( ! (_radioNumber == rhs._radioNumber) ) ivarsEqual = false;
+     if( ! (siteNumber == rhs.siteNumber) ) ivarsEqual = false;
+     if( ! (applicationNumber == rhs.applicationNumber) ) ivarsEqual = false;
+     if( ! (referenceNumber == rhs.referenceNumber) ) ivarsEqual = false;
+     if( ! (radioNumber == rhs.radioNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -88,10 +48,10 @@ int RadioIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _siteNumber
-   marshalSize = marshalSize + 2;  // _applicationNumber
-   marshalSize = marshalSize + 2;  // _referenceNumber
-   marshalSize = marshalSize + 2;  // _radioNumber
+   marshalSize = marshalSize + 2;  // siteNumber
+   marshalSize = marshalSize + 2;  // applicationNumber
+   marshalSize = marshalSize + 2;  // referenceNumber
+   marshalSize = marshalSize + 2;  // radioNumber
     return marshalSize;
 }
 

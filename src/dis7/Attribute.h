@@ -1,50 +1,41 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Used to convey information for one or more attributes. Attributes conform to the standard variable record format of 6.2.82. Section 6.2.10
+// Used to convey information for one or more attributes. Attributes conform to the standard variable record format of 6.2.82. Section 6.2.10. NOT COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT Attribute
+struct EXPORT_MACRO Attribute
 {
-protected:
-  unsigned int _recordType; 
+  /** The record type for this attribute. Enumeration */
+  unsigned int recordType;
 
-  unsigned short _recordLength;
+  /** Total length of the record in octets. The record shall end on a 64-bit boundary after any padding. = 6 + K + P, where K is the total length of records and P is padding, and 6 is the integer + short */
+  unsigned short recordLength;
 
-  long long _recordSpecificFields;
+  /** The attribute data format conforming to that specified by the record type. K bytes long */
+  long recordSpecificFields;
 
-
- public:
     Attribute();
     virtual ~Attribute();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordType() const; 
-    void setRecordType(unsigned int pX); 
 
-    unsigned short getRecordLength() const;
-    void setRecordLength(unsigned short pX);
+     virtual int getMarshalledSize() const;
 
-    long long getRecordSpecificFields() const;
-    void setRecordSpecificFields(long long pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const Attribute& rhs) const;
+     bool operator ==(const Attribute& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

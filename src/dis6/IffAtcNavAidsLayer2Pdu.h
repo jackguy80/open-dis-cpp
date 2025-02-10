@@ -1,69 +1,52 @@
 #pragma once
 
-#include <dis6/LayerHeader.h>
-#include <dis6/BeamData.h>
-#include <dis6/BeamData.h>
-#include <dis6/FundamentalParameterDataIff.h>
+#include "LayerHeader.h"
+#include "BeamData.h"
+#include "BeamData.h"
+#include "FundamentalParameterDataIff.h"
 #include <vector>
-#include <dis6/IffAtcNavAidsLayer1Pdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "IffAtcNavAidsLayer1Pdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.7.4.2 When present, layer 2 should follow layer 1 and have the following fields. This requires manual cleanup.        the beamData attribute semantics are used in multiple ways. UNFINSISHED
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT IffAtcNavAidsLayer2Pdu : public IffAtcNavAidsLayer1Pdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO IffAtcNavAidsLayer2Pdu : public IffAtcNavAidsLayer1Pdu
 {
-protected:
   /** layer header */
-  LayerHeader _layerHeader; 
+  LayerHeader layerHeader;
 
   /** beam data */
-  BeamData _beamData; 
+  BeamData beamData;
 
   /** Secondary operational data, 5.2.57 */
-  BeamData _secondaryOperationalData; 
+  BeamData secondaryOperationalData;
 
   /** variable length list of fundamental parameters. ^^^This is wrong */
-  std::vector<FundamentalParameterDataIff> _fundamentalIffParameters; 
+  std::vector<FundamentalParameterDataIff> fundamentalIffParameters;
 
-
- public:
     IffAtcNavAidsLayer2Pdu();
     virtual ~IffAtcNavAidsLayer2Pdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    LayerHeader& getLayerHeader(); 
-    const LayerHeader&  getLayerHeader() const; 
-    void setLayerHeader(const LayerHeader    &pX);
 
-    BeamData& getBeamData(); 
-    const BeamData&  getBeamData() const; 
-    void setBeamData(const BeamData    &pX);
+     virtual int getMarshalledSize() const;
 
-    BeamData& getSecondaryOperationalData(); 
-    const BeamData&  getSecondaryOperationalData() const; 
-    void setSecondaryOperationalData(const BeamData    &pX);
-
-    std::vector<FundamentalParameterDataIff>& getFundamentalIffParameters(); 
-    const std::vector<FundamentalParameterDataIff>& getFundamentalIffParameters() const; 
-    void setFundamentalIffParameters(const std::vector<FundamentalParameterDataIff>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IffAtcNavAidsLayer2Pdu& rhs) const;
+     bool operator ==(const IffAtcNavAidsLayer2Pdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

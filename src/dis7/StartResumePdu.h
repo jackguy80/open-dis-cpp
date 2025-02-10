@@ -1,74 +1,44 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/EntityID.h>
-#include <dis7/ClockTime.h>
-#include <dis7/ClockTime.h>
-#include <dis7/SimulationManagementFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "ClockTime.h"
+#include "ClockTime.h"
+#include "SimulationManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 7.5.4. Start or resume an exercise. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT StartResumePdu : public SimulationManagementFamilyPdu
+struct EXPORT_MACRO StartResumePdu : public SimulationManagementFamilyPdu
 {
-protected:
-  /** Identifier for originating entity(or simulation) */
-  EntityID _originatingID; 
-
-  /** Identifier for the receiving entity(or simulation) */
-  EntityID _receivingID; 
-
   /** This field shall specify the real-world time (UTC) at which the entity is to start/resume in the exercise. This information shall be used by the participating simulation applications to start/resume an exercise synchronously. This field shall be represented by a Clock Time record (see 6.2.16). */
-  ClockTime _realWorldTime; 
+  ClockTime realWorldTime;
 
   /** The reference time within a simulation exercise. This time is established ahead of time by simulation management and is common to all participants in a particular exercise. Simulation time may be either Absolute Time or Relative Time. This field shall be represented by a Clock Time record (see 6.2.16) */
-  ClockTime _simulationTime; 
+  ClockTime simulationTime;
 
   /** Identifier for the specific and unique start/resume request */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     StartResumePdu();
     virtual ~StartResumePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getOriginatingID(); 
-    const EntityID&  getOriginatingID() const; 
-    void setOriginatingID(const EntityID    &pX);
 
-    EntityID& getReceivingID(); 
-    const EntityID&  getReceivingID() const; 
-    void setReceivingID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    ClockTime& getRealWorldTime(); 
-    const ClockTime&  getRealWorldTime() const; 
-    void setRealWorldTime(const ClockTime    &pX);
-
-    ClockTime& getSimulationTime(); 
-    const ClockTime&  getSimulationTime() const; 
-    void setSimulationTime(const ClockTime    &pX);
-
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StartResumePdu& rhs) const;
+     bool operator ==(const StartResumePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

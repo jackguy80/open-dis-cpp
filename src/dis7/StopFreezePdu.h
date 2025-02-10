@@ -1,84 +1,49 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/EntityID.h>
-#include <dis7/ClockTime.h>
-#include <dis7/SimulationManagementFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "ClockTime.h"
+#include "SimulationManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 7.5.5. Stop or freeze an enity (or exercise). COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT StopFreezePdu : public SimulationManagementFamilyPdu
+struct EXPORT_MACRO StopFreezePdu : public SimulationManagementFamilyPdu
 {
-protected:
-  /** Identifier for originating entity(or simulation) */
-  EntityID _originatingID; 
-
-  /** Identifier for the receiving entity(or simulation) */
-  EntityID _receivingID; 
-
   /** real-world(UTC) time at which the entity shall stop or freeze in the exercise */
-  ClockTime _realWorldTime; 
+  ClockTime realWorldTime;
 
   /** Reason the simulation was stopped or frozen (see section 7 of SISO-REF-010) represented by an 8-bit enumeration */
-  unsigned char _reason; 
+  unsigned char reason;
 
   /** Internal behavior of the entity(or simulation) and its appearance while frozen to the other participants */
-  unsigned char _frozenBehavior; 
+  unsigned char frozenBehavior;
 
   /** padding */
-  short _padding1; 
+  short padding1;
 
   /** Request ID that is unique */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     StopFreezePdu();
     virtual ~StopFreezePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getOriginatingID(); 
-    const EntityID&  getOriginatingID() const; 
-    void setOriginatingID(const EntityID    &pX);
 
-    EntityID& getReceivingID(); 
-    const EntityID&  getReceivingID() const; 
-    void setReceivingID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    ClockTime& getRealWorldTime(); 
-    const ClockTime&  getRealWorldTime() const; 
-    void setRealWorldTime(const ClockTime    &pX);
-
-    unsigned char getReason() const; 
-    void setReason(unsigned char pX); 
-
-    unsigned char getFrozenBehavior() const; 
-    void setFrozenBehavior(unsigned char pX); 
-
-    short getPadding1() const; 
-    void setPadding1(short pX); 
-
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StopFreezePdu& rhs) const;
+     bool operator ==(const StopFreezePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

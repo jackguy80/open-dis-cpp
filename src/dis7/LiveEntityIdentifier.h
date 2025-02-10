@@ -1,49 +1,39 @@
 #pragma once
 
-#include <dis7/LiveSimulationAddress.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "LiveSimulationAddress.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // The unique designation of each entity in an event or exercise that is contained in a Live Entity PDU. Section 6.2.54 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT LiveEntityIdentifier
+struct EXPORT_MACRO LiveEntityIdentifier
 {
-protected:
-  /** Live Simulation Address record (see 6.2.55)  */
-  LiveSimulationAddress _liveSimulationAddress; 
+  /** Live Simulation Address record (see 6.2.54)  */
+  LiveSimulationAddress liveSimulationAddress;
 
   /** Live entity number  */
-  unsigned short _entityNumber; 
+  unsigned short entityNumber;
 
-
- public:
     LiveEntityIdentifier();
     virtual ~LiveEntityIdentifier();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    LiveSimulationAddress& getLiveSimulationAddress(); 
-    const LiveSimulationAddress&  getLiveSimulationAddress() const; 
-    void setLiveSimulationAddress(const LiveSimulationAddress    &pX);
 
-    unsigned short getEntityNumber() const; 
-    void setEntityNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const LiveEntityIdentifier& rhs) const;
+     bool operator ==(const LiveEntityIdentifier& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

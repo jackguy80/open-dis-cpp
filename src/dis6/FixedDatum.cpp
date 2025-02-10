@@ -1,11 +1,11 @@
-#include <dis6/FixedDatum.h>
+#include "FixedDatum.h"
 
 using namespace DIS;
 
 
 FixedDatum::FixedDatum():
-   _fixedDatumID(0), 
-   _fixedDatumValue(0)
+   fixedDatumID(0), 
+   fixedDatumValue(0)
 {
 }
 
@@ -13,36 +13,16 @@ FixedDatum::~FixedDatum()
 {
 }
 
-unsigned int FixedDatum::getFixedDatumID() const
-{
-    return _fixedDatumID;
-}
-
-void FixedDatum::setFixedDatumID(unsigned int pX)
-{
-    _fixedDatumID = pX;
-}
-
-unsigned int FixedDatum::getFixedDatumValue() const
-{
-    return _fixedDatumValue;
-}
-
-void FixedDatum::setFixedDatumValue(unsigned int pX)
-{
-    _fixedDatumValue = pX;
-}
-
 void FixedDatum::marshal(DataStream& dataStream) const
 {
-    dataStream << _fixedDatumID;
-    dataStream << _fixedDatumValue;
+    dataStream << fixedDatumID;
+    dataStream << fixedDatumValue;
 }
 
 void FixedDatum::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _fixedDatumID;
-    dataStream >> _fixedDatumValue;
+    dataStream >> fixedDatumID;
+    dataStream >> fixedDatumValue;
 }
 
 
@@ -50,8 +30,8 @@ bool FixedDatum::operator ==(const FixedDatum& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_fixedDatumID == rhs._fixedDatumID) ) ivarsEqual = false;
-     if( ! (_fixedDatumValue == rhs._fixedDatumValue) ) ivarsEqual = false;
+     if( ! (fixedDatumID == rhs.fixedDatumID) ) ivarsEqual = false;
+     if( ! (fixedDatumValue == rhs.fixedDatumValue) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -60,8 +40,8 @@ int FixedDatum::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _fixedDatumID
-   marshalSize = marshalSize + 4;  // _fixedDatumValue
+   marshalSize = marshalSize + 4;  // fixedDatumID
+   marshalSize = marshalSize + 4;  // fixedDatumValue
     return marshalSize;
 }
 

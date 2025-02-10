@@ -1,107 +1,34 @@
-#include <dis7/DeadReckoningParameters.h>
+#include "DeadReckoningParameters.h"
 
 using namespace DIS;
 
 
 DeadReckoningParameters::DeadReckoningParameters():
-   _deadReckoningAlgorithm(0), 
-   _entityLinearAcceleration(), 
-   _entityAngularVelocity()
+   deadReckoningAlgorithm(0), 
+   parameters(0), 
+   entityLinearAcceleration(), 
+   entityAngularVelocity()
 {
-     // Initialize fixed length array
-     for(int lengthparameters= 0; lengthparameters < 15; lengthparameters++)
-     {
-         _parameters[lengthparameters] = 0;
-     }
-
 }
 
 DeadReckoningParameters::~DeadReckoningParameters()
 {
 }
 
-unsigned char DeadReckoningParameters::getDeadReckoningAlgorithm() const
-{
-    return _deadReckoningAlgorithm;
-}
-
-void DeadReckoningParameters::setDeadReckoningAlgorithm(unsigned char pX)
-{
-    _deadReckoningAlgorithm = pX;
-}
-
-unsigned char* DeadReckoningParameters::getParameters() 
-{
-    return _parameters;
-}
-
-const unsigned char* DeadReckoningParameters::getParameters() const
-{
-    return _parameters;
-}
-
-void DeadReckoningParameters::setParameters(const unsigned char* x)
-{
-   for(int i = 0; i < 15; i++)
-   {
-        _parameters[i] = x[i];
-   }
-}
-
-Vector3Float& DeadReckoningParameters::getEntityLinearAcceleration() 
-{
-    return _entityLinearAcceleration;
-}
-
-const Vector3Float& DeadReckoningParameters::getEntityLinearAcceleration() const
-{
-    return _entityLinearAcceleration;
-}
-
-void DeadReckoningParameters::setEntityLinearAcceleration(const Vector3Float &pX)
-{
-    _entityLinearAcceleration = pX;
-}
-
-Vector3Float& DeadReckoningParameters::getEntityAngularVelocity() 
-{
-    return _entityAngularVelocity;
-}
-
-const Vector3Float& DeadReckoningParameters::getEntityAngularVelocity() const
-{
-    return _entityAngularVelocity;
-}
-
-void DeadReckoningParameters::setEntityAngularVelocity(const Vector3Float &pX)
-{
-    _entityAngularVelocity = pX;
-}
-
 void DeadReckoningParameters::marshal(DataStream& dataStream) const
 {
-    dataStream << _deadReckoningAlgorithm;
-
-     for(size_t idx = 0; idx < 15; idx++)
-     {
-        dataStream << _parameters[idx];
-     }
-
-    _entityLinearAcceleration.marshal(dataStream);
-    _entityAngularVelocity.marshal(dataStream);
+    dataStream << deadReckoningAlgorithm;
+    dataStream << parameters;
+    entityLinearAcceleration.marshal(dataStream);
+    entityAngularVelocity.marshal(dataStream);
 }
 
 void DeadReckoningParameters::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _deadReckoningAlgorithm;
-
-     for(size_t idx = 0; idx < 15; idx++)
-     {
-        dataStream >> _parameters[idx];
-     }
-
-    _entityLinearAcceleration.unmarshal(dataStream);
-    _entityAngularVelocity.unmarshal(dataStream);
+    dataStream >> deadReckoningAlgorithm;
+    dataStream >> parameters;
+    entityLinearAcceleration.unmarshal(dataStream);
+    entityAngularVelocity.unmarshal(dataStream);
 }
 
 
@@ -109,15 +36,10 @@ bool DeadReckoningParameters::operator ==(const DeadReckoningParameters& rhs) co
  {
      bool ivarsEqual = true;
 
-     if( ! (_deadReckoningAlgorithm == rhs._deadReckoningAlgorithm) ) ivarsEqual = false;
-
-     for(unsigned char idx = 0; idx < 15; idx++)
-     {
-          if(!(_parameters[idx] == rhs._parameters[idx]) ) ivarsEqual = false;
-     }
-
-     if( ! (_entityLinearAcceleration == rhs._entityLinearAcceleration) ) ivarsEqual = false;
-     if( ! (_entityAngularVelocity == rhs._entityAngularVelocity) ) ivarsEqual = false;
+     if( ! (deadReckoningAlgorithm == rhs.deadReckoningAlgorithm) ) ivarsEqual = false;
+     if( ! (parameters == rhs.parameters) ) ivarsEqual = false;
+     if( ! (entityLinearAcceleration == rhs.entityLinearAcceleration) ) ivarsEqual = false;
+     if( ! (entityAngularVelocity == rhs.entityAngularVelocity) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -126,10 +48,10 @@ int DeadReckoningParameters::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _deadReckoningAlgorithm
-   marshalSize = marshalSize + 15 * 1;  // _parameters
-   marshalSize = marshalSize + _entityLinearAcceleration.getMarshalledSize();  // _entityLinearAcceleration
-   marshalSize = marshalSize + _entityAngularVelocity.getMarshalledSize();  // _entityAngularVelocity
+   marshalSize = marshalSize + 1;  // deadReckoningAlgorithm
+   marshalSize = marshalSize + 1;  // parameters
+   marshalSize = marshalSize + entityLinearAcceleration.getMarshalledSize();  // entityLinearAcceleration
+   marshalSize = marshalSize + entityAngularVelocity.getMarshalledSize();  // entityAngularVelocity
     return marshalSize;
 }
 

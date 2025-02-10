@@ -1,13 +1,13 @@
-#include <dis7/Environment.h>
+#include "Environment.h"
 
 using namespace DIS;
 
 
 Environment::Environment():
-   _environmentType(0), 
-   _length(0), 
-   _index(0), 
-   _padding(0)
+   environmentType(0), 
+   length(0), 
+   index(0), 
+   padding(0)
 {
 }
 
@@ -15,60 +15,20 @@ Environment::~Environment()
 {
 }
 
-unsigned int Environment::getEnvironmentType() const
-{
-    return _environmentType;
-}
-
-void Environment::setEnvironmentType(unsigned int pX)
-{
-    _environmentType = pX;
-}
-
-unsigned short Environment::getLength() const
-{
-    return _length;
-}
-
-void Environment::setLength(unsigned short pX)
-{
-    _length = pX;
-}
-
-unsigned char Environment::getIndex() const
-{
-    return _index;
-}
-
-void Environment::setIndex(unsigned char pX)
-{
-    _index = pX;
-}
-
-unsigned char Environment::getPadding() const
-{
-    return _padding;
-}
-
-void Environment::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
 void Environment::marshal(DataStream& dataStream) const
 {
-    dataStream << _environmentType;
-    dataStream << _length;
-    dataStream << _index;
-    dataStream << _padding;
+    dataStream << environmentType;
+    dataStream << length;
+    dataStream << index;
+    dataStream << padding;
 }
 
 void Environment::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _environmentType;
-    dataStream >> _length;
-    dataStream >> _index;
-    dataStream >> _padding;
+    dataStream >> environmentType;
+    dataStream >> length;
+    dataStream >> index;
+    dataStream >> padding;
 }
 
 
@@ -76,10 +36,10 @@ bool Environment::operator ==(const Environment& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_environmentType == rhs._environmentType) ) ivarsEqual = false;
-     if( ! (_length == rhs._length) ) ivarsEqual = false;
-     if( ! (_index == rhs._index) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (environmentType == rhs.environmentType) ) ivarsEqual = false;
+     if( ! (length == rhs.length) ) ivarsEqual = false;
+     if( ! (index == rhs.index) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -88,10 +48,10 @@ int Environment::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _environmentType
-   marshalSize = marshalSize + 2;  // _length
-   marshalSize = marshalSize + 1;  // _index
-   marshalSize = marshalSize + 1;  // _padding
+   marshalSize = marshalSize + 4;  // environmentType
+   marshalSize = marshalSize + 2;  // length
+   marshalSize = marshalSize + 1;  // index
+   marshalSize = marshalSize + 1;  // padding
     return marshalSize;
 }
 

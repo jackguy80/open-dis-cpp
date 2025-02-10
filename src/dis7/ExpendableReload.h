@@ -1,68 +1,46 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // An entity's expendable (chaff, flares, etc) information. Section 6.2.37
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ExpendableReload
+struct EXPORT_MACRO ExpendableReload
 {
-protected:
   /** Type of expendable */
-  EntityType _expendable; 
+  EntityType expendable;
 
-  unsigned int _station; 
+  unsigned int station;
 
-  unsigned short _standardQuantity; 
+  unsigned short standardQuantity;
 
-  unsigned short _maximumQuantity; 
+  unsigned short maximumQuantity;
 
-  unsigned int _standardQuantityReloadTime; 
+  unsigned int standardQuantityReloadTime;
 
-  unsigned int _maximumQuantityReloadTime; 
+  unsigned int maximumQuantityReloadTime;
 
-
- public:
     ExpendableReload();
     virtual ~ExpendableReload();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getExpendable(); 
-    const EntityType&  getExpendable() const; 
-    void setExpendable(const EntityType    &pX);
 
-    unsigned int getStation() const; 
-    void setStation(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getStandardQuantity() const; 
-    void setStandardQuantity(unsigned short pX); 
-
-    unsigned short getMaximumQuantity() const; 
-    void setMaximumQuantity(unsigned short pX); 
-
-    unsigned int getStandardQuantityReloadTime() const; 
-    void setStandardQuantityReloadTime(unsigned int pX); 
-
-    unsigned int getMaximumQuantityReloadTime() const; 
-    void setMaximumQuantityReloadTime(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ExpendableReload& rhs) const;
+     bool operator ==(const ExpendableReload& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

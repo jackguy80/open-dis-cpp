@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.14.1. A Simulation Address  record shall consist of the Site Identification number and the Application Identification number.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT SimulationAddress
+struct EXPORT_MACRO SimulationAddress
 {
-protected:
   /** The site ID */
-  unsigned short _site; 
+  unsigned short site;
 
   /** The application ID */
-  unsigned short _application; 
+  unsigned short application;
 
-
- public:
     SimulationAddress();
     virtual ~SimulationAddress();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSite() const; 
-    void setSite(unsigned short pX); 
 
-    unsigned short getApplication() const; 
-    void setApplication(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SimulationAddress& rhs) const;
+     bool operator ==(const SimulationAddress& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

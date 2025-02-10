@@ -1,11 +1,11 @@
-#include <dis7/CommunicationsNodeID.h>
+#include "CommunicationsNodeID.h"
 
 using namespace DIS;
 
 
 CommunicationsNodeID::CommunicationsNodeID():
-   _entityID(), 
-   _elementID(0)
+   entityID(), 
+   elementID(0)
 {
 }
 
@@ -13,41 +13,16 @@ CommunicationsNodeID::~CommunicationsNodeID()
 {
 }
 
-EntityID& CommunicationsNodeID::getEntityID() 
-{
-    return _entityID;
-}
-
-const EntityID& CommunicationsNodeID::getEntityID() const
-{
-    return _entityID;
-}
-
-void CommunicationsNodeID::setEntityID(const EntityID &pX)
-{
-    _entityID = pX;
-}
-
-unsigned short CommunicationsNodeID::getElementID() const
-{
-    return _elementID;
-}
-
-void CommunicationsNodeID::setElementID(unsigned short pX)
-{
-    _elementID = pX;
-}
-
 void CommunicationsNodeID::marshal(DataStream& dataStream) const
 {
-    _entityID.marshal(dataStream);
-    dataStream << _elementID;
+    entityID.marshal(dataStream);
+    dataStream << elementID;
 }
 
 void CommunicationsNodeID::unmarshal(DataStream& dataStream)
 {
-    _entityID.unmarshal(dataStream);
-    dataStream >> _elementID;
+    entityID.unmarshal(dataStream);
+    dataStream >> elementID;
 }
 
 
@@ -55,8 +30,8 @@ bool CommunicationsNodeID::operator ==(const CommunicationsNodeID& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_entityID == rhs._entityID) ) ivarsEqual = false;
-     if( ! (_elementID == rhs._elementID) ) ivarsEqual = false;
+     if( ! (entityID == rhs.entityID) ) ivarsEqual = false;
+     if( ! (elementID == rhs.elementID) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int CommunicationsNodeID::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _entityID.getMarshalledSize();  // _entityID
-   marshalSize = marshalSize + 2;  // _elementID
+   marshalSize = marshalSize + entityID.getMarshalledSize();  // entityID
+   marshalSize = marshalSize + 2;  // elementID
     return marshalSize;
 }
 

@@ -1,11 +1,11 @@
-#include <dis6/ClockTime.h>
+#include "ClockTime.h"
 
 using namespace DIS;
 
 
 ClockTime::ClockTime():
-   _hour(0), 
-   _timePastHour(0)
+   hour(0), 
+   timePastHour(0)
 {
 }
 
@@ -13,36 +13,16 @@ ClockTime::~ClockTime()
 {
 }
 
-int ClockTime::getHour() const
-{
-    return _hour;
-}
-
-void ClockTime::setHour(int pX)
-{
-    _hour = pX;
-}
-
-unsigned int ClockTime::getTimePastHour() const
-{
-    return _timePastHour;
-}
-
-void ClockTime::setTimePastHour(unsigned int pX)
-{
-    _timePastHour = pX;
-}
-
 void ClockTime::marshal(DataStream& dataStream) const
 {
-    dataStream << _hour;
-    dataStream << _timePastHour;
+    dataStream << hour;
+    dataStream << timePastHour;
 }
 
 void ClockTime::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _hour;
-    dataStream >> _timePastHour;
+    dataStream >> hour;
+    dataStream >> timePastHour;
 }
 
 
@@ -50,8 +30,8 @@ bool ClockTime::operator ==(const ClockTime& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_hour == rhs._hour) ) ivarsEqual = false;
-     if( ! (_timePastHour == rhs._timePastHour) ) ivarsEqual = false;
+     if( ! (hour == rhs.hour) ) ivarsEqual = false;
+     if( ! (timePastHour == rhs.timePastHour) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -60,8 +40,8 @@ int ClockTime::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _hour
-   marshalSize = marshalSize + 4;  // _timePastHour
+   marshalSize = marshalSize + 4;  // hour
+   marshalSize = marshalSize + 4;  // timePastHour
     return marshalSize;
 }
 

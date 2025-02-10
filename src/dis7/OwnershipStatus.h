@@ -1,55 +1,42 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // used to convey entity and conflict status information associated with transferring ownership of an entity. Section 6.2.65
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT OwnershipStatus
+struct EXPORT_MACRO OwnershipStatus
 {
-protected:
   /** EntityID */
-  EntityID _entityId; 
+  EntityID entityId;
 
   /** The ownership and/or ownership conflict status of the entity represented by the Entity ID field. */
-  unsigned char _ownershipStatus; 
+  unsigned char ownershipStatus;
 
   /** padding */
-  unsigned char _padding; 
+  unsigned char padding;
 
-
- public:
     OwnershipStatus();
     virtual ~OwnershipStatus();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getEntityId(); 
-    const EntityID&  getEntityId() const; 
-    void setEntityId(const EntityID    &pX);
 
-    unsigned char getOwnershipStatus() const; 
-    void setOwnershipStatus(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getPadding() const; 
-    void setPadding(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const OwnershipStatus& rhs) const;
+     bool operator ==(const OwnershipStatus& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,177 +1,48 @@
-#include <dis6/IntercomControlPdu.h>
+#include "IntercomControlPdu.h"
 
 using namespace DIS;
 
 
 IntercomControlPdu::IntercomControlPdu() : RadioCommunicationsFamilyPdu(),
-   _controlType(0), 
-   _communicationsChannelType(0), 
-   _sourceEntityID(), 
-   _sourceCommunicationsDeviceID(0), 
-   _sourceLineID(0), 
-   _transmitPriority(0), 
-   _transmitLineState(0), 
-   _command(0), 
-   _masterEntityID(), 
-   _masterCommunicationsDeviceID(0), 
-   _intercomParametersLength(0)
+   controlType(0), 
+   communicationsChannelType(0), 
+   sourceEntityID(), 
+   sourceCommunicationsDeviceID(0), 
+   sourceLineID(0), 
+   transmitPriority(0), 
+   transmitLineState(0), 
+   command(0), 
+   masterEntityID(), 
+   masterCommunicationsDeviceID(0), 
+   intercomParametersLength(0), 
+   intercomParameters(0)
 {
-    setPduType( 32 );
+    pduType = 32;
 }
 
 IntercomControlPdu::~IntercomControlPdu()
 {
-    _intercomParameters.clear();
-}
-
-unsigned char IntercomControlPdu::getControlType() const
-{
-    return _controlType;
-}
-
-void IntercomControlPdu::setControlType(unsigned char pX)
-{
-    _controlType = pX;
-}
-
-unsigned char IntercomControlPdu::getCommunicationsChannelType() const
-{
-    return _communicationsChannelType;
-}
-
-void IntercomControlPdu::setCommunicationsChannelType(unsigned char pX)
-{
-    _communicationsChannelType = pX;
-}
-
-EntityID& IntercomControlPdu::getSourceEntityID() 
-{
-    return _sourceEntityID;
-}
-
-const EntityID& IntercomControlPdu::getSourceEntityID() const
-{
-    return _sourceEntityID;
-}
-
-void IntercomControlPdu::setSourceEntityID(const EntityID &pX)
-{
-    _sourceEntityID = pX;
-}
-
-unsigned char IntercomControlPdu::getSourceCommunicationsDeviceID() const
-{
-    return _sourceCommunicationsDeviceID;
-}
-
-void IntercomControlPdu::setSourceCommunicationsDeviceID(unsigned char pX)
-{
-    _sourceCommunicationsDeviceID = pX;
-}
-
-unsigned char IntercomControlPdu::getSourceLineID() const
-{
-    return _sourceLineID;
-}
-
-void IntercomControlPdu::setSourceLineID(unsigned char pX)
-{
-    _sourceLineID = pX;
-}
-
-unsigned char IntercomControlPdu::getTransmitPriority() const
-{
-    return _transmitPriority;
-}
-
-void IntercomControlPdu::setTransmitPriority(unsigned char pX)
-{
-    _transmitPriority = pX;
-}
-
-unsigned char IntercomControlPdu::getTransmitLineState() const
-{
-    return _transmitLineState;
-}
-
-void IntercomControlPdu::setTransmitLineState(unsigned char pX)
-{
-    _transmitLineState = pX;
-}
-
-unsigned char IntercomControlPdu::getCommand() const
-{
-    return _command;
-}
-
-void IntercomControlPdu::setCommand(unsigned char pX)
-{
-    _command = pX;
-}
-
-EntityID& IntercomControlPdu::getMasterEntityID() 
-{
-    return _masterEntityID;
-}
-
-const EntityID& IntercomControlPdu::getMasterEntityID() const
-{
-    return _masterEntityID;
-}
-
-void IntercomControlPdu::setMasterEntityID(const EntityID &pX)
-{
-    _masterEntityID = pX;
-}
-
-unsigned short IntercomControlPdu::getMasterCommunicationsDeviceID() const
-{
-    return _masterCommunicationsDeviceID;
-}
-
-void IntercomControlPdu::setMasterCommunicationsDeviceID(unsigned short pX)
-{
-    _masterCommunicationsDeviceID = pX;
-}
-
-unsigned int IntercomControlPdu::getIntercomParametersLength() const
-{
-   return _intercomParameters.size();
-}
-
-std::vector<IntercomCommunicationsParameters>& IntercomControlPdu::getIntercomParameters() 
-{
-    return _intercomParameters;
-}
-
-const std::vector<IntercomCommunicationsParameters>& IntercomControlPdu::getIntercomParameters() const
-{
-    return _intercomParameters;
-}
-
-void IntercomControlPdu::setIntercomParameters(const std::vector<IntercomCommunicationsParameters>& pX)
-{
-     _intercomParameters = pX;
+    intercomParameters.clear();
 }
 
 void IntercomControlPdu::marshal(DataStream& dataStream) const
 {
     RadioCommunicationsFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    dataStream << _controlType;
-    dataStream << _communicationsChannelType;
-    _sourceEntityID.marshal(dataStream);
-    dataStream << _sourceCommunicationsDeviceID;
-    dataStream << _sourceLineID;
-    dataStream << _transmitPriority;
-    dataStream << _transmitLineState;
-    dataStream << _command;
-    _masterEntityID.marshal(dataStream);
-    dataStream << _masterCommunicationsDeviceID;
-    dataStream << ( unsigned int )_intercomParameters.size();
+    dataStream << controlType;
+    dataStream << communicationsChannelType;
+    sourceEntityID.marshal(dataStream);
+    dataStream << sourceCommunicationsDeviceID;
+    dataStream << sourceLineID;
+    dataStream << transmitPriority;
+    dataStream << transmitLineState;
+    dataStream << command;
+    masterEntityID.marshal(dataStream);
+    dataStream << masterCommunicationsDeviceID;
+    dataStream << ( unsigned int )intercomParameters.size();
 
-     for(size_t idx = 0; idx < _intercomParameters.size(); idx++)
+     for(size_t idx = 0; idx < intercomParameters.size(); idx++)
      {
-        IntercomCommunicationsParameters x = _intercomParameters[idx];
+        IntercomCommunicationsParameters x = intercomParameters[idx];
         x.marshal(dataStream);
      }
 
@@ -180,24 +51,24 @@ void IntercomControlPdu::marshal(DataStream& dataStream) const
 void IntercomControlPdu::unmarshal(DataStream& dataStream)
 {
     RadioCommunicationsFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    dataStream >> _controlType;
-    dataStream >> _communicationsChannelType;
-    _sourceEntityID.unmarshal(dataStream);
-    dataStream >> _sourceCommunicationsDeviceID;
-    dataStream >> _sourceLineID;
-    dataStream >> _transmitPriority;
-    dataStream >> _transmitLineState;
-    dataStream >> _command;
-    _masterEntityID.unmarshal(dataStream);
-    dataStream >> _masterCommunicationsDeviceID;
-    dataStream >> _intercomParametersLength;
+    dataStream >> controlType;
+    dataStream >> communicationsChannelType;
+    sourceEntityID.unmarshal(dataStream);
+    dataStream >> sourceCommunicationsDeviceID;
+    dataStream >> sourceLineID;
+    dataStream >> transmitPriority;
+    dataStream >> transmitLineState;
+    dataStream >> command;
+    masterEntityID.unmarshal(dataStream);
+    dataStream >> masterCommunicationsDeviceID;
+    dataStream >> intercomParametersLength;
 
-     _intercomParameters.clear();
-     for(size_t idx = 0; idx < _intercomParametersLength; idx++)
+     intercomParameters.clear();
+     for(size_t idx = 0; idx < intercomParametersLength; idx++)
      {
         IntercomCommunicationsParameters x;
         x.unmarshal(dataStream);
-        _intercomParameters.push_back(x);
+        intercomParameters.push_back(x);
      }
 }
 
@@ -208,20 +79,20 @@ bool IntercomControlPdu::operator ==(const IntercomControlPdu& rhs) const
 
      ivarsEqual = RadioCommunicationsFamilyPdu::operator==(rhs);
 
-     if( ! (_controlType == rhs._controlType) ) ivarsEqual = false;
-     if( ! (_communicationsChannelType == rhs._communicationsChannelType) ) ivarsEqual = false;
-     if( ! (_sourceEntityID == rhs._sourceEntityID) ) ivarsEqual = false;
-     if( ! (_sourceCommunicationsDeviceID == rhs._sourceCommunicationsDeviceID) ) ivarsEqual = false;
-     if( ! (_sourceLineID == rhs._sourceLineID) ) ivarsEqual = false;
-     if( ! (_transmitPriority == rhs._transmitPriority) ) ivarsEqual = false;
-     if( ! (_transmitLineState == rhs._transmitLineState) ) ivarsEqual = false;
-     if( ! (_command == rhs._command) ) ivarsEqual = false;
-     if( ! (_masterEntityID == rhs._masterEntityID) ) ivarsEqual = false;
-     if( ! (_masterCommunicationsDeviceID == rhs._masterCommunicationsDeviceID) ) ivarsEqual = false;
+     if( ! (controlType == rhs.controlType) ) ivarsEqual = false;
+     if( ! (communicationsChannelType == rhs.communicationsChannelType) ) ivarsEqual = false;
+     if( ! (sourceEntityID == rhs.sourceEntityID) ) ivarsEqual = false;
+     if( ! (sourceCommunicationsDeviceID == rhs.sourceCommunicationsDeviceID) ) ivarsEqual = false;
+     if( ! (sourceLineID == rhs.sourceLineID) ) ivarsEqual = false;
+     if( ! (transmitPriority == rhs.transmitPriority) ) ivarsEqual = false;
+     if( ! (transmitLineState == rhs.transmitLineState) ) ivarsEqual = false;
+     if( ! (command == rhs.command) ) ivarsEqual = false;
+     if( ! (masterEntityID == rhs.masterEntityID) ) ivarsEqual = false;
+     if( ! (masterCommunicationsDeviceID == rhs.masterCommunicationsDeviceID) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _intercomParameters.size(); idx++)
+     for(size_t idx = 0; idx < intercomParameters.size(); idx++)
      {
-        if( ! ( _intercomParameters[idx] == rhs._intercomParameters[idx]) ) ivarsEqual = false;
+        if( ! ( intercomParameters[idx] == rhs.intercomParameters[idx]) ) ivarsEqual = false;
      }
 
 
@@ -233,21 +104,21 @@ int IntercomControlPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = RadioCommunicationsFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + 1;  // _controlType
-   marshalSize = marshalSize + 1;  // _communicationsChannelType
-   marshalSize = marshalSize + _sourceEntityID.getMarshalledSize();  // _sourceEntityID
-   marshalSize = marshalSize + 1;  // _sourceCommunicationsDeviceID
-   marshalSize = marshalSize + 1;  // _sourceLineID
-   marshalSize = marshalSize + 1;  // _transmitPriority
-   marshalSize = marshalSize + 1;  // _transmitLineState
-   marshalSize = marshalSize + 1;  // _command
-   marshalSize = marshalSize + _masterEntityID.getMarshalledSize();  // _masterEntityID
-   marshalSize = marshalSize + 2;  // _masterCommunicationsDeviceID
-   marshalSize = marshalSize + 4;  // _intercomParametersLength
+   marshalSize = marshalSize + 1;  // controlType
+   marshalSize = marshalSize + 1;  // communicationsChannelType
+   marshalSize = marshalSize + sourceEntityID.getMarshalledSize();  // sourceEntityID
+   marshalSize = marshalSize + 1;  // sourceCommunicationsDeviceID
+   marshalSize = marshalSize + 1;  // sourceLineID
+   marshalSize = marshalSize + 1;  // transmitPriority
+   marshalSize = marshalSize + 1;  // transmitLineState
+   marshalSize = marshalSize + 1;  // command
+   marshalSize = marshalSize + masterEntityID.getMarshalledSize();  // masterEntityID
+   marshalSize = marshalSize + 2;  // masterCommunicationsDeviceID
+   marshalSize = marshalSize + 4;  // intercomParametersLength
 
-   for(unsigned long long idx=0; idx < _intercomParameters.size(); idx++)
+   for(int idx=0; idx < intercomParameters.size(); idx++)
    {
-        IntercomCommunicationsParameters listElement = _intercomParameters[idx];
+        IntercomCommunicationsParameters listElement = intercomParameters[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

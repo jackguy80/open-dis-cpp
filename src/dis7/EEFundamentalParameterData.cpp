@@ -1,14 +1,14 @@
-#include <dis7/EEFundamentalParameterData.h>
+#include "EEFundamentalParameterData.h"
 
 using namespace DIS;
 
 
 EEFundamentalParameterData::EEFundamentalParameterData():
-   _frequency(0.0), 
-   _frequencyRange(0.0), 
-   _effectiveRadiatedPower(0.0), 
-   _pulseRepetitionFrequency(0.0), 
-   _pulseWidth(0.0)
+   frequency(0.0), 
+   frequencyRange(0.0), 
+   effectiveRadiatedPower(0.0), 
+   pulseRepetitionFrequency(0.0), 
+   pulseWidth(0.0)
 {
 }
 
@@ -16,72 +16,22 @@ EEFundamentalParameterData::~EEFundamentalParameterData()
 {
 }
 
-float EEFundamentalParameterData::getFrequency() const
-{
-    return _frequency;
-}
-
-void EEFundamentalParameterData::setFrequency(float pX)
-{
-    _frequency = pX;
-}
-
-float EEFundamentalParameterData::getFrequencyRange() const
-{
-    return _frequencyRange;
-}
-
-void EEFundamentalParameterData::setFrequencyRange(float pX)
-{
-    _frequencyRange = pX;
-}
-
-float EEFundamentalParameterData::getEffectiveRadiatedPower() const
-{
-    return _effectiveRadiatedPower;
-}
-
-void EEFundamentalParameterData::setEffectiveRadiatedPower(float pX)
-{
-    _effectiveRadiatedPower = pX;
-}
-
-float EEFundamentalParameterData::getPulseRepetitionFrequency() const
-{
-    return _pulseRepetitionFrequency;
-}
-
-void EEFundamentalParameterData::setPulseRepetitionFrequency(float pX)
-{
-    _pulseRepetitionFrequency = pX;
-}
-
-float EEFundamentalParameterData::getPulseWidth() const
-{
-    return _pulseWidth;
-}
-
-void EEFundamentalParameterData::setPulseWidth(float pX)
-{
-    _pulseWidth = pX;
-}
-
 void EEFundamentalParameterData::marshal(DataStream& dataStream) const
 {
-    dataStream << _frequency;
-    dataStream << _frequencyRange;
-    dataStream << _effectiveRadiatedPower;
-    dataStream << _pulseRepetitionFrequency;
-    dataStream << _pulseWidth;
+    dataStream << frequency;
+    dataStream << frequencyRange;
+    dataStream << effectiveRadiatedPower;
+    dataStream << pulseRepetitionFrequency;
+    dataStream << pulseWidth;
 }
 
 void EEFundamentalParameterData::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _frequency;
-    dataStream >> _frequencyRange;
-    dataStream >> _effectiveRadiatedPower;
-    dataStream >> _pulseRepetitionFrequency;
-    dataStream >> _pulseWidth;
+    dataStream >> frequency;
+    dataStream >> frequencyRange;
+    dataStream >> effectiveRadiatedPower;
+    dataStream >> pulseRepetitionFrequency;
+    dataStream >> pulseWidth;
 }
 
 
@@ -89,11 +39,11 @@ bool EEFundamentalParameterData::operator ==(const EEFundamentalParameterData& r
  {
      bool ivarsEqual = true;
 
-     if( ! (_frequency == rhs._frequency) ) ivarsEqual = false;
-     if( ! (_frequencyRange == rhs._frequencyRange) ) ivarsEqual = false;
-     if( ! (_effectiveRadiatedPower == rhs._effectiveRadiatedPower) ) ivarsEqual = false;
-     if( ! (_pulseRepetitionFrequency == rhs._pulseRepetitionFrequency) ) ivarsEqual = false;
-     if( ! (_pulseWidth == rhs._pulseWidth) ) ivarsEqual = false;
+     if( ! (frequency == rhs.frequency) ) ivarsEqual = false;
+     if( ! (frequencyRange == rhs.frequencyRange) ) ivarsEqual = false;
+     if( ! (effectiveRadiatedPower == rhs.effectiveRadiatedPower) ) ivarsEqual = false;
+     if( ! (pulseRepetitionFrequency == rhs.pulseRepetitionFrequency) ) ivarsEqual = false;
+     if( ! (pulseWidth == rhs.pulseWidth) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -102,11 +52,11 @@ int EEFundamentalParameterData::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _frequency
-   marshalSize = marshalSize + 4;  // _frequencyRange
-   marshalSize = marshalSize + 4;  // _effectiveRadiatedPower
-   marshalSize = marshalSize + 4;  // _pulseRepetitionFrequency
-   marshalSize = marshalSize + 4;  // _pulseWidth
+   marshalSize = marshalSize + 4;  // frequency
+   marshalSize = marshalSize + 4;  // frequencyRange
+   marshalSize = marshalSize + 4;  // effectiveRadiatedPower
+   marshalSize = marshalSize + 4;  // pulseRepetitionFrequency
+   marshalSize = marshalSize + 4;  // pulseWidth
     return marshalSize;
 }
 

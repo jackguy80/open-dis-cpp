@@ -1,49 +1,42 @@
 #pragma once
 
-#include <dis6/Pdu.h>
+#include "Pdu.h"
 #include <vector>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Used for XML compatability. A container that holds PDUs
+// A container that holds PDUs
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT PduContainer
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO PduContainer
 {
-protected:
   /** Number of PDUs in the container list */
-  int _numberOfPdus; 
+  int numberOfPdus;
 
-  /** record sets */
-  std::vector<Pdu> _pdus; 
+  /** List of PDUs */
+  std::vector<Pdu> pdus;
 
-
- public:
     PduContainer();
     virtual ~PduContainer();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    int getNumberOfPdus() const; 
 
-    std::vector<Pdu>& getPdus(); 
-    const std::vector<Pdu>& getPdus() const; 
-    void setPdus(const std::vector<Pdu>&    pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const PduContainer& rhs) const;
+     bool operator ==(const PduContainer& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

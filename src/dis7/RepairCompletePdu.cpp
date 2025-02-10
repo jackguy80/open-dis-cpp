@@ -1,87 +1,37 @@
-#include <dis7/RepairCompletePdu.h>
+#include "RepairCompletePdu.h"
 
 using namespace DIS;
 
 
 RepairCompletePdu::RepairCompletePdu() : LogisticsFamilyPdu(),
-   _receivingEntityID(), 
-   _repairingEntityID(), 
-   _repair(0), 
-   _padding4(0)
+   receivingEntityID(), 
+   repairingEntityID(), 
+   repair(0), 
+   padding4(0)
 {
-    setPduType( 9 );
+    pduType = 9;
 }
 
 RepairCompletePdu::~RepairCompletePdu()
 {
 }
 
-EntityID& RepairCompletePdu::getReceivingEntityID() 
-{
-    return _receivingEntityID;
-}
-
-const EntityID& RepairCompletePdu::getReceivingEntityID() const
-{
-    return _receivingEntityID;
-}
-
-void RepairCompletePdu::setReceivingEntityID(const EntityID &pX)
-{
-    _receivingEntityID = pX;
-}
-
-EntityID& RepairCompletePdu::getRepairingEntityID() 
-{
-    return _repairingEntityID;
-}
-
-const EntityID& RepairCompletePdu::getRepairingEntityID() const
-{
-    return _repairingEntityID;
-}
-
-void RepairCompletePdu::setRepairingEntityID(const EntityID &pX)
-{
-    _repairingEntityID = pX;
-}
-
-unsigned short RepairCompletePdu::getRepair() const
-{
-    return _repair;
-}
-
-void RepairCompletePdu::setRepair(unsigned short pX)
-{
-    _repair = pX;
-}
-
-short RepairCompletePdu::getPadding4() const
-{
-    return _padding4;
-}
-
-void RepairCompletePdu::setPadding4(short pX)
-{
-    _padding4 = pX;
-}
-
 void RepairCompletePdu::marshal(DataStream& dataStream) const
 {
     LogisticsFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _receivingEntityID.marshal(dataStream);
-    _repairingEntityID.marshal(dataStream);
-    dataStream << _repair;
-    dataStream << _padding4;
+    receivingEntityID.marshal(dataStream);
+    repairingEntityID.marshal(dataStream);
+    dataStream << repair;
+    dataStream << padding4;
 }
 
 void RepairCompletePdu::unmarshal(DataStream& dataStream)
 {
     LogisticsFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _receivingEntityID.unmarshal(dataStream);
-    _repairingEntityID.unmarshal(dataStream);
-    dataStream >> _repair;
-    dataStream >> _padding4;
+    receivingEntityID.unmarshal(dataStream);
+    repairingEntityID.unmarshal(dataStream);
+    dataStream >> repair;
+    dataStream >> padding4;
 }
 
 
@@ -91,10 +41,10 @@ bool RepairCompletePdu::operator ==(const RepairCompletePdu& rhs) const
 
      ivarsEqual = LogisticsFamilyPdu::operator==(rhs);
 
-     if( ! (_receivingEntityID == rhs._receivingEntityID) ) ivarsEqual = false;
-     if( ! (_repairingEntityID == rhs._repairingEntityID) ) ivarsEqual = false;
-     if( ! (_repair == rhs._repair) ) ivarsEqual = false;
-     if( ! (_padding4 == rhs._padding4) ) ivarsEqual = false;
+     if( ! (receivingEntityID == rhs.receivingEntityID) ) ivarsEqual = false;
+     if( ! (repairingEntityID == rhs.repairingEntityID) ) ivarsEqual = false;
+     if( ! (repair == rhs.repair) ) ivarsEqual = false;
+     if( ! (padding4 == rhs.padding4) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -104,10 +54,10 @@ int RepairCompletePdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = LogisticsFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _receivingEntityID.getMarshalledSize();  // _receivingEntityID
-   marshalSize = marshalSize + _repairingEntityID.getMarshalledSize();  // _repairingEntityID
-   marshalSize = marshalSize + 2;  // _repair
-   marshalSize = marshalSize + 2;  // _padding4
+   marshalSize = marshalSize + receivingEntityID.getMarshalledSize();  // receivingEntityID
+   marshalSize = marshalSize + repairingEntityID.getMarshalledSize();  // repairingEntityID
+   marshalSize = marshalSize + 2;  // repair
+   marshalSize = marshalSize + 2;  // padding4
     return marshalSize;
 }
 

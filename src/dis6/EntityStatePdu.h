@@ -1,131 +1,83 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityType.h>
-#include <dis6/EntityType.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/Vector3Double.h>
-#include <dis6/Orientation.h>
-#include <dis6/DeadReckoningParameter.h>
-#include <dis6/Marking.h>
-#include <dis6/ArticulationParameter.h>
+#include "EntityID.h"
+#include "EntityType.h"
+#include "EntityType.h"
+#include "Vector3Float.h"
+#include "Vector3Double.h"
+#include "Orientation.h"
+#include "DeadReckoningParameter.h"
+#include "Marking.h"
+#include "ArticulationParameter.h"
 #include <vector>
-#include <dis6/EntityInformationFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityInformationFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.3.1. Represents the postion and state of one entity in the world. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT EntityStatePdu : public EntityInformationFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO EntityStatePdu : public EntityInformationFamilyPdu
 {
-protected:
   /** Unique ID for an entity that is tied to this state information */
-  EntityID _entityID; 
+  EntityID entityID;
 
   /** What force this entity is affiliated with, eg red, blue, neutral, etc */
-  unsigned char _forceId; 
+  unsigned char forceId;
 
   /** How many articulation parameters are in the variable length list */
-  char _numberOfArticulationParameters; 
+  char numberOfArticulationParameters;
 
   /** Describes the type of entity in the world */
-  EntityType _entityType; 
+  EntityType entityType;
 
-  EntityType _alternativeEntityType; 
+  EntityType alternativeEntityType;
 
   /** Describes the speed of the entity in the world */
-  Vector3Float _entityLinearVelocity; 
+  Vector3Float entityLinearVelocity;
 
   /** describes the location of the entity in the world */
-  Vector3Double _entityLocation; 
+  Vector3Double entityLocation;
 
   /** describes the orientation of the entity, in euler angles */
-  Orientation _entityOrientation; 
+  Orientation entityOrientation;
 
   /** a series of bit flags that are used to help draw the entity, such as smoking, on fire, etc. */
-  int _entityAppearance; 
+  int entityAppearance;
 
   /** parameters used for dead reckoning */
-  DeadReckoningParameter _deadReckoningParameters; 
+  DeadReckoningParameter deadReckoningParameters;
 
   /** characters that can be used for debugging, or to draw unique strings on the side of entities in the world */
-  Marking _marking; 
+  Marking marking;
 
   /** a series of bit flags */
-  int _capabilities; 
+  int capabilities;
 
   /** variable length list of articulation parameters */
-  std::vector<ArticulationParameter> _articulationParameters; 
+  std::vector<ArticulationParameter> articulationParameters;
 
-
- public:
     EntityStatePdu();
     virtual ~EntityStatePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getEntityID(); 
-    const EntityID&  getEntityID() const; 
-    void setEntityID(const EntityID    &pX);
 
-    unsigned char getForceId() const; 
-    void setForceId(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    char getNumberOfArticulationParameters() const; 
-
-    EntityType& getEntityType(); 
-    const EntityType&  getEntityType() const; 
-    void setEntityType(const EntityType    &pX);
-
-    EntityType& getAlternativeEntityType(); 
-    const EntityType&  getAlternativeEntityType() const; 
-    void setAlternativeEntityType(const EntityType    &pX);
-
-    Vector3Float& getEntityLinearVelocity(); 
-    const Vector3Float&  getEntityLinearVelocity() const; 
-    void setEntityLinearVelocity(const Vector3Float    &pX);
-
-    Vector3Double& getEntityLocation(); 
-    const Vector3Double&  getEntityLocation() const; 
-    void setEntityLocation(const Vector3Double    &pX);
-
-    Orientation& getEntityOrientation(); 
-    const Orientation&  getEntityOrientation() const; 
-    void setEntityOrientation(const Orientation    &pX);
-
-    int getEntityAppearance() const; 
-    void setEntityAppearance(int pX); 
-
-    DeadReckoningParameter& getDeadReckoningParameters(); 
-    const DeadReckoningParameter&  getDeadReckoningParameters() const; 
-    void setDeadReckoningParameters(const DeadReckoningParameter    &pX);
-
-    Marking& getMarking(); 
-    const Marking&  getMarking() const; 
-    void setMarking(const Marking    &pX);
-
-    int getCapabilities() const; 
-    void setCapabilities(int pX); 
-
-    std::vector<ArticulationParameter>& getArticulationParameters(); 
-    const std::vector<ArticulationParameter>& getArticulationParameters() const; 
-    void setArticulationParameters(const std::vector<ArticulationParameter>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EntityStatePdu& rhs) const;
+     bool operator ==(const EntityStatePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

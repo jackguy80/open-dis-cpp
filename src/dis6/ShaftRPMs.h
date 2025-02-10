@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Shaft RPMs, used in underwater acoustic clacluations.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT ShaftRPMs
+struct EXPORT_MACRO ShaftRPMs
 {
-protected:
   /** Current shaft RPMs */
-  short _currentShaftRPMs; 
+  short currentShaftRPMs;
 
   /** ordered shaft rpms */
-  short _orderedShaftRPMs; 
+  short orderedShaftRPMs;
 
   /** rate of change of shaft RPMs */
-  float _shaftRPMRateOfChange; 
+  float shaftRPMRateOfChange;
 
-
- public:
     ShaftRPMs();
     virtual ~ShaftRPMs();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    short getCurrentShaftRPMs() const; 
-    void setCurrentShaftRPMs(short pX); 
 
-    short getOrderedShaftRPMs() const; 
-    void setOrderedShaftRPMs(short pX); 
+     virtual int getMarshalledSize() const;
 
-    float getShaftRPMRateOfChange() const; 
-    void setShaftRPMRateOfChange(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ShaftRPMs& rhs) const;
+     bool operator ==(const ShaftRPMs& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,11 +1,11 @@
-#include <dis7/AggregateIdentifier.h>
+#include "AggregateIdentifier.h"
 
 using namespace DIS;
 
 
 AggregateIdentifier::AggregateIdentifier():
-   _simulationAddress(), 
-   _aggregateID(0)
+   simulationAddress(), 
+   aggregateID(0)
 {
 }
 
@@ -13,41 +13,16 @@ AggregateIdentifier::~AggregateIdentifier()
 {
 }
 
-SimulationAddress& AggregateIdentifier::getSimulationAddress() 
-{
-    return _simulationAddress;
-}
-
-const SimulationAddress& AggregateIdentifier::getSimulationAddress() const
-{
-    return _simulationAddress;
-}
-
-void AggregateIdentifier::setSimulationAddress(const SimulationAddress &pX)
-{
-    _simulationAddress = pX;
-}
-
-unsigned short AggregateIdentifier::getAggregateID() const
-{
-    return _aggregateID;
-}
-
-void AggregateIdentifier::setAggregateID(unsigned short pX)
-{
-    _aggregateID = pX;
-}
-
 void AggregateIdentifier::marshal(DataStream& dataStream) const
 {
-    _simulationAddress.marshal(dataStream);
-    dataStream << _aggregateID;
+    simulationAddress.marshal(dataStream);
+    dataStream << aggregateID;
 }
 
 void AggregateIdentifier::unmarshal(DataStream& dataStream)
 {
-    _simulationAddress.unmarshal(dataStream);
-    dataStream >> _aggregateID;
+    simulationAddress.unmarshal(dataStream);
+    dataStream >> aggregateID;
 }
 
 
@@ -55,8 +30,8 @@ bool AggregateIdentifier::operator ==(const AggregateIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_simulationAddress == rhs._simulationAddress) ) ivarsEqual = false;
-     if( ! (_aggregateID == rhs._aggregateID) ) ivarsEqual = false;
+     if( ! (simulationAddress == rhs.simulationAddress) ) ivarsEqual = false;
+     if( ! (aggregateID == rhs.aggregateID) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int AggregateIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _simulationAddress.getMarshalledSize();  // _simulationAddress
-   marshalSize = marshalSize + 2;  // _aggregateID
+   marshalSize = marshalSize + simulationAddress.getMarshalledSize();  // simulationAddress
+   marshalSize = marshalSize + 2;  // aggregateID
     return marshalSize;
 }
 

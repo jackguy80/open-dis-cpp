@@ -1,83 +1,56 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// For each type or location of Storage Fuel, this record shall specify the type, location, fuel measure- ment units, reload quantity and maximum quantity for storage fuel either for the whole entity or a specific storage fuel location (tank). Section 6.2.84.
+// For each type or location of Storage Fuel, this record shall specify the type, location, fuel measure- ment units, reload quantity and maximum quantity for storage fuel either for the whole entity or a specific storage fuel location (tank). Section 6.2.85.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT StorageFuelReload
+struct EXPORT_MACRO StorageFuelReload
 {
-protected:
   /**  the standard quantity of this fuel type normally loaded at this station/launcher if a station/launcher is specified. If the Station/Launcher field is set to zero, then this is the total quantity of this fuel type that would be present in a standard reload of all appli- cable stations/launchers associated with this entity. */
-  unsigned int _standardQuantity; 
+  unsigned int standardQuantity;
 
   /** the maximum quantity of this fuel type that this sta- tion/launcher is capable of holding when a station/launcher is specified. This would be the value used when a maximum reload was desired to be set for this station/launcher. If the Station/launcher field is set to zero, then this is the maximum quantity of this fuel type that would be present on this entity at all stations/launchers that can accept this fuel type. */
-  unsigned int _maximumQuantity; 
+  unsigned int maximumQuantity;
 
   /** the seconds normally required to reload the standard quantity of this fuel type at this specific station/launcher. When the Station/Launcher field is set to zero, this shall be the time it takes to perform a standard quantity reload of this fuel type at all applicable stations/launchers for this entity. */
-  unsigned char _standardQuantityReloadTime; 
+  unsigned char standardQuantityReloadTime;
 
   /** the seconds normally required to reload the maximum possible quantity of this fuel type at this station/launcher. When the Station/Launcher field is set to zero, this shall be the time it takes to perform a maximum quantity load/reload of this fuel type at all applicable stations/launchers for this entity. */
-  unsigned char _maximumQuantityReloadTime; 
+  unsigned char maximumQuantityReloadTime;
 
   /** the fuel measurement units. Enumeration */
-  unsigned char _fuelMeasurementUnits; 
+  unsigned char fuelMeasurementUnits;
 
   /** Fuel type. Enumeration */
-  unsigned char _fuelType; 
+  unsigned char fuelType;
 
   /** Location of fuel as related to entity. See section 14 of EBV document */
-  unsigned char _fuelLocation; 
+  unsigned char fuelLocation;
 
   /** padding */
-  unsigned char _padding; 
+  unsigned char padding;
 
-
- public:
     StorageFuelReload();
     virtual ~StorageFuelReload();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getStandardQuantity() const; 
-    void setStandardQuantity(unsigned int pX); 
 
-    unsigned int getMaximumQuantity() const; 
-    void setMaximumQuantity(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getStandardQuantityReloadTime() const; 
-    void setStandardQuantityReloadTime(unsigned char pX); 
-
-    unsigned char getMaximumQuantityReloadTime() const; 
-    void setMaximumQuantityReloadTime(unsigned char pX); 
-
-    unsigned char getFuelMeasurementUnits() const; 
-    void setFuelMeasurementUnits(unsigned char pX); 
-
-    unsigned char getFuelType() const; 
-    void setFuelType(unsigned char pX); 
-
-    unsigned char getFuelLocation() const; 
-    void setFuelLocation(unsigned char pX); 
-
-    unsigned char getPadding() const; 
-    void setPadding(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StorageFuelReload& rhs) const;
+     bool operator ==(const StorageFuelReload& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

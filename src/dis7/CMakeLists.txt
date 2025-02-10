@@ -25,6 +25,7 @@ set(dis7_hdr
   BeamData.h
   BeamStatus.h
   BlankingSector.h
+  ChangeOptions.h
   ClockTime.h
   CollisionElasticPdu.h
   CollisionPdu.h
@@ -50,9 +51,6 @@ set(dis7_hdr
   DistributedEmissionsFamilyPdu.h
   EEFundamentalParameterData.h
   EightByteChunk.h
-  ElectromagneticEmissionBeamData.h
-  ElectromagneticEmissionsPdu.h
-  ElectromagneticEmissionSystemData.h
   EmitterSystem.h
   EngineFuel.h
   EngineFuelReload.h
@@ -86,6 +84,7 @@ set(dis7_hdr
   FundamentalOperationalData.h
   GridAxis.h
   GroupIdentifier.h
+  IFFData.h
   IffDataSpecification.h
   IFFFundamentalParameterData.h
   IFFPdu.h
@@ -117,6 +116,7 @@ set(dis7_hdr
   NamedLocationIdentification.h
   ObjectIdentifier.h
   ObjectType.h
+  OneByteChunk.h
   OwnershipStatus.h
   PduContainer.h
   Pdu.h
@@ -162,6 +162,7 @@ set(dis7_hdr
   SupplyQuantity.h
   SyntheticEnvironmentFamilyPdu.h
   SystemIdentifier.h
+  Timestamp.h
   TotalRecordSets.h
   TrackJamData.h
   TwoByteChunk.h
@@ -204,6 +205,7 @@ set(dis7_src
   BeamData.cpp
   BeamStatus.cpp
   BlankingSector.cpp
+  ChangeOptions.cpp
   ClockTime.cpp
   CollisionElasticPdu.cpp
   CollisionPdu.cpp
@@ -229,9 +231,6 @@ set(dis7_src
   DistributedEmissionsFamilyPdu.cpp
   EEFundamentalParameterData.cpp
   EightByteChunk.cpp
-  ElectromagneticEmissionBeamData.cpp
-  ElectromagneticEmissionsPdu.cpp
-  ElectromagneticEmissionSystemData.cpp
   EmitterSystem.cpp
   EngineFuel.cpp
   EngineFuelReload.cpp
@@ -265,9 +264,9 @@ set(dis7_src
   FundamentalOperationalData.cpp
   GridAxis.cpp
   GroupIdentifier.cpp
+  IFFData.cpp
   IffDataSpecification.cpp
   IFFFundamentalParameterData.cpp
-  IFFPdu.cpp
   IntercomCommunicationsParameters.cpp
   IntercomIdentifier.cpp
   IntercomSignalPdu.cpp
@@ -296,6 +295,7 @@ set(dis7_src
   NamedLocationIdentification.cpp
   ObjectIdentifier.cpp
   ObjectType.cpp
+  OneByteChunk.cpp
   OwnershipStatus.cpp
   PduContainer.cpp
   Pdu.cpp
@@ -341,6 +341,7 @@ set(dis7_src
   SupplyQuantity.cpp
   SyntheticEnvironmentFamilyPdu.cpp
   SystemIdentifier.cpp
+  Timestamp.cpp
   TotalRecordSets.cpp
   TrackJamData.cpp
   TwoByteChunk.cpp

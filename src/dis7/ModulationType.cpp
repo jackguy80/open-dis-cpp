@@ -1,13 +1,13 @@
-#include <dis7/ModulationType.h>
+#include "ModulationType.h"
 
 using namespace DIS;
 
 
 ModulationType::ModulationType():
-   _spreadSpectrum(0), 
-   _majorModulation(0), 
-   _detail(0), 
-   _radioSystem(0)
+   spreadSpectrum(0), 
+   majorModulation(0), 
+   detail(0), 
+   radioSystem(0)
 {
 }
 
@@ -15,60 +15,20 @@ ModulationType::~ModulationType()
 {
 }
 
-unsigned short ModulationType::getSpreadSpectrum() const
-{
-    return _spreadSpectrum;
-}
-
-void ModulationType::setSpreadSpectrum(unsigned short pX)
-{
-    _spreadSpectrum = pX;
-}
-
-unsigned short ModulationType::getMajorModulation() const
-{
-    return _majorModulation;
-}
-
-void ModulationType::setMajorModulation(unsigned short pX)
-{
-    _majorModulation = pX;
-}
-
-unsigned short ModulationType::getDetail() const
-{
-    return _detail;
-}
-
-void ModulationType::setDetail(unsigned short pX)
-{
-    _detail = pX;
-}
-
-unsigned short ModulationType::getRadioSystem() const
-{
-    return _radioSystem;
-}
-
-void ModulationType::setRadioSystem(unsigned short pX)
-{
-    _radioSystem = pX;
-}
-
 void ModulationType::marshal(DataStream& dataStream) const
 {
-    dataStream << _spreadSpectrum;
-    dataStream << _majorModulation;
-    dataStream << _detail;
-    dataStream << _radioSystem;
+    dataStream << spreadSpectrum;
+    dataStream << majorModulation;
+    dataStream << detail;
+    dataStream << radioSystem;
 }
 
 void ModulationType::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _spreadSpectrum;
-    dataStream >> _majorModulation;
-    dataStream >> _detail;
-    dataStream >> _radioSystem;
+    dataStream >> spreadSpectrum;
+    dataStream >> majorModulation;
+    dataStream >> detail;
+    dataStream >> radioSystem;
 }
 
 
@@ -76,10 +36,10 @@ bool ModulationType::operator ==(const ModulationType& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_spreadSpectrum == rhs._spreadSpectrum) ) ivarsEqual = false;
-     if( ! (_majorModulation == rhs._majorModulation) ) ivarsEqual = false;
-     if( ! (_detail == rhs._detail) ) ivarsEqual = false;
-     if( ! (_radioSystem == rhs._radioSystem) ) ivarsEqual = false;
+     if( ! (spreadSpectrum == rhs.spreadSpectrum) ) ivarsEqual = false;
+     if( ! (majorModulation == rhs.majorModulation) ) ivarsEqual = false;
+     if( ! (detail == rhs.detail) ) ivarsEqual = false;
+     if( ! (radioSystem == rhs.radioSystem) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -88,10 +48,10 @@ int ModulationType::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _spreadSpectrum
-   marshalSize = marshalSize + 2;  // _majorModulation
-   marshalSize = marshalSize + 2;  // _detail
-   marshalSize = marshalSize + 2;  // _radioSystem
+   marshalSize = marshalSize + 2;  // spreadSpectrum
+   marshalSize = marshalSize + 2;  // majorModulation
+   marshalSize = marshalSize + 2;  // detail
+   marshalSize = marshalSize + 2;  // radioSystem
     return marshalSize;
 }
 

@@ -1,78 +1,50 @@
 #pragma once
 
-#include <dis7/EventIdentifier.h>
-#include <dis7/EventIdentifier.h>
-#include <dis7/EventIdentifier.h>
-#include <dis7/Vector3Double.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EventIdentifier.h"
+#include "EventIdentifier.h"
+#include "EventIdentifier.h"
+#include "Vector3Double.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Identity of a communications node. Section 6.2.51
+// Identity of a communications node. Section 6.2.50
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT LaunchedMunitionRecord
+struct EXPORT_MACRO LaunchedMunitionRecord
 {
-protected:
-  EventIdentifier _fireEventID; 
+  EventIdentifier fireEventID;
 
-  unsigned short _padding; 
+  unsigned short padding;
 
-  EventIdentifier _firingEntityID; 
+  EventIdentifier firingEntityID;
 
-  unsigned short _padding2; 
+  unsigned short padding2;
 
-  EventIdentifier _targetEntityID; 
+  EventIdentifier targetEntityID;
 
-  unsigned short _padding3; 
+  unsigned short padding3;
 
-  Vector3Double _targetLocation; 
+  Vector3Double targetLocation;
 
-
- public:
     LaunchedMunitionRecord();
     virtual ~LaunchedMunitionRecord();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EventIdentifier& getFireEventID(); 
-    const EventIdentifier&  getFireEventID() const; 
-    void setFireEventID(const EventIdentifier    &pX);
 
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    EventIdentifier& getFiringEntityID(); 
-    const EventIdentifier&  getFiringEntityID() const; 
-    void setFiringEntityID(const EventIdentifier    &pX);
-
-    unsigned short getPadding2() const; 
-    void setPadding2(unsigned short pX); 
-
-    EventIdentifier& getTargetEntityID(); 
-    const EventIdentifier&  getTargetEntityID() const; 
-    void setTargetEntityID(const EventIdentifier    &pX);
-
-    unsigned short getPadding3() const; 
-    void setPadding3(unsigned short pX); 
-
-    Vector3Double& getTargetLocation(); 
-    const Vector3Double&  getTargetLocation() const; 
-    void setTargetLocation(const Vector3Double    &pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const LaunchedMunitionRecord& rhs) const;
+     bool operator ==(const LaunchedMunitionRecord& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

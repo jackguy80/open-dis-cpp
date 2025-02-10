@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.11. This field shall specify information about a particular emitter system
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT EmitterSystem
+struct EXPORT_MACRO EmitterSystem
 {
-protected:
   /** Name of the emitter, 16 bit enumeration */
-  unsigned short _emitterName; 
+  unsigned short emitterName;
 
   /** function of the emitter, 8 bit enumeration */
-  unsigned char _function; 
+  unsigned char function;
 
   /** emitter ID, 8 bit enumeration */
-  unsigned char _emitterIdNumber; 
+  unsigned char emitterIdNumber;
 
-
- public:
     EmitterSystem();
     virtual ~EmitterSystem();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getEmitterName() const; 
-    void setEmitterName(unsigned short pX); 
 
-    unsigned char getFunction() const; 
-    void setFunction(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getEmitterIdNumber() const; 
-    void setEmitterIdNumber(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EmitterSystem& rhs) const;
+     bool operator ==(const EmitterSystem& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

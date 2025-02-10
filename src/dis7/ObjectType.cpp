@@ -1,13 +1,13 @@
-#include <dis7/ObjectType.h>
+#include "ObjectType.h"
 
 using namespace DIS;
 
 
 ObjectType::ObjectType():
-   _domain(0), 
-   _objectKind(0), 
-   _category(0), 
-   _subcategory(0)
+   domain(0), 
+   objectKind(0), 
+   category(0), 
+   subcategory(0)
 {
 }
 
@@ -15,60 +15,20 @@ ObjectType::~ObjectType()
 {
 }
 
-unsigned char ObjectType::getDomain() const
-{
-    return _domain;
-}
-
-void ObjectType::setDomain(unsigned char pX)
-{
-    _domain = pX;
-}
-
-unsigned char ObjectType::getObjectKind() const
-{
-    return _objectKind;
-}
-
-void ObjectType::setObjectKind(unsigned char pX)
-{
-    _objectKind = pX;
-}
-
-unsigned char ObjectType::getCategory() const
-{
-    return _category;
-}
-
-void ObjectType::setCategory(unsigned char pX)
-{
-    _category = pX;
-}
-
-unsigned char ObjectType::getSubcategory() const
-{
-    return _subcategory;
-}
-
-void ObjectType::setSubcategory(unsigned char pX)
-{
-    _subcategory = pX;
-}
-
 void ObjectType::marshal(DataStream& dataStream) const
 {
-    dataStream << _domain;
-    dataStream << _objectKind;
-    dataStream << _category;
-    dataStream << _subcategory;
+    dataStream << domain;
+    dataStream << objectKind;
+    dataStream << category;
+    dataStream << subcategory;
 }
 
 void ObjectType::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _domain;
-    dataStream >> _objectKind;
-    dataStream >> _category;
-    dataStream >> _subcategory;
+    dataStream >> domain;
+    dataStream >> objectKind;
+    dataStream >> category;
+    dataStream >> subcategory;
 }
 
 
@@ -76,10 +36,10 @@ bool ObjectType::operator ==(const ObjectType& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_domain == rhs._domain) ) ivarsEqual = false;
-     if( ! (_objectKind == rhs._objectKind) ) ivarsEqual = false;
-     if( ! (_category == rhs._category) ) ivarsEqual = false;
-     if( ! (_subcategory == rhs._subcategory) ) ivarsEqual = false;
+     if( ! (domain == rhs.domain) ) ivarsEqual = false;
+     if( ! (objectKind == rhs.objectKind) ) ivarsEqual = false;
+     if( ! (category == rhs.category) ) ivarsEqual = false;
+     if( ! (subcategory == rhs.subcategory) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -88,10 +48,10 @@ int ObjectType::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _domain
-   marshalSize = marshalSize + 1;  // _objectKind
-   marshalSize = marshalSize + 1;  // _category
-   marshalSize = marshalSize + 1;  // _subcategory
+   marshalSize = marshalSize + 1;  // domain
+   marshalSize = marshalSize + 1;  // objectKind
+   marshalSize = marshalSize + 1;  // category
+   marshalSize = marshalSize + 1;  // subcategory
     return marshalSize;
 }
 

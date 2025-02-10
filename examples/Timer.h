@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SDL.h>
-#include <SDL_timer.h>
+#include <cstdint>
+
 
 namespace Example
 {
@@ -16,7 +16,7 @@ namespace Example
       double GetSeconds() const;
 
    private:
-      Uint32 _ticks;
+      uint32_t _ticks;
    };
 }
 

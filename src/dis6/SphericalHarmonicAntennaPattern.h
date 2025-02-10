@@ -1,40 +1,35 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.4.3. Used when the antenna pattern type in the transmitter pdu is of value 2.         Specified the direction and radiation pattern from a radio transmitter's antenna.        NOTE: this class must be hand-coded to clean up some implementation details.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT SphericalHarmonicAntennaPattern
+struct EXPORT_MACRO SphericalHarmonicAntennaPattern
 {
-protected:
-  char _order; 
+  /** The highest order of the expansion in spherical harmonics, counting     from zero. There are 2n+1 coefficients for each order n, and a total of N^2 + 2N + 1 coefficients     through order N. note that order by itself is a sql reserved word */
+  char harmonicOrder;
 
-
- public:
     SphericalHarmonicAntennaPattern();
     virtual ~SphericalHarmonicAntennaPattern();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    char getOrder() const; 
-    void setOrder(char pX); 
 
+     virtual int getMarshalledSize() const;
 
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SphericalHarmonicAntennaPattern& rhs) const;
+     bool operator ==(const SphericalHarmonicAntennaPattern& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

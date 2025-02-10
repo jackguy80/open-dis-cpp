@@ -1,49 +1,39 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-//  A supply, and the amount of that supply. Section 6.2.85
+//  A supply, and the amount of that supply. Section 6.2.86
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT SupplyQuantity
+struct EXPORT_MACRO SupplyQuantity
 {
-protected:
   /** Type of supply */
-  EntityType _supplyType; 
+  EntityType supplyType;
 
   /** the number of units of a supply type.  */
-  float _quantity; 
+  float quantity;
 
-
- public:
     SupplyQuantity();
     virtual ~SupplyQuantity();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getSupplyType(); 
-    const EntityType&  getSupplyType() const; 
-    void setSupplyType(const EntityType    &pX);
 
-    float getQuantity() const; 
-    void setQuantity(float pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SupplyQuantity& rhs) const;
+     bool operator ==(const SupplyQuantity& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

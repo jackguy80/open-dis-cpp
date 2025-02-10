@@ -1,136 +1,43 @@
-#include <dis7/IFFFundamentalParameterData.h>
+#include "IFFFundamentalParameterData.h"
 
 using namespace DIS;
 
 
 IFFFundamentalParameterData::IFFFundamentalParameterData():
-   _erp(0.0), 
-   _frequency(0.0), 
-   _pgrf(0.0), 
-   _pulseWidth(0.0), 
-   _burstLength(0), 
-   _applicableModes(0)
+   erp(0.0), 
+   frequency(0.0), 
+   pgrf(0.0), 
+   pulseWidth(0.0), 
+   burstLength(0), 
+   applicableModes(0), 
+   systemSpecificData(0)
 {
-     // Initialize fixed length array
-     for(int lengthsystemSpecificData= 0; lengthsystemSpecificData < 3; lengthsystemSpecificData++)
-     {
-         _systemSpecificData[lengthsystemSpecificData] = 0;
-     }
-
 }
 
 IFFFundamentalParameterData::~IFFFundamentalParameterData()
 {
 }
 
-float IFFFundamentalParameterData::getErp() const
-{
-    return _erp;
-}
-
-void IFFFundamentalParameterData::setErp(float pX)
-{
-    _erp = pX;
-}
-
-float IFFFundamentalParameterData::getFrequency() const
-{
-    return _frequency;
-}
-
-void IFFFundamentalParameterData::setFrequency(float pX)
-{
-    _frequency = pX;
-}
-
-float IFFFundamentalParameterData::getPgrf() const
-{
-    return _pgrf;
-}
-
-void IFFFundamentalParameterData::setPgrf(float pX)
-{
-    _pgrf = pX;
-}
-
-float IFFFundamentalParameterData::getPulseWidth() const
-{
-    return _pulseWidth;
-}
-
-void IFFFundamentalParameterData::setPulseWidth(float pX)
-{
-    _pulseWidth = pX;
-}
-
-unsigned int IFFFundamentalParameterData::getBurstLength() const
-{
-    return _burstLength;
-}
-
-void IFFFundamentalParameterData::setBurstLength(unsigned int pX)
-{
-    _burstLength = pX;
-}
-
-unsigned char IFFFundamentalParameterData::getApplicableModes() const
-{
-    return _applicableModes;
-}
-
-void IFFFundamentalParameterData::setApplicableModes(unsigned char pX)
-{
-    _applicableModes = pX;
-}
-
-unsigned char* IFFFundamentalParameterData::getSystemSpecificData() 
-{
-    return _systemSpecificData;
-}
-
-const unsigned char* IFFFundamentalParameterData::getSystemSpecificData() const
-{
-    return _systemSpecificData;
-}
-
-void IFFFundamentalParameterData::setSystemSpecificData(const unsigned char* x)
-{
-   for(int i = 0; i < 3; i++)
-   {
-        _systemSpecificData[i] = x[i];
-   }
-}
-
 void IFFFundamentalParameterData::marshal(DataStream& dataStream) const
 {
-    dataStream << _erp;
-    dataStream << _frequency;
-    dataStream << _pgrf;
-    dataStream << _pulseWidth;
-    dataStream << _burstLength;
-    dataStream << _applicableModes;
-
-     for(size_t idx = 0; idx < 3; idx++)
-     {
-        dataStream << _systemSpecificData[idx];
-     }
-
+    dataStream << erp;
+    dataStream << frequency;
+    dataStream << pgrf;
+    dataStream << pulseWidth;
+    dataStream << burstLength;
+    dataStream << applicableModes;
+    dataStream << systemSpecificData;
 }
 
 void IFFFundamentalParameterData::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _erp;
-    dataStream >> _frequency;
-    dataStream >> _pgrf;
-    dataStream >> _pulseWidth;
-    dataStream >> _burstLength;
-    dataStream >> _applicableModes;
-
-     for(size_t idx = 0; idx < 3; idx++)
-     {
-        dataStream >> _systemSpecificData[idx];
-     }
-
+    dataStream >> erp;
+    dataStream >> frequency;
+    dataStream >> pgrf;
+    dataStream >> pulseWidth;
+    dataStream >> burstLength;
+    dataStream >> applicableModes;
+    dataStream >> systemSpecificData;
 }
 
 
@@ -138,18 +45,13 @@ bool IFFFundamentalParameterData::operator ==(const IFFFundamentalParameterData&
  {
      bool ivarsEqual = true;
 
-     if( ! (_erp == rhs._erp) ) ivarsEqual = false;
-     if( ! (_frequency == rhs._frequency) ) ivarsEqual = false;
-     if( ! (_pgrf == rhs._pgrf) ) ivarsEqual = false;
-     if( ! (_pulseWidth == rhs._pulseWidth) ) ivarsEqual = false;
-     if( ! (_burstLength == rhs._burstLength) ) ivarsEqual = false;
-     if( ! (_applicableModes == rhs._applicableModes) ) ivarsEqual = false;
-
-     for(unsigned char idx = 0; idx < 3; idx++)
-     {
-          if(!(_systemSpecificData[idx] == rhs._systemSpecificData[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (erp == rhs.erp) ) ivarsEqual = false;
+     if( ! (frequency == rhs.frequency) ) ivarsEqual = false;
+     if( ! (pgrf == rhs.pgrf) ) ivarsEqual = false;
+     if( ! (pulseWidth == rhs.pulseWidth) ) ivarsEqual = false;
+     if( ! (burstLength == rhs.burstLength) ) ivarsEqual = false;
+     if( ! (applicableModes == rhs.applicableModes) ) ivarsEqual = false;
+     if( ! (systemSpecificData == rhs.systemSpecificData) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -158,13 +60,13 @@ int IFFFundamentalParameterData::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _erp
-   marshalSize = marshalSize + 4;  // _frequency
-   marshalSize = marshalSize + 4;  // _pgrf
-   marshalSize = marshalSize + 4;  // _pulseWidth
-   marshalSize = marshalSize + 4;  // _burstLength
-   marshalSize = marshalSize + 1;  // _applicableModes
-   marshalSize = marshalSize + 3 * 1;  // _systemSpecificData
+   marshalSize = marshalSize + 4;  // erp
+   marshalSize = marshalSize + 4;  // frequency
+   marshalSize = marshalSize + 4;  // pgrf
+   marshalSize = marshalSize + 4;  // pulseWidth
+   marshalSize = marshalSize + 4;  // burstLength
+   marshalSize = marshalSize + 1;  // applicableModes
+   marshalSize = marshalSize + 1;  // systemSpecificData
     return marshalSize;
 }
 

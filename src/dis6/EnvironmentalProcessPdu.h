@@ -1,84 +1,60 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityType.h>
-#include <dis6/Environment.h>
+#include "EntityID.h"
+#include "EntityType.h"
+#include "Environment.h"
 #include <vector>
-#include <dis6/SyntheticEnvironmentFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "SyntheticEnvironmentFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.11.1: Information about environmental effects and processes. This requires manual cleanup. the environmental        record is variable, as is the padding. UNFINISHED
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT EnvironmentalProcessPdu : public SyntheticEnvironmentFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO EnvironmentalProcessPdu : public SyntheticEnvironmentFamilyPdu
 {
-protected:
   /** Environmental process ID */
-  EntityID _environementalProcessID; 
+  EntityID environementalProcessID;
 
   /** Environment type */
-  EntityType _environmentType; 
+  EntityType environmentType;
 
   /** model type */
-  unsigned char _modelType; 
+  unsigned char modelType;
 
   /** Environment status */
-  unsigned char _environmentStatus; 
+  unsigned char environmentStatus;
 
   /** number of environment records  */
-  unsigned char _numberOfEnvironmentRecords; 
+  unsigned char numberOfEnvironmentRecords;
 
   /** PDU sequence number for the environmentla process if pdu sequencing required */
-  unsigned short _sequenceNumber; 
+  unsigned short sequenceNumber;
 
   /** environemt records */
-  std::vector<Environment> _environmentRecords; 
+  std::vector<Environment> environmentRecords;
 
-
- public:
     EnvironmentalProcessPdu();
     virtual ~EnvironmentalProcessPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getEnvironementalProcessID(); 
-    const EntityID&  getEnvironementalProcessID() const; 
-    void setEnvironementalProcessID(const EntityID    &pX);
 
-    EntityType& getEnvironmentType(); 
-    const EntityType&  getEnvironmentType() const; 
-    void setEnvironmentType(const EntityType    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned char getModelType() const; 
-    void setModelType(unsigned char pX); 
-
-    unsigned char getEnvironmentStatus() const; 
-    void setEnvironmentStatus(unsigned char pX); 
-
-    unsigned char getNumberOfEnvironmentRecords() const; 
-
-    unsigned short getSequenceNumber() const; 
-    void setSequenceNumber(unsigned short pX); 
-
-    std::vector<Environment>& getEnvironmentRecords(); 
-    const std::vector<Environment>& getEnvironmentRecords() const; 
-    void setEnvironmentRecords(const std::vector<Environment>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EnvironmentalProcessPdu& rhs) const;
+     bool operator ==(const EnvironmentalProcessPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

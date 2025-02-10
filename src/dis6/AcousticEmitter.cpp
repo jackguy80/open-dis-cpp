@@ -1,12 +1,12 @@
-#include <dis6/AcousticEmitter.h>
+#include "AcousticEmitter.h"
 
 using namespace DIS;
 
 
 AcousticEmitter::AcousticEmitter():
-   _acousticName(0), 
-   _function(0), 
-   _acousticIdNumber(0)
+   acousticName(0), 
+   function(0), 
+   acousticIdNumber(0)
 {
 }
 
@@ -14,48 +14,18 @@ AcousticEmitter::~AcousticEmitter()
 {
 }
 
-unsigned short AcousticEmitter::getAcousticName() const
-{
-    return _acousticName;
-}
-
-void AcousticEmitter::setAcousticName(unsigned short pX)
-{
-    _acousticName = pX;
-}
-
-unsigned char AcousticEmitter::getFunction() const
-{
-    return _function;
-}
-
-void AcousticEmitter::setFunction(unsigned char pX)
-{
-    _function = pX;
-}
-
-unsigned char AcousticEmitter::getAcousticIdNumber() const
-{
-    return _acousticIdNumber;
-}
-
-void AcousticEmitter::setAcousticIdNumber(unsigned char pX)
-{
-    _acousticIdNumber = pX;
-}
-
 void AcousticEmitter::marshal(DataStream& dataStream) const
 {
-    dataStream << _acousticName;
-    dataStream << _function;
-    dataStream << _acousticIdNumber;
+    dataStream << acousticName;
+    dataStream << function;
+    dataStream << acousticIdNumber;
 }
 
 void AcousticEmitter::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _acousticName;
-    dataStream >> _function;
-    dataStream >> _acousticIdNumber;
+    dataStream >> acousticName;
+    dataStream >> function;
+    dataStream >> acousticIdNumber;
 }
 
 
@@ -63,9 +33,9 @@ bool AcousticEmitter::operator ==(const AcousticEmitter& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_acousticName == rhs._acousticName) ) ivarsEqual = false;
-     if( ! (_function == rhs._function) ) ivarsEqual = false;
-     if( ! (_acousticIdNumber == rhs._acousticIdNumber) ) ivarsEqual = false;
+     if( ! (acousticName == rhs.acousticName) ) ivarsEqual = false;
+     if( ! (function == rhs.function) ) ivarsEqual = false;
+     if( ! (acousticIdNumber == rhs.acousticIdNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int AcousticEmitter::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _acousticName
-   marshalSize = marshalSize + 1;  // _function
-   marshalSize = marshalSize + 1;  // _acousticIdNumber
+   marshalSize = marshalSize + 2;  // acousticName
+   marshalSize = marshalSize + 1;  // function
+   marshalSize = marshalSize + 1;  // acousticIdNumber
     return marshalSize;
 }
 

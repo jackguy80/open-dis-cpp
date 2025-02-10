@@ -1,67 +1,43 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "CommunicationsNodeID.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // A communications node that is part of a simulted communcations network. Section 6.2.49.2
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT IOCommunicationsNode
+struct EXPORT_MACRO IOCommunicationsNode
 {
-protected:
-  unsigned int _recordType; 
+  unsigned int recordType;
 
-  unsigned short _recordLength; 
+  unsigned short recordLength;
 
-  unsigned char _communcationsNodeType; 
+  unsigned char communcationsNodeType;
 
-  unsigned char _padding; 
+  unsigned char padding;
 
-  EntityID _communicationsNode; 
+  CommunicationsNodeID communicationsNodeID;
 
-  unsigned short _elementID; 
-
-
- public:
     IOCommunicationsNode();
     virtual ~IOCommunicationsNode();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordType() const; 
-    void setRecordType(unsigned int pX); 
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getCommuncationsNodeType() const; 
-    void setCommuncationsNodeType(unsigned char pX); 
-
-    unsigned char getPadding() const; 
-    void setPadding(unsigned char pX); 
-
-    EntityID& getCommunicationsNode(); 
-    const EntityID&  getCommunicationsNode() const; 
-    void setCommunicationsNode(const EntityID    &pX);
-
-    unsigned short getElementID() const; 
-    void setElementID(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IOCommunicationsNode& rhs) const;
+     bool operator ==(const IOCommunicationsNode& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

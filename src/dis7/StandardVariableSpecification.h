@@ -1,49 +1,39 @@
 #pragma once
 
-#include <dis7/SimulationManagementPduHeader.h>
-#include <vector>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "SimulationManagementPduHeader.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Does not work, and causes failure in anything it is embedded in. Section 6.2.82
+// Does not work, and causes failure in anything it is embedded in. Section 6.2.83
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT StandardVariableSpecification
+struct EXPORT_MACRO StandardVariableSpecification
 {
-protected:
   /** Number of static variable records */
-  unsigned short _numberOfStandardVariableRecords; 
+  unsigned short numberOfStandardVariableRecords;
 
   /** variable length list of standard variables, The class type and length here are WRONG and will cause the incorrect serialization of any class in whihc it is embedded. */
-  std::vector<SimulationManagementPduHeader> _standardVariables; 
+  SimulationManagementPduHeader standardVariables;
 
-
- public:
     StandardVariableSpecification();
     virtual ~StandardVariableSpecification();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getNumberOfStandardVariableRecords() const; 
 
-    std::vector<SimulationManagementPduHeader>& getStandardVariables(); 
-    const std::vector<SimulationManagementPduHeader>& getStandardVariables() const; 
-    void setStandardVariables(const std::vector<SimulationManagementPduHeader>&    pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StandardVariableSpecification& rhs) const;
+     bool operator ==(const StandardVariableSpecification& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

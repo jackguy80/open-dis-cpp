@@ -1,61 +1,28 @@
-#include <dis7/RecordQuerySpecification.h>
+#include "RecordQuerySpecification.h"
 
 using namespace DIS;
 
 
 RecordQuerySpecification::RecordQuerySpecification():
-   _numberOfRecords(0)
+   numberOfRecords(0), 
+   records()
 {
 }
 
 RecordQuerySpecification::~RecordQuerySpecification()
 {
-    _records.clear();
-}
-
-unsigned int RecordQuerySpecification::getNumberOfRecords() const
-{
-   return _records.size();
-}
-
-std::vector<FourByteChunk>& RecordQuerySpecification::getRecords() 
-{
-    return _records;
-}
-
-const std::vector<FourByteChunk>& RecordQuerySpecification::getRecords() const
-{
-    return _records;
-}
-
-void RecordQuerySpecification::setRecords(const std::vector<FourByteChunk>& pX)
-{
-     _records = pX;
 }
 
 void RecordQuerySpecification::marshal(DataStream& dataStream) const
 {
-    dataStream << ( unsigned int )_records.size();
-
-     for(size_t idx = 0; idx < _records.size(); idx++)
-     {
-        FourByteChunk x = _records[idx];
-        x.marshal(dataStream);
-     }
-
+    dataStream << numberOfRecords;
+    records.marshal(dataStream);
 }
 
 void RecordQuerySpecification::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _numberOfRecords;
-
-     _records.clear();
-     for(size_t idx = 0; idx < _numberOfRecords; idx++)
-     {
-        FourByteChunk x;
-        x.unmarshal(dataStream);
-        _records.push_back(x);
-     }
+    dataStream >> numberOfRecords;
+    records.unmarshal(dataStream);
 }
 
 
@@ -63,12 +30,8 @@ bool RecordQuerySpecification::operator ==(const RecordQuerySpecification& rhs) 
  {
      bool ivarsEqual = true;
 
-
-     for(size_t idx = 0; idx < _records.size(); idx++)
-     {
-        if( ! ( _records[idx] == rhs._records[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (numberOfRecords == rhs.numberOfRecords) ) ivarsEqual = false;
+     if( ! (records == rhs.records) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -77,14 +40,8 @@ int RecordQuerySpecification::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _numberOfRecords
-
-   for(unsigned long long idx=0; idx < _records.size(); idx++)
-   {
-        FourByteChunk listElement = _records[idx];
-        marshalSize = marshalSize + listElement.getMarshalledSize();
-    }
-
+   marshalSize = marshalSize + 4;  // numberOfRecords
+   marshalSize = marshalSize + records.getMarshalledSize();  // records
     return marshalSize;
 }
 

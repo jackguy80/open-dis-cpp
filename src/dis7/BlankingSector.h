@@ -1,85 +1,74 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The Blanking Sector attribute record may be used to convey persistent areas within a scan volume where emitter power for a specific active emitter beam is reduced to an insignificant value. Section 6.2.12
+// The Blanking Sector attribute record may be used to convey persistent areas within a scan volume where emitter power for a specific active emitter beam is reduced to an insignificant value. Section 6.2.21.2
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT BlankingSector
+struct EXPORT_MACRO BlankingSector
 {
-protected:
-  unsigned int _recordType; 
+  /** record type */
+  int recordType;
 
-  unsigned short _recordLength; 
+  /** the length of the Blanking Sector attribute record in octets. */
+  unsigned short recordLength;
 
-  unsigned char _emitterNumber; 
+  /** Pading */
+  unsigned short padding;
 
-  unsigned char _beamNumber; 
+  /** indicates the emitter system for which the blanking sector values are applicable */
+  unsigned char emitterNumber;
 
-  unsigned char _stateIndicator; 
+  /** indicates the beam for which the blanking sector values are applicable. */
+  unsigned char beamNumber;
 
-  float _leftAzimuth; 
+  /** indicate if blanking sector data have changed since issuance of the last Blanking Sector attribute record for this beam, if the Blanking Sector attribute record beam has ceased */
+  unsigned char stateIndicator;
 
-  float _rightAzimuth; 
+  /** Padding */
+  unsigned char padding2;
 
-  float _lowerElevation; 
+  /** This field is provided to indicate the left-most azimuth (clockwise in radians) for which emitted power is reduced. This angle is measured in the X-Y plane of the radar's entity coor- dinate system (see 1.4.3). The range of permissible values is 0 to 2PI, with zero pointing in the X- direction.  */
+  float leftAzimuth;
 
-  float _upperElevation; 
+  /** Indicate the right-most azimuth (clockwise in radians) for which emitted power is reduced. This angle is measured in the X-Y plane of the radar's entity coordinate system (see 1.4.3). The range of permissible values is 0 to 2PI , with zero pointing in the X- direction. */
+  float rightAzimuth;
 
-  float _residualPower; 
+  /** This field is provided to indicate the lowest elevation (in radians) for which emit- ted power is reduced. This angle is measured positive upward with respect to the X-Y plane of the radar's entity coordinate system (see 1.4.3). The range of permissible values is -PI/2 to PI/2 */
+  float lowerElevation;
 
+  /** This field is provided to indicate the highest elevation (in radians) for which emitted power is reduced. This angle is measured positive upward with respect to the X-Y plane of the radar's entitycoordinatesystem(see1.4.3). The range of permissible values is -PI/2 to PI/2 */
+  float upperElevation;
 
- public:
+  /** This field shall specify the residual effective radiated power in the blanking sector in dBm.  */
+  float residualPower;
+
+  /** Padding, 32 bits */
+  int padding3;
+
+  /** Padding, 32 bits */
+  int padding4;
+
     BlankingSector();
     virtual ~BlankingSector();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordType() const; 
-    void setRecordType(unsigned int pX); 
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getEmitterNumber() const; 
-    void setEmitterNumber(unsigned char pX); 
-
-    unsigned char getBeamNumber() const; 
-    void setBeamNumber(unsigned char pX); 
-
-    unsigned char getStateIndicator() const; 
-    void setStateIndicator(unsigned char pX); 
-
-    float getLeftAzimuth() const; 
-    void setLeftAzimuth(float pX); 
-
-    float getRightAzimuth() const; 
-    void setRightAzimuth(float pX); 
-
-    float getLowerElevation() const; 
-    void setLowerElevation(float pX); 
-
-    float getUpperElevation() const; 
-    void setUpperElevation(float pX); 
-
-    float getResidualPower() const; 
-    void setResidualPower(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const BlankingSector& rhs) const;
+     bool operator ==(const BlankingSector& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

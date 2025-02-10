@@ -1,78 +1,57 @@
 #pragma once
 
-#include <dis7/ElectromagneticEmissionSystemData.h>
-#include <dis7/EntityID.h>
-#include <dis7/EventIdentifier.h>
-#include <dis7/Vector3Float.h>
-#include <dis7/Vector3Float.h>
+#include "EntityID.h"
+#include "EventID.h"
+#include "ElectronicEmissionSystemData.h"
 #include <vector>
-#include <dis7/DistributedEmissionsFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "DistributedEmissionsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Section 5.3.7.1. Information about active electronic warfare (EW) emissions and active EW countermeasures shall be communicated using an Electromagnetic Emission PDU. NOT COMPLETE
+// Section 5.3.7.1. Information about active electronic warfare (EW) emissions and active EW countermeasures shall be communicated using an Electromagnetic Emission PDU. COMPLETE (I think)
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ElectromagneticEmissionsPdu : public DistributedEmissionsFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO ElectronicEmissionsPdu : public DistributedEmissionsFamilyPdu
 {
-protected:
   /** ID of the entity emitting */
-  EntityID _emittingEntityID; 
+  EntityID emittingEntityID;
 
   /** ID of event */
-  EventIdentifier _eventID; 
+  EventID eventID;
 
   /** This field shall be used to indicate if the data in the PDU represents a state update or just data that has changed since issuance of the last Electromagnetic Emission PDU [relative to the identified entity and emission system(s)]. */
-  unsigned char _stateUpdateIndicator; 
+  unsigned char stateUpdateIndicator;
 
   /** This field shall specify the number of emission systems being described in the current PDU. */
-  unsigned char _numberOfSystems; 
+  unsigned char numberOfSystems;
 
   /** padding */
-  unsigned short _paddingForEmissionsPdu;
+  unsigned short paddingForEmissionsPdu;
 
-  std::vector<ElectromagneticEmissionSystemData> _systems;
-  
- public:
-    ElectromagneticEmissionsPdu();
-    virtual ~ElectromagneticEmissionsPdu();
+  /** Electronic emmissions systems */
+  std::vector<ElectronicEmissionSystemData> systems;
+
+    ElectronicEmissionsPdu();
+    virtual ~ElectronicEmissionsPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getEmittingEntityID(); 
-    const EntityID&  getEmittingEntityID() const; 
-    void setEmittingEntityID(const EntityID    &pX);
 
-    EventIdentifier& getEventID(); 
-    const EventIdentifier&  getEventID() const; 
-    void setEventID(const EventIdentifier    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned char getStateUpdateIndicator() const; 
-    void setStateUpdateIndicator(unsigned char pX); 
-
-    unsigned char getNumberOfSystems() const; 
-
-    unsigned short getPaddingForEmissionsPdu() const; 
-    void setPaddingForEmissionsPdu(unsigned short pX); 
-
-    std::vector<ElectromagneticEmissionSystemData>& getSystems();
-    const std::vector<ElectromagneticEmissionSystemData>& getSystems() const;
-    void setSystems(const std::vector<ElectromagneticEmissionSystemData>& pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ElectromagneticEmissionsPdu& rhs) const;
+     bool operator ==(const ElectronicEmissionsPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

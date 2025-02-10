@@ -1,4 +1,4 @@
-#include <dis6/SyntheticEnvironmentFamilyPdu.h>
+#include "SyntheticEnvironmentFamilyPdu.h"
 
 using namespace DIS;
 
@@ -6,7 +6,7 @@ using namespace DIS;
 SyntheticEnvironmentFamilyPdu::SyntheticEnvironmentFamilyPdu() : Pdu()
 
 {
-    setProtocolFamily( 9 );
+    protocolFamily = 9;
 }
 
 SyntheticEnvironmentFamilyPdu::~SyntheticEnvironmentFamilyPdu()

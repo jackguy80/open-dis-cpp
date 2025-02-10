@@ -1,12 +1,12 @@
-#include <dis7/AcousticEmitter.h>
+#include "AcousticEmitter.h"
 
 using namespace DIS;
 
 
 AcousticEmitter::AcousticEmitter():
-   _acousticName(0), 
-   _function(0), 
-   _acousticIdNumber(0)
+   acousticSystemName(0), 
+   acousticFunction(0), 
+   acousticIDNumber(0)
 {
 }
 
@@ -14,48 +14,18 @@ AcousticEmitter::~AcousticEmitter()
 {
 }
 
-unsigned short AcousticEmitter::getAcousticName() const
-{
-    return _acousticName;
-}
-
-void AcousticEmitter::setAcousticName(unsigned short pX)
-{
-    _acousticName = pX;
-}
-
-unsigned char AcousticEmitter::getFunction() const
-{
-    return _function;
-}
-
-void AcousticEmitter::setFunction(unsigned char pX)
-{
-    _function = pX;
-}
-
-unsigned char AcousticEmitter::getAcousticIdNumber() const
-{
-    return _acousticIdNumber;
-}
-
-void AcousticEmitter::setAcousticIdNumber(unsigned char pX)
-{
-    _acousticIdNumber = pX;
-}
-
 void AcousticEmitter::marshal(DataStream& dataStream) const
 {
-    dataStream << _acousticName;
-    dataStream << _function;
-    dataStream << _acousticIdNumber;
+    dataStream << acousticSystemName;
+    dataStream << acousticFunction;
+    dataStream << acousticIDNumber;
 }
 
 void AcousticEmitter::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _acousticName;
-    dataStream >> _function;
-    dataStream >> _acousticIdNumber;
+    dataStream >> acousticSystemName;
+    dataStream >> acousticFunction;
+    dataStream >> acousticIDNumber;
 }
 
 
@@ -63,9 +33,9 @@ bool AcousticEmitter::operator ==(const AcousticEmitter& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_acousticName == rhs._acousticName) ) ivarsEqual = false;
-     if( ! (_function == rhs._function) ) ivarsEqual = false;
-     if( ! (_acousticIdNumber == rhs._acousticIdNumber) ) ivarsEqual = false;
+     if( ! (acousticSystemName == rhs.acousticSystemName) ) ivarsEqual = false;
+     if( ! (acousticFunction == rhs.acousticFunction) ) ivarsEqual = false;
+     if( ! (acousticIDNumber == rhs.acousticIDNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int AcousticEmitter::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _acousticName
-   marshalSize = marshalSize + 1;  // _function
-   marshalSize = marshalSize + 1;  // _acousticIdNumber
+   marshalSize = marshalSize + 2;  // acousticSystemName
+   marshalSize = marshalSize + 1;  // acousticFunction
+   marshalSize = marshalSize + 1;  // acousticIDNumber
     return marshalSize;
 }
 

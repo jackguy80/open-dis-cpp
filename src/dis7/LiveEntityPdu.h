@@ -1,48 +1,39 @@
 #pragma once
 
-#include <dis7/PduSuperclass.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "PduSuperclass.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // The live entity PDUs have a header with some different field names, but the same length. Section 9.3.2
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT LiveEntityPdu : public PduSuperclass
+struct EXPORT_MACRO LiveEntityPdu : public PduSuperclass
 {
-protected:
   /** Subprotocol used to decode the PDU. Section 13 of EBV. */
-  unsigned short _subprotocolNumber; 
+  unsigned short subprotocolNumber;
 
   /** zero-filled array of padding */
-  unsigned char _padding; 
+  unsigned char padding;
 
-
- public:
     LiveEntityPdu();
     virtual ~LiveEntityPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSubprotocolNumber() const; 
-    void setSubprotocolNumber(unsigned short pX); 
 
-    unsigned char getPadding() const; 
-    void setPadding(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const LiveEntityPdu& rhs) const;
+     bool operator ==(const LiveEntityPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

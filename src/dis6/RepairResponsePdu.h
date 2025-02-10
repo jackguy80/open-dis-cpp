@@ -1,70 +1,50 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/LogisticsFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "LogisticsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.5.6. Sent after repair complete PDU. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT RepairResponsePdu : public LogisticsFamilyPdu
+struct EXPORT_MACRO RepairResponsePdu : public LogisticsFamilyPdu
 {
-protected:
   /** Entity that is receiving service */
-  EntityID _receivingEntityID; 
+  EntityID receivingEntityID;
 
   /** Entity that is supplying */
-  EntityID _repairingEntityID; 
+  EntityID repairingEntityID;
 
   /** Result of repair operation */
-  unsigned char _repairResult; 
+  unsigned char repairResult;
 
   /** padding */
-  short _padding1; 
+  short padding1;
 
   /** padding */
-  char _padding2; 
+  char padding2;
 
-
- public:
     RepairResponsePdu();
     virtual ~RepairResponsePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getReceivingEntityID(); 
-    const EntityID&  getReceivingEntityID() const; 
-    void setReceivingEntityID(const EntityID    &pX);
 
-    EntityID& getRepairingEntityID(); 
-    const EntityID&  getRepairingEntityID() const; 
-    void setRepairingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned char getRepairResult() const; 
-    void setRepairResult(unsigned char pX); 
-
-    short getPadding1() const; 
-    void setPadding1(short pX); 
-
-    char getPadding2() const; 
-    void setPadding2(char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RepairResponsePdu& rhs) const;
+     bool operator ==(const RepairResponsePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

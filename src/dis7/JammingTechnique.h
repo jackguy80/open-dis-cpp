@@ -1,55 +1,40 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Jamming technique. Section 6.2.50
+// Jamming technique. Section 6.2.49
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT JammingTechnique
+struct EXPORT_MACRO JammingTechnique
 {
-protected:
-  unsigned char _kind; 
+  unsigned char kind;
 
-  unsigned char _category; 
+  unsigned char category;
 
-  unsigned char _subcategory; 
+  unsigned char subcategory;
 
-  unsigned char _specific; 
+  unsigned char specific;
 
-
- public:
     JammingTechnique();
     virtual ~JammingTechnique();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getKind() const; 
-    void setKind(unsigned char pX); 
 
-    unsigned char getCategory() const; 
-    void setCategory(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getSubcategory() const; 
-    void setSubcategory(unsigned char pX); 
-
-    unsigned char getSpecific() const; 
-    void setSpecific(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const JammingTechnique& rhs) const;
+     bool operator ==(const JammingTechnique& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

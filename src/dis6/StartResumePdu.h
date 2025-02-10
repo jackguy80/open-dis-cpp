@@ -1,58 +1,44 @@
 #pragma once
 
-#include <dis6/ClockTime.h>
-#include <dis6/ClockTime.h>
-#include <dis6/SimulationManagementFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "ClockTime.h"
+#include "ClockTime.h"
+#include "SimulationManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.6.3. Start or resume an exercise. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT StartResumePdu : public SimulationManagementFamilyPdu
+struct EXPORT_MACRO StartResumePdu : public SimulationManagementFamilyPdu
 {
-protected:
   /** UTC time at which the simulation shall start or resume */
-  ClockTime _realWorldTime; 
+  ClockTime realWorldTime;
 
   /** Simulation clock time at which the simulation shall start or resume */
-  ClockTime _simulationTime; 
+  ClockTime simulationTime;
 
   /** Identifier for the request */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     StartResumePdu();
     virtual ~StartResumePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    ClockTime& getRealWorldTime(); 
-    const ClockTime&  getRealWorldTime() const; 
-    void setRealWorldTime(const ClockTime    &pX);
 
-    ClockTime& getSimulationTime(); 
-    const ClockTime&  getSimulationTime() const; 
-    void setSimulationTime(const ClockTime    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StartResumePdu& rhs) const;
+     bool operator ==(const StartResumePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,64 +1,46 @@
 #pragma once
 
-#include <dis7/Vector3Float.h>
-#include <dis7/Vector3Float.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "Vector3Float.h"
+#include "Vector3Float.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Not specified in the standard. This is used by the ESPDU
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT DeadReckoningParameters
+struct EXPORT_MACRO DeadReckoningParameters
 {
-protected:
   /** Algorithm to use in computing dead reckoning. See EBV doc. */
-  unsigned char _deadReckoningAlgorithm; 
+  unsigned char deadReckoningAlgorithm;
 
   /** Dead reckoning parameters. Contents depends on algorithm. */
-  unsigned char _parameters[15]; 
+  unsigned char parameters;
 
   /** Linear acceleration of the entity */
-  Vector3Float _entityLinearAcceleration; 
+  Vector3Float entityLinearAcceleration;
 
   /** Angular velocity of the entity */
-  Vector3Float _entityAngularVelocity; 
+  Vector3Float entityAngularVelocity;
 
-
- public:
     DeadReckoningParameters();
     virtual ~DeadReckoningParameters();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getDeadReckoningAlgorithm() const; 
-    void setDeadReckoningAlgorithm(unsigned char pX); 
 
-    unsigned char*  getParameters(); 
-    const unsigned char*  getParameters() const; 
-    void setParameters( const unsigned char*    pX);
+     virtual int getMarshalledSize() const;
 
-    Vector3Float& getEntityLinearAcceleration(); 
-    const Vector3Float&  getEntityLinearAcceleration() const; 
-    void setEntityLinearAcceleration(const Vector3Float    &pX);
-
-    Vector3Float& getEntityAngularVelocity(); 
-    const Vector3Float&  getEntityAngularVelocity() const; 
-    void setEntityAngularVelocity(const Vector3Float    &pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DeadReckoningParameters& rhs) const;
+     bool operator ==(const DeadReckoningParameters& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

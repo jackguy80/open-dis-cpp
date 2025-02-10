@@ -1,111 +1,70 @@
 #pragma once
 
-#include <dis7/Vector3Float.h>
-#include <dis7/EventIdentifier.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "Vector3Float.h"
+#include "EventIdentifier.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Damage sustained by an entity due to directed energy. Location of the damage based on a relative x,y,z location from the center of the entity. Section 6.2.17.2
+// Damage sustained by an entity due to directed energy. Location of the damage based on a relative x,y,z location from the center of the entity. Section 6.2.15.2
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT DirectedEnergyDamage
+struct EXPORT_MACRO DirectedEnergyDamage
 {
-protected:
   /** DE Record Type. */
-  unsigned int _recordType; 
+  unsigned int recordType;
 
   /** DE Record Length (bytes). */
-  unsigned short _recordLength; 
+  unsigned short recordLength;
 
   /** padding. */
-  unsigned short _padding; 
+  unsigned short padding;
 
   /** location of damage, relative to center of entity */
-  Vector3Float _damageLocation; 
+  Vector3Float damageLocation;
 
   /** Size of damaged area, in meters. */
-  float _damageDiameter; 
+  float damageDiameter;
 
   /** average temp of the damaged area, in degrees celsius. If firing entitty does not model this, use a value of -273.15 */
-  float _temperature; 
+  float temperature;
 
   /** enumeration */
-  unsigned char _componentIdentification; 
+  unsigned char componentIdentification;
 
   /** enumeration */
-  unsigned char _componentDamageStatus; 
+  unsigned char componentDamageStatus;
 
   /** enumeration */
-  unsigned char _componentVisualDamageStatus; 
+  unsigned char componentVisualDamageStatus;
 
   /** enumeration */
-  unsigned char _componentVisualSmokeColor; 
+  unsigned char componentVisualSmokeColor;
 
   /** For any component damage resulting this field shall be set to the fire event ID from that PDU. */
-  EventIdentifier _fireEventID; 
+  EventIdentifier fireEventID;
 
   /** padding */
-  unsigned short _padding2; 
+  unsigned short padding2;
 
-
- public:
     DirectedEnergyDamage();
     virtual ~DirectedEnergyDamage();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordType() const; 
-    void setRecordType(unsigned int pX); 
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
-
-    Vector3Float& getDamageLocation(); 
-    const Vector3Float&  getDamageLocation() const; 
-    void setDamageLocation(const Vector3Float    &pX);
-
-    float getDamageDiameter() const; 
-    void setDamageDiameter(float pX); 
-
-    float getTemperature() const; 
-    void setTemperature(float pX); 
-
-    unsigned char getComponentIdentification() const; 
-    void setComponentIdentification(unsigned char pX); 
-
-    unsigned char getComponentDamageStatus() const; 
-    void setComponentDamageStatus(unsigned char pX); 
-
-    unsigned char getComponentVisualDamageStatus() const; 
-    void setComponentVisualDamageStatus(unsigned char pX); 
-
-    unsigned char getComponentVisualSmokeColor() const; 
-    void setComponentVisualSmokeColor(unsigned char pX); 
-
-    EventIdentifier& getFireEventID(); 
-    const EventIdentifier&  getFireEventID() const; 
-    void setFireEventID(const EventIdentifier    &pX);
-
-    unsigned short getPadding2() const; 
-    void setPadding2(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DirectedEnergyDamage& rhs) const;
+     bool operator ==(const DirectedEnergyDamage& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

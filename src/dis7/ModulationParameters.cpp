@@ -1,4 +1,4 @@
-#include <dis7/ModulationParameters.h>
+#include "ModulationParameters.h"
 
 using namespace DIS;
 

@@ -1,105 +1,71 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The False Targets attribute record shall be used to communicate discrete values that are associated with false targets jamming that cannot be referenced to an emitter mode. The values provided in the False Targets attri- bute record shall be considered valid only for the victim radar beams listed in the jamming beam's Track/Jam Data records (provided in the associated Electromagnetic Emission PDU). Section 6.2.12.3
+// The False Targets attribute record shall be used to communicate discrete values that are associated with false targets jamming that cannot be referenced to an emitter mode. The values provided in the False Targets attri- bute record shall be considered valid only for the victim radar beams listed in the jamming beam's Track/Jam Data records (provided in the associated Electromagnetic Emission PDU). Section 6.2.21.3
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT FalseTargetsAttribute
+struct EXPORT_MACRO FalseTargetsAttribute
 {
-protected:
-  unsigned int _recordType; 
+  /** record type */
+  unsigned int recordType;
 
-  unsigned short _recordLength; 
+  /** the length of the record in octets. */
+  unsigned short recordLength;
 
-  unsigned short _padding; 
+  /** padding */
+  unsigned short padding;
 
-  unsigned char _emitterNumber; 
+  /** This field indicates the emitter system generating the false targets. */
+  unsigned char emitterNumber;
 
-  unsigned char _beamNumber; 
+  /** This field indicates the jamming beam generating the false targets.  */
+  unsigned char beamNumber;
 
-  unsigned char _stateIndicator; 
+  /** This field shall be used to indicate if false target data have changed since issuance of the last False Targets attribute record for this beam, if the False Targets attribute record is part of a heartbeat update to meet periodic update requirements or if false target data for the beam has ceased. */
+  unsigned char stateIndicator;
 
-  unsigned char _padding2; 
+  /** padding */
+  unsigned char padding2;
 
-  float _falseTargetCount; 
+  /** This field indicates the jamming beam generating the false targets.  */
+  unsigned short falseTargetCount;
 
-  float _walkSpeed; 
+  /** This field shall specify the speed (in meters per second) at which false targets move toward the victim radar. Negative values shall indicate a velocity away from the victim radar.  */
+  float walkSpeed;
 
-  float _walkAcceleration; 
+  /** This field shall specify the rate (in meters per second squared) at which false tar- gets accelerate toward the victim radar. Negative values shall indicate an acceleration direction away from the victim radar.  */
+  float walkAcceleration;
 
-  float _maximumWalkDistance; 
+  /** This field shall specify the distance (in meters) that a false target is to walk before it pauses in range.  */
+  float maximumWalkDistance;
 
-  float _keepTime; 
+  /** This field shall specify the time (in seconds) that a false target is to be held at the Maxi- mum Walk Distance before it resets to its initial position.  */
+  float keepTime;
 
-  float _echoSpacing; 
+  /** TThis field shall specify the distance between false targets in meters. Positive values for this field shall indicate that second and subsequent false targets are initially placed at increasing ranges from the victim radar.  */
+  float echoSpacing;
 
-  unsigned int _padding3; 
-
-
- public:
     FalseTargetsAttribute();
     virtual ~FalseTargetsAttribute();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordType() const; 
-    void setRecordType(unsigned int pX); 
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
-
-    unsigned char getEmitterNumber() const; 
-    void setEmitterNumber(unsigned char pX); 
-
-    unsigned char getBeamNumber() const; 
-    void setBeamNumber(unsigned char pX); 
-
-    unsigned char getStateIndicator() const; 
-    void setStateIndicator(unsigned char pX); 
-
-    unsigned char getPadding2() const; 
-    void setPadding2(unsigned char pX); 
-
-    float getFalseTargetCount() const; 
-    void setFalseTargetCount(float pX); 
-
-    float getWalkSpeed() const; 
-    void setWalkSpeed(float pX); 
-
-    float getWalkAcceleration() const; 
-    void setWalkAcceleration(float pX); 
-
-    float getMaximumWalkDistance() const; 
-    void setMaximumWalkDistance(float pX); 
-
-    float getKeepTime() const; 
-    void setKeepTime(float pX); 
-
-    float getEchoSpacing() const; 
-    void setEchoSpacing(float pX); 
-
-    unsigned int getPadding3() const; 
-    void setPadding3(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const FalseTargetsAttribute& rhs) const;
+     bool operator ==(const FalseTargetsAttribute& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

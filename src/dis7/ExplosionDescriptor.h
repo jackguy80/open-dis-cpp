@@ -1,61 +1,45 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Explosion of a non-munition. Section 6.2.20.3
+// Explosion of a non-munition. Section 6.2.19.3
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ExplosionDescriptor
+struct EXPORT_MACRO ExplosionDescriptor
 {
-protected:
   /** Type of the object that exploded. See 6.2.30 */
-  EntityType _explodingObject; 
+  EntityType explodingObject;
 
-  /** Material that exploded. Can be grain dust, tnt, gasoline, etc. */
-  unsigned short _explosiveMaterial; 
+  /** Material that exploded. Can be grain dust, tnt, gasoline, etc. Enumeration */
+  unsigned short explosiveMaterial;
 
   /** padding */
-  unsigned short _padding; 
+  unsigned short padding;
 
   /** Force of explosion, in equivalent KG of TNT */
-  float _explosiveForce; 
+  float explosiveForce;
 
-
- public:
     ExplosionDescriptor();
     virtual ~ExplosionDescriptor();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getExplodingObject(); 
-    const EntityType&  getExplodingObject() const; 
-    void setExplodingObject(const EntityType    &pX);
 
-    unsigned short getExplosiveMaterial() const; 
-    void setExplosiveMaterial(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
-
-    float getExplosiveForce() const; 
-    void setExplosiveForce(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ExplosionDescriptor& rhs) const;
+     bool operator ==(const ExplosionDescriptor& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

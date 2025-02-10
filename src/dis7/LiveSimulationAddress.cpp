@@ -1,11 +1,11 @@
-#include <dis7/LiveSimulationAddress.h>
+#include "LiveSimulationAddress.h"
 
 using namespace DIS;
 
 
 LiveSimulationAddress::LiveSimulationAddress():
-   _liveSiteNumber(0), 
-   _liveApplicationNumber(0)
+   liveSiteNumber(0), 
+   liveApplicationNumber(0)
 {
 }
 
@@ -13,36 +13,16 @@ LiveSimulationAddress::~LiveSimulationAddress()
 {
 }
 
-unsigned char LiveSimulationAddress::getLiveSiteNumber() const
-{
-    return _liveSiteNumber;
-}
-
-void LiveSimulationAddress::setLiveSiteNumber(unsigned char pX)
-{
-    _liveSiteNumber = pX;
-}
-
-unsigned short LiveSimulationAddress::getLiveApplicationNumber() const
-{
-    return _liveApplicationNumber;
-}
-
-void LiveSimulationAddress::setLiveApplicationNumber(unsigned short pX)
-{
-    _liveApplicationNumber = pX;
-}
-
 void LiveSimulationAddress::marshal(DataStream& dataStream) const
 {
-    dataStream << _liveSiteNumber;
-    dataStream << _liveApplicationNumber;
+    dataStream << liveSiteNumber;
+    dataStream << liveApplicationNumber;
 }
 
 void LiveSimulationAddress::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _liveSiteNumber;
-    dataStream >> _liveApplicationNumber;
+    dataStream >> liveSiteNumber;
+    dataStream >> liveApplicationNumber;
 }
 
 
@@ -50,8 +30,8 @@ bool LiveSimulationAddress::operator ==(const LiveSimulationAddress& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_liveSiteNumber == rhs._liveSiteNumber) ) ivarsEqual = false;
-     if( ! (_liveApplicationNumber == rhs._liveApplicationNumber) ) ivarsEqual = false;
+     if( ! (liveSiteNumber == rhs.liveSiteNumber) ) ivarsEqual = false;
+     if( ! (liveApplicationNumber == rhs.liveApplicationNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -60,8 +40,8 @@ int LiveSimulationAddress::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _liveSiteNumber
-   marshalSize = marshalSize + 2;  // _liveApplicationNumber
+   marshalSize = marshalSize + 1;  // liveSiteNumber
+   marshalSize = marshalSize + 1;  // liveApplicationNumber
     return marshalSize;
 }
 

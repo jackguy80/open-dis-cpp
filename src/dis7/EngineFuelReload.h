@@ -1,77 +1,53 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // For each type or location of engine fuell, this record specifies the type, location, fuel measurement units, and reload quantity and maximum quantity. Section 6.2.25.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT EngineFuelReload
+struct EXPORT_MACRO EngineFuelReload
 {
-protected:
   /** standard quantity of fuel loaded */
-  unsigned int _standardQuantity; 
+  unsigned int standardQuantity;
 
   /** maximum quantity of fuel loaded */
-  unsigned int _maximumQuantity; 
+  unsigned int maximumQuantity;
 
   /** seconds normally required to to reload standard qty */
-  unsigned int _standardQuantityReloadTime; 
+  unsigned int standardQuantityReloadTime;
 
   /** seconds normally required to to reload maximum qty */
-  unsigned int _maximumQuantityReloadTime; 
+  unsigned int maximumQuantityReloadTime;
 
   /** Units of measure */
-  unsigned char _fuelMeasurmentUnits; 
+  unsigned char fuelMeasurmentUnits;
 
   /** fuel  location as related to the entity */
-  unsigned char _fuelLocation; 
+  unsigned char fuelLocation;
 
   /** padding */
-  unsigned char _padding; 
+  unsigned char padding;
 
-
- public:
     EngineFuelReload();
     virtual ~EngineFuelReload();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getStandardQuantity() const; 
-    void setStandardQuantity(unsigned int pX); 
 
-    unsigned int getMaximumQuantity() const; 
-    void setMaximumQuantity(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned int getStandardQuantityReloadTime() const; 
-    void setStandardQuantityReloadTime(unsigned int pX); 
-
-    unsigned int getMaximumQuantityReloadTime() const; 
-    void setMaximumQuantityReloadTime(unsigned int pX); 
-
-    unsigned char getFuelMeasurmentUnits() const; 
-    void setFuelMeasurmentUnits(unsigned char pX); 
-
-    unsigned char getFuelLocation() const; 
-    void setFuelLocation(unsigned char pX); 
-
-    unsigned char getPadding() const; 
-    void setPadding(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EngineFuelReload& rhs) const;
+     bool operator ==(const EngineFuelReload& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

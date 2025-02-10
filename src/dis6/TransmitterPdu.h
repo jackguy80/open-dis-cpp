@@ -1,161 +1,105 @@
 #pragma once
 
-#include <dis6/RadioEntityType.h>
-#include <dis6/Vector3Double.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/ModulationType.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/Vector3Float.h>
+#include "EntityID.h"
+#include "RadioEntityType.h"
+#include "Vector3Double.h"
+#include "Vector3Float.h"
+#include "ModulationType.h"
+#include "BeamAntennaPattern.h"
 #include <vector>
-#include <dis6/RadioCommunicationsFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "RadioCommunicationsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.8.1. Detailed information about a radio transmitter. This PDU requires manually         written code to complete, since the modulation parameters are of variable length. UNFINISHED
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT TransmitterPdu : public RadioCommunicationsFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO TransmitterPdu : public RadioCommunicationsFamilyPdu
 {
-protected:
+  /** ID of the entity that is the source of the communication, ie contains the radio */
+  EntityID entityId;
+
+  /** particular radio within an entity */
+  unsigned short radioId;
+
   /** linear accelleration of entity */
-  RadioEntityType _radioEntityType; 
+  RadioEntityType radioEntityType;
 
   /** transmit state */
-  unsigned char _transmitState; 
+  unsigned char transmitState;
 
   /** input source */
-  unsigned char _inputSource; 
+  unsigned char inputSource;
 
   /** padding */
-  unsigned short _padding1; 
+  unsigned short padding1;
 
   /** Location of antenna */
-  Vector3Double _antennaLocation; 
+  Vector3Double antennaLocation;
 
-  /** relative location of antenna */
-  Vector3Float _relativeAntennaLocation; 
+  /** relative location of antenna, in entity coordinates */
+  Vector3Float relativeAntennaLocation;
 
   /** antenna pattern type */
-  unsigned short _antennaPatternType; 
+  unsigned short antennaPatternType;
 
   /** atenna pattern length */
-  unsigned short _antennaPatternCount; 
+  unsigned short antennaPatternCount;
 
   /** frequency */
-  unsigned long long _frequency;
+  long frequency;
 
   /** transmit frequency Bandwidth */
-  float _transmitFrequencyBandwidth; 
+  float transmitFrequencyBandwidth;
 
   /** transmission power */
-  float _power; 
+  float power;
 
   /** modulation */
-  ModulationType _modulationType; 
+  ModulationType modulationType;
 
   /** crypto system enumeration */
-  unsigned short _cryptoSystem; 
+  unsigned short cryptoSystem;
 
   /** crypto system key identifer */
-  unsigned short _cryptoKeyId; 
+  unsigned short cryptoKeyId;
 
-  /** how many modulation parameters we have */
-  unsigned char _modulationParameterCount; 
+  /** length of modulation parameters in octets */
+  unsigned char modulationParameterCount;
 
   /** padding2 */
-  unsigned short _padding2; 
+  unsigned short padding2;
 
   /** padding3 */
-  unsigned char _padding3; 
+  unsigned char padding3;
 
   /** variable length list of modulation parameters */
-  std::vector<Vector3Float> _modulationParametersList; 
+  std::vector<unsigned short> modulationParametersList;
 
   /** variable length list of antenna pattern records */
-  std::vector<Vector3Float> _antennaPatternList; 
+  std::vector<BeamAntennaPattern> antennaPatternList;
 
-
- public:
     TransmitterPdu();
     virtual ~TransmitterPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    RadioEntityType& getRadioEntityType(); 
-    const RadioEntityType&  getRadioEntityType() const; 
-    void setRadioEntityType(const RadioEntityType    &pX);
 
-    unsigned char getTransmitState() const; 
-    void setTransmitState(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getInputSource() const; 
-    void setInputSource(unsigned char pX); 
-
-    unsigned short getPadding1() const; 
-    void setPadding1(unsigned short pX); 
-
-    Vector3Double& getAntennaLocation(); 
-    const Vector3Double&  getAntennaLocation() const; 
-    void setAntennaLocation(const Vector3Double    &pX);
-
-    Vector3Float& getRelativeAntennaLocation(); 
-    const Vector3Float&  getRelativeAntennaLocation() const; 
-    void setRelativeAntennaLocation(const Vector3Float    &pX);
-
-    unsigned short getAntennaPatternType() const; 
-    void setAntennaPatternType(unsigned short pX); 
-
-    unsigned short getAntennaPatternCount() const; 
-
-    unsigned long long getFrequency() const;
-    void setFrequency(unsigned long long pX);
-
-    float getTransmitFrequencyBandwidth() const; 
-    void setTransmitFrequencyBandwidth(float pX); 
-
-    float getPower() const; 
-    void setPower(float pX); 
-
-    ModulationType& getModulationType(); 
-    const ModulationType&  getModulationType() const; 
-    void setModulationType(const ModulationType    &pX);
-
-    unsigned short getCryptoSystem() const; 
-    void setCryptoSystem(unsigned short pX); 
-
-    unsigned short getCryptoKeyId() const; 
-    void setCryptoKeyId(unsigned short pX); 
-
-    unsigned char getModulationParameterCount() const; 
-
-    unsigned short getPadding2() const; 
-    void setPadding2(unsigned short pX); 
-
-    unsigned char getPadding3() const; 
-    void setPadding3(unsigned char pX); 
-
-    std::vector<Vector3Float>& getModulationParametersList(); 
-    const std::vector<Vector3Float>& getModulationParametersList() const; 
-    void setModulationParametersList(const std::vector<Vector3Float>&    pX);
-
-    std::vector<Vector3Float>& getAntennaPatternList(); 
-    const std::vector<Vector3Float>& getAntennaPatternList() const; 
-    void setAntennaPatternList(const std::vector<Vector3Float>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const TransmitterPdu& rhs) const;
+     bool operator ==(const TransmitterPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

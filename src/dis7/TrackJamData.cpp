@@ -1,12 +1,12 @@
-#include <dis7/TrackJamData.h>
+#include "TrackJamData.h"
 
 using namespace DIS;
 
 
 TrackJamData::TrackJamData():
-   _entityID(), 
-   _emitterNumber(0), 
-   _beamNumber(0)
+   entityID(), 
+   emitterNumber(0), 
+   beamNumber(0)
 {
 }
 
@@ -14,53 +14,18 @@ TrackJamData::~TrackJamData()
 {
 }
 
-EntityID& TrackJamData::getEntityID() 
-{
-    return _entityID;
-}
-
-const EntityID& TrackJamData::getEntityID() const
-{
-    return _entityID;
-}
-
-void TrackJamData::setEntityID(const EntityID &pX)
-{
-    _entityID = pX;
-}
-
-unsigned char TrackJamData::getEmitterNumber() const
-{
-    return _emitterNumber;
-}
-
-void TrackJamData::setEmitterNumber(unsigned char pX)
-{
-    _emitterNumber = pX;
-}
-
-unsigned char TrackJamData::getBeamNumber() const
-{
-    return _beamNumber;
-}
-
-void TrackJamData::setBeamNumber(unsigned char pX)
-{
-    _beamNumber = pX;
-}
-
 void TrackJamData::marshal(DataStream& dataStream) const
 {
-    _entityID.marshal(dataStream);
-    dataStream << _emitterNumber;
-    dataStream << _beamNumber;
+    entityID.marshal(dataStream);
+    dataStream << emitterNumber;
+    dataStream << beamNumber;
 }
 
 void TrackJamData::unmarshal(DataStream& dataStream)
 {
-    _entityID.unmarshal(dataStream);
-    dataStream >> _emitterNumber;
-    dataStream >> _beamNumber;
+    entityID.unmarshal(dataStream);
+    dataStream >> emitterNumber;
+    dataStream >> beamNumber;
 }
 
 
@@ -68,9 +33,9 @@ bool TrackJamData::operator ==(const TrackJamData& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_entityID == rhs._entityID) ) ivarsEqual = false;
-     if( ! (_emitterNumber == rhs._emitterNumber) ) ivarsEqual = false;
-     if( ! (_beamNumber == rhs._beamNumber) ) ivarsEqual = false;
+     if( ! (entityID == rhs.entityID) ) ivarsEqual = false;
+     if( ! (emitterNumber == rhs.emitterNumber) ) ivarsEqual = false;
+     if( ! (beamNumber == rhs.beamNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -79,9 +44,9 @@ int TrackJamData::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _entityID.getMarshalledSize();  // _entityID
-   marshalSize = marshalSize + 1;  // _emitterNumber
-   marshalSize = marshalSize + 1;  // _beamNumber
+   marshalSize = marshalSize + entityID.getMarshalledSize();  // entityID
+   marshalSize = marshalSize + 1;  // emitterNumber
+   marshalSize = marshalSize + 1;  // beamNumber
     return marshalSize;
 }
 

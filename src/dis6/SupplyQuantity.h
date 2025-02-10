@@ -1,49 +1,39 @@
 #pragma once
 
-#include <dis6/EntityType.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.30. A supply, and the amount of that supply. Similar to an entity kind but with the addition of a quantity.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT SupplyQuantity
+struct EXPORT_MACRO SupplyQuantity
 {
-protected:
   /** Type of supply */
-  EntityType _supplyType; 
+  EntityType supplyType;
 
   /** quantity to be supplied */
-  unsigned char _quantity; 
+  unsigned char quantity;
 
-
- public:
     SupplyQuantity();
     virtual ~SupplyQuantity();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getSupplyType(); 
-    const EntityType&  getSupplyType() const; 
-    void setSupplyType(const EntityType    &pX);
 
-    unsigned char getQuantity() const; 
-    void setQuantity(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SupplyQuantity& rhs) const;
+     bool operator ==(const SupplyQuantity& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

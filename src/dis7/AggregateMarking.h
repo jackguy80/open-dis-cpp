@@ -1,48 +1,38 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Specifies the character set used in the first byte, followed by up to 31 characters of text data. Section 6.2.4. 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT AggregateMarking
+struct EXPORT_MACRO AggregateMarking
 {
-protected:
   /** The character set */
-  unsigned char _characterSet; 
+  unsigned char characterSet;
 
   /** The characters */
-  unsigned char _characters[31]; 
+  unsigned char characters;
 
-
- public:
     AggregateMarking();
     virtual ~AggregateMarking();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getCharacterSet() const; 
-    void setCharacterSet(unsigned char pX); 
 
-    unsigned char*  getCharacters(); 
-    const unsigned char*  getCharacters() const; 
-    void setCharacters( const unsigned char*    pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AggregateMarking& rhs) const;
+     bool operator ==(const AggregateMarking& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

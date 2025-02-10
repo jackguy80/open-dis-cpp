@@ -1,140 +1,41 @@
-#include <dis6/EntityStateUpdatePdu.h>
+#include "EntityStateUpdatePdu.h"
 
 using namespace DIS;
 
 
 EntityStateUpdatePdu::EntityStateUpdatePdu() : EntityInformationFamilyPdu(),
-   _entityID(), 
-   _padding1(0), 
-   _numberOfArticulationParameters(0), 
-   _entityLinearVelocity(), 
-   _entityLocation(), 
-   _entityOrientation(), 
-   _entityAppearance(0)
+   entityID(), 
+   padding1(0), 
+   numberOfArticulationParameters(0), 
+   entityLinearVelocity(), 
+   entityLocation(), 
+   entityOrientation(), 
+   entityAppearance(0), 
+   articulationParameters(0)
 {
-    setPduType( 67 );
-    setProtocolFamily( 1 );
+    pduType = 67;
+    protocolFamily = 1;
 }
 
 EntityStateUpdatePdu::~EntityStateUpdatePdu()
 {
-    _articulationParameters.clear();
-}
-
-EntityID& EntityStateUpdatePdu::getEntityID() 
-{
-    return _entityID;
-}
-
-const EntityID& EntityStateUpdatePdu::getEntityID() const
-{
-    return _entityID;
-}
-
-void EntityStateUpdatePdu::setEntityID(const EntityID &pX)
-{
-    _entityID = pX;
-}
-
-char EntityStateUpdatePdu::getPadding1() const
-{
-    return _padding1;
-}
-
-void EntityStateUpdatePdu::setPadding1(char pX)
-{
-    _padding1 = pX;
-}
-
-unsigned char EntityStateUpdatePdu::getNumberOfArticulationParameters() const
-{
-   return _articulationParameters.size();
-}
-
-Vector3Float& EntityStateUpdatePdu::getEntityLinearVelocity() 
-{
-    return _entityLinearVelocity;
-}
-
-const Vector3Float& EntityStateUpdatePdu::getEntityLinearVelocity() const
-{
-    return _entityLinearVelocity;
-}
-
-void EntityStateUpdatePdu::setEntityLinearVelocity(const Vector3Float &pX)
-{
-    _entityLinearVelocity = pX;
-}
-
-Vector3Double& EntityStateUpdatePdu::getEntityLocation() 
-{
-    return _entityLocation;
-}
-
-const Vector3Double& EntityStateUpdatePdu::getEntityLocation() const
-{
-    return _entityLocation;
-}
-
-void EntityStateUpdatePdu::setEntityLocation(const Vector3Double &pX)
-{
-    _entityLocation = pX;
-}
-
-Orientation& EntityStateUpdatePdu::getEntityOrientation() 
-{
-    return _entityOrientation;
-}
-
-const Orientation& EntityStateUpdatePdu::getEntityOrientation() const
-{
-    return _entityOrientation;
-}
-
-void EntityStateUpdatePdu::setEntityOrientation(const Orientation &pX)
-{
-    _entityOrientation = pX;
-}
-
-int EntityStateUpdatePdu::getEntityAppearance() const
-{
-    return _entityAppearance;
-}
-
-void EntityStateUpdatePdu::setEntityAppearance(int pX)
-{
-    _entityAppearance = pX;
-}
-
-std::vector<ArticulationParameter>& EntityStateUpdatePdu::getArticulationParameters() 
-{
-    return _articulationParameters;
-}
-
-const std::vector<ArticulationParameter>& EntityStateUpdatePdu::getArticulationParameters() const
-{
-    return _articulationParameters;
-}
-
-void EntityStateUpdatePdu::setArticulationParameters(const std::vector<ArticulationParameter>& pX)
-{
-     _articulationParameters = pX;
+    articulationParameters.clear();
 }
 
 void EntityStateUpdatePdu::marshal(DataStream& dataStream) const
 {
     EntityInformationFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _entityID.marshal(dataStream);
-    dataStream << _padding1;
-    dataStream << ( unsigned char )_articulationParameters.size();
-    _entityLinearVelocity.marshal(dataStream);
-    _entityLocation.marshal(dataStream);
-    _entityOrientation.marshal(dataStream);
-    dataStream << _entityAppearance;
+    entityID.marshal(dataStream);
+    dataStream << padding1;
+    dataStream << ( unsigned char )articulationParameters.size();
+    entityLinearVelocity.marshal(dataStream);
+    entityLocation.marshal(dataStream);
+    entityOrientation.marshal(dataStream);
+    dataStream << entityAppearance;
 
-     for(size_t idx = 0; idx < _articulationParameters.size(); idx++)
+     for(size_t idx = 0; idx < articulationParameters.size(); idx++)
      {
-        ArticulationParameter x = _articulationParameters[idx];
+        ArticulationParameter x = articulationParameters[idx];
         x.marshal(dataStream);
      }
 
@@ -143,20 +44,20 @@ void EntityStateUpdatePdu::marshal(DataStream& dataStream) const
 void EntityStateUpdatePdu::unmarshal(DataStream& dataStream)
 {
     EntityInformationFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _entityID.unmarshal(dataStream);
-    dataStream >> _padding1;
-    dataStream >> _numberOfArticulationParameters;
-    _entityLinearVelocity.unmarshal(dataStream);
-    _entityLocation.unmarshal(dataStream);
-    _entityOrientation.unmarshal(dataStream);
-    dataStream >> _entityAppearance;
+    entityID.unmarshal(dataStream);
+    dataStream >> padding1;
+    dataStream >> numberOfArticulationParameters;
+    entityLinearVelocity.unmarshal(dataStream);
+    entityLocation.unmarshal(dataStream);
+    entityOrientation.unmarshal(dataStream);
+    dataStream >> entityAppearance;
 
-     _articulationParameters.clear();
-     for(size_t idx = 0; idx < _numberOfArticulationParameters; idx++)
+     articulationParameters.clear();
+     for(size_t idx = 0; idx < numberOfArticulationParameters; idx++)
      {
         ArticulationParameter x;
         x.unmarshal(dataStream);
-        _articulationParameters.push_back(x);
+        articulationParameters.push_back(x);
      }
 }
 
@@ -167,16 +68,16 @@ bool EntityStateUpdatePdu::operator ==(const EntityStateUpdatePdu& rhs) const
 
      ivarsEqual = EntityInformationFamilyPdu::operator==(rhs);
 
-     if( ! (_entityID == rhs._entityID) ) ivarsEqual = false;
-     if( ! (_padding1 == rhs._padding1) ) ivarsEqual = false;
-     if( ! (_entityLinearVelocity == rhs._entityLinearVelocity) ) ivarsEqual = false;
-     if( ! (_entityLocation == rhs._entityLocation) ) ivarsEqual = false;
-     if( ! (_entityOrientation == rhs._entityOrientation) ) ivarsEqual = false;
-     if( ! (_entityAppearance == rhs._entityAppearance) ) ivarsEqual = false;
+     if( ! (entityID == rhs.entityID) ) ivarsEqual = false;
+     if( ! (padding1 == rhs.padding1) ) ivarsEqual = false;
+     if( ! (entityLinearVelocity == rhs.entityLinearVelocity) ) ivarsEqual = false;
+     if( ! (entityLocation == rhs.entityLocation) ) ivarsEqual = false;
+     if( ! (entityOrientation == rhs.entityOrientation) ) ivarsEqual = false;
+     if( ! (entityAppearance == rhs.entityAppearance) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _articulationParameters.size(); idx++)
+     for(size_t idx = 0; idx < articulationParameters.size(); idx++)
      {
-        if( ! ( _articulationParameters[idx] == rhs._articulationParameters[idx]) ) ivarsEqual = false;
+        if( ! ( articulationParameters[idx] == rhs.articulationParameters[idx]) ) ivarsEqual = false;
      }
 
 
@@ -188,17 +89,17 @@ int EntityStateUpdatePdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = EntityInformationFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _entityID.getMarshalledSize();  // _entityID
-   marshalSize = marshalSize + 1;  // _padding1
-   marshalSize = marshalSize + 1;  // _numberOfArticulationParameters
-   marshalSize = marshalSize + _entityLinearVelocity.getMarshalledSize();  // _entityLinearVelocity
-   marshalSize = marshalSize + _entityLocation.getMarshalledSize();  // _entityLocation
-   marshalSize = marshalSize + _entityOrientation.getMarshalledSize();  // _entityOrientation
-   marshalSize = marshalSize + 4;  // _entityAppearance
+   marshalSize = marshalSize + entityID.getMarshalledSize();  // entityID
+   marshalSize = marshalSize + 1;  // padding1
+   marshalSize = marshalSize + 1;  // numberOfArticulationParameters
+   marshalSize = marshalSize + entityLinearVelocity.getMarshalledSize();  // entityLinearVelocity
+   marshalSize = marshalSize + entityLocation.getMarshalledSize();  // entityLocation
+   marshalSize = marshalSize + entityOrientation.getMarshalledSize();  // entityOrientation
+   marshalSize = marshalSize + 4;  // entityAppearance
 
-   for(unsigned long long idx=0; idx < _articulationParameters.size(); idx++)
+   for(int idx=0; idx < articulationParameters.size(); idx++)
    {
-        ArticulationParameter listElement = _articulationParameters[idx];
+        ArticulationParameter listElement = articulationParameters[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

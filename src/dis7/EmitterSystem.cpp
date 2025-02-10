@@ -1,12 +1,12 @@
-#include <dis7/EmitterSystem.h>
+#include "EmitterSystem.h"
 
 using namespace DIS;
 
 
 EmitterSystem::EmitterSystem():
-   _emitterName(0), 
-   _function(0), 
-   _emitterIdNumber(0)
+   emitterName(0), 
+   emitterFunction(0), 
+   emitterIDNumber(0)
 {
 }
 
@@ -14,48 +14,18 @@ EmitterSystem::~EmitterSystem()
 {
 }
 
-unsigned short EmitterSystem::getEmitterName() const
-{
-    return _emitterName;
-}
-
-void EmitterSystem::setEmitterName(unsigned short pX)
-{
-    _emitterName = pX;
-}
-
-unsigned char EmitterSystem::getFunction() const
-{
-    return _function;
-}
-
-void EmitterSystem::setFunction(unsigned char pX)
-{
-    _function = pX;
-}
-
-unsigned char EmitterSystem::getEmitterIdNumber() const
-{
-    return _emitterIdNumber;
-}
-
-void EmitterSystem::setEmitterIdNumber(unsigned char pX)
-{
-    _emitterIdNumber = pX;
-}
-
 void EmitterSystem::marshal(DataStream& dataStream) const
 {
-    dataStream << _emitterName;
-    dataStream << _function;
-    dataStream << _emitterIdNumber;
+    dataStream << emitterName;
+    dataStream << emitterFunction;
+    dataStream << emitterIDNumber;
 }
 
 void EmitterSystem::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _emitterName;
-    dataStream >> _function;
-    dataStream >> _emitterIdNumber;
+    dataStream >> emitterName;
+    dataStream >> emitterFunction;
+    dataStream >> emitterIDNumber;
 }
 
 
@@ -63,9 +33,9 @@ bool EmitterSystem::operator ==(const EmitterSystem& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_emitterName == rhs._emitterName) ) ivarsEqual = false;
-     if( ! (_function == rhs._function) ) ivarsEqual = false;
-     if( ! (_emitterIdNumber == rhs._emitterIdNumber) ) ivarsEqual = false;
+     if( ! (emitterName == rhs.emitterName) ) ivarsEqual = false;
+     if( ! (emitterFunction == rhs.emitterFunction) ) ivarsEqual = false;
+     if( ! (emitterIDNumber == rhs.emitterIDNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int EmitterSystem::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _emitterName
-   marshalSize = marshalSize + 1;  // _function
-   marshalSize = marshalSize + 1;  // _emitterIdNumber
+   marshalSize = marshalSize + 2;  // emitterName
+   marshalSize = marshalSize + 1;  // emitterFunction
+   marshalSize = marshalSize + 1;  // emitterIDNumber
     return marshalSize;
 }
 

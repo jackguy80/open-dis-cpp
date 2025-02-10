@@ -1,59 +1,44 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // The unique designation of an environmental object. Section 6.2.64
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ObjectType
+struct EXPORT_MACRO ObjectType
 {
-protected:
   /** Domain of entity (air, surface, subsurface, space, etc) */
-  unsigned char _domain; 
+  unsigned char domain;
 
   /** country to which the design of the entity is attributed */
-  unsigned char _objectKind; 
+  unsigned char objectKind;
 
   /** category of entity */
-  unsigned char _category; 
+  unsigned char category;
 
   /** subcategory of entity */
-  unsigned char _subcategory; 
+  unsigned char subcategory;
 
-
- public:
     ObjectType();
     virtual ~ObjectType();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getDomain() const; 
-    void setDomain(unsigned char pX); 
 
-    unsigned char getObjectKind() const; 
-    void setObjectKind(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getCategory() const; 
-    void setCategory(unsigned char pX); 
-
-    unsigned char getSubcategory() const; 
-    void setSubcategory(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ObjectType& rhs) const;
+     bool operator ==(const ObjectType& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,49 +1,38 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Specifies the character set used inthe first byte, followed by 11 characters of text data. Section 6.29
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT EntityMarking
+struct EXPORT_MACRO EntityMarking
 {
-protected:
   /** The character set */
-  unsigned char _characterSet; 
+  unsigned char characterSet;
 
   /** The characters */
-  char _characters[11]; 
+  char characters;
 
-
- public:
     EntityMarking();
     virtual ~EntityMarking();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getCharacterSet() const; 
-    void setCharacterSet(unsigned char pX); 
 
-    char*  getCharacters(); 
-    const char*  getCharacters() const; 
-    void setCharacters( const char*    pX);
-    void setByStringCharacters(const char* pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EntityMarking& rhs) const;
+     bool operator ==(const EntityMarking& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

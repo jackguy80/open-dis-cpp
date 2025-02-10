@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Intercom communcations parameters. Section 6.2.47.  This requires hand coding
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT IntercomCommunicationsParameters
+struct EXPORT_MACRO IntercomCommunicationsParameters
 {
-protected:
   /** Type of intercom parameters record */
-  unsigned short _recordType; 
+  unsigned short recordType;
 
   /** length of record */
-  unsigned short _recordLength; 
+  unsigned short recordLength;
 
   /** This is a placeholder. */
-  unsigned int _recordSpecificField; 
+  unsigned int recordSpecificField;
 
-
- public:
     IntercomCommunicationsParameters();
     virtual ~IntercomCommunicationsParameters();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getRecordType() const; 
-    void setRecordType(unsigned short pX); 
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned int getRecordSpecificField() const; 
-    void setRecordSpecificField(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IntercomCommunicationsParameters& rhs) const;
+     bool operator ==(const IntercomCommunicationsParameters& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

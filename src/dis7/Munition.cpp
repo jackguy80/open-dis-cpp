@@ -1,14 +1,14 @@
-#include <dis7/Munition.h>
+#include "Munition.h"
 
 using namespace DIS;
 
 
 Munition::Munition():
-   _munitionType(), 
-   _station(0), 
-   _quantity(0), 
-   _munitionStatus(0), 
-   _padding(0)
+   munitionType(), 
+   station(0), 
+   quantity(0), 
+   munitionStatus(0), 
+   padding(0)
 {
 }
 
@@ -16,77 +16,22 @@ Munition::~Munition()
 {
 }
 
-EntityType& Munition::getMunitionType() 
-{
-    return _munitionType;
-}
-
-const EntityType& Munition::getMunitionType() const
-{
-    return _munitionType;
-}
-
-void Munition::setMunitionType(const EntityType &pX)
-{
-    _munitionType = pX;
-}
-
-unsigned int Munition::getStation() const
-{
-    return _station;
-}
-
-void Munition::setStation(unsigned int pX)
-{
-    _station = pX;
-}
-
-unsigned short Munition::getQuantity() const
-{
-    return _quantity;
-}
-
-void Munition::setQuantity(unsigned short pX)
-{
-    _quantity = pX;
-}
-
-unsigned char Munition::getMunitionStatus() const
-{
-    return _munitionStatus;
-}
-
-void Munition::setMunitionStatus(unsigned char pX)
-{
-    _munitionStatus = pX;
-}
-
-unsigned char Munition::getPadding() const
-{
-    return _padding;
-}
-
-void Munition::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
 void Munition::marshal(DataStream& dataStream) const
 {
-    _munitionType.marshal(dataStream);
-    dataStream << _station;
-    dataStream << _quantity;
-    dataStream << _munitionStatus;
-    dataStream << _padding;
+    munitionType.marshal(dataStream);
+    dataStream << station;
+    dataStream << quantity;
+    dataStream << munitionStatus;
+    dataStream << padding;
 }
 
 void Munition::unmarshal(DataStream& dataStream)
 {
-    _munitionType.unmarshal(dataStream);
-    dataStream >> _station;
-    dataStream >> _quantity;
-    dataStream >> _munitionStatus;
-    dataStream >> _padding;
+    munitionType.unmarshal(dataStream);
+    dataStream >> station;
+    dataStream >> quantity;
+    dataStream >> munitionStatus;
+    dataStream >> padding;
 }
 
 
@@ -94,11 +39,11 @@ bool Munition::operator ==(const Munition& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_munitionType == rhs._munitionType) ) ivarsEqual = false;
-     if( ! (_station == rhs._station) ) ivarsEqual = false;
-     if( ! (_quantity == rhs._quantity) ) ivarsEqual = false;
-     if( ! (_munitionStatus == rhs._munitionStatus) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (munitionType == rhs.munitionType) ) ivarsEqual = false;
+     if( ! (station == rhs.station) ) ivarsEqual = false;
+     if( ! (quantity == rhs.quantity) ) ivarsEqual = false;
+     if( ! (munitionStatus == rhs.munitionStatus) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -107,11 +52,11 @@ int Munition::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _munitionType.getMarshalledSize();  // _munitionType
-   marshalSize = marshalSize + 4;  // _station
-   marshalSize = marshalSize + 2;  // _quantity
-   marshalSize = marshalSize + 1;  // _munitionStatus
-   marshalSize = marshalSize + 1;  // _padding
+   marshalSize = marshalSize + munitionType.getMarshalledSize();  // munitionType
+   marshalSize = marshalSize + 4;  // station
+   marshalSize = marshalSize + 2;  // quantity
+   marshalSize = marshalSize + 1;  // munitionStatus
+   marshalSize = marshalSize + 1;  // padding
     return marshalSize;
 }
 

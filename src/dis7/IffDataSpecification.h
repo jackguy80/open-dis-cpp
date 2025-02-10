@@ -1,43 +1,39 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "IFFData.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Requires hand coding to be useful. Section 6.2.44
+// Requires hand coding to be useful. Section 6.2.43
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT IffDataSpecification
+struct EXPORT_MACRO IffDataSpecification
 {
-protected:
   /** Number of iff records */
-  EntityType _numberOfIffDataRecords; 
+  unsigned short numberOfIffDataRecords;
 
+  /** IFF data records */
+  IFFData iffDataRecords;
 
- public:
     IffDataSpecification();
     virtual ~IffDataSpecification();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityType& getNumberOfIffDataRecords(); 
-    const EntityType&  getNumberOfIffDataRecords() const; 
-    void setNumberOfIffDataRecords(const EntityType    &pX);
 
+     virtual int getMarshalledSize() const;
 
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IffDataSpecification& rhs) const;
+     bool operator ==(const IffDataSpecification& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // A simulation's designation associated with all Live Entity IDs contained in Live Entity PDUs. Section 6.2.55 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT LiveSimulationAddress
+struct EXPORT_MACRO LiveSimulationAddress
 {
-protected:
   /** facility, installation, organizational unit or geographic location may have multiple sites associated with it. The Site Number is the first component of the Live Simulation Address, which defines a live simulation. */
-  unsigned char _liveSiteNumber; 
+  unsigned char liveSiteNumber;
 
   /** An application associated with a live site is termed a live application. Each live application participating in an event  */
-  unsigned short _liveApplicationNumber; 
+  unsigned char liveApplicationNumber;
 
-
- public:
     LiveSimulationAddress();
     virtual ~LiveSimulationAddress();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getLiveSiteNumber() const; 
-    void setLiveSiteNumber(unsigned char pX); 
 
-    unsigned short getLiveApplicationNumber() const; 
-    void setLiveApplicationNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const LiveSimulationAddress& rhs) const;
+     bool operator ==(const LiveSimulationAddress& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,61 +1,28 @@
-#include <dis7/RecordSpecification.h>
+#include "RecordSpecification.h"
 
 using namespace DIS;
 
 
 RecordSpecification::RecordSpecification():
-   _numberOfRecordSets(0)
+   numberOfRecordSets(0), 
+   recordSets()
 {
 }
 
 RecordSpecification::~RecordSpecification()
 {
-    _recordSets.clear();
-}
-
-unsigned int RecordSpecification::getNumberOfRecordSets() const
-{
-   return _recordSets.size();
-}
-
-std::vector<RecordSpecificationElement>& RecordSpecification::getRecordSets() 
-{
-    return _recordSets;
-}
-
-const std::vector<RecordSpecificationElement>& RecordSpecification::getRecordSets() const
-{
-    return _recordSets;
-}
-
-void RecordSpecification::setRecordSets(const std::vector<RecordSpecificationElement>& pX)
-{
-     _recordSets = pX;
 }
 
 void RecordSpecification::marshal(DataStream& dataStream) const
 {
-    dataStream << ( unsigned int )_recordSets.size();
-
-     for(size_t idx = 0; idx < _recordSets.size(); idx++)
-     {
-        RecordSpecificationElement x = _recordSets[idx];
-        x.marshal(dataStream);
-     }
-
+    dataStream << numberOfRecordSets;
+    recordSets.marshal(dataStream);
 }
 
 void RecordSpecification::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _numberOfRecordSets;
-
-     _recordSets.clear();
-     for(size_t idx = 0; idx < _numberOfRecordSets; idx++)
-     {
-        RecordSpecificationElement x;
-        x.unmarshal(dataStream);
-        _recordSets.push_back(x);
-     }
+    dataStream >> numberOfRecordSets;
+    recordSets.unmarshal(dataStream);
 }
 
 
@@ -63,12 +30,8 @@ bool RecordSpecification::operator ==(const RecordSpecification& rhs) const
  {
      bool ivarsEqual = true;
 
-
-     for(size_t idx = 0; idx < _recordSets.size(); idx++)
-     {
-        if( ! ( _recordSets[idx] == rhs._recordSets[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (numberOfRecordSets == rhs.numberOfRecordSets) ) ivarsEqual = false;
+     if( ! (recordSets == rhs.recordSets) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -77,14 +40,8 @@ int RecordSpecification::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _numberOfRecordSets
-
-   for(unsigned long long idx=0; idx < _recordSets.size(); idx++)
-   {
-        RecordSpecificationElement listElement = _recordSets[idx];
-        marshalSize = marshalSize + listElement.getMarshalledSize();
-    }
-
+   marshalSize = marshalSize + 4;  // numberOfRecordSets
+   marshalSize = marshalSize + recordSets.getMarshalledSize();  // recordSets
     return marshalSize;
 }
 

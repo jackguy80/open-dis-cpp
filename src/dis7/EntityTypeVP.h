@@ -1,67 +1,47 @@
 #pragma once
 
-#include <dis7/EntityType.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityType.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Association or disassociation of two entities.  Section 6.2.93.5
+// Association or disassociation of two entities.  Section 6.2.94.5
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT EntityTypeVP
+struct EXPORT_MACRO EntityTypeVP
 {
-protected:
   /** the identification of the Variable Parameter record. Enumeration from EBV */
-  unsigned char _recordType; 
+  unsigned char recordType;
 
   /** Indicates if this VP has changed since last issuance */
-  unsigned char _changeIndicator; 
+  unsigned char changeIndicator;
 
-  /**  */
-  EntityType _entityType; 
-
-  /** padding */
-  unsigned short _padding; 
+  EntityType entityType;
 
   /** padding */
-  unsigned int _padding1; 
+  unsigned short padding;
 
+  /** padding */
+  unsigned int padding1;
 
- public:
     EntityTypeVP();
     virtual ~EntityTypeVP();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getRecordType() const; 
-    void setRecordType(unsigned char pX); 
 
-    unsigned char getChangeIndicator() const; 
-    void setChangeIndicator(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    EntityType& getEntityType(); 
-    const EntityType&  getEntityType() const; 
-    void setEntityType(const EntityType    &pX);
-
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
-
-    unsigned int getPadding1() const; 
-    void setPadding1(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EntityTypeVP& rhs) const;
+     bool operator ==(const EntityTypeVP& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

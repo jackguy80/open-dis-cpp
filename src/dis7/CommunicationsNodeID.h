@@ -1,47 +1,37 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Identity of a communications node. Section 6.2.49.4
+// Identity of a communications node. Section 6.2.48.4
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT CommunicationsNodeID
+struct EXPORT_MACRO CommunicationsNodeID
 {
-protected:
-  EntityID _entityID; 
+  EntityID entityID;
 
-  unsigned short _elementID; 
+  unsigned short elementID;
 
-
- public:
     CommunicationsNodeID();
     virtual ~CommunicationsNodeID();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getEntityID(); 
-    const EntityID&  getEntityID() const; 
-    void setEntityID(const EntityID    &pX);
 
-    unsigned short getElementID() const; 
-    void setElementID(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const CommunicationsNodeID& rhs) const;
+     bool operator ==(const CommunicationsNodeID& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

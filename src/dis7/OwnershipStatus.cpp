@@ -1,12 +1,12 @@
-#include <dis7/OwnershipStatus.h>
+#include "OwnershipStatus.h"
 
 using namespace DIS;
 
 
 OwnershipStatus::OwnershipStatus():
-   _entityId(), 
-   _ownershipStatus(0), 
-   _padding(0)
+   entityId(), 
+   ownershipStatus(0), 
+   padding(0)
 {
 }
 
@@ -14,53 +14,18 @@ OwnershipStatus::~OwnershipStatus()
 {
 }
 
-EntityID& OwnershipStatus::getEntityId() 
-{
-    return _entityId;
-}
-
-const EntityID& OwnershipStatus::getEntityId() const
-{
-    return _entityId;
-}
-
-void OwnershipStatus::setEntityId(const EntityID &pX)
-{
-    _entityId = pX;
-}
-
-unsigned char OwnershipStatus::getOwnershipStatus() const
-{
-    return _ownershipStatus;
-}
-
-void OwnershipStatus::setOwnershipStatus(unsigned char pX)
-{
-    _ownershipStatus = pX;
-}
-
-unsigned char OwnershipStatus::getPadding() const
-{
-    return _padding;
-}
-
-void OwnershipStatus::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
 void OwnershipStatus::marshal(DataStream& dataStream) const
 {
-    _entityId.marshal(dataStream);
-    dataStream << _ownershipStatus;
-    dataStream << _padding;
+    entityId.marshal(dataStream);
+    dataStream << ownershipStatus;
+    dataStream << padding;
 }
 
 void OwnershipStatus::unmarshal(DataStream& dataStream)
 {
-    _entityId.unmarshal(dataStream);
-    dataStream >> _ownershipStatus;
-    dataStream >> _padding;
+    entityId.unmarshal(dataStream);
+    dataStream >> ownershipStatus;
+    dataStream >> padding;
 }
 
 
@@ -68,9 +33,9 @@ bool OwnershipStatus::operator ==(const OwnershipStatus& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_entityId == rhs._entityId) ) ivarsEqual = false;
-     if( ! (_ownershipStatus == rhs._ownershipStatus) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (entityId == rhs.entityId) ) ivarsEqual = false;
+     if( ! (ownershipStatus == rhs.ownershipStatus) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -79,9 +44,9 @@ int OwnershipStatus::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _entityId.getMarshalledSize();  // _entityId
-   marshalSize = marshalSize + 1;  // _ownershipStatus
-   marshalSize = marshalSize + 1;  // _padding
+   marshalSize = marshalSize + entityId.getMarshalledSize();  // entityId
+   marshalSize = marshalSize + 1;  // ownershipStatus
+   marshalSize = marshalSize + 1;  // padding
     return marshalSize;
 }
 

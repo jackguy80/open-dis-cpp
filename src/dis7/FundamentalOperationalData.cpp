@@ -1,19 +1,19 @@
-#include <dis7/FundamentalOperationalData.h>
+#include "FundamentalOperationalData.h"
 
 using namespace DIS;
 
 
 FundamentalOperationalData::FundamentalOperationalData():
-   _systemStatus(0), 
-   _dataField1(0), 
-   _informationLayers(0), 
-   _dataField2(0), 
-   _parameter1(0), 
-   _parameter2(0), 
-   _parameter3(0), 
-   _parameter4(0), 
-   _parameter5(0), 
-   _parameter6(0)
+   systemStatus(0), 
+   dataField1(0), 
+   informationLayers(0), 
+   dataField2(0), 
+   parameter1(0), 
+   parameter2(0), 
+   parameter3(0), 
+   parameter4(0), 
+   parameter5(0), 
+   parameter6(0)
 {
 }
 
@@ -21,132 +21,32 @@ FundamentalOperationalData::~FundamentalOperationalData()
 {
 }
 
-unsigned char FundamentalOperationalData::getSystemStatus() const
-{
-    return _systemStatus;
-}
-
-void FundamentalOperationalData::setSystemStatus(unsigned char pX)
-{
-    _systemStatus = pX;
-}
-
-unsigned char FundamentalOperationalData::getDataField1() const
-{
-    return _dataField1;
-}
-
-void FundamentalOperationalData::setDataField1(unsigned char pX)
-{
-    _dataField1 = pX;
-}
-
-unsigned char FundamentalOperationalData::getInformationLayers() const
-{
-    return _informationLayers;
-}
-
-void FundamentalOperationalData::setInformationLayers(unsigned char pX)
-{
-    _informationLayers = pX;
-}
-
-unsigned char FundamentalOperationalData::getDataField2() const
-{
-    return _dataField2;
-}
-
-void FundamentalOperationalData::setDataField2(unsigned char pX)
-{
-    _dataField2 = pX;
-}
-
-unsigned short FundamentalOperationalData::getParameter1() const
-{
-    return _parameter1;
-}
-
-void FundamentalOperationalData::setParameter1(unsigned short pX)
-{
-    _parameter1 = pX;
-}
-
-unsigned short FundamentalOperationalData::getParameter2() const
-{
-    return _parameter2;
-}
-
-void FundamentalOperationalData::setParameter2(unsigned short pX)
-{
-    _parameter2 = pX;
-}
-
-unsigned short FundamentalOperationalData::getParameter3() const
-{
-    return _parameter3;
-}
-
-void FundamentalOperationalData::setParameter3(unsigned short pX)
-{
-    _parameter3 = pX;
-}
-
-unsigned short FundamentalOperationalData::getParameter4() const
-{
-    return _parameter4;
-}
-
-void FundamentalOperationalData::setParameter4(unsigned short pX)
-{
-    _parameter4 = pX;
-}
-
-unsigned short FundamentalOperationalData::getParameter5() const
-{
-    return _parameter5;
-}
-
-void FundamentalOperationalData::setParameter5(unsigned short pX)
-{
-    _parameter5 = pX;
-}
-
-unsigned short FundamentalOperationalData::getParameter6() const
-{
-    return _parameter6;
-}
-
-void FundamentalOperationalData::setParameter6(unsigned short pX)
-{
-    _parameter6 = pX;
-}
-
 void FundamentalOperationalData::marshal(DataStream& dataStream) const
 {
-    dataStream << _systemStatus;
-    dataStream << _dataField1;
-    dataStream << _informationLayers;
-    dataStream << _dataField2;
-    dataStream << _parameter1;
-    dataStream << _parameter2;
-    dataStream << _parameter3;
-    dataStream << _parameter4;
-    dataStream << _parameter5;
-    dataStream << _parameter6;
+    dataStream << systemStatus;
+    dataStream << dataField1;
+    dataStream << informationLayers;
+    dataStream << dataField2;
+    dataStream << parameter1;
+    dataStream << parameter2;
+    dataStream << parameter3;
+    dataStream << parameter4;
+    dataStream << parameter5;
+    dataStream << parameter6;
 }
 
 void FundamentalOperationalData::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _systemStatus;
-    dataStream >> _dataField1;
-    dataStream >> _informationLayers;
-    dataStream >> _dataField2;
-    dataStream >> _parameter1;
-    dataStream >> _parameter2;
-    dataStream >> _parameter3;
-    dataStream >> _parameter4;
-    dataStream >> _parameter5;
-    dataStream >> _parameter6;
+    dataStream >> systemStatus;
+    dataStream >> dataField1;
+    dataStream >> informationLayers;
+    dataStream >> dataField2;
+    dataStream >> parameter1;
+    dataStream >> parameter2;
+    dataStream >> parameter3;
+    dataStream >> parameter4;
+    dataStream >> parameter5;
+    dataStream >> parameter6;
 }
 
 
@@ -154,16 +54,16 @@ bool FundamentalOperationalData::operator ==(const FundamentalOperationalData& r
  {
      bool ivarsEqual = true;
 
-     if( ! (_systemStatus == rhs._systemStatus) ) ivarsEqual = false;
-     if( ! (_dataField1 == rhs._dataField1) ) ivarsEqual = false;
-     if( ! (_informationLayers == rhs._informationLayers) ) ivarsEqual = false;
-     if( ! (_dataField2 == rhs._dataField2) ) ivarsEqual = false;
-     if( ! (_parameter1 == rhs._parameter1) ) ivarsEqual = false;
-     if( ! (_parameter2 == rhs._parameter2) ) ivarsEqual = false;
-     if( ! (_parameter3 == rhs._parameter3) ) ivarsEqual = false;
-     if( ! (_parameter4 == rhs._parameter4) ) ivarsEqual = false;
-     if( ! (_parameter5 == rhs._parameter5) ) ivarsEqual = false;
-     if( ! (_parameter6 == rhs._parameter6) ) ivarsEqual = false;
+     if( ! (systemStatus == rhs.systemStatus) ) ivarsEqual = false;
+     if( ! (dataField1 == rhs.dataField1) ) ivarsEqual = false;
+     if( ! (informationLayers == rhs.informationLayers) ) ivarsEqual = false;
+     if( ! (dataField2 == rhs.dataField2) ) ivarsEqual = false;
+     if( ! (parameter1 == rhs.parameter1) ) ivarsEqual = false;
+     if( ! (parameter2 == rhs.parameter2) ) ivarsEqual = false;
+     if( ! (parameter3 == rhs.parameter3) ) ivarsEqual = false;
+     if( ! (parameter4 == rhs.parameter4) ) ivarsEqual = false;
+     if( ! (parameter5 == rhs.parameter5) ) ivarsEqual = false;
+     if( ! (parameter6 == rhs.parameter6) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -172,16 +72,16 @@ int FundamentalOperationalData::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _systemStatus
-   marshalSize = marshalSize + 1;  // _dataField1
-   marshalSize = marshalSize + 1;  // _informationLayers
-   marshalSize = marshalSize + 1;  // _dataField2
-   marshalSize = marshalSize + 2;  // _parameter1
-   marshalSize = marshalSize + 2;  // _parameter2
-   marshalSize = marshalSize + 2;  // _parameter3
-   marshalSize = marshalSize + 2;  // _parameter4
-   marshalSize = marshalSize + 2;  // _parameter5
-   marshalSize = marshalSize + 2;  // _parameter6
+   marshalSize = marshalSize + 1;  // systemStatus
+   marshalSize = marshalSize + 1;  // dataField1
+   marshalSize = marshalSize + 1;  // informationLayers
+   marshalSize = marshalSize + 1;  // dataField2
+   marshalSize = marshalSize + 2;  // parameter1
+   marshalSize = marshalSize + 2;  // parameter2
+   marshalSize = marshalSize + 2;  // parameter3
+   marshalSize = marshalSize + 2;  // parameter4
+   marshalSize = marshalSize + 2;  // parameter5
+   marshalSize = marshalSize + 2;  // parameter6
     return marshalSize;
 }
 

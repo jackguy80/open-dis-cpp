@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.18. Fixed Datum Record
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT FixedDatum
+struct EXPORT_MACRO FixedDatum
 {
-protected:
   /** ID of the fixed datum */
-  unsigned int _fixedDatumID; 
+  unsigned int fixedDatumID;
 
   /** Value for the fixed datum */
-  unsigned int _fixedDatumValue; 
+  unsigned int fixedDatumValue;
 
-
- public:
     FixedDatum();
     virtual ~FixedDatum();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getFixedDatumID() const; 
-    void setFixedDatumID(unsigned int pX); 
 
-    unsigned int getFixedDatumValue() const; 
-    void setFixedDatumValue(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const FixedDatum& rhs) const;
+     bool operator ==(const FixedDatum& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

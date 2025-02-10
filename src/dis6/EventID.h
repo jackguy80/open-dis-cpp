@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.18. Identifies a unique event in a simulation via the combination of three values
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT EventID
+struct EXPORT_MACRO EventID
 {
-protected:
   /** The site ID */
-  unsigned short _site; 
+  unsigned short site;
 
   /** The application ID */
-  unsigned short _application; 
+  unsigned short application;
 
   /** the number of the event */
-  unsigned short _eventNumber; 
+  unsigned short eventNumber;
 
-
- public:
     EventID();
     virtual ~EventID();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSite() const; 
-    void setSite(unsigned short pX); 
 
-    unsigned short getApplication() const; 
-    void setApplication(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getEventNumber() const; 
-    void setEventNumber(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EventID& rhs) const;
+     bool operator ==(const EventID& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

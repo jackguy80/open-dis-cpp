@@ -1,14 +1,14 @@
-#include <dis7/StorageFuel.h>
+#include "StorageFuel.h"
 
 using namespace DIS;
 
 
 StorageFuel::StorageFuel():
-   _fuelQuantity(0), 
-   _fuelMeasurementUnits(0), 
-   _fuelType(0), 
-   _fuelLocation(0), 
-   _padding(0)
+   fuelQuantity(0), 
+   fuelMeasurementUnits(0), 
+   fuelType(0), 
+   fuelLocation(0), 
+   padding(0)
 {
 }
 
@@ -16,72 +16,22 @@ StorageFuel::~StorageFuel()
 {
 }
 
-unsigned int StorageFuel::getFuelQuantity() const
-{
-    return _fuelQuantity;
-}
-
-void StorageFuel::setFuelQuantity(unsigned int pX)
-{
-    _fuelQuantity = pX;
-}
-
-unsigned char StorageFuel::getFuelMeasurementUnits() const
-{
-    return _fuelMeasurementUnits;
-}
-
-void StorageFuel::setFuelMeasurementUnits(unsigned char pX)
-{
-    _fuelMeasurementUnits = pX;
-}
-
-unsigned char StorageFuel::getFuelType() const
-{
-    return _fuelType;
-}
-
-void StorageFuel::setFuelType(unsigned char pX)
-{
-    _fuelType = pX;
-}
-
-unsigned char StorageFuel::getFuelLocation() const
-{
-    return _fuelLocation;
-}
-
-void StorageFuel::setFuelLocation(unsigned char pX)
-{
-    _fuelLocation = pX;
-}
-
-unsigned char StorageFuel::getPadding() const
-{
-    return _padding;
-}
-
-void StorageFuel::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
 void StorageFuel::marshal(DataStream& dataStream) const
 {
-    dataStream << _fuelQuantity;
-    dataStream << _fuelMeasurementUnits;
-    dataStream << _fuelType;
-    dataStream << _fuelLocation;
-    dataStream << _padding;
+    dataStream << fuelQuantity;
+    dataStream << fuelMeasurementUnits;
+    dataStream << fuelType;
+    dataStream << fuelLocation;
+    dataStream << padding;
 }
 
 void StorageFuel::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _fuelQuantity;
-    dataStream >> _fuelMeasurementUnits;
-    dataStream >> _fuelType;
-    dataStream >> _fuelLocation;
-    dataStream >> _padding;
+    dataStream >> fuelQuantity;
+    dataStream >> fuelMeasurementUnits;
+    dataStream >> fuelType;
+    dataStream >> fuelLocation;
+    dataStream >> padding;
 }
 
 
@@ -89,11 +39,11 @@ bool StorageFuel::operator ==(const StorageFuel& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_fuelQuantity == rhs._fuelQuantity) ) ivarsEqual = false;
-     if( ! (_fuelMeasurementUnits == rhs._fuelMeasurementUnits) ) ivarsEqual = false;
-     if( ! (_fuelType == rhs._fuelType) ) ivarsEqual = false;
-     if( ! (_fuelLocation == rhs._fuelLocation) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (fuelQuantity == rhs.fuelQuantity) ) ivarsEqual = false;
+     if( ! (fuelMeasurementUnits == rhs.fuelMeasurementUnits) ) ivarsEqual = false;
+     if( ! (fuelType == rhs.fuelType) ) ivarsEqual = false;
+     if( ! (fuelLocation == rhs.fuelLocation) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -102,11 +52,11 @@ int StorageFuel::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _fuelQuantity
-   marshalSize = marshalSize + 1;  // _fuelMeasurementUnits
-   marshalSize = marshalSize + 1;  // _fuelType
-   marshalSize = marshalSize + 1;  // _fuelLocation
-   marshalSize = marshalSize + 1;  // _padding
+   marshalSize = marshalSize + 4;  // fuelQuantity
+   marshalSize = marshalSize + 1;  // fuelMeasurementUnits
+   marshalSize = marshalSize + 1;  // fuelType
+   marshalSize = marshalSize + 1;  // fuelLocation
+   marshalSize = marshalSize + 1;  // padding
     return marshalSize;
 }
 

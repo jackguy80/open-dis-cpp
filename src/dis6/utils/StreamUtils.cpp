@@ -7,11 +7,11 @@
 std::ostream& operator <<(std::ostream& lhs, const DIS::EntityType& rhs)
 {
    lhs << "EntityType ("
-       << (unsigned int)rhs.getEntityKind()
-       << "," << (unsigned int)rhs.getDomain()
-       << "," << (unsigned int)rhs.getCountry()
-       << "," << (unsigned int)rhs.getCategory()
-       << "," << (unsigned int)rhs.getSubcategory()
+       << (unsigned int)rhs.entityKind
+       << "," << (unsigned int)rhs.domain
+       << "," << (unsigned int)rhs.country
+       << "," << (unsigned int)rhs.category
+       << "," << (unsigned int)rhs.subcategory
        << ") ";
    return lhs;
 }
@@ -19,18 +19,18 @@ std::ostream& operator <<(std::ostream& lhs, const DIS::EntityType& rhs)
 std::ostream& operator <<(std::ostream& lhs, const DIS::EntityID& rhs)
 {
    lhs << "EntityID ("
-       << (unsigned int)rhs.getEntity() << ") ";
+       << (unsigned int)rhs.entity << ") ";
    return lhs;
 }
 
 std::ostream& operator <<(std::ostream& lhs, const DIS::EntityStatePdu& rhs)
 {
-   lhs << "EntityStatePdu (" << rhs.getEntityID() << ") ";
+   lhs << "EntityStatePdu (" << rhs.entityID << ") ";
    return lhs;
 }
 
 std::ostream& operator <<(std::ostream& lhs, const DIS::DetonationPdu& rhs)
 {
-   lhs << "DetonationPDU (" << rhs.getFiringEntityID() << ") ";
+   lhs << "DetonationPDU (" << rhs.firingEntityID << ") ";
    return lhs;
 }

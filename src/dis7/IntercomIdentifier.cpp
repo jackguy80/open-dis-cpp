@@ -1,13 +1,13 @@
-#include <dis7/IntercomIdentifier.h>
+#include "IntercomIdentifier.h"
 
 using namespace DIS;
 
 
 IntercomIdentifier::IntercomIdentifier():
-   _siteNumber(0), 
-   _applicationNumber(0), 
-   _referenceNumber(0), 
-   _intercomNumber(0)
+   siteNumber(0), 
+   applicationNumber(0), 
+   referenceNumber(0), 
+   intercomNumber(0)
 {
 }
 
@@ -15,60 +15,20 @@ IntercomIdentifier::~IntercomIdentifier()
 {
 }
 
-unsigned short IntercomIdentifier::getSiteNumber() const
-{
-    return _siteNumber;
-}
-
-void IntercomIdentifier::setSiteNumber(unsigned short pX)
-{
-    _siteNumber = pX;
-}
-
-unsigned short IntercomIdentifier::getApplicationNumber() const
-{
-    return _applicationNumber;
-}
-
-void IntercomIdentifier::setApplicationNumber(unsigned short pX)
-{
-    _applicationNumber = pX;
-}
-
-unsigned short IntercomIdentifier::getReferenceNumber() const
-{
-    return _referenceNumber;
-}
-
-void IntercomIdentifier::setReferenceNumber(unsigned short pX)
-{
-    _referenceNumber = pX;
-}
-
-unsigned short IntercomIdentifier::getIntercomNumber() const
-{
-    return _intercomNumber;
-}
-
-void IntercomIdentifier::setIntercomNumber(unsigned short pX)
-{
-    _intercomNumber = pX;
-}
-
 void IntercomIdentifier::marshal(DataStream& dataStream) const
 {
-    dataStream << _siteNumber;
-    dataStream << _applicationNumber;
-    dataStream << _referenceNumber;
-    dataStream << _intercomNumber;
+    dataStream << siteNumber;
+    dataStream << applicationNumber;
+    dataStream << referenceNumber;
+    dataStream << intercomNumber;
 }
 
 void IntercomIdentifier::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _siteNumber;
-    dataStream >> _applicationNumber;
-    dataStream >> _referenceNumber;
-    dataStream >> _intercomNumber;
+    dataStream >> siteNumber;
+    dataStream >> applicationNumber;
+    dataStream >> referenceNumber;
+    dataStream >> intercomNumber;
 }
 
 
@@ -76,10 +36,10 @@ bool IntercomIdentifier::operator ==(const IntercomIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_siteNumber == rhs._siteNumber) ) ivarsEqual = false;
-     if( ! (_applicationNumber == rhs._applicationNumber) ) ivarsEqual = false;
-     if( ! (_referenceNumber == rhs._referenceNumber) ) ivarsEqual = false;
-     if( ! (_intercomNumber == rhs._intercomNumber) ) ivarsEqual = false;
+     if( ! (siteNumber == rhs.siteNumber) ) ivarsEqual = false;
+     if( ! (applicationNumber == rhs.applicationNumber) ) ivarsEqual = false;
+     if( ! (referenceNumber == rhs.referenceNumber) ) ivarsEqual = false;
+     if( ! (intercomNumber == rhs.intercomNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -88,10 +48,10 @@ int IntercomIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _siteNumber
-   marshalSize = marshalSize + 2;  // _applicationNumber
-   marshalSize = marshalSize + 2;  // _referenceNumber
-   marshalSize = marshalSize + 2;  // _intercomNumber
+   marshalSize = marshalSize + 2;  // siteNumber
+   marshalSize = marshalSize + 2;  // applicationNumber
+   marshalSize = marshalSize + 2;  // referenceNumber
+   marshalSize = marshalSize + 2;  // intercomNumber
     return marshalSize;
 }
 

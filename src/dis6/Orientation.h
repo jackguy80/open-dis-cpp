@@ -1,50 +1,38 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.17. Three floating point values representing an orientation, psi, theta, and phi, aka the euler angles, in radians
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT Orientation
+struct EXPORT_MACRO Orientation
 {
-protected:
-  float _psi; 
+  float psi;
 
-  float _theta; 
+  float theta;
 
-  float _phi; 
+  float phi;
 
-
- public:
     Orientation();
     virtual ~Orientation();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    float getPsi() const; 
-    void setPsi(float pX); 
 
-    float getTheta() const; 
-    void setTheta(float pX); 
+     virtual int getMarshalledSize() const;
 
-    float getPhi() const; 
-    void setPhi(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const Orientation& rhs) const;
+     bool operator ==(const Orientation& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

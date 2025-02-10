@@ -1,11 +1,11 @@
-#include <dis7/EventIdentifier.h>
+#include "EventIdentifier.h"
 
 using namespace DIS;
 
 
 EventIdentifier::EventIdentifier():
-   _simulationAddress(), 
-   _eventNumber(0)
+   simulationAddress(), 
+   eventNumber(0)
 {
 }
 
@@ -13,41 +13,16 @@ EventIdentifier::~EventIdentifier()
 {
 }
 
-SimulationAddress& EventIdentifier::getSimulationAddress() 
-{
-    return _simulationAddress;
-}
-
-const SimulationAddress& EventIdentifier::getSimulationAddress() const
-{
-    return _simulationAddress;
-}
-
-void EventIdentifier::setSimulationAddress(const SimulationAddress &pX)
-{
-    _simulationAddress = pX;
-}
-
-unsigned short EventIdentifier::getEventNumber() const
-{
-    return _eventNumber;
-}
-
-void EventIdentifier::setEventNumber(unsigned short pX)
-{
-    _eventNumber = pX;
-}
-
 void EventIdentifier::marshal(DataStream& dataStream) const
 {
-    _simulationAddress.marshal(dataStream);
-    dataStream << _eventNumber;
+    simulationAddress.marshal(dataStream);
+    dataStream << eventNumber;
 }
 
 void EventIdentifier::unmarshal(DataStream& dataStream)
 {
-    _simulationAddress.unmarshal(dataStream);
-    dataStream >> _eventNumber;
+    simulationAddress.unmarshal(dataStream);
+    dataStream >> eventNumber;
 }
 
 
@@ -55,8 +30,8 @@ bool EventIdentifier::operator ==(const EventIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_simulationAddress == rhs._simulationAddress) ) ivarsEqual = false;
-     if( ! (_eventNumber == rhs._eventNumber) ) ivarsEqual = false;
+     if( ! (simulationAddress == rhs.simulationAddress) ) ivarsEqual = false;
+     if( ! (eventNumber == rhs.eventNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int EventIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _simulationAddress.getMarshalledSize();  // _simulationAddress
-   marshalSize = marshalSize + 2;  // _eventNumber
+   marshalSize = marshalSize + simulationAddress.getMarshalledSize();  // simulationAddress
+   marshalSize = marshalSize + 2;  // eventNumber
     return marshalSize;
 }
 

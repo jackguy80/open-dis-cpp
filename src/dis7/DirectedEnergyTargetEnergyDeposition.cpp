@@ -1,12 +1,12 @@
-#include <dis7/DirectedEnergyTargetEnergyDeposition.h>
+#include "DirectedEnergyTargetEnergyDeposition.h"
 
 using namespace DIS;
 
 
 DirectedEnergyTargetEnergyDeposition::DirectedEnergyTargetEnergyDeposition():
-   _targetEntityID(), 
-   _padding(0), 
-   _peakIrradiance(0.0)
+   targetEntityID(), 
+   padding(0), 
+   peakIrradiance(0.0)
 {
 }
 
@@ -14,53 +14,18 @@ DirectedEnergyTargetEnergyDeposition::~DirectedEnergyTargetEnergyDeposition()
 {
 }
 
-EntityID& DirectedEnergyTargetEnergyDeposition::getTargetEntityID() 
-{
-    return _targetEntityID;
-}
-
-const EntityID& DirectedEnergyTargetEnergyDeposition::getTargetEntityID() const
-{
-    return _targetEntityID;
-}
-
-void DirectedEnergyTargetEnergyDeposition::setTargetEntityID(const EntityID &pX)
-{
-    _targetEntityID = pX;
-}
-
-unsigned short DirectedEnergyTargetEnergyDeposition::getPadding() const
-{
-    return _padding;
-}
-
-void DirectedEnergyTargetEnergyDeposition::setPadding(unsigned short pX)
-{
-    _padding = pX;
-}
-
-float DirectedEnergyTargetEnergyDeposition::getPeakIrradiance() const
-{
-    return _peakIrradiance;
-}
-
-void DirectedEnergyTargetEnergyDeposition::setPeakIrradiance(float pX)
-{
-    _peakIrradiance = pX;
-}
-
 void DirectedEnergyTargetEnergyDeposition::marshal(DataStream& dataStream) const
 {
-    _targetEntityID.marshal(dataStream);
-    dataStream << _padding;
-    dataStream << _peakIrradiance;
+    targetEntityID.marshal(dataStream);
+    dataStream << padding;
+    dataStream << peakIrradiance;
 }
 
 void DirectedEnergyTargetEnergyDeposition::unmarshal(DataStream& dataStream)
 {
-    _targetEntityID.unmarshal(dataStream);
-    dataStream >> _padding;
-    dataStream >> _peakIrradiance;
+    targetEntityID.unmarshal(dataStream);
+    dataStream >> padding;
+    dataStream >> peakIrradiance;
 }
 
 
@@ -68,9 +33,9 @@ bool DirectedEnergyTargetEnergyDeposition::operator ==(const DirectedEnergyTarge
  {
      bool ivarsEqual = true;
 
-     if( ! (_targetEntityID == rhs._targetEntityID) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
-     if( ! (_peakIrradiance == rhs._peakIrradiance) ) ivarsEqual = false;
+     if( ! (targetEntityID == rhs.targetEntityID) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
+     if( ! (peakIrradiance == rhs.peakIrradiance) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -79,9 +44,9 @@ int DirectedEnergyTargetEnergyDeposition::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _targetEntityID.getMarshalledSize();  // _targetEntityID
-   marshalSize = marshalSize + 2;  // _padding
-   marshalSize = marshalSize + 4;  // _peakIrradiance
+   marshalSize = marshalSize + targetEntityID.getMarshalledSize();  // targetEntityID
+   marshalSize = marshalSize + 2;  // padding
+   marshalSize = marshalSize + 4;  // peakIrradiance
     return marshalSize;
 }
 

@@ -1,86 +1,58 @@
 #pragma once
 
-#include <dis7/FourByteChunk.h>
-#include <vector>
-#include <dis7/SimulationManagementWithReliabilityFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "FourByteChunk.h"
+#include "SimulationManagementWithReliabilityFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.12.13: A request for one or more records of data from an entity. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT RecordQueryReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
+struct EXPORT_MACRO RecordQueryReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
 {
-protected:
   /** request ID */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
   /** level of reliability service used for this transaction */
-  unsigned char _requiredReliabilityService; 
+  unsigned char requiredReliabilityService;
 
   /** padding. The spec is unclear and contradictory here. */
-  unsigned short _pad1; 
+  unsigned short pad1;
 
   /** padding */
-  unsigned char _pad2; 
+  unsigned char pad2;
 
   /** event type */
-  unsigned short _eventType; 
+  unsigned short eventType;
 
   /** time */
-  unsigned int _time; 
+  unsigned int time;
 
   /** numberOfRecords */
-  unsigned int _numberOfRecords; 
+  unsigned int numberOfRecords;
 
   /** record IDs */
-  std::vector<FourByteChunk> _recordIDs; 
+  FourByteChunk recordIDs;
 
-
- public:
     RecordQueryReliablePdu();
     virtual ~RecordQueryReliablePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
 
-    unsigned char getRequiredReliabilityService() const; 
-    void setRequiredReliabilityService(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPad1() const; 
-    void setPad1(unsigned short pX); 
-
-    unsigned char getPad2() const; 
-    void setPad2(unsigned char pX); 
-
-    unsigned short getEventType() const; 
-    void setEventType(unsigned short pX); 
-
-    unsigned int getTime() const; 
-    void setTime(unsigned int pX); 
-
-    unsigned int getNumberOfRecords() const; 
-
-    std::vector<FourByteChunk>& getRecordIDs(); 
-    const std::vector<FourByteChunk>& getRecordIDs() const; 
-    void setRecordIDs(const std::vector<FourByteChunk>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RecordQueryReliablePdu& rhs) const;
+     bool operator ==(const RecordQueryReliablePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

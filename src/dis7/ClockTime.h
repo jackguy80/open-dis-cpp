@@ -1,47 +1,39 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "Timestamp.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Time measurements that exceed one hour are represented by this record. The first field is the hours since the unix epoch (Jan 1 1970, used by most Unix systems and java) and the second field the timestamp units since the top of the hour. Section 6.2.16
+// Time measurements that exceed one hour are represented by this record. The first field is the hours since the unix epoch (Jan 1 1970, used by most Unix systems and java) and the second field the timestamp units since the top of the hour. Section 6.2.14
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ClockTime
+struct EXPORT_MACRO ClockTime
 {
-protected:
-  /** Hours in UTC */
-  unsigned int _hour; 
+  /** Hours since midnight, 1970, UTC */
+  unsigned int hour;
 
-  /** Time past the hour */
-  unsigned int _timePastHour; 
+  /** Time past the hour, in timestamp form */
+  Timestamp timePastHour;
 
-
- public:
     ClockTime();
     virtual ~ClockTime();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getHour() const; 
-    void setHour(unsigned int pX); 
 
-    unsigned int getTimePastHour() const; 
-    void setTimePastHour(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ClockTime& rhs) const;
+     bool operator ==(const ClockTime& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

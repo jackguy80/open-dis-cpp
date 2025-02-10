@@ -1,49 +1,39 @@
 #pragma once
 
-#include <dis7/SimulationAddress.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "SimulationAddress.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // The unique designation of one or more unattached radios in an event or exercise Section 6.2.91
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT UnattachedIdentifier
+struct EXPORT_MACRO UnattachedIdentifier
 {
-protected:
   /** See 6.2.79 */
-  SimulationAddress _simulationAddress; 
+  SimulationAddress simulationAddress;
 
   /** Reference number */
-  unsigned short _referenceNumber; 
+  unsigned short referenceNumber;
 
-
- public:
     UnattachedIdentifier();
     virtual ~UnattachedIdentifier();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    SimulationAddress& getSimulationAddress(); 
-    const SimulationAddress&  getSimulationAddress() const; 
-    void setSimulationAddress(const SimulationAddress    &pX);
 
-    unsigned short getReferenceNumber() const; 
-    void setReferenceNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const UnattachedIdentifier& rhs) const;
+     bool operator ==(const UnattachedIdentifier& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

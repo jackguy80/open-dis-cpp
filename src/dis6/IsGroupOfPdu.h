@@ -1,82 +1,59 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/VariableDatum.h>
+#include "EntityID.h"
+#include "VariableDatum.h"
 #include <vector>
-#include <dis6/EntityManagementFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.9.2 Information about a particular group of entities grouped together for the purposes of netowrk bandwidth         reduction or aggregation. Needs manual cleanup. The GED size requires a database lookup. UNFINISHED
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT IsGroupOfPdu : public EntityManagementFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO IsGroupOfPdu : public EntityManagementFamilyPdu
 {
-protected:
   /** ID of aggregated entities */
-  EntityID _groupEntityID; 
+  EntityID groupEntityID;
 
   /** type of entities constituting the group */
-  unsigned char _groupedEntityCategory; 
+  unsigned char groupedEntityCategory;
 
   /** Number of individual entities constituting the group */
-  unsigned char _numberOfGroupedEntities; 
+  unsigned char numberOfGroupedEntities;
 
   /** padding */
-  unsigned int _pad2; 
+  unsigned int pad2;
 
   /** latitude */
-  double _latitude; 
+  double latitude;
 
   /** longitude */
-  double _longitude; 
+  double longitude;
 
   /** GED records about each individual entity in the group. ^^^this is wrong--need a database lookup to find the actual size of the list elements */
-  std::vector<VariableDatum> _groupedEntityDescriptions; 
+  std::vector<VariableDatum> groupedEntityDescriptions;
 
-
- public:
     IsGroupOfPdu();
     virtual ~IsGroupOfPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getGroupEntityID(); 
-    const EntityID&  getGroupEntityID() const; 
-    void setGroupEntityID(const EntityID    &pX);
 
-    unsigned char getGroupedEntityCategory() const; 
-    void setGroupedEntityCategory(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getNumberOfGroupedEntities() const; 
-
-    unsigned int getPad2() const; 
-    void setPad2(unsigned int pX); 
-
-    double getLatitude() const; 
-    void setLatitude(double pX); 
-
-    double getLongitude() const; 
-    void setLongitude(double pX); 
-
-    std::vector<VariableDatum>& getGroupedEntityDescriptions(); 
-    const std::vector<VariableDatum>& getGroupedEntityDescriptions() const; 
-    void setGroupedEntityDescriptions(const std::vector<VariableDatum>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IsGroupOfPdu& rhs) const;
+     bool operator ==(const IsGroupOfPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

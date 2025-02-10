@@ -1,71 +1,50 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Synthetic record, made up from section 6.2.72. This is used to acheive a repeating variable list element.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT RecordSpecificationElement
+struct EXPORT_MACRO RecordSpecificationElement
 {
-protected:
   /** the data structure used to convey the parameter values of the record for each record. 32 bit enumeration. */
-  unsigned int _recordID; 
+  unsigned int recordID;
 
   /** the serial number of the first record in the block of records */
-  unsigned int _recordSetSerialNumber; 
+  unsigned int recordSetSerialNumber;
 
   /**  the length, in bits, of the record. Note, bits, not bytes. */
-  unsigned short _recordLength; 
+  unsigned short recordLength;
 
   /**  the number of records included in the record set  */
-  unsigned short _recordCount; 
+  unsigned short recordCount;
 
   /** the concatenated records of the format specified by the Record ID field. The length of this field is the Record Length multiplied by the Record Count, in units of bits. ^^^This is wrong--variable sized data records, bit values. THis MUST be patched after generation. */
-  unsigned short _recordValues; 
+  unsigned short recordValues;
 
   /** Padding of 0 to 31 unused bits as required for 32-bit alignment of the Record Set field. ^^^This is wrong--variable sized padding. MUST be patched post-code generation */
-  unsigned char _pad4; 
+  unsigned char pad4;
 
-
- public:
     RecordSpecificationElement();
     virtual ~RecordSpecificationElement();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordID() const; 
-    void setRecordID(unsigned int pX); 
 
-    unsigned int getRecordSetSerialNumber() const; 
-    void setRecordSetSerialNumber(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
-
-    unsigned short getRecordCount() const; 
-    void setRecordCount(unsigned short pX); 
-
-    unsigned short getRecordValues() const; 
-    void setRecordValues(unsigned short pX); 
-
-    unsigned char getPad4() const; 
-    void setPad4(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RecordSpecificationElement& rhs) const;
+     bool operator ==(const RecordSpecificationElement& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

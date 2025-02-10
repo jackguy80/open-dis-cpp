@@ -1,114 +1,75 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/IntercomCommunicationsParameters.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "IntercomCommunicationsParameters.h"
 #include <vector>
-#include <dis6/RadioCommunicationsFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "RadioCommunicationsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.8.5. Detailed inofrmation about the state of an intercom device and the actions it is requestion         of another intercom device, or the response to a requested action. Required manual intervention to fix the intercom parameters,        which can be of varialbe length. UNFINSISHED
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT IntercomControlPdu : public RadioCommunicationsFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO IntercomControlPdu : public RadioCommunicationsFamilyPdu
 {
-protected:
   /** control type */
-  unsigned char _controlType; 
+  unsigned char controlType;
 
   /** control type */
-  unsigned char _communicationsChannelType; 
+  unsigned char communicationsChannelType;
 
   /** Source entity ID */
-  EntityID _sourceEntityID; 
+  EntityID sourceEntityID;
 
   /** The specific intercom device being simulated within an entity. */
-  unsigned char _sourceCommunicationsDeviceID; 
+  unsigned char sourceCommunicationsDeviceID;
 
   /** Line number to which the intercom control refers */
-  unsigned char _sourceLineID; 
+  unsigned char sourceLineID;
 
   /** priority of this message relative to transmissons from other intercom devices */
-  unsigned char _transmitPriority; 
+  unsigned char transmitPriority;
 
   /** current transmit state of the line */
-  unsigned char _transmitLineState; 
+  unsigned char transmitLineState;
 
   /** detailed type requested. */
-  unsigned char _command; 
+  unsigned char command;
 
   /** eid of the entity that has created this intercom channel. */
-  EntityID _masterEntityID; 
+  EntityID masterEntityID;
 
   /** specific intercom device that has created this intercom channel */
-  unsigned short _masterCommunicationsDeviceID; 
+  unsigned short masterCommunicationsDeviceID;
 
   /** number of intercom parameters */
-  unsigned int _intercomParametersLength; 
+  unsigned int intercomParametersLength;
 
-  /** ^^^This is wrong--the length of the data field is variable. Using a long for now. */
-  std::vector<IntercomCommunicationsParameters> _intercomParameters; 
+  /** Must be  */
+  std::vector<IntercomCommunicationsParameters> intercomParameters;
 
-
- public:
     IntercomControlPdu();
     virtual ~IntercomControlPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getControlType() const; 
-    void setControlType(unsigned char pX); 
 
-    unsigned char getCommunicationsChannelType() const; 
-    void setCommunicationsChannelType(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    EntityID& getSourceEntityID(); 
-    const EntityID&  getSourceEntityID() const; 
-    void setSourceEntityID(const EntityID    &pX);
-
-    unsigned char getSourceCommunicationsDeviceID() const; 
-    void setSourceCommunicationsDeviceID(unsigned char pX); 
-
-    unsigned char getSourceLineID() const; 
-    void setSourceLineID(unsigned char pX); 
-
-    unsigned char getTransmitPriority() const; 
-    void setTransmitPriority(unsigned char pX); 
-
-    unsigned char getTransmitLineState() const; 
-    void setTransmitLineState(unsigned char pX); 
-
-    unsigned char getCommand() const; 
-    void setCommand(unsigned char pX); 
-
-    EntityID& getMasterEntityID(); 
-    const EntityID&  getMasterEntityID() const; 
-    void setMasterEntityID(const EntityID    &pX);
-
-    unsigned short getMasterCommunicationsDeviceID() const; 
-    void setMasterCommunicationsDeviceID(unsigned short pX); 
-
-    unsigned int getIntercomParametersLength() const; 
-
-    std::vector<IntercomCommunicationsParameters>& getIntercomParameters(); 
-    const std::vector<IntercomCommunicationsParameters>& getIntercomParameters() const; 
-    void setIntercomParameters(const std::vector<IntercomCommunicationsParameters>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const IntercomControlPdu& rhs) const;
+     bool operator ==(const IntercomControlPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

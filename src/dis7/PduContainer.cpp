@@ -1,61 +1,28 @@
-#include <dis7/PduContainer.h>
+#include "PduContainer.h"
 
 using namespace DIS;
 
 
 PduContainer::PduContainer():
-   _numberOfPdus(0)
+   numberOfPdus(0), 
+   pdus()
 {
 }
 
 PduContainer::~PduContainer()
 {
-    _pdus.clear();
-}
-
-unsigned int PduContainer::getNumberOfPdus() const
-{
-   return _pdus.size();
-}
-
-std::vector<Pdu>& PduContainer::getPdus() 
-{
-    return _pdus;
-}
-
-const std::vector<Pdu>& PduContainer::getPdus() const
-{
-    return _pdus;
-}
-
-void PduContainer::setPdus(const std::vector<Pdu>& pX)
-{
-     _pdus = pX;
 }
 
 void PduContainer::marshal(DataStream& dataStream) const
 {
-    dataStream << ( int )_pdus.size();
-
-     for(size_t idx = 0; idx < _pdus.size(); idx++)
-     {
-        Pdu x = _pdus[idx];
-        x.marshal(dataStream);
-     }
-
+    dataStream << numberOfPdus;
+    pdus.marshal(dataStream);
 }
 
 void PduContainer::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _numberOfPdus;
-
-     _pdus.clear();
-     for(size_t idx = 0; idx < _numberOfPdus; idx++)
-     {
-        Pdu x;
-        x.unmarshal(dataStream);
-        _pdus.push_back(x);
-     }
+    dataStream >> numberOfPdus;
+    pdus.unmarshal(dataStream);
 }
 
 
@@ -63,12 +30,8 @@ bool PduContainer::operator ==(const PduContainer& rhs) const
  {
      bool ivarsEqual = true;
 
-
-     for(size_t idx = 0; idx < _pdus.size(); idx++)
-     {
-        if( ! ( _pdus[idx] == rhs._pdus[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (numberOfPdus == rhs.numberOfPdus) ) ivarsEqual = false;
+     if( ! (pdus == rhs.pdus) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -77,14 +40,8 @@ int PduContainer::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _numberOfPdus
-
-   for(unsigned long long idx=0; idx < _pdus.size(); idx++)
-   {
-        Pdu listElement = _pdus[idx];
-        marshalSize = marshalSize + listElement.getMarshalledSize();
-    }
-
+   marshalSize = marshalSize + 4;  // numberOfPdus
+   marshalSize = marshalSize + pdus.getMarshalledSize();  // pdus
     return marshalSize;
 }
 

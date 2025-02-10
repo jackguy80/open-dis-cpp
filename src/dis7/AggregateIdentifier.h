@@ -1,49 +1,39 @@
 #pragma once
 
-#include <dis7/SimulationAddress.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "SimulationAddress.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // The unique designation of each aggrgate in an exercise is specified by an aggregate identifier record. The aggregate ID is not an entity and shall not be treated as such. Section 6.2.3.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT AggregateIdentifier
+struct EXPORT_MACRO AggregateIdentifier
 {
-protected:
   /** Simulation address, ie site and application, the first two fields of the entity ID */
-  SimulationAddress _simulationAddress; 
+  SimulationAddress simulationAddress;
 
-  /** the aggregate ID */
-  unsigned short _aggregateID; 
+  /** the aggregate ID, an object identifier */
+  unsigned short aggregateID;
 
-
- public:
     AggregateIdentifier();
     virtual ~AggregateIdentifier();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    SimulationAddress& getSimulationAddress(); 
-    const SimulationAddress&  getSimulationAddress() const; 
-    void setSimulationAddress(const SimulationAddress    &pX);
 
-    unsigned short getAggregateID() const; 
-    void setAggregateID(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AggregateIdentifier& rhs) const;
+     bool operator ==(const AggregateIdentifier& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

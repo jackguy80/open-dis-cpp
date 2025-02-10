@@ -1,65 +1,47 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// specification of additional information associated with an entity or detonation, not otherwise accounted for in a PDU 6.2.93.1
+// specification of additional information associated with an entity or detonation, not otherwise accounted for in a PDU 6.2.94.1
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT VariableParameter
+struct EXPORT_MACRO VariableParameter
 {
-protected:
   /** the identification of the Variable Parameter record. Enumeration from EBV */
-  unsigned char _recordType; 
+  unsigned char recordType;
 
   /** Variable parameter data fields. Two doubles minus one byte */
-  double _variableParameterFields1; 
+  double variableParameterFields1;
 
   /** Variable parameter data fields.  */
-  unsigned int _variableParameterFields2; 
+  unsigned int variableParameterFields2;
 
   /** Variable parameter data fields.  */
-  unsigned short _variableParameterFields3; 
+  unsigned short variableParameterFields3;
 
   /** Variable parameter data fields.  */
-  unsigned char _variableParameterFields4; 
+  unsigned char variableParameterFields4;
 
-
- public:
     VariableParameter();
     virtual ~VariableParameter();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getRecordType() const; 
-    void setRecordType(unsigned char pX); 
 
-    double getVariableParameterFields1() const; 
-    void setVariableParameterFields1(double pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned int getVariableParameterFields2() const; 
-    void setVariableParameterFields2(unsigned int pX); 
-
-    unsigned short getVariableParameterFields3() const; 
-    void setVariableParameterFields3(unsigned short pX); 
-
-    unsigned char getVariableParameterFields4() const; 
-    void setVariableParameterFields4(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const VariableParameter& rhs) const;
+     bool operator ==(const VariableParameter& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

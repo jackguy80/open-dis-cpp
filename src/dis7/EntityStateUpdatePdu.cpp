@@ -1,163 +1,50 @@
-#include <dis7/EntityStateUpdatePdu.h>
+#include "EntityStateUpdatePdu.h"
 
 using namespace DIS;
 
 
 EntityStateUpdatePdu::EntityStateUpdatePdu() : EntityInformationFamilyPdu(),
-   _entityID(), 
-   _padding1(0), 
-   _numberOfVariableParameters(0), 
-   _entityLinearVelocity(), 
-   _entityLocation(), 
-   _entityOrientation(), 
-   _entityAppearance(0)
+   entityID(), 
+   padding1(0), 
+   numberOfVariableParameters(0), 
+   entityLinearVelocity(), 
+   entityLocation(), 
+   entityOrientation(), 
+   entityAppearance(0), 
+   variableParameters()
 {
-    setPduType( 67 );
-    setProtocolFamily( 1 );
+    pduType = 67;
+    protocolFamily = 1;
 }
 
 EntityStateUpdatePdu::~EntityStateUpdatePdu()
 {
-    _variableParameters.clear();
-}
-
-EntityID& EntityStateUpdatePdu::getEntityID() 
-{
-    return _entityID;
-}
-
-const EntityID& EntityStateUpdatePdu::getEntityID() const
-{
-    return _entityID;
-}
-
-void EntityStateUpdatePdu::setEntityID(const EntityID &pX)
-{
-    _entityID = pX;
-}
-
-char EntityStateUpdatePdu::getPadding1() const
-{
-    return _padding1;
-}
-
-void EntityStateUpdatePdu::setPadding1(char pX)
-{
-    _padding1 = pX;
-}
-
-unsigned char EntityStateUpdatePdu::getNumberOfVariableParameters() const
-{
-   return _variableParameters.size();
-}
-
-Vector3Float& EntityStateUpdatePdu::getEntityLinearVelocity() 
-{
-    return _entityLinearVelocity;
-}
-
-const Vector3Float& EntityStateUpdatePdu::getEntityLinearVelocity() const
-{
-    return _entityLinearVelocity;
-}
-
-void EntityStateUpdatePdu::setEntityLinearVelocity(const Vector3Float &pX)
-{
-    _entityLinearVelocity = pX;
-}
-
-Vector3Double& EntityStateUpdatePdu::getEntityLocation() 
-{
-    return _entityLocation;
-}
-
-const Vector3Double& EntityStateUpdatePdu::getEntityLocation() const
-{
-    return _entityLocation;
-}
-
-void EntityStateUpdatePdu::setEntityLocation(const Vector3Double &pX)
-{
-    _entityLocation = pX;
-}
-
-EulerAngles& EntityStateUpdatePdu::getEntityOrientation() 
-{
-    return _entityOrientation;
-}
-
-const EulerAngles& EntityStateUpdatePdu::getEntityOrientation() const
-{
-    return _entityOrientation;
-}
-
-void EntityStateUpdatePdu::setEntityOrientation(const EulerAngles &pX)
-{
-    _entityOrientation = pX;
-}
-
-unsigned int EntityStateUpdatePdu::getEntityAppearance() const
-{
-    return _entityAppearance;
-}
-
-void EntityStateUpdatePdu::setEntityAppearance(unsigned int pX)
-{
-    _entityAppearance = pX;
-}
-
-std::vector<VariableParameter>& EntityStateUpdatePdu::getVariableParameters() 
-{
-    return _variableParameters;
-}
-
-const std::vector<VariableParameter>& EntityStateUpdatePdu::getVariableParameters() const
-{
-    return _variableParameters;
-}
-
-void EntityStateUpdatePdu::setVariableParameters(const std::vector<VariableParameter>& pX)
-{
-     _variableParameters = pX;
 }
 
 void EntityStateUpdatePdu::marshal(DataStream& dataStream) const
 {
     EntityInformationFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _entityID.marshal(dataStream);
-    dataStream << _padding1;
-    dataStream << ( unsigned char )_variableParameters.size();
-    _entityLinearVelocity.marshal(dataStream);
-    _entityLocation.marshal(dataStream);
-    _entityOrientation.marshal(dataStream);
-    dataStream << _entityAppearance;
-
-     for(size_t idx = 0; idx < _variableParameters.size(); idx++)
-     {
-        VariableParameter x = _variableParameters[idx];
-        x.marshal(dataStream);
-     }
-
+    entityID.marshal(dataStream);
+    dataStream << padding1;
+    dataStream << numberOfVariableParameters;
+    entityLinearVelocity.marshal(dataStream);
+    entityLocation.marshal(dataStream);
+    entityOrientation.marshal(dataStream);
+    dataStream << entityAppearance;
+    variableParameters.marshal(dataStream);
 }
 
 void EntityStateUpdatePdu::unmarshal(DataStream& dataStream)
 {
     EntityInformationFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _entityID.unmarshal(dataStream);
-    dataStream >> _padding1;
-    dataStream >> _numberOfVariableParameters;
-    _entityLinearVelocity.unmarshal(dataStream);
-    _entityLocation.unmarshal(dataStream);
-    _entityOrientation.unmarshal(dataStream);
-    dataStream >> _entityAppearance;
-
-     _variableParameters.clear();
-     for(size_t idx = 0; idx < _numberOfVariableParameters; idx++)
-     {
-        VariableParameter x;
-        x.unmarshal(dataStream);
-        _variableParameters.push_back(x);
-     }
+    entityID.unmarshal(dataStream);
+    dataStream >> padding1;
+    dataStream >> numberOfVariableParameters;
+    entityLinearVelocity.unmarshal(dataStream);
+    entityLocation.unmarshal(dataStream);
+    entityOrientation.unmarshal(dataStream);
+    dataStream >> entityAppearance;
+    variableParameters.unmarshal(dataStream);
 }
 
 
@@ -167,18 +54,14 @@ bool EntityStateUpdatePdu::operator ==(const EntityStateUpdatePdu& rhs) const
 
      ivarsEqual = EntityInformationFamilyPdu::operator==(rhs);
 
-     if( ! (_entityID == rhs._entityID) ) ivarsEqual = false;
-     if( ! (_padding1 == rhs._padding1) ) ivarsEqual = false;
-     if( ! (_entityLinearVelocity == rhs._entityLinearVelocity) ) ivarsEqual = false;
-     if( ! (_entityLocation == rhs._entityLocation) ) ivarsEqual = false;
-     if( ! (_entityOrientation == rhs._entityOrientation) ) ivarsEqual = false;
-     if( ! (_entityAppearance == rhs._entityAppearance) ) ivarsEqual = false;
-
-     for(size_t idx = 0; idx < _variableParameters.size(); idx++)
-     {
-        if( ! ( _variableParameters[idx] == rhs._variableParameters[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (entityID == rhs.entityID) ) ivarsEqual = false;
+     if( ! (padding1 == rhs.padding1) ) ivarsEqual = false;
+     if( ! (numberOfVariableParameters == rhs.numberOfVariableParameters) ) ivarsEqual = false;
+     if( ! (entityLinearVelocity == rhs.entityLinearVelocity) ) ivarsEqual = false;
+     if( ! (entityLocation == rhs.entityLocation) ) ivarsEqual = false;
+     if( ! (entityOrientation == rhs.entityOrientation) ) ivarsEqual = false;
+     if( ! (entityAppearance == rhs.entityAppearance) ) ivarsEqual = false;
+     if( ! (variableParameters == rhs.variableParameters) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -188,20 +71,14 @@ int EntityStateUpdatePdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = EntityInformationFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _entityID.getMarshalledSize();  // _entityID
-   marshalSize = marshalSize + 1;  // _padding1
-   marshalSize = marshalSize + 1;  // _numberOfVariableParameters
-   marshalSize = marshalSize + _entityLinearVelocity.getMarshalledSize();  // _entityLinearVelocity
-   marshalSize = marshalSize + _entityLocation.getMarshalledSize();  // _entityLocation
-   marshalSize = marshalSize + _entityOrientation.getMarshalledSize();  // _entityOrientation
-   marshalSize = marshalSize + 4;  // _entityAppearance
-
-   for(unsigned long long idx=0; idx < _variableParameters.size(); idx++)
-   {
-        VariableParameter listElement = _variableParameters[idx];
-        marshalSize = marshalSize + listElement.getMarshalledSize();
-    }
-
+   marshalSize = marshalSize + entityID.getMarshalledSize();  // entityID
+   marshalSize = marshalSize + 1;  // padding1
+   marshalSize = marshalSize + 1;  // numberOfVariableParameters
+   marshalSize = marshalSize + entityLinearVelocity.getMarshalledSize();  // entityLinearVelocity
+   marshalSize = marshalSize + entityLocation.getMarshalledSize();  // entityLocation
+   marshalSize = marshalSize + entityOrientation.getMarshalledSize();  // entityOrientation
+   marshalSize = marshalSize + 4;  // entityAppearance
+   marshalSize = marshalSize + variableParameters.getMarshalledSize();  // variableParameters
     return marshalSize;
 }
 

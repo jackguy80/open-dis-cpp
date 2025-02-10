@@ -1,61 +1,28 @@
-#include <dis7/StandardVariableSpecification.h>
+#include "StandardVariableSpecification.h"
 
 using namespace DIS;
 
 
 StandardVariableSpecification::StandardVariableSpecification():
-   _numberOfStandardVariableRecords(0)
+   numberOfStandardVariableRecords(0), 
+   standardVariables()
 {
 }
 
 StandardVariableSpecification::~StandardVariableSpecification()
 {
-    _standardVariables.clear();
-}
-
-unsigned short StandardVariableSpecification::getNumberOfStandardVariableRecords() const
-{
-   return _standardVariables.size();
-}
-
-std::vector<SimulationManagementPduHeader>& StandardVariableSpecification::getStandardVariables() 
-{
-    return _standardVariables;
-}
-
-const std::vector<SimulationManagementPduHeader>& StandardVariableSpecification::getStandardVariables() const
-{
-    return _standardVariables;
-}
-
-void StandardVariableSpecification::setStandardVariables(const std::vector<SimulationManagementPduHeader>& pX)
-{
-     _standardVariables = pX;
 }
 
 void StandardVariableSpecification::marshal(DataStream& dataStream) const
 {
-    dataStream << ( unsigned short )_standardVariables.size();
-
-     for(size_t idx = 0; idx < _standardVariables.size(); idx++)
-     {
-        SimulationManagementPduHeader x = _standardVariables[idx];
-        x.marshal(dataStream);
-     }
-
+    dataStream << numberOfStandardVariableRecords;
+    standardVariables.marshal(dataStream);
 }
 
 void StandardVariableSpecification::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _numberOfStandardVariableRecords;
-
-     _standardVariables.clear();
-     for(size_t idx = 0; idx < _numberOfStandardVariableRecords; idx++)
-     {
-        SimulationManagementPduHeader x;
-        x.unmarshal(dataStream);
-        _standardVariables.push_back(x);
-     }
+    dataStream >> numberOfStandardVariableRecords;
+    standardVariables.unmarshal(dataStream);
 }
 
 
@@ -63,12 +30,8 @@ bool StandardVariableSpecification::operator ==(const StandardVariableSpecificat
  {
      bool ivarsEqual = true;
 
-
-     for(size_t idx = 0; idx < _standardVariables.size(); idx++)
-     {
-        if( ! ( _standardVariables[idx] == rhs._standardVariables[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (numberOfStandardVariableRecords == rhs.numberOfStandardVariableRecords) ) ivarsEqual = false;
+     if( ! (standardVariables == rhs.standardVariables) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -77,14 +40,8 @@ int StandardVariableSpecification::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _numberOfStandardVariableRecords
-
-   for(unsigned long long idx=0; idx < _standardVariables.size(); idx++)
-   {
-        SimulationManagementPduHeader listElement = _standardVariables[idx];
-        marshalSize = marshalSize + listElement.getMarshalledSize();
-    }
-
+   marshalSize = marshalSize + 2;  // numberOfStandardVariableRecords
+   marshalSize = marshalSize + standardVariables.getMarshalledSize();  // standardVariables
     return marshalSize;
 }
 

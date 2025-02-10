@@ -1,25 +1,25 @@
-#include <dis7/AngleDeception.h>
+#include "AngleDeception.h"
 
 using namespace DIS;
 
 
 AngleDeception::AngleDeception():
-   _recordType(3501), 
-   _recordLength(48), 
-   _padding(0), 
-   _emitterNumber(0), 
-   _beamNumber(0), 
-   _stateIndicator(0), 
-   _padding2(0), 
-   _azimuthOffset(0.0), 
-   _azimuthWidth(0.0), 
-   _azimuthPullRate(0.0), 
-   _azimuthPullAcceleration(0.0), 
-   _elevationOffset(0.0), 
-   _elevationWidth(0.0), 
-   _elevationPullRate(0.0), 
-   _elevationPullAcceleration(0.0), 
-   _padding3(0)
+   recordType(3501), 
+   recordLength(48), 
+   padding(0), 
+   emitterNumber(0), 
+   beamNumber(0), 
+   stateIndicator(0), 
+   padding2(0), 
+   azimuthOffset(0.0), 
+   azimuthWidth(0.0), 
+   azimuthPullRate(0.0), 
+   azimuthPullAcceleration(0.0), 
+   elevationOffset(0.0), 
+   elevationWidth(0.0), 
+   elevationPullRate(0.0), 
+   elevationPullAcceleration(0.0), 
+   padding3(0)
 {
 }
 
@@ -27,204 +27,44 @@ AngleDeception::~AngleDeception()
 {
 }
 
-unsigned int AngleDeception::getRecordType() const
-{
-    return _recordType;
-}
-
-void AngleDeception::setRecordType(unsigned int pX)
-{
-    _recordType = pX;
-}
-
-unsigned short AngleDeception::getRecordLength() const
-{
-    return _recordLength;
-}
-
-void AngleDeception::setRecordLength(unsigned short pX)
-{
-    _recordLength = pX;
-}
-
-unsigned short AngleDeception::getPadding() const
-{
-    return _padding;
-}
-
-void AngleDeception::setPadding(unsigned short pX)
-{
-    _padding = pX;
-}
-
-unsigned char AngleDeception::getEmitterNumber() const
-{
-    return _emitterNumber;
-}
-
-void AngleDeception::setEmitterNumber(unsigned char pX)
-{
-    _emitterNumber = pX;
-}
-
-unsigned char AngleDeception::getBeamNumber() const
-{
-    return _beamNumber;
-}
-
-void AngleDeception::setBeamNumber(unsigned char pX)
-{
-    _beamNumber = pX;
-}
-
-unsigned char AngleDeception::getStateIndicator() const
-{
-    return _stateIndicator;
-}
-
-void AngleDeception::setStateIndicator(unsigned char pX)
-{
-    _stateIndicator = pX;
-}
-
-unsigned int AngleDeception::getPadding2() const
-{
-    return _padding2;
-}
-
-void AngleDeception::setPadding2(unsigned int pX)
-{
-    _padding2 = pX;
-}
-
-float AngleDeception::getAzimuthOffset() const
-{
-    return _azimuthOffset;
-}
-
-void AngleDeception::setAzimuthOffset(float pX)
-{
-    _azimuthOffset = pX;
-}
-
-float AngleDeception::getAzimuthWidth() const
-{
-    return _azimuthWidth;
-}
-
-void AngleDeception::setAzimuthWidth(float pX)
-{
-    _azimuthWidth = pX;
-}
-
-float AngleDeception::getAzimuthPullRate() const
-{
-    return _azimuthPullRate;
-}
-
-void AngleDeception::setAzimuthPullRate(float pX)
-{
-    _azimuthPullRate = pX;
-}
-
-float AngleDeception::getAzimuthPullAcceleration() const
-{
-    return _azimuthPullAcceleration;
-}
-
-void AngleDeception::setAzimuthPullAcceleration(float pX)
-{
-    _azimuthPullAcceleration = pX;
-}
-
-float AngleDeception::getElevationOffset() const
-{
-    return _elevationOffset;
-}
-
-void AngleDeception::setElevationOffset(float pX)
-{
-    _elevationOffset = pX;
-}
-
-float AngleDeception::getElevationWidth() const
-{
-    return _elevationWidth;
-}
-
-void AngleDeception::setElevationWidth(float pX)
-{
-    _elevationWidth = pX;
-}
-
-float AngleDeception::getElevationPullRate() const
-{
-    return _elevationPullRate;
-}
-
-void AngleDeception::setElevationPullRate(float pX)
-{
-    _elevationPullRate = pX;
-}
-
-float AngleDeception::getElevationPullAcceleration() const
-{
-    return _elevationPullAcceleration;
-}
-
-void AngleDeception::setElevationPullAcceleration(float pX)
-{
-    _elevationPullAcceleration = pX;
-}
-
-unsigned int AngleDeception::getPadding3() const
-{
-    return _padding3;
-}
-
-void AngleDeception::setPadding3(unsigned int pX)
-{
-    _padding3 = pX;
-}
-
 void AngleDeception::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _recordLength;
-    dataStream << _padding;
-    dataStream << _emitterNumber;
-    dataStream << _beamNumber;
-    dataStream << _stateIndicator;
-    dataStream << _padding2;
-    dataStream << _azimuthOffset;
-    dataStream << _azimuthWidth;
-    dataStream << _azimuthPullRate;
-    dataStream << _azimuthPullAcceleration;
-    dataStream << _elevationOffset;
-    dataStream << _elevationWidth;
-    dataStream << _elevationPullRate;
-    dataStream << _elevationPullAcceleration;
-    dataStream << _padding3;
+    dataStream << recordType;
+    dataStream << recordLength;
+    dataStream << padding;
+    dataStream << emitterNumber;
+    dataStream << beamNumber;
+    dataStream << stateIndicator;
+    dataStream << padding2;
+    dataStream << azimuthOffset;
+    dataStream << azimuthWidth;
+    dataStream << azimuthPullRate;
+    dataStream << azimuthPullAcceleration;
+    dataStream << elevationOffset;
+    dataStream << elevationWidth;
+    dataStream << elevationPullRate;
+    dataStream << elevationPullAcceleration;
+    dataStream << padding3;
 }
 
 void AngleDeception::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _recordLength;
-    dataStream >> _padding;
-    dataStream >> _emitterNumber;
-    dataStream >> _beamNumber;
-    dataStream >> _stateIndicator;
-    dataStream >> _padding2;
-    dataStream >> _azimuthOffset;
-    dataStream >> _azimuthWidth;
-    dataStream >> _azimuthPullRate;
-    dataStream >> _azimuthPullAcceleration;
-    dataStream >> _elevationOffset;
-    dataStream >> _elevationWidth;
-    dataStream >> _elevationPullRate;
-    dataStream >> _elevationPullAcceleration;
-    dataStream >> _padding3;
+    dataStream >> recordType;
+    dataStream >> recordLength;
+    dataStream >> padding;
+    dataStream >> emitterNumber;
+    dataStream >> beamNumber;
+    dataStream >> stateIndicator;
+    dataStream >> padding2;
+    dataStream >> azimuthOffset;
+    dataStream >> azimuthWidth;
+    dataStream >> azimuthPullRate;
+    dataStream >> azimuthPullAcceleration;
+    dataStream >> elevationOffset;
+    dataStream >> elevationWidth;
+    dataStream >> elevationPullRate;
+    dataStream >> elevationPullAcceleration;
+    dataStream >> padding3;
 }
 
 
@@ -232,22 +72,22 @@ bool AngleDeception::operator ==(const AngleDeception& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_recordLength == rhs._recordLength) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
-     if( ! (_emitterNumber == rhs._emitterNumber) ) ivarsEqual = false;
-     if( ! (_beamNumber == rhs._beamNumber) ) ivarsEqual = false;
-     if( ! (_stateIndicator == rhs._stateIndicator) ) ivarsEqual = false;
-     if( ! (_padding2 == rhs._padding2) ) ivarsEqual = false;
-     if( ! (_azimuthOffset == rhs._azimuthOffset) ) ivarsEqual = false;
-     if( ! (_azimuthWidth == rhs._azimuthWidth) ) ivarsEqual = false;
-     if( ! (_azimuthPullRate == rhs._azimuthPullRate) ) ivarsEqual = false;
-     if( ! (_azimuthPullAcceleration == rhs._azimuthPullAcceleration) ) ivarsEqual = false;
-     if( ! (_elevationOffset == rhs._elevationOffset) ) ivarsEqual = false;
-     if( ! (_elevationWidth == rhs._elevationWidth) ) ivarsEqual = false;
-     if( ! (_elevationPullRate == rhs._elevationPullRate) ) ivarsEqual = false;
-     if( ! (_elevationPullAcceleration == rhs._elevationPullAcceleration) ) ivarsEqual = false;
-     if( ! (_padding3 == rhs._padding3) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (recordLength == rhs.recordLength) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
+     if( ! (emitterNumber == rhs.emitterNumber) ) ivarsEqual = false;
+     if( ! (beamNumber == rhs.beamNumber) ) ivarsEqual = false;
+     if( ! (stateIndicator == rhs.stateIndicator) ) ivarsEqual = false;
+     if( ! (padding2 == rhs.padding2) ) ivarsEqual = false;
+     if( ! (azimuthOffset == rhs.azimuthOffset) ) ivarsEqual = false;
+     if( ! (azimuthWidth == rhs.azimuthWidth) ) ivarsEqual = false;
+     if( ! (azimuthPullRate == rhs.azimuthPullRate) ) ivarsEqual = false;
+     if( ! (azimuthPullAcceleration == rhs.azimuthPullAcceleration) ) ivarsEqual = false;
+     if( ! (elevationOffset == rhs.elevationOffset) ) ivarsEqual = false;
+     if( ! (elevationWidth == rhs.elevationWidth) ) ivarsEqual = false;
+     if( ! (elevationPullRate == rhs.elevationPullRate) ) ivarsEqual = false;
+     if( ! (elevationPullAcceleration == rhs.elevationPullAcceleration) ) ivarsEqual = false;
+     if( ! (padding3 == rhs.padding3) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -256,22 +96,22 @@ int AngleDeception::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _recordType
-   marshalSize = marshalSize + 2;  // _recordLength
-   marshalSize = marshalSize + 2;  // _padding
-   marshalSize = marshalSize + 1;  // _emitterNumber
-   marshalSize = marshalSize + 1;  // _beamNumber
-   marshalSize = marshalSize + 1;  // _stateIndicator
-   marshalSize = marshalSize + 4;  // _padding2
-   marshalSize = marshalSize + 4;  // _azimuthOffset
-   marshalSize = marshalSize + 4;  // _azimuthWidth
-   marshalSize = marshalSize + 4;  // _azimuthPullRate
-   marshalSize = marshalSize + 4;  // _azimuthPullAcceleration
-   marshalSize = marshalSize + 4;  // _elevationOffset
-   marshalSize = marshalSize + 4;  // _elevationWidth
-   marshalSize = marshalSize + 4;  // _elevationPullRate
-   marshalSize = marshalSize + 4;  // _elevationPullAcceleration
-   marshalSize = marshalSize + 4;  // _padding3
+   marshalSize = marshalSize + 4;  // recordType
+   marshalSize = marshalSize + 2;  // recordLength
+   marshalSize = marshalSize + 2;  // padding
+   marshalSize = marshalSize + 1;  // emitterNumber
+   marshalSize = marshalSize + 1;  // beamNumber
+   marshalSize = marshalSize + 1;  // stateIndicator
+   marshalSize = marshalSize + 1;  // padding2
+   marshalSize = marshalSize + 4;  // azimuthOffset
+   marshalSize = marshalSize + 4;  // azimuthWidth
+   marshalSize = marshalSize + 4;  // azimuthPullRate
+   marshalSize = marshalSize + 4;  // azimuthPullAcceleration
+   marshalSize = marshalSize + 4;  // elevationOffset
+   marshalSize = marshalSize + 4;  // elevationWidth
+   marshalSize = marshalSize + 4;  // elevationPullRate
+   marshalSize = marshalSize + 4;  // elevationPullAcceleration
+   marshalSize = marshalSize + 4;  // padding3
     return marshalSize;
 }
 

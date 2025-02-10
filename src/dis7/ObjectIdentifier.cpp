@@ -1,11 +1,11 @@
-#include <dis7/ObjectIdentifier.h>
+#include "ObjectIdentifier.h"
 
 using namespace DIS;
 
 
 ObjectIdentifier::ObjectIdentifier():
-   _simulationAddress(), 
-   _objectNumber(0)
+   simulationAddress(), 
+   objectNumber(0)
 {
 }
 
@@ -13,41 +13,16 @@ ObjectIdentifier::~ObjectIdentifier()
 {
 }
 
-SimulationAddress& ObjectIdentifier::getSimulationAddress() 
-{
-    return _simulationAddress;
-}
-
-const SimulationAddress& ObjectIdentifier::getSimulationAddress() const
-{
-    return _simulationAddress;
-}
-
-void ObjectIdentifier::setSimulationAddress(const SimulationAddress &pX)
-{
-    _simulationAddress = pX;
-}
-
-unsigned short ObjectIdentifier::getObjectNumber() const
-{
-    return _objectNumber;
-}
-
-void ObjectIdentifier::setObjectNumber(unsigned short pX)
-{
-    _objectNumber = pX;
-}
-
 void ObjectIdentifier::marshal(DataStream& dataStream) const
 {
-    _simulationAddress.marshal(dataStream);
-    dataStream << _objectNumber;
+    simulationAddress.marshal(dataStream);
+    dataStream << objectNumber;
 }
 
 void ObjectIdentifier::unmarshal(DataStream& dataStream)
 {
-    _simulationAddress.unmarshal(dataStream);
-    dataStream >> _objectNumber;
+    simulationAddress.unmarshal(dataStream);
+    dataStream >> objectNumber;
 }
 
 
@@ -55,8 +30,8 @@ bool ObjectIdentifier::operator ==(const ObjectIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_simulationAddress == rhs._simulationAddress) ) ivarsEqual = false;
-     if( ! (_objectNumber == rhs._objectNumber) ) ivarsEqual = false;
+     if( ! (simulationAddress == rhs.simulationAddress) ) ivarsEqual = false;
+     if( ! (objectNumber == rhs.objectNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int ObjectIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _simulationAddress.getMarshalledSize();  // _simulationAddress
-   marshalSize = marshalSize + 2;  // _objectNumber
+   marshalSize = marshalSize + simulationAddress.getMarshalledSize();  // simulationAddress
+   marshalSize = marshalSize + 2;  // objectNumber
     return marshalSize;
 }
 

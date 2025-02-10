@@ -1,12 +1,12 @@
-#include <dis6/LayerHeader.h>
+#include "LayerHeader.h"
 
 using namespace DIS;
 
 
 LayerHeader::LayerHeader():
-   _layerNumber(0), 
-   _layerSpecificInformaiton(0), 
-   _length(0)
+   layerNumber(0), 
+   layerSpecificInformaiton(0), 
+   length(0)
 {
 }
 
@@ -14,48 +14,18 @@ LayerHeader::~LayerHeader()
 {
 }
 
-unsigned char LayerHeader::getLayerNumber() const
-{
-    return _layerNumber;
-}
-
-void LayerHeader::setLayerNumber(unsigned char pX)
-{
-    _layerNumber = pX;
-}
-
-unsigned char LayerHeader::getLayerSpecificInformaiton() const
-{
-    return _layerSpecificInformaiton;
-}
-
-void LayerHeader::setLayerSpecificInformaiton(unsigned char pX)
-{
-    _layerSpecificInformaiton = pX;
-}
-
-unsigned short LayerHeader::getLength() const
-{
-    return _length;
-}
-
-void LayerHeader::setLength(unsigned short pX)
-{
-    _length = pX;
-}
-
 void LayerHeader::marshal(DataStream& dataStream) const
 {
-    dataStream << _layerNumber;
-    dataStream << _layerSpecificInformaiton;
-    dataStream << _length;
+    dataStream << layerNumber;
+    dataStream << layerSpecificInformaiton;
+    dataStream << length;
 }
 
 void LayerHeader::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _layerNumber;
-    dataStream >> _layerSpecificInformaiton;
-    dataStream >> _length;
+    dataStream >> layerNumber;
+    dataStream >> layerSpecificInformaiton;
+    dataStream >> length;
 }
 
 
@@ -63,9 +33,9 @@ bool LayerHeader::operator ==(const LayerHeader& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_layerNumber == rhs._layerNumber) ) ivarsEqual = false;
-     if( ! (_layerSpecificInformaiton == rhs._layerSpecificInformaiton) ) ivarsEqual = false;
-     if( ! (_length == rhs._length) ) ivarsEqual = false;
+     if( ! (layerNumber == rhs.layerNumber) ) ivarsEqual = false;
+     if( ! (layerSpecificInformaiton == rhs.layerSpecificInformaiton) ) ivarsEqual = false;
+     if( ! (length == rhs.length) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int LayerHeader::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _layerNumber
-   marshalSize = marshalSize + 1;  // _layerSpecificInformaiton
-   marshalSize = marshalSize + 2;  // _length
+   marshalSize = marshalSize + 1;  // layerNumber
+   marshalSize = marshalSize + 1;  // layerSpecificInformaiton
+   marshalSize = marshalSize + 2;  // length
     return marshalSize;
 }
 

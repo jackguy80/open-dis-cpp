@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.34. Three double precision floating point values, x, y, and z
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT Vector3Double
+struct EXPORT_MACRO Vector3Double
 {
-protected:
   /** X value */
-  double _x; 
+  double x;
 
   /** Y value */
-  double _y; 
+  double y;
 
   /** Z value */
-  double _z; 
+  double z;
 
-
- public:
     Vector3Double();
     virtual ~Vector3Double();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    double getX() const; 
-    void setX(double pX); 
 
-    double getY() const; 
-    void setY(double pX); 
+     virtual int getMarshalledSize() const;
 
-    double getZ() const; 
-    void setZ(double pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const Vector3Double& rhs) const;
+     bool operator ==(const Vector3Double& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

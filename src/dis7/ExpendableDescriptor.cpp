@@ -1,11 +1,11 @@
-#include <dis7/ExpendableDescriptor.h>
+#include "ExpendableDescriptor.h"
 
 using namespace DIS;
 
 
 ExpendableDescriptor::ExpendableDescriptor():
-   _expendableType(), 
-   _padding(0)
+   expendableType(), 
+   padding(0)
 {
 }
 
@@ -13,41 +13,16 @@ ExpendableDescriptor::~ExpendableDescriptor()
 {
 }
 
-EntityType& ExpendableDescriptor::getExpendableType() 
-{
-    return _expendableType;
-}
-
-const EntityType& ExpendableDescriptor::getExpendableType() const
-{
-    return _expendableType;
-}
-
-void ExpendableDescriptor::setExpendableType(const EntityType &pX)
-{
-    _expendableType = pX;
-}
-
-long long ExpendableDescriptor::getPadding() const
-{
-    return _padding;
-}
-
-void ExpendableDescriptor::setPadding(long long pX)
-{
-    _padding = pX;
-}
-
 void ExpendableDescriptor::marshal(DataStream& dataStream) const
 {
-    _expendableType.marshal(dataStream);
-    dataStream << _padding;
+    expendableType.marshal(dataStream);
+    dataStream << padding;
 }
 
 void ExpendableDescriptor::unmarshal(DataStream& dataStream)
 {
-    _expendableType.unmarshal(dataStream);
-    dataStream >> _padding;
+    expendableType.unmarshal(dataStream);
+    dataStream >> padding;
 }
 
 
@@ -55,8 +30,8 @@ bool ExpendableDescriptor::operator ==(const ExpendableDescriptor& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_expendableType == rhs._expendableType) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (expendableType == rhs.expendableType) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int ExpendableDescriptor::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _expendableType.getMarshalledSize();  // _expendableType
-   marshalSize = marshalSize + 8;  // _padding
+   marshalSize = marshalSize + expendableType.getMarshalledSize();  // expendableType
+   marshalSize = marshalSize + 8;  // padding
     return marshalSize;
 }
 

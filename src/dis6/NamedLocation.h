@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // discrete ostional relationsihip 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT NamedLocation
+struct EXPORT_MACRO NamedLocation
 {
-protected:
   /** station name enumeration */
-  unsigned short _stationName; 
+  unsigned short stationName;
 
   /** station number */
-  unsigned short _stationNumber; 
+  unsigned short stationNumber;
 
-
- public:
     NamedLocation();
     virtual ~NamedLocation();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getStationName() const; 
-    void setStationName(unsigned short pX); 
 
-    unsigned short getStationNumber() const; 
-    void setStationNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const NamedLocation& rhs) const;
+     bool operator ==(const NamedLocation& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

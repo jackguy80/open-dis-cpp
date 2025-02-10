@@ -2,10 +2,7 @@
 
 #include <string>                        // for param
 #include <cstddef>                       // for size_t definition
-
-#include <SDL.h>
-#include <SDL_net.h>
-
+#include <winsock2.h>
 
 namespace Example
 {
@@ -32,8 +29,8 @@ namespace Example
    private:
       void HandleError();
 
-      UDPsocket mSocket;
-      IPaddress mAddr;
+      SOCKET mSocket;
+      char* mAddr;
    };
 }
 

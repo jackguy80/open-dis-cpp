@@ -1,12 +1,12 @@
-#include <dis7/SecondaryOperationalData.h>
+#include "SecondaryOperationalData.h"
 
 using namespace DIS;
 
 
 SecondaryOperationalData::SecondaryOperationalData():
-   _operationalData1(0), 
-   _operationalData2(0), 
-   _numberOfIFFFundamentalParameterRecords(0)
+   operationalData1(0), 
+   operationalData2(0), 
+   numberOfIFFFundamentalParameterRecords(0)
 {
 }
 
@@ -14,48 +14,18 @@ SecondaryOperationalData::~SecondaryOperationalData()
 {
 }
 
-unsigned char SecondaryOperationalData::getOperationalData1() const
-{
-    return _operationalData1;
-}
-
-void SecondaryOperationalData::setOperationalData1(unsigned char pX)
-{
-    _operationalData1 = pX;
-}
-
-unsigned char SecondaryOperationalData::getOperationalData2() const
-{
-    return _operationalData2;
-}
-
-void SecondaryOperationalData::setOperationalData2(unsigned char pX)
-{
-    _operationalData2 = pX;
-}
-
-unsigned short SecondaryOperationalData::getNumberOfIFFFundamentalParameterRecords() const
-{
-    return _numberOfIFFFundamentalParameterRecords;
-}
-
-void SecondaryOperationalData::setNumberOfIFFFundamentalParameterRecords(unsigned short pX)
-{
-    _numberOfIFFFundamentalParameterRecords = pX;
-}
-
 void SecondaryOperationalData::marshal(DataStream& dataStream) const
 {
-    dataStream << _operationalData1;
-    dataStream << _operationalData2;
-    dataStream << _numberOfIFFFundamentalParameterRecords;
+    dataStream << operationalData1;
+    dataStream << operationalData2;
+    dataStream << numberOfIFFFundamentalParameterRecords;
 }
 
 void SecondaryOperationalData::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _operationalData1;
-    dataStream >> _operationalData2;
-    dataStream >> _numberOfIFFFundamentalParameterRecords;
+    dataStream >> operationalData1;
+    dataStream >> operationalData2;
+    dataStream >> numberOfIFFFundamentalParameterRecords;
 }
 
 
@@ -63,9 +33,9 @@ bool SecondaryOperationalData::operator ==(const SecondaryOperationalData& rhs) 
  {
      bool ivarsEqual = true;
 
-     if( ! (_operationalData1 == rhs._operationalData1) ) ivarsEqual = false;
-     if( ! (_operationalData2 == rhs._operationalData2) ) ivarsEqual = false;
-     if( ! (_numberOfIFFFundamentalParameterRecords == rhs._numberOfIFFFundamentalParameterRecords) ) ivarsEqual = false;
+     if( ! (operationalData1 == rhs.operationalData1) ) ivarsEqual = false;
+     if( ! (operationalData2 == rhs.operationalData2) ) ivarsEqual = false;
+     if( ! (numberOfIFFFundamentalParameterRecords == rhs.numberOfIFFFundamentalParameterRecords) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int SecondaryOperationalData::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _operationalData1
-   marshalSize = marshalSize + 1;  // _operationalData2
-   marshalSize = marshalSize + 2;  // _numberOfIFFFundamentalParameterRecords
+   marshalSize = marshalSize + 1;  // operationalData1
+   marshalSize = marshalSize + 1;  // operationalData2
+   marshalSize = marshalSize + 2;  // numberOfIFFFundamentalParameterRecords
     return marshalSize;
 }
 

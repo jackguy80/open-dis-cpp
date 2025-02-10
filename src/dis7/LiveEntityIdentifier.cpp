@@ -1,11 +1,11 @@
-#include <dis7/LiveEntityIdentifier.h>
+#include "LiveEntityIdentifier.h"
 
 using namespace DIS;
 
 
 LiveEntityIdentifier::LiveEntityIdentifier():
-   _liveSimulationAddress(), 
-   _entityNumber(0)
+   liveSimulationAddress(), 
+   entityNumber(0)
 {
 }
 
@@ -13,41 +13,16 @@ LiveEntityIdentifier::~LiveEntityIdentifier()
 {
 }
 
-LiveSimulationAddress& LiveEntityIdentifier::getLiveSimulationAddress() 
-{
-    return _liveSimulationAddress;
-}
-
-const LiveSimulationAddress& LiveEntityIdentifier::getLiveSimulationAddress() const
-{
-    return _liveSimulationAddress;
-}
-
-void LiveEntityIdentifier::setLiveSimulationAddress(const LiveSimulationAddress &pX)
-{
-    _liveSimulationAddress = pX;
-}
-
-unsigned short LiveEntityIdentifier::getEntityNumber() const
-{
-    return _entityNumber;
-}
-
-void LiveEntityIdentifier::setEntityNumber(unsigned short pX)
-{
-    _entityNumber = pX;
-}
-
 void LiveEntityIdentifier::marshal(DataStream& dataStream) const
 {
-    _liveSimulationAddress.marshal(dataStream);
-    dataStream << _entityNumber;
+    liveSimulationAddress.marshal(dataStream);
+    dataStream << entityNumber;
 }
 
 void LiveEntityIdentifier::unmarshal(DataStream& dataStream)
 {
-    _liveSimulationAddress.unmarshal(dataStream);
-    dataStream >> _entityNumber;
+    liveSimulationAddress.unmarshal(dataStream);
+    dataStream >> entityNumber;
 }
 
 
@@ -55,8 +30,8 @@ bool LiveEntityIdentifier::operator ==(const LiveEntityIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_liveSimulationAddress == rhs._liveSimulationAddress) ) ivarsEqual = false;
-     if( ! (_entityNumber == rhs._entityNumber) ) ivarsEqual = false;
+     if( ! (liveSimulationAddress == rhs.liveSimulationAddress) ) ivarsEqual = false;
+     if( ! (entityNumber == rhs.entityNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int LiveEntityIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _liveSimulationAddress.getMarshalledSize();  // _liveSimulationAddress
-   marshalSize = marshalSize + 2;  // _entityNumber
+   marshalSize = marshalSize + liveSimulationAddress.getMarshalledSize();  // liveSimulationAddress
+   marshalSize = marshalSize + 2;  // entityNumber
     return marshalSize;
 }
 

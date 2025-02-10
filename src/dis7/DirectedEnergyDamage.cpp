@@ -1,21 +1,21 @@
-#include <dis7/DirectedEnergyDamage.h>
+#include "DirectedEnergyDamage.h"
 
 using namespace DIS;
 
 
 DirectedEnergyDamage::DirectedEnergyDamage():
-   _recordType(4500), 
-   _recordLength(40), 
-   _padding(0), 
-   _damageLocation(), 
-   _damageDiameter(0.0), 
-   _temperature(-273.15), 
-   _componentIdentification(0), 
-   _componentDamageStatus(0), 
-   _componentVisualDamageStatus(0), 
-   _componentVisualSmokeColor(0), 
-   _fireEventID(), 
-   _padding2(0)
+   recordType(4500), 
+   recordLength(40), 
+   padding(0), 
+   damageLocation(), 
+   damageDiameter(0.0), 
+   temperature(-273.15), 
+   componentIdentification(0), 
+   componentDamageStatus(0), 
+   componentVisualDamageStatus(0), 
+   componentVisualSmokeColor(0), 
+   fireEventID(), 
+   padding2(0)
 {
 }
 
@@ -23,166 +23,36 @@ DirectedEnergyDamage::~DirectedEnergyDamage()
 {
 }
 
-unsigned int DirectedEnergyDamage::getRecordType() const
-{
-    return _recordType;
-}
-
-void DirectedEnergyDamage::setRecordType(unsigned int pX)
-{
-    _recordType = pX;
-}
-
-unsigned short DirectedEnergyDamage::getRecordLength() const
-{
-    return _recordLength;
-}
-
-void DirectedEnergyDamage::setRecordLength(unsigned short pX)
-{
-    _recordLength = pX;
-}
-
-unsigned short DirectedEnergyDamage::getPadding() const
-{
-    return _padding;
-}
-
-void DirectedEnergyDamage::setPadding(unsigned short pX)
-{
-    _padding = pX;
-}
-
-Vector3Float& DirectedEnergyDamage::getDamageLocation() 
-{
-    return _damageLocation;
-}
-
-const Vector3Float& DirectedEnergyDamage::getDamageLocation() const
-{
-    return _damageLocation;
-}
-
-void DirectedEnergyDamage::setDamageLocation(const Vector3Float &pX)
-{
-    _damageLocation = pX;
-}
-
-float DirectedEnergyDamage::getDamageDiameter() const
-{
-    return _damageDiameter;
-}
-
-void DirectedEnergyDamage::setDamageDiameter(float pX)
-{
-    _damageDiameter = pX;
-}
-
-float DirectedEnergyDamage::getTemperature() const
-{
-    return _temperature;
-}
-
-void DirectedEnergyDamage::setTemperature(float pX)
-{
-    _temperature = pX;
-}
-
-unsigned char DirectedEnergyDamage::getComponentIdentification() const
-{
-    return _componentIdentification;
-}
-
-void DirectedEnergyDamage::setComponentIdentification(unsigned char pX)
-{
-    _componentIdentification = pX;
-}
-
-unsigned char DirectedEnergyDamage::getComponentDamageStatus() const
-{
-    return _componentDamageStatus;
-}
-
-void DirectedEnergyDamage::setComponentDamageStatus(unsigned char pX)
-{
-    _componentDamageStatus = pX;
-}
-
-unsigned char DirectedEnergyDamage::getComponentVisualDamageStatus() const
-{
-    return _componentVisualDamageStatus;
-}
-
-void DirectedEnergyDamage::setComponentVisualDamageStatus(unsigned char pX)
-{
-    _componentVisualDamageStatus = pX;
-}
-
-unsigned char DirectedEnergyDamage::getComponentVisualSmokeColor() const
-{
-    return _componentVisualSmokeColor;
-}
-
-void DirectedEnergyDamage::setComponentVisualSmokeColor(unsigned char pX)
-{
-    _componentVisualSmokeColor = pX;
-}
-
-EventIdentifier& DirectedEnergyDamage::getFireEventID() 
-{
-    return _fireEventID;
-}
-
-const EventIdentifier& DirectedEnergyDamage::getFireEventID() const
-{
-    return _fireEventID;
-}
-
-void DirectedEnergyDamage::setFireEventID(const EventIdentifier &pX)
-{
-    _fireEventID = pX;
-}
-
-unsigned short DirectedEnergyDamage::getPadding2() const
-{
-    return _padding2;
-}
-
-void DirectedEnergyDamage::setPadding2(unsigned short pX)
-{
-    _padding2 = pX;
-}
-
 void DirectedEnergyDamage::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _recordLength;
-    dataStream << _padding;
-    _damageLocation.marshal(dataStream);
-    dataStream << _damageDiameter;
-    dataStream << _temperature;
-    dataStream << _componentIdentification;
-    dataStream << _componentDamageStatus;
-    dataStream << _componentVisualDamageStatus;
-    dataStream << _componentVisualSmokeColor;
-    _fireEventID.marshal(dataStream);
-    dataStream << _padding2;
+    dataStream << recordType;
+    dataStream << recordLength;
+    dataStream << padding;
+    damageLocation.marshal(dataStream);
+    dataStream << damageDiameter;
+    dataStream << temperature;
+    dataStream << componentIdentification;
+    dataStream << componentDamageStatus;
+    dataStream << componentVisualDamageStatus;
+    dataStream << componentVisualSmokeColor;
+    fireEventID.marshal(dataStream);
+    dataStream << padding2;
 }
 
 void DirectedEnergyDamage::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _recordLength;
-    dataStream >> _padding;
-    _damageLocation.unmarshal(dataStream);
-    dataStream >> _damageDiameter;
-    dataStream >> _temperature;
-    dataStream >> _componentIdentification;
-    dataStream >> _componentDamageStatus;
-    dataStream >> _componentVisualDamageStatus;
-    dataStream >> _componentVisualSmokeColor;
-    _fireEventID.unmarshal(dataStream);
-    dataStream >> _padding2;
+    dataStream >> recordType;
+    dataStream >> recordLength;
+    dataStream >> padding;
+    damageLocation.unmarshal(dataStream);
+    dataStream >> damageDiameter;
+    dataStream >> temperature;
+    dataStream >> componentIdentification;
+    dataStream >> componentDamageStatus;
+    dataStream >> componentVisualDamageStatus;
+    dataStream >> componentVisualSmokeColor;
+    fireEventID.unmarshal(dataStream);
+    dataStream >> padding2;
 }
 
 
@@ -190,18 +60,18 @@ bool DirectedEnergyDamage::operator ==(const DirectedEnergyDamage& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_recordLength == rhs._recordLength) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
-     if( ! (_damageLocation == rhs._damageLocation) ) ivarsEqual = false;
-     if( ! (_damageDiameter == rhs._damageDiameter) ) ivarsEqual = false;
-     if( ! (_temperature == rhs._temperature) ) ivarsEqual = false;
-     if( ! (_componentIdentification == rhs._componentIdentification) ) ivarsEqual = false;
-     if( ! (_componentDamageStatus == rhs._componentDamageStatus) ) ivarsEqual = false;
-     if( ! (_componentVisualDamageStatus == rhs._componentVisualDamageStatus) ) ivarsEqual = false;
-     if( ! (_componentVisualSmokeColor == rhs._componentVisualSmokeColor) ) ivarsEqual = false;
-     if( ! (_fireEventID == rhs._fireEventID) ) ivarsEqual = false;
-     if( ! (_padding2 == rhs._padding2) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (recordLength == rhs.recordLength) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
+     if( ! (damageLocation == rhs.damageLocation) ) ivarsEqual = false;
+     if( ! (damageDiameter == rhs.damageDiameter) ) ivarsEqual = false;
+     if( ! (temperature == rhs.temperature) ) ivarsEqual = false;
+     if( ! (componentIdentification == rhs.componentIdentification) ) ivarsEqual = false;
+     if( ! (componentDamageStatus == rhs.componentDamageStatus) ) ivarsEqual = false;
+     if( ! (componentVisualDamageStatus == rhs.componentVisualDamageStatus) ) ivarsEqual = false;
+     if( ! (componentVisualSmokeColor == rhs.componentVisualSmokeColor) ) ivarsEqual = false;
+     if( ! (fireEventID == rhs.fireEventID) ) ivarsEqual = false;
+     if( ! (padding2 == rhs.padding2) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -210,18 +80,18 @@ int DirectedEnergyDamage::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _recordType
-   marshalSize = marshalSize + 2;  // _recordLength
-   marshalSize = marshalSize + 2;  // _padding
-   marshalSize = marshalSize + _damageLocation.getMarshalledSize();  // _damageLocation
-   marshalSize = marshalSize + 4;  // _damageDiameter
-   marshalSize = marshalSize + 4;  // _temperature
-   marshalSize = marshalSize + 1;  // _componentIdentification
-   marshalSize = marshalSize + 1;  // _componentDamageStatus
-   marshalSize = marshalSize + 1;  // _componentVisualDamageStatus
-   marshalSize = marshalSize + 1;  // _componentVisualSmokeColor
-   marshalSize = marshalSize + _fireEventID.getMarshalledSize();  // _fireEventID
-   marshalSize = marshalSize + 2;  // _padding2
+   marshalSize = marshalSize + 4;  // recordType
+   marshalSize = marshalSize + 2;  // recordLength
+   marshalSize = marshalSize + 2;  // padding
+   marshalSize = marshalSize + damageLocation.getMarshalledSize();  // damageLocation
+   marshalSize = marshalSize + 4;  // damageDiameter
+   marshalSize = marshalSize + 4;  // temperature
+   marshalSize = marshalSize + 1;  // componentIdentification
+   marshalSize = marshalSize + 1;  // componentDamageStatus
+   marshalSize = marshalSize + 1;  // componentVisualDamageStatus
+   marshalSize = marshalSize + 1;  // componentVisualSmokeColor
+   marshalSize = marshalSize + fireEventID.getMarshalledSize();  // fireEventID
+   marshalSize = marshalSize + 2;  // padding2
     return marshalSize;
 }
 

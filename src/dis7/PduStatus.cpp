@@ -1,10 +1,10 @@
-#include <dis7/PduStatus.h>
+#include "PduStatus.h"
 
 using namespace DIS;
 
 
 PduStatus::PduStatus():
-   _pduStatus(0)
+   pduStatus(0)
 {
 }
 
@@ -12,24 +12,14 @@ PduStatus::~PduStatus()
 {
 }
 
-unsigned char PduStatus::getPduStatus() const
-{
-    return _pduStatus;
-}
-
-void PduStatus::setPduStatus(unsigned char pX)
-{
-    _pduStatus = pX;
-}
-
 void PduStatus::marshal(DataStream& dataStream) const
 {
-    dataStream << _pduStatus;
+    dataStream << pduStatus;
 }
 
 void PduStatus::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _pduStatus;
+    dataStream >> pduStatus;
 }
 
 
@@ -37,7 +27,7 @@ bool PduStatus::operator ==(const PduStatus& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_pduStatus == rhs._pduStatus) ) ivarsEqual = false;
+     if( ! (pduStatus == rhs.pduStatus) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -46,7 +36,7 @@ int PduStatus::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 1;  // _pduStatus
+   marshalSize = marshalSize + 1;  // pduStatus
     return marshalSize;
 }
 

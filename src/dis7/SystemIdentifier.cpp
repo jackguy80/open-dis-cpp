@@ -1,13 +1,13 @@
-#include <dis7/SystemIdentifier.h>
+#include "SystemIdentifier.h"
 
 using namespace DIS;
 
 
 SystemIdentifier::SystemIdentifier():
-   _systemType(0), 
-   _systemName(0), 
-   _systemMode(0), 
-   _changeOptions(0)
+   systemType(0), 
+   systemName(0), 
+   systemMode(0), 
+   changeOptions()
 {
 }
 
@@ -15,60 +15,20 @@ SystemIdentifier::~SystemIdentifier()
 {
 }
 
-unsigned short SystemIdentifier::getSystemType() const
-{
-    return _systemType;
-}
-
-void SystemIdentifier::setSystemType(unsigned short pX)
-{
-    _systemType = pX;
-}
-
-unsigned short SystemIdentifier::getSystemName() const
-{
-    return _systemName;
-}
-
-void SystemIdentifier::setSystemName(unsigned short pX)
-{
-    _systemName = pX;
-}
-
-unsigned char SystemIdentifier::getSystemMode() const
-{
-    return _systemMode;
-}
-
-void SystemIdentifier::setSystemMode(unsigned char pX)
-{
-    _systemMode = pX;
-}
-
-unsigned char SystemIdentifier::getChangeOptions() const
-{
-    return _changeOptions;
-}
-
-void SystemIdentifier::setChangeOptions(unsigned char pX)
-{
-    _changeOptions = pX;
-}
-
 void SystemIdentifier::marshal(DataStream& dataStream) const
 {
-    dataStream << _systemType;
-    dataStream << _systemName;
-    dataStream << _systemMode;
-    dataStream << _changeOptions;
+    dataStream << systemType;
+    dataStream << systemName;
+    dataStream << systemMode;
+    changeOptions.marshal(dataStream);
 }
 
 void SystemIdentifier::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _systemType;
-    dataStream >> _systemName;
-    dataStream >> _systemMode;
-    dataStream >> _changeOptions;
+    dataStream >> systemType;
+    dataStream >> systemName;
+    dataStream >> systemMode;
+    changeOptions.unmarshal(dataStream);
 }
 
 
@@ -76,10 +36,10 @@ bool SystemIdentifier::operator ==(const SystemIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_systemType == rhs._systemType) ) ivarsEqual = false;
-     if( ! (_systemName == rhs._systemName) ) ivarsEqual = false;
-     if( ! (_systemMode == rhs._systemMode) ) ivarsEqual = false;
-     if( ! (_changeOptions == rhs._changeOptions) ) ivarsEqual = false;
+     if( ! (systemType == rhs.systemType) ) ivarsEqual = false;
+     if( ! (systemName == rhs.systemName) ) ivarsEqual = false;
+     if( ! (systemMode == rhs.systemMode) ) ivarsEqual = false;
+     if( ! (changeOptions == rhs.changeOptions) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -88,10 +48,10 @@ int SystemIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _systemType
-   marshalSize = marshalSize + 2;  // _systemName
-   marshalSize = marshalSize + 1;  // _systemMode
-   marshalSize = marshalSize + 1;  // _changeOptions
+   marshalSize = marshalSize + 2;  // systemType
+   marshalSize = marshalSize + 2;  // systemName
+   marshalSize = marshalSize + 2;  // systemMode
+   marshalSize = marshalSize + changeOptions.getMarshalledSize();  // changeOptions
     return marshalSize;
 }
 

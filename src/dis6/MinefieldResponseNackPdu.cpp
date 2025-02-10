@@ -1,93 +1,34 @@
-#include <dis6/MinefieldResponseNackPdu.h>
+#include "MinefieldResponseNackPdu.h"
 
 using namespace DIS;
 
 
 MinefieldResponseNackPdu::MinefieldResponseNackPdu() : MinefieldFamilyPdu(),
-   _minefieldID(), 
-   _requestingEntityID(), 
-   _requestID(0), 
-   _numberOfMissingPdus(0)
+   minefieldID(), 
+   requestingEntityID(), 
+   requestID(0), 
+   numberOfMissingPdus(0), 
+   missingPduSequenceNumbers(0)
 {
-    setPduType( 40 );
+    pduType = 40;
 }
 
 MinefieldResponseNackPdu::~MinefieldResponseNackPdu()
 {
-    _missingPduSequenceNumbers.clear();
-}
-
-EntityID& MinefieldResponseNackPdu::getMinefieldID() 
-{
-    return _minefieldID;
-}
-
-const EntityID& MinefieldResponseNackPdu::getMinefieldID() const
-{
-    return _minefieldID;
-}
-
-void MinefieldResponseNackPdu::setMinefieldID(const EntityID &pX)
-{
-    _minefieldID = pX;
-}
-
-EntityID& MinefieldResponseNackPdu::getRequestingEntityID() 
-{
-    return _requestingEntityID;
-}
-
-const EntityID& MinefieldResponseNackPdu::getRequestingEntityID() const
-{
-    return _requestingEntityID;
-}
-
-void MinefieldResponseNackPdu::setRequestingEntityID(const EntityID &pX)
-{
-    _requestingEntityID = pX;
-}
-
-unsigned char MinefieldResponseNackPdu::getRequestID() const
-{
-    return _requestID;
-}
-
-void MinefieldResponseNackPdu::setRequestID(unsigned char pX)
-{
-    _requestID = pX;
-}
-
-unsigned char MinefieldResponseNackPdu::getNumberOfMissingPdus() const
-{
-   return _missingPduSequenceNumbers.size();
-}
-
-std::vector<EightByteChunk>& MinefieldResponseNackPdu::getMissingPduSequenceNumbers() 
-{
-    return _missingPduSequenceNumbers;
-}
-
-const std::vector<EightByteChunk>& MinefieldResponseNackPdu::getMissingPduSequenceNumbers() const
-{
-    return _missingPduSequenceNumbers;
-}
-
-void MinefieldResponseNackPdu::setMissingPduSequenceNumbers(const std::vector<EightByteChunk>& pX)
-{
-     _missingPduSequenceNumbers = pX;
+    missingPduSequenceNumbers.clear();
 }
 
 void MinefieldResponseNackPdu::marshal(DataStream& dataStream) const
 {
     MinefieldFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _minefieldID.marshal(dataStream);
-    _requestingEntityID.marshal(dataStream);
-    dataStream << _requestID;
-    dataStream << ( unsigned char )_missingPduSequenceNumbers.size();
+    minefieldID.marshal(dataStream);
+    requestingEntityID.marshal(dataStream);
+    dataStream << requestID;
+    dataStream << ( unsigned char )missingPduSequenceNumbers.size();
 
-     for(size_t idx = 0; idx < _missingPduSequenceNumbers.size(); idx++)
+     for(size_t idx = 0; idx < missingPduSequenceNumbers.size(); idx++)
      {
-        EightByteChunk x = _missingPduSequenceNumbers[idx];
+        EightByteChunk x = missingPduSequenceNumbers[idx];
         x.marshal(dataStream);
      }
 
@@ -96,17 +37,17 @@ void MinefieldResponseNackPdu::marshal(DataStream& dataStream) const
 void MinefieldResponseNackPdu::unmarshal(DataStream& dataStream)
 {
     MinefieldFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _minefieldID.unmarshal(dataStream);
-    _requestingEntityID.unmarshal(dataStream);
-    dataStream >> _requestID;
-    dataStream >> _numberOfMissingPdus;
+    minefieldID.unmarshal(dataStream);
+    requestingEntityID.unmarshal(dataStream);
+    dataStream >> requestID;
+    dataStream >> numberOfMissingPdus;
 
-     _missingPduSequenceNumbers.clear();
-     for(size_t idx = 0; idx < _numberOfMissingPdus; idx++)
+     missingPduSequenceNumbers.clear();
+     for(size_t idx = 0; idx < numberOfMissingPdus; idx++)
      {
         EightByteChunk x;
         x.unmarshal(dataStream);
-        _missingPduSequenceNumbers.push_back(x);
+        missingPduSequenceNumbers.push_back(x);
      }
 }
 
@@ -117,13 +58,13 @@ bool MinefieldResponseNackPdu::operator ==(const MinefieldResponseNackPdu& rhs) 
 
      ivarsEqual = MinefieldFamilyPdu::operator==(rhs);
 
-     if( ! (_minefieldID == rhs._minefieldID) ) ivarsEqual = false;
-     if( ! (_requestingEntityID == rhs._requestingEntityID) ) ivarsEqual = false;
-     if( ! (_requestID == rhs._requestID) ) ivarsEqual = false;
+     if( ! (minefieldID == rhs.minefieldID) ) ivarsEqual = false;
+     if( ! (requestingEntityID == rhs.requestingEntityID) ) ivarsEqual = false;
+     if( ! (requestID == rhs.requestID) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _missingPduSequenceNumbers.size(); idx++)
+     for(size_t idx = 0; idx < missingPduSequenceNumbers.size(); idx++)
      {
-        if( ! ( _missingPduSequenceNumbers[idx] == rhs._missingPduSequenceNumbers[idx]) ) ivarsEqual = false;
+        if( ! ( missingPduSequenceNumbers[idx] == rhs.missingPduSequenceNumbers[idx]) ) ivarsEqual = false;
      }
 
 
@@ -135,14 +76,14 @@ int MinefieldResponseNackPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = MinefieldFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _minefieldID.getMarshalledSize();  // _minefieldID
-   marshalSize = marshalSize + _requestingEntityID.getMarshalledSize();  // _requestingEntityID
-   marshalSize = marshalSize + 1;  // _requestID
-   marshalSize = marshalSize + 1;  // _numberOfMissingPdus
+   marshalSize = marshalSize + minefieldID.getMarshalledSize();  // minefieldID
+   marshalSize = marshalSize + requestingEntityID.getMarshalledSize();  // requestingEntityID
+   marshalSize = marshalSize + 1;  // requestID
+   marshalSize = marshalSize + 1;  // numberOfMissingPdus
 
-   for(unsigned long long idx=0; idx < _missingPduSequenceNumbers.size(); idx++)
+   for(int idx=0; idx < missingPduSequenceNumbers.size(); idx++)
    {
-        EightByteChunk listElement = _missingPduSequenceNumbers[idx];
+        EightByteChunk listElement = missingPduSequenceNumbers[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

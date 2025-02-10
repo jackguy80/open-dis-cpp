@@ -1,16 +1,16 @@
-#include <dis7/GridAxis.h>
+#include "GridAxis.h"
 
 using namespace DIS;
 
 
 GridAxis::GridAxis():
-   _domainInitialXi(0.0), 
-   _domainFinalXi(0.0), 
-   _domainPointsXi(0), 
-   _interleafFactor(0), 
-   _axisType(0), 
-   _numberOfPointsOnXiAxis(0), 
-   _initialIndex(0)
+   domainInitialXi(0.0), 
+   domainFinalXi(0.0), 
+   domainPointsXi(0), 
+   interleafFactor(0), 
+   axisType(0), 
+   numberOfPointsOnXiAxis(0), 
+   initialIndex(0)
 {
 }
 
@@ -18,96 +18,26 @@ GridAxis::~GridAxis()
 {
 }
 
-double GridAxis::getDomainInitialXi() const
-{
-    return _domainInitialXi;
-}
-
-void GridAxis::setDomainInitialXi(double pX)
-{
-    _domainInitialXi = pX;
-}
-
-double GridAxis::getDomainFinalXi() const
-{
-    return _domainFinalXi;
-}
-
-void GridAxis::setDomainFinalXi(double pX)
-{
-    _domainFinalXi = pX;
-}
-
-unsigned short GridAxis::getDomainPointsXi() const
-{
-    return _domainPointsXi;
-}
-
-void GridAxis::setDomainPointsXi(unsigned short pX)
-{
-    _domainPointsXi = pX;
-}
-
-unsigned char GridAxis::getInterleafFactor() const
-{
-    return _interleafFactor;
-}
-
-void GridAxis::setInterleafFactor(unsigned char pX)
-{
-    _interleafFactor = pX;
-}
-
-unsigned char GridAxis::getAxisType() const
-{
-    return _axisType;
-}
-
-void GridAxis::setAxisType(unsigned char pX)
-{
-    _axisType = pX;
-}
-
-unsigned short GridAxis::getNumberOfPointsOnXiAxis() const
-{
-    return _numberOfPointsOnXiAxis;
-}
-
-void GridAxis::setNumberOfPointsOnXiAxis(unsigned short pX)
-{
-    _numberOfPointsOnXiAxis = pX;
-}
-
-unsigned short GridAxis::getInitialIndex() const
-{
-    return _initialIndex;
-}
-
-void GridAxis::setInitialIndex(unsigned short pX)
-{
-    _initialIndex = pX;
-}
-
 void GridAxis::marshal(DataStream& dataStream) const
 {
-    dataStream << _domainInitialXi;
-    dataStream << _domainFinalXi;
-    dataStream << _domainPointsXi;
-    dataStream << _interleafFactor;
-    dataStream << _axisType;
-    dataStream << _numberOfPointsOnXiAxis;
-    dataStream << _initialIndex;
+    dataStream << domainInitialXi;
+    dataStream << domainFinalXi;
+    dataStream << domainPointsXi;
+    dataStream << interleafFactor;
+    dataStream << axisType;
+    dataStream << numberOfPointsOnXiAxis;
+    dataStream << initialIndex;
 }
 
 void GridAxis::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _domainInitialXi;
-    dataStream >> _domainFinalXi;
-    dataStream >> _domainPointsXi;
-    dataStream >> _interleafFactor;
-    dataStream >> _axisType;
-    dataStream >> _numberOfPointsOnXiAxis;
-    dataStream >> _initialIndex;
+    dataStream >> domainInitialXi;
+    dataStream >> domainFinalXi;
+    dataStream >> domainPointsXi;
+    dataStream >> interleafFactor;
+    dataStream >> axisType;
+    dataStream >> numberOfPointsOnXiAxis;
+    dataStream >> initialIndex;
 }
 
 
@@ -115,13 +45,13 @@ bool GridAxis::operator ==(const GridAxis& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_domainInitialXi == rhs._domainInitialXi) ) ivarsEqual = false;
-     if( ! (_domainFinalXi == rhs._domainFinalXi) ) ivarsEqual = false;
-     if( ! (_domainPointsXi == rhs._domainPointsXi) ) ivarsEqual = false;
-     if( ! (_interleafFactor == rhs._interleafFactor) ) ivarsEqual = false;
-     if( ! (_axisType == rhs._axisType) ) ivarsEqual = false;
-     if( ! (_numberOfPointsOnXiAxis == rhs._numberOfPointsOnXiAxis) ) ivarsEqual = false;
-     if( ! (_initialIndex == rhs._initialIndex) ) ivarsEqual = false;
+     if( ! (domainInitialXi == rhs.domainInitialXi) ) ivarsEqual = false;
+     if( ! (domainFinalXi == rhs.domainFinalXi) ) ivarsEqual = false;
+     if( ! (domainPointsXi == rhs.domainPointsXi) ) ivarsEqual = false;
+     if( ! (interleafFactor == rhs.interleafFactor) ) ivarsEqual = false;
+     if( ! (axisType == rhs.axisType) ) ivarsEqual = false;
+     if( ! (numberOfPointsOnXiAxis == rhs.numberOfPointsOnXiAxis) ) ivarsEqual = false;
+     if( ! (initialIndex == rhs.initialIndex) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -130,13 +60,13 @@ int GridAxis::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 8;  // _domainInitialXi
-   marshalSize = marshalSize + 8;  // _domainFinalXi
-   marshalSize = marshalSize + 2;  // _domainPointsXi
-   marshalSize = marshalSize + 1;  // _interleafFactor
-   marshalSize = marshalSize + 1;  // _axisType
-   marshalSize = marshalSize + 2;  // _numberOfPointsOnXiAxis
-   marshalSize = marshalSize + 2;  // _initialIndex
+   marshalSize = marshalSize + 8;  // domainInitialXi
+   marshalSize = marshalSize + 8;  // domainFinalXi
+   marshalSize = marshalSize + 2;  // domainPointsXi
+   marshalSize = marshalSize + 1;  // interleafFactor
+   marshalSize = marshalSize + 1;  // axisType
+   marshalSize = marshalSize + 2;  // numberOfPointsOnXiAxis
+   marshalSize = marshalSize + 2;  // initialIndex
     return marshalSize;
 }
 

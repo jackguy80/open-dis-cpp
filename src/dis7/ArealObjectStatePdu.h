@@ -1,120 +1,75 @@
 #pragma once
 
-#include <dis7/EntityID.h>
-#include <dis7/EntityID.h>
-#include <dis7/EntityType.h>
-#include <dis7/SimulationAddress.h>
-#include <dis7/SimulationAddress.h>
-#include <dis7/Vector3Double.h>
-#include <vector>
-#include <dis7/SyntheticEnvironmentFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "EntityType.h"
+#include "SimulationAddress.h"
+#include "SimulationAddress.h"
+#include "Vector3Double.h"
+#include "SyntheticEnvironmentFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Information about the addition/modification of an oobject that is geometrically anchored to the terrain with a set of three or more points that come to a closure. Section 7.10.6 COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ArealObjectStatePdu : public SyntheticEnvironmentFamilyPdu
+struct EXPORT_MACRO ArealObjectStatePdu : public SyntheticEnvironmentFamilyPdu
 {
-protected:
   /** Object in synthetic environment */
-  EntityID _objectID; 
+  EntityID objectID;
 
   /** Object with which this point object is associated */
-  EntityID _referencedObjectID; 
+  EntityID referencedObjectID;
 
   /** unique update number of each state transition of an object */
-  unsigned short _updateNumber; 
+  unsigned short updateNumber;
 
   /** force ID */
-  unsigned char _forceID; 
+  unsigned char forceID;
 
   /** modifications enumeration */
-  unsigned char _modifications; 
+  unsigned char modifications;
 
   /** Object type */
-  EntityType _objectType; 
+  EntityType objectType;
 
   /** Object appearance */
-  unsigned int _specificObjectAppearance; 
+  unsigned int specificObjectAppearance;
 
   /** Object appearance */
-  unsigned short _generalObjectAppearance; 
+  unsigned short generalObjectAppearance;
 
   /** Number of points */
-  unsigned short _numberOfPoints; 
+  unsigned short numberOfPoints;
 
   /** requesterID */
-  SimulationAddress _requesterID; 
+  SimulationAddress requesterID;
 
   /** receiver ID */
-  SimulationAddress _receivingID; 
+  SimulationAddress receivingID;
 
   /** location of object */
-  std::vector<Vector3Double> _objectLocation; 
+  Vector3Double objectLocation;
 
-
- public:
     ArealObjectStatePdu();
     virtual ~ArealObjectStatePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getObjectID(); 
-    const EntityID&  getObjectID() const; 
-    void setObjectID(const EntityID    &pX);
 
-    EntityID& getReferencedObjectID(); 
-    const EntityID&  getReferencedObjectID() const; 
-    void setReferencedObjectID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned short getUpdateNumber() const; 
-    void setUpdateNumber(unsigned short pX); 
-
-    unsigned char getForceID() const; 
-    void setForceID(unsigned char pX); 
-
-    unsigned char getModifications() const; 
-    void setModifications(unsigned char pX); 
-
-    EntityType& getObjectType(); 
-    const EntityType&  getObjectType() const; 
-    void setObjectType(const EntityType    &pX);
-
-    unsigned int getSpecificObjectAppearance() const; 
-    void setSpecificObjectAppearance(unsigned int pX); 
-
-    unsigned short getGeneralObjectAppearance() const; 
-    void setGeneralObjectAppearance(unsigned short pX); 
-
-    unsigned short getNumberOfPoints() const; 
-
-    SimulationAddress& getRequesterID(); 
-    const SimulationAddress&  getRequesterID() const; 
-    void setRequesterID(const SimulationAddress    &pX);
-
-    SimulationAddress& getReceivingID(); 
-    const SimulationAddress&  getReceivingID() const; 
-    void setReceivingID(const SimulationAddress    &pX);
-
-    std::vector<Vector3Double>& getObjectLocation(); 
-    const std::vector<Vector3Double>& getObjectLocation() const; 
-    void setObjectLocation(const std::vector<Vector3Double>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ArealObjectStatePdu& rhs) const;
+     bool operator ==(const ArealObjectStatePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

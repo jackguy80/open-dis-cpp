@@ -1,47 +1,38 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Operational data for describing the vectoring nozzle systems Section 6.2.96
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT VectoringNozzleSystem
+struct EXPORT_MACRO VectoringNozzleSystem
 {
-protected:
   /** In degrees */
-  float _horizontalDeflectionAngle; 
+  float horizontalDeflectionAngle;
 
   /** In degrees */
-  float _verticalDeflectionAngle; 
+  float verticalDeflectionAngle;
 
-
- public:
     VectoringNozzleSystem();
     virtual ~VectoringNozzleSystem();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    float getHorizontalDeflectionAngle() const; 
-    void setHorizontalDeflectionAngle(float pX); 
 
-    float getVerticalDeflectionAngle() const; 
-    void setVerticalDeflectionAngle(float pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const VectoringNozzleSystem& rhs) const;
+     bool operator ==(const VectoringNozzleSystem& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

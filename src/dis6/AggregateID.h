@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.36. Each agregate in a given simulation app is given an aggregate identifier number unique for all other aggregates in that app and in that exercise. The id is valid for the duration of the the exercise.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT AggregateID
+struct EXPORT_MACRO AggregateID
 {
-protected:
   /** The site ID */
-  unsigned short _site; 
+  unsigned short site;
 
   /** The application ID */
-  unsigned short _application; 
+  unsigned short application;
 
   /** the aggregate ID */
-  unsigned short _aggregateID; 
+  unsigned short aggregateID;
 
-
- public:
     AggregateID();
     virtual ~AggregateID();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getSite() const; 
-    void setSite(unsigned short pX); 
 
-    unsigned short getApplication() const; 
-    void setApplication(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getAggregateID() const; 
-    void setAggregateID(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AggregateID& rhs) const;
+     bool operator ==(const AggregateID& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

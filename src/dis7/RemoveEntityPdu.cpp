@@ -1,74 +1,28 @@
-#include <dis7/RemoveEntityPdu.h>
+#include "RemoveEntityPdu.h"
 
 using namespace DIS;
 
 
 RemoveEntityPdu::RemoveEntityPdu() : SimulationManagementFamilyPdu(),
-   _originatingID(), 
-   _receivingID(), 
-   _requestID(0)
+   requestID(0)
 {
-    setPduType( 12 );
+    pduType = 12;
 }
 
 RemoveEntityPdu::~RemoveEntityPdu()
 {
 }
 
-EntityID& RemoveEntityPdu::getOriginatingID() 
-{
-    return _originatingID;
-}
-
-const EntityID& RemoveEntityPdu::getOriginatingID() const
-{
-    return _originatingID;
-}
-
-void RemoveEntityPdu::setOriginatingID(const EntityID &pX)
-{
-    _originatingID = pX;
-}
-
-EntityID& RemoveEntityPdu::getReceivingID() 
-{
-    return _receivingID;
-}
-
-const EntityID& RemoveEntityPdu::getReceivingID() const
-{
-    return _receivingID;
-}
-
-void RemoveEntityPdu::setReceivingID(const EntityID &pX)
-{
-    _receivingID = pX;
-}
-
-unsigned int RemoveEntityPdu::getRequestID() const
-{
-    return _requestID;
-}
-
-void RemoveEntityPdu::setRequestID(unsigned int pX)
-{
-    _requestID = pX;
-}
-
 void RemoveEntityPdu::marshal(DataStream& dataStream) const
 {
     SimulationManagementFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _originatingID.marshal(dataStream);
-    _receivingID.marshal(dataStream);
-    dataStream << _requestID;
+    dataStream << requestID;
 }
 
 void RemoveEntityPdu::unmarshal(DataStream& dataStream)
 {
     SimulationManagementFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _originatingID.unmarshal(dataStream);
-    _receivingID.unmarshal(dataStream);
-    dataStream >> _requestID;
+    dataStream >> requestID;
 }
 
 
@@ -78,9 +32,7 @@ bool RemoveEntityPdu::operator ==(const RemoveEntityPdu& rhs) const
 
      ivarsEqual = SimulationManagementFamilyPdu::operator==(rhs);
 
-     if( ! (_originatingID == rhs._originatingID) ) ivarsEqual = false;
-     if( ! (_receivingID == rhs._receivingID) ) ivarsEqual = false;
-     if( ! (_requestID == rhs._requestID) ) ivarsEqual = false;
+     if( ! (requestID == rhs.requestID) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -90,9 +42,7 @@ int RemoveEntityPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = SimulationManagementFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _originatingID.getMarshalledSize();  // _originatingID
-   marshalSize = marshalSize + _receivingID.getMarshalledSize();  // _receivingID
-   marshalSize = marshalSize + 4;  // _requestID
+   marshalSize = marshalSize + 4;  // requestID
     return marshalSize;
 }
 

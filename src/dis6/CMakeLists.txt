@@ -41,9 +41,6 @@ set(dis6_hdr
   DetonationPdu.h
   DistributedEmissionsFamilyPdu.h
   EightByteChunk.h
-  ElectromagneticEmissionBeamData.h
-  ElectromagneticEmissionsPdu.h
-  ElectromagneticEmissionSystemData.h
   EmitterSystem.h
   EntityID.h
   EntityInformationFamilyPdu.h
@@ -79,17 +76,16 @@ set(dis6_hdr
   LinearObjectStatePdu.h
   LinearSegmentParameter.h
   LogisticsFamilyPdu.h
-  LogisticsPdu.h
   Marking.h
   MinefieldDataPdu.h
   MinefieldFamilyPdu.h
-  MinefieldPduFamily.h
   MinefieldQueryPdu.h
   MinefieldResponseNackPdu.h
   MinefieldStatePdu.h
   ModulationType.h
   NamedLocation.h
   ObjectType.h
+  OneByteChunk.h
   Orientation.h
   PduContainer.h
   Pdu.h
@@ -134,6 +130,7 @@ set(dis6_hdr
   TransmitterPdu.h
   TwoByteChunk.h
   UaPdu.h
+  UnsignedIntegerWrapper.h
   VariableDatum.h
   Vector3Double.h
   Vector3Float.h
@@ -182,9 +179,6 @@ set(dis6_src
   DetonationPdu.cpp
   DistributedEmissionsFamilyPdu.cpp
   EightByteChunk.cpp
-  ElectromagneticEmissionBeamData.cpp
-  ElectromagneticEmissionsPdu.cpp
-  ElectromagneticEmissionSystemData.cpp
   EmitterSystem.cpp
   EntityID.cpp
   EntityInformationFamilyPdu.cpp
@@ -220,17 +214,16 @@ set(dis6_src
   LinearObjectStatePdu.cpp
   LinearSegmentParameter.cpp
   LogisticsFamilyPdu.cpp
-  LogisticsPdu.cpp
   Marking.cpp
   MinefieldDataPdu.cpp
   MinefieldFamilyPdu.cpp
-  MinefieldPduFamily.cpp
   MinefieldQueryPdu.cpp
   MinefieldResponseNackPdu.cpp
   MinefieldStatePdu.cpp
   ModulationType.cpp
   NamedLocation.cpp
   ObjectType.cpp
+  OneByteChunk.cpp
   Orientation.cpp
   PduContainer.cpp
   Pdu.cpp
@@ -274,6 +267,7 @@ set(dis6_src
   TransmitterPdu.cpp
   TwoByteChunk.cpp
   UaPdu.cpp
+  UnsignedIntegerWrapper.cpp
   VariableDatum.cpp
   Vector3Double.cpp
   Vector3Float.cpp

@@ -1,15 +1,15 @@
-#include <dis7/RecordSpecificationElement.h>
+#include "RecordSpecificationElement.h"
 
 using namespace DIS;
 
 
 RecordSpecificationElement::RecordSpecificationElement():
-   _recordID(0), 
-   _recordSetSerialNumber(0), 
-   _recordLength(0), 
-   _recordCount(0), 
-   _recordValues(0), 
-   _pad4(0)
+   recordID(0), 
+   recordSetSerialNumber(0), 
+   recordLength(0), 
+   recordCount(0), 
+   recordValues(0), 
+   pad4(0)
 {
 }
 
@@ -17,84 +17,24 @@ RecordSpecificationElement::~RecordSpecificationElement()
 {
 }
 
-unsigned int RecordSpecificationElement::getRecordID() const
-{
-    return _recordID;
-}
-
-void RecordSpecificationElement::setRecordID(unsigned int pX)
-{
-    _recordID = pX;
-}
-
-unsigned int RecordSpecificationElement::getRecordSetSerialNumber() const
-{
-    return _recordSetSerialNumber;
-}
-
-void RecordSpecificationElement::setRecordSetSerialNumber(unsigned int pX)
-{
-    _recordSetSerialNumber = pX;
-}
-
-unsigned short RecordSpecificationElement::getRecordLength() const
-{
-    return _recordLength;
-}
-
-void RecordSpecificationElement::setRecordLength(unsigned short pX)
-{
-    _recordLength = pX;
-}
-
-unsigned short RecordSpecificationElement::getRecordCount() const
-{
-    return _recordCount;
-}
-
-void RecordSpecificationElement::setRecordCount(unsigned short pX)
-{
-    _recordCount = pX;
-}
-
-unsigned short RecordSpecificationElement::getRecordValues() const
-{
-    return _recordValues;
-}
-
-void RecordSpecificationElement::setRecordValues(unsigned short pX)
-{
-    _recordValues = pX;
-}
-
-unsigned char RecordSpecificationElement::getPad4() const
-{
-    return _pad4;
-}
-
-void RecordSpecificationElement::setPad4(unsigned char pX)
-{
-    _pad4 = pX;
-}
-
 void RecordSpecificationElement::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordID;
-    dataStream << _recordSetSerialNumber;
-    dataStream << _recordLength;
-    dataStream << _recordCount;
-    dataStream << _recordValues;
-    dataStream << _pad4;
+    dataStream << recordID;
+    dataStream << recordSetSerialNumber;
+    dataStream << recordLength;
+    dataStream << recordCount;
+    dataStream << recordValues;
+    dataStream << pad4;
 }
 
 void RecordSpecificationElement::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordID;
-    dataStream >> _recordSetSerialNumber;
-    dataStream >> _recordLength;
-    dataStream >> _recordCount;
-    dataStream >> _recordValues;
-    dataStream >> _pad4;
+    dataStream >> recordID;
+    dataStream >> recordSetSerialNumber;
+    dataStream >> recordLength;
+    dataStream >> recordCount;
+    dataStream >> recordValues;
+    dataStream >> pad4;
 }
 
 
@@ -102,12 +42,12 @@ bool RecordSpecificationElement::operator ==(const RecordSpecificationElement& r
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordID == rhs._recordID) ) ivarsEqual = false;
-     if( ! (_recordSetSerialNumber == rhs._recordSetSerialNumber) ) ivarsEqual = false;
-     if( ! (_recordLength == rhs._recordLength) ) ivarsEqual = false;
-     if( ! (_recordCount == rhs._recordCount) ) ivarsEqual = false;
-     if( ! (_recordValues == rhs._recordValues) ) ivarsEqual = false;
-     if( ! (_pad4 == rhs._pad4) ) ivarsEqual = false;
+     if( ! (recordID == rhs.recordID) ) ivarsEqual = false;
+     if( ! (recordSetSerialNumber == rhs.recordSetSerialNumber) ) ivarsEqual = false;
+     if( ! (recordLength == rhs.recordLength) ) ivarsEqual = false;
+     if( ! (recordCount == rhs.recordCount) ) ivarsEqual = false;
+     if( ! (recordValues == rhs.recordValues) ) ivarsEqual = false;
+     if( ! (pad4 == rhs.pad4) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -116,12 +56,12 @@ int RecordSpecificationElement::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _recordID
-   marshalSize = marshalSize + 4;  // _recordSetSerialNumber
-   marshalSize = marshalSize + 2;  // _recordLength
-   marshalSize = marshalSize + 2;  // _recordCount
-   marshalSize = marshalSize + 2;  // _recordValues
-   marshalSize = marshalSize + 1;  // _pad4
+   marshalSize = marshalSize + 4;  // recordID
+   marshalSize = marshalSize + 4;  // recordSetSerialNumber
+   marshalSize = marshalSize + 2;  // recordLength
+   marshalSize = marshalSize + 2;  // recordCount
+   marshalSize = marshalSize + 2;  // recordValues
+   marshalSize = marshalSize + 1;  // pad4
     return marshalSize;
 }
 

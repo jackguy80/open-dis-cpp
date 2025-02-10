@@ -1,95 +1,62 @@
 #pragma once
 
-#include <dis6/SixByteChunk.h>
-#include <dis6/Vector3Double.h>
-#include <dis6/Orientation.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "SixByteChunk.h"
+#include "Vector3Double.h"
+#include "Orientation.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 5.2.48: Linear segment parameters
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT LinearSegmentParameter
+struct EXPORT_MACRO LinearSegmentParameter
 {
-protected:
   /** number of segments */
-  unsigned char _segmentNumber; 
+  unsigned char segmentNumber;
 
   /** segment appearance */
-  SixByteChunk _segmentAppearance; 
+  SixByteChunk segmentAppearance;
 
   /** location */
-  Vector3Double _location; 
+  Vector3Double location;
 
   /** orientation */
-  Orientation _orientation; 
+  Orientation orientation;
 
   /** segmentLength */
-  unsigned short _segmentLength; 
+  unsigned short segmentLength;
 
   /** segmentWidth */
-  unsigned short _segmentWidth; 
+  unsigned short segmentWidth;
 
   /** segmentHeight */
-  unsigned short _segmentHeight; 
+  unsigned short segmentHeight;
 
   /** segment Depth */
-  unsigned short _segmentDepth; 
+  unsigned short segmentDepth;
 
   /** segment Depth */
-  unsigned int _pad1; 
+  unsigned int pad1;
 
-
- public:
     LinearSegmentParameter();
     virtual ~LinearSegmentParameter();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getSegmentNumber() const; 
-    void setSegmentNumber(unsigned char pX); 
 
-    SixByteChunk& getSegmentAppearance(); 
-    const SixByteChunk&  getSegmentAppearance() const; 
-    void setSegmentAppearance(const SixByteChunk    &pX);
+     virtual int getMarshalledSize() const;
 
-    Vector3Double& getLocation(); 
-    const Vector3Double&  getLocation() const; 
-    void setLocation(const Vector3Double    &pX);
-
-    Orientation& getOrientation(); 
-    const Orientation&  getOrientation() const; 
-    void setOrientation(const Orientation    &pX);
-
-    unsigned short getSegmentLength() const; 
-    void setSegmentLength(unsigned short pX); 
-
-    unsigned short getSegmentWidth() const; 
-    void setSegmentWidth(unsigned short pX); 
-
-    unsigned short getSegmentHeight() const; 
-    void setSegmentHeight(unsigned short pX); 
-
-    unsigned short getSegmentDepth() const; 
-    void setSegmentDepth(unsigned short pX); 
-
-    unsigned int getPad1() const; 
-    void setPad1(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const LinearSegmentParameter& rhs) const;
+     bool operator ==(const LinearSegmentParameter& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

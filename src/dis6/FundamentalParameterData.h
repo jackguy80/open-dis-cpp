@@ -1,95 +1,62 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.22. Contains electromagnetic emmision regineratin parameters that are        variable throughout a scenario dependent on the actions of the participants in the simulation. Also provides basic parametric data that may be used to support low-fidelity simulations.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT FundamentalParameterData
+struct EXPORT_MACRO FundamentalParameterData
 {
-protected:
   /** center frequency of the emission in hertz. */
-  float _frequency; 
+  float frequency;
 
   /** Bandwidth of the frequencies corresponding to the fequency field. */
-  float _frequencyRange; 
+  float frequencyRange;
 
   /** Effective radiated power for the emission in DdBm. For a      radar noise jammer, indicates the peak of the transmitted power. */
-  float _effectiveRadiatedPower; 
+  float effectiveRadiatedPower;
 
   /** Average repetition frequency of the emission in hertz. */
-  float _pulseRepetitionFrequency; 
+  float pulseRepetitionFrequency;
 
   /** Average pulse width  of the emission in microseconds. */
-  float _pulseWidth; 
+  float pulseWidth;
 
   /** Specifies the beam azimuth an elevation centers and corresponding half-angles     to describe the scan volume */
-  float _beamAzimuthCenter; 
+  float beamAzimuthCenter;
 
   /** Specifies the beam azimuth sweep to determine scan volume */
-  float _beamAzimuthSweep; 
+  float beamAzimuthSweep;
 
   /** Specifies the beam elevation center to determine scan volume */
-  float _beamElevationCenter; 
+  float beamElevationCenter;
 
   /** Specifies the beam elevation sweep to determine scan volume */
-  float _beamElevationSweep; 
+  float beamElevationSweep;
 
   /** allows receiver to synchronize its regenerated scan pattern to     that of the emmitter. Specifies the percentage of time a scan is through its pattern from its origion. */
-  float _beamSweepSync; 
+  float beamSweepSync;
 
-
- public:
     FundamentalParameterData();
     virtual ~FundamentalParameterData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    float getFrequency() const; 
-    void setFrequency(float pX); 
 
-    float getFrequencyRange() const; 
-    void setFrequencyRange(float pX); 
+     virtual int getMarshalledSize() const;
 
-    float getEffectiveRadiatedPower() const; 
-    void setEffectiveRadiatedPower(float pX); 
-
-    float getPulseRepetitionFrequency() const; 
-    void setPulseRepetitionFrequency(float pX); 
-
-    float getPulseWidth() const; 
-    void setPulseWidth(float pX); 
-
-    float getBeamAzimuthCenter() const; 
-    void setBeamAzimuthCenter(float pX); 
-
-    float getBeamAzimuthSweep() const; 
-    void setBeamAzimuthSweep(float pX); 
-
-    float getBeamElevationCenter() const; 
-    void setBeamElevationCenter(float pX); 
-
-    float getBeamElevationSweep() const; 
-    void setBeamElevationSweep(float pX); 
-
-    float getBeamSweepSync() const; 
-    void setBeamSweepSync(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const FundamentalParameterData& rhs) const;
+     bool operator ==(const FundamentalParameterData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

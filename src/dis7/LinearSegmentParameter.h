@@ -1,99 +1,67 @@
 #pragma once
 
-#include <dis7/Vector3Double.h>
-#include <dis7/EulerAngles.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "Vector3Double.h"
+#include "EulerAngles.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The specification of an individual segment of a linear segment synthetic environment object in a Linear Object State PDU Section 6.2.53
+// The specification of an individual segment of a linear segment synthetic environment object in a Linear Object State PDU Section 6.2.52
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT LinearSegmentParameter
+struct EXPORT_MACRO LinearSegmentParameter
 {
-protected:
-  /** the individual segment of the linear segment  */
-  unsigned char _segmentNumber; 
+  /** the individual segment of the linear segment */
+  unsigned char segmentNumber;
 
-  /**  whether a modification has been made to the point object’s location or orientation */
-  unsigned char _segmentModification; 
+  /**  whether a modification has been made to the point object's location or orientation */
+  unsigned char segmentModification;
 
   /** general dynamic appearance attributes of the segment. This record shall be defined as a 16-bit record of enumerations. The values defined for this record are included in Section 12 of SISO-REF-010. */
-  unsigned short _generalSegmentAppearance; 
+  unsigned short generalSegmentAppearance;
 
   /** This field shall specify specific dynamic appearance attributes of the segment. This record shall be defined as a 32-bit record of enumerations. */
-  unsigned short _specificSegmentAppearance; 
+  unsigned int specificSegmentAppearance;
 
   /** This field shall specify the location of the linear segment in the simulated world and shall be represented by a World Coordinates record  */
-  Vector3Double _segmentLocation; 
+  Vector3Double segmentLocation;
 
   /** orientation of the linear segment about the segment location and shall be represented by a Euler Angles record  */
-  EulerAngles _segmentOrientation; 
+  EulerAngles segmentOrientation;
 
   /** length of the linear segment, in meters, extending in the positive X direction */
-  unsigned short _segmentLength; 
+  float segmentLength;
 
   /** The total width of the linear segment, in meters, shall be specified by a 16-bit unsigned integer. One-half of the width shall extend in the positive Y direction, and one-half of the width shall extend in the negative Y direction. */
-  unsigned short _segmentWidth; 
+  float segmentWidth;
 
   /** The height of the linear segment, in meters, above ground shall be specified by a 16-bit unsigned integer. */
-  unsigned short _segmentHeight; 
+  float segmentHeight;
 
   /** The depth of the linear segment, in meters, below ground level  */
-  unsigned short _segmentDepth; 
+  float segmentDepth;
 
+  /** padding */
+  unsigned int padding;
 
- public:
     LinearSegmentParameter();
     virtual ~LinearSegmentParameter();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getSegmentNumber() const; 
-    void setSegmentNumber(unsigned char pX); 
 
-    unsigned char getSegmentModification() const; 
-    void setSegmentModification(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getGeneralSegmentAppearance() const; 
-    void setGeneralSegmentAppearance(unsigned short pX); 
-
-    unsigned short getSpecificSegmentAppearance() const; 
-    void setSpecificSegmentAppearance(unsigned short pX); 
-
-    Vector3Double& getSegmentLocation(); 
-    const Vector3Double&  getSegmentLocation() const; 
-    void setSegmentLocation(const Vector3Double    &pX);
-
-    EulerAngles& getSegmentOrientation(); 
-    const EulerAngles&  getSegmentOrientation() const; 
-    void setSegmentOrientation(const EulerAngles    &pX);
-
-    unsigned short getSegmentLength() const; 
-    void setSegmentLength(unsigned short pX); 
-
-    unsigned short getSegmentWidth() const; 
-    void setSegmentWidth(unsigned short pX); 
-
-    unsigned short getSegmentHeight() const; 
-    void setSegmentHeight(unsigned short pX); 
-
-    unsigned short getSegmentDepth() const; 
-    void setSegmentDepth(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const LinearSegmentParameter& rhs) const;
+     bool operator ==(const LinearSegmentParameter& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

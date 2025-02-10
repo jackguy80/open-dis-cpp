@@ -1,71 +1,50 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Record sets, used in transfer control request PDU
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT RecordSet
+struct EXPORT_MACRO RecordSet
 {
-protected:
   /** record ID */
-  unsigned int _recordID; 
+  unsigned int recordID;
 
   /** record set serial number */
-  unsigned int _recordSetSerialNumber; 
+  unsigned int recordSetSerialNumber;
 
   /** record length */
-  unsigned short _recordLength; 
+  unsigned short recordLength;
 
   /** record count */
-  unsigned short _recordCount; 
+  unsigned short recordCount;
 
   /** ^^^This is wrong--variable sized data records */
-  unsigned short _recordValues; 
+  unsigned short recordValues;
 
   /** ^^^This is wrong--variable sized padding */
-  unsigned char _pad4; 
+  unsigned char pad4;
 
-
- public:
     RecordSet();
     virtual ~RecordSet();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordID() const; 
-    void setRecordID(unsigned int pX); 
 
-    unsigned int getRecordSetSerialNumber() const; 
-    void setRecordSetSerialNumber(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
-
-    unsigned short getRecordCount() const; 
-    void setRecordCount(unsigned short pX); 
-
-    unsigned short getRecordValues() const; 
-    void setRecordValues(unsigned short pX); 
-
-    unsigned char getPad4() const; 
-    void setPad4(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RecordSet& rhs) const;
+     bool operator ==(const RecordSet& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

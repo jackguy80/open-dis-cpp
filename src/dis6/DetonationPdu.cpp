@@ -1,173 +1,44 @@
-#include <dis6/DetonationPdu.h>
+#include "DetonationPdu.h"
 
 using namespace DIS;
 
 
 DetonationPdu::DetonationPdu() : WarfareFamilyPdu(),
-   _munitionID(), 
-   _eventID(), 
-   _velocity(), 
-   _locationInWorldCoordinates(), 
-   _burstDescriptor(), 
-   _locationInEntityCoordinates(), 
-   _detonationResult(0), 
-   _numberOfArticulationParameters(0), 
-   _pad(0)
+   munitionID(), 
+   eventID(), 
+   velocity(), 
+   locationInWorldCoordinates(), 
+   burstDescriptor(), 
+   locationInEntityCoordinates(), 
+   detonationResult(0), 
+   numberOfArticulationParameters(0), 
+   pad(0), 
+   articulationParameters(0)
 {
-    setPduType( 3 );
+    pduType = 3;
 }
 
 DetonationPdu::~DetonationPdu()
 {
-    _articulationParameters.clear();
-}
-
-EntityID& DetonationPdu::getMunitionID() 
-{
-    return _munitionID;
-}
-
-const EntityID& DetonationPdu::getMunitionID() const
-{
-    return _munitionID;
-}
-
-void DetonationPdu::setMunitionID(const EntityID &pX)
-{
-    _munitionID = pX;
-}
-
-EventID& DetonationPdu::getEventID() 
-{
-    return _eventID;
-}
-
-const EventID& DetonationPdu::getEventID() const
-{
-    return _eventID;
-}
-
-void DetonationPdu::setEventID(const EventID &pX)
-{
-    _eventID = pX;
-}
-
-Vector3Float& DetonationPdu::getVelocity() 
-{
-    return _velocity;
-}
-
-const Vector3Float& DetonationPdu::getVelocity() const
-{
-    return _velocity;
-}
-
-void DetonationPdu::setVelocity(const Vector3Float &pX)
-{
-    _velocity = pX;
-}
-
-Vector3Double& DetonationPdu::getLocationInWorldCoordinates() 
-{
-    return _locationInWorldCoordinates;
-}
-
-const Vector3Double& DetonationPdu::getLocationInWorldCoordinates() const
-{
-    return _locationInWorldCoordinates;
-}
-
-void DetonationPdu::setLocationInWorldCoordinates(const Vector3Double &pX)
-{
-    _locationInWorldCoordinates = pX;
-}
-
-BurstDescriptor& DetonationPdu::getBurstDescriptor() 
-{
-    return _burstDescriptor;
-}
-
-const BurstDescriptor& DetonationPdu::getBurstDescriptor() const
-{
-    return _burstDescriptor;
-}
-
-void DetonationPdu::setBurstDescriptor(const BurstDescriptor &pX)
-{
-    _burstDescriptor = pX;
-}
-
-Vector3Float& DetonationPdu::getLocationInEntityCoordinates() 
-{
-    return _locationInEntityCoordinates;
-}
-
-const Vector3Float& DetonationPdu::getLocationInEntityCoordinates() const
-{
-    return _locationInEntityCoordinates;
-}
-
-void DetonationPdu::setLocationInEntityCoordinates(const Vector3Float &pX)
-{
-    _locationInEntityCoordinates = pX;
-}
-
-unsigned char DetonationPdu::getDetonationResult() const
-{
-    return _detonationResult;
-}
-
-void DetonationPdu::setDetonationResult(unsigned char pX)
-{
-    _detonationResult = pX;
-}
-
-unsigned char DetonationPdu::getNumberOfArticulationParameters() const
-{
-   return _articulationParameters.size();
-}
-
-short DetonationPdu::getPad() const
-{
-    return _pad;
-}
-
-void DetonationPdu::setPad(short pX)
-{
-    _pad = pX;
-}
-
-std::vector<ArticulationParameter>& DetonationPdu::getArticulationParameters() 
-{
-    return _articulationParameters;
-}
-
-const std::vector<ArticulationParameter>& DetonationPdu::getArticulationParameters() const
-{
-    return _articulationParameters;
-}
-
-void DetonationPdu::setArticulationParameters(const std::vector<ArticulationParameter>& pX)
-{
-     _articulationParameters = pX;
+    articulationParameters.clear();
 }
 
 void DetonationPdu::marshal(DataStream& dataStream) const
 {
     WarfareFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _munitionID.marshal(dataStream);
-    _eventID.marshal(dataStream);
-    _velocity.marshal(dataStream);
-    _locationInWorldCoordinates.marshal(dataStream);
-    _burstDescriptor.marshal(dataStream);
-    _locationInEntityCoordinates.marshal(dataStream);
-    dataStream << _detonationResult;
-    dataStream << ( unsigned char )_articulationParameters.size();
-    dataStream << _pad;
+    munitionID.marshal(dataStream);
+    eventID.marshal(dataStream);
+    velocity.marshal(dataStream);
+    locationInWorldCoordinates.marshal(dataStream);
+    burstDescriptor.marshal(dataStream);
+    locationInEntityCoordinates.marshal(dataStream);
+    dataStream << detonationResult;
+    dataStream << ( unsigned char )articulationParameters.size();
+    dataStream << pad;
 
-     for(size_t idx = 0; idx < _articulationParameters.size(); idx++)
+     for(size_t idx = 0; idx < articulationParameters.size(); idx++)
      {
-        ArticulationParameter x = _articulationParameters[idx];
+        ArticulationParameter x = articulationParameters[idx];
         x.marshal(dataStream);
      }
 
@@ -176,22 +47,22 @@ void DetonationPdu::marshal(DataStream& dataStream) const
 void DetonationPdu::unmarshal(DataStream& dataStream)
 {
     WarfareFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _munitionID.unmarshal(dataStream);
-    _eventID.unmarshal(dataStream);
-    _velocity.unmarshal(dataStream);
-    _locationInWorldCoordinates.unmarshal(dataStream);
-    _burstDescriptor.unmarshal(dataStream);
-    _locationInEntityCoordinates.unmarshal(dataStream);
-    dataStream >> _detonationResult;
-    dataStream >> _numberOfArticulationParameters;
-    dataStream >> _pad;
+    munitionID.unmarshal(dataStream);
+    eventID.unmarshal(dataStream);
+    velocity.unmarshal(dataStream);
+    locationInWorldCoordinates.unmarshal(dataStream);
+    burstDescriptor.unmarshal(dataStream);
+    locationInEntityCoordinates.unmarshal(dataStream);
+    dataStream >> detonationResult;
+    dataStream >> numberOfArticulationParameters;
+    dataStream >> pad;
 
-     _articulationParameters.clear();
-     for(size_t idx = 0; idx < _numberOfArticulationParameters; idx++)
+     articulationParameters.clear();
+     for(size_t idx = 0; idx < numberOfArticulationParameters; idx++)
      {
         ArticulationParameter x;
         x.unmarshal(dataStream);
-        _articulationParameters.push_back(x);
+        articulationParameters.push_back(x);
      }
 }
 
@@ -202,18 +73,18 @@ bool DetonationPdu::operator ==(const DetonationPdu& rhs) const
 
      ivarsEqual = WarfareFamilyPdu::operator==(rhs);
 
-     if( ! (_munitionID == rhs._munitionID) ) ivarsEqual = false;
-     if( ! (_eventID == rhs._eventID) ) ivarsEqual = false;
-     if( ! (_velocity == rhs._velocity) ) ivarsEqual = false;
-     if( ! (_locationInWorldCoordinates == rhs._locationInWorldCoordinates) ) ivarsEqual = false;
-     if( ! (_burstDescriptor == rhs._burstDescriptor) ) ivarsEqual = false;
-     if( ! (_locationInEntityCoordinates == rhs._locationInEntityCoordinates) ) ivarsEqual = false;
-     if( ! (_detonationResult == rhs._detonationResult) ) ivarsEqual = false;
-     if( ! (_pad == rhs._pad) ) ivarsEqual = false;
+     if( ! (munitionID == rhs.munitionID) ) ivarsEqual = false;
+     if( ! (eventID == rhs.eventID) ) ivarsEqual = false;
+     if( ! (velocity == rhs.velocity) ) ivarsEqual = false;
+     if( ! (locationInWorldCoordinates == rhs.locationInWorldCoordinates) ) ivarsEqual = false;
+     if( ! (burstDescriptor == rhs.burstDescriptor) ) ivarsEqual = false;
+     if( ! (locationInEntityCoordinates == rhs.locationInEntityCoordinates) ) ivarsEqual = false;
+     if( ! (detonationResult == rhs.detonationResult) ) ivarsEqual = false;
+     if( ! (pad == rhs.pad) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _articulationParameters.size(); idx++)
+     for(size_t idx = 0; idx < articulationParameters.size(); idx++)
      {
-        if( ! ( _articulationParameters[idx] == rhs._articulationParameters[idx]) ) ivarsEqual = false;
+        if( ! ( articulationParameters[idx] == rhs.articulationParameters[idx]) ) ivarsEqual = false;
      }
 
 
@@ -225,19 +96,19 @@ int DetonationPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = WarfareFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _munitionID.getMarshalledSize();  // _munitionID
-   marshalSize = marshalSize + _eventID.getMarshalledSize();  // _eventID
-   marshalSize = marshalSize + _velocity.getMarshalledSize();  // _velocity
-   marshalSize = marshalSize + _locationInWorldCoordinates.getMarshalledSize();  // _locationInWorldCoordinates
-   marshalSize = marshalSize + _burstDescriptor.getMarshalledSize();  // _burstDescriptor
-   marshalSize = marshalSize + _locationInEntityCoordinates.getMarshalledSize();  // _locationInEntityCoordinates
-   marshalSize = marshalSize + 1;  // _detonationResult
-   marshalSize = marshalSize + 1;  // _numberOfArticulationParameters
-   marshalSize = marshalSize + 2;  // _pad
+   marshalSize = marshalSize + munitionID.getMarshalledSize();  // munitionID
+   marshalSize = marshalSize + eventID.getMarshalledSize();  // eventID
+   marshalSize = marshalSize + velocity.getMarshalledSize();  // velocity
+   marshalSize = marshalSize + locationInWorldCoordinates.getMarshalledSize();  // locationInWorldCoordinates
+   marshalSize = marshalSize + burstDescriptor.getMarshalledSize();  // burstDescriptor
+   marshalSize = marshalSize + locationInEntityCoordinates.getMarshalledSize();  // locationInEntityCoordinates
+   marshalSize = marshalSize + 1;  // detonationResult
+   marshalSize = marshalSize + 1;  // numberOfArticulationParameters
+   marshalSize = marshalSize + 2;  // pad
 
-   for(unsigned long long idx=0; idx < _articulationParameters.size(); idx++)
+   for(int idx=0; idx < articulationParameters.size(); idx++)
    {
-        ArticulationParameter listElement = _articulationParameters[idx];
+        ArticulationParameter listElement = articulationParameters[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

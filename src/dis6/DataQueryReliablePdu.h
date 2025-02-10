@@ -1,93 +1,65 @@
 #pragma once
 
-#include <dis6/FixedDatum.h>
-#include <dis6/VariableDatum.h>
+#include "FixedDatum.h"
+#include "VariableDatum.h"
 #include <vector>
-#include <dis6/SimulationManagementWithReliabilityFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "SimulationManagementWithReliabilityFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.12.8: request for data from an entity. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT DataQueryReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO DataQueryReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
 {
-protected:
   /** level of reliability service used for this transaction */
-  unsigned char _requiredReliabilityService; 
+  unsigned char requiredReliabilityService;
 
   /** padding */
-  unsigned short _pad1; 
+  unsigned short pad1;
 
   /** padding */
-  unsigned char _pad2; 
+  unsigned char pad2;
 
   /** request ID */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
   /** time interval between issuing data query PDUs */
-  unsigned int _timeInterval; 
+  unsigned int timeInterval;
 
   /** Fixed datum record count */
-  unsigned int _numberOfFixedDatumRecords; 
+  unsigned int numberOfFixedDatumRecords;
 
   /** variable datum record count */
-  unsigned int _numberOfVariableDatumRecords; 
+  unsigned int numberOfVariableDatumRecords;
 
   /** Fixed datum records */
-  std::vector<FixedDatum> _fixedDatumRecords; 
+  std::vector<FixedDatum> fixedDatumRecords;
 
   /** Variable datum records */
-  std::vector<VariableDatum> _variableDatumRecords; 
+  std::vector<VariableDatum> variableDatumRecords;
 
-
- public:
     DataQueryReliablePdu();
     virtual ~DataQueryReliablePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getRequiredReliabilityService() const; 
-    void setRequiredReliabilityService(unsigned char pX); 
 
-    unsigned short getPad1() const; 
-    void setPad1(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getPad2() const; 
-    void setPad2(unsigned char pX); 
-
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-    unsigned int getTimeInterval() const; 
-    void setTimeInterval(unsigned int pX); 
-
-    unsigned int getNumberOfFixedDatumRecords() const; 
-
-    unsigned int getNumberOfVariableDatumRecords() const; 
-
-    std::vector<FixedDatum>& getFixedDatumRecords(); 
-    const std::vector<FixedDatum>& getFixedDatumRecords() const; 
-    void setFixedDatumRecords(const std::vector<FixedDatum>&    pX);
-
-    std::vector<VariableDatum>& getVariableDatumRecords(); 
-    const std::vector<VariableDatum>& getVariableDatumRecords() const; 
-    void setVariableDatumRecords(const std::vector<VariableDatum>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DataQueryReliablePdu& rhs) const;
+     bool operator ==(const DataQueryReliablePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

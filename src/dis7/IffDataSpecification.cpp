@@ -1,10 +1,11 @@
-#include <dis7/IffDataSpecification.h>
+#include "IffDataSpecification.h"
 
 using namespace DIS;
 
 
 IffDataSpecification::IffDataSpecification():
-   _numberOfIffDataRecords()
+   numberOfIffDataRecords(0), 
+   iffDataRecords()
 {
 }
 
@@ -12,29 +13,16 @@ IffDataSpecification::~IffDataSpecification()
 {
 }
 
-EntityType& IffDataSpecification::getNumberOfIffDataRecords() 
-{
-    return _numberOfIffDataRecords;
-}
-
-const EntityType& IffDataSpecification::getNumberOfIffDataRecords() const
-{
-    return _numberOfIffDataRecords;
-}
-
-void IffDataSpecification::setNumberOfIffDataRecords(const EntityType &pX)
-{
-    _numberOfIffDataRecords = pX;
-}
-
 void IffDataSpecification::marshal(DataStream& dataStream) const
 {
-    _numberOfIffDataRecords.marshal(dataStream);
+    dataStream << numberOfIffDataRecords;
+    iffDataRecords.marshal(dataStream);
 }
 
 void IffDataSpecification::unmarshal(DataStream& dataStream)
 {
-    _numberOfIffDataRecords.unmarshal(dataStream);
+    dataStream >> numberOfIffDataRecords;
+    iffDataRecords.unmarshal(dataStream);
 }
 
 
@@ -42,7 +30,8 @@ bool IffDataSpecification::operator ==(const IffDataSpecification& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_numberOfIffDataRecords == rhs._numberOfIffDataRecords) ) ivarsEqual = false;
+     if( ! (numberOfIffDataRecords == rhs.numberOfIffDataRecords) ) ivarsEqual = false;
+     if( ! (iffDataRecords == rhs.iffDataRecords) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -51,7 +40,8 @@ int IffDataSpecification::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _numberOfIffDataRecords.getMarshalledSize();  // _numberOfIffDataRecords
+   marshalSize = marshalSize + 2;  // numberOfIffDataRecords
+   marshalSize = marshalSize + iffDataRecords.getMarshalledSize();  // iffDataRecords
     return marshalSize;
 }
 

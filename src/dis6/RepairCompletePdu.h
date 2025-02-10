@@ -1,64 +1,47 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/LogisticsFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "LogisticsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.5.5. Repair is complete. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT RepairCompletePdu : public LogisticsFamilyPdu
+struct EXPORT_MACRO RepairCompletePdu : public LogisticsFamilyPdu
 {
-protected:
   /** Entity that is receiving service */
-  EntityID _receivingEntityID; 
+  EntityID receivingEntityID;
 
   /** Entity that is supplying */
-  EntityID _repairingEntityID; 
+  EntityID repairingEntityID;
 
   /** Enumeration for type of repair */
-  unsigned short _repair; 
+  unsigned short repair;
 
   /** padding, number prevents conflict with superclass ivar name */
-  short _padding2; 
+  short padding2;
 
-
- public:
     RepairCompletePdu();
     virtual ~RepairCompletePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getReceivingEntityID(); 
-    const EntityID&  getReceivingEntityID() const; 
-    void setReceivingEntityID(const EntityID    &pX);
 
-    EntityID& getRepairingEntityID(); 
-    const EntityID&  getRepairingEntityID() const; 
-    void setRepairingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned short getRepair() const; 
-    void setRepair(unsigned short pX); 
-
-    short getPadding2() const; 
-    void setPadding2(short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RepairCompletePdu& rhs) const;
+     bool operator ==(const RepairCompletePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

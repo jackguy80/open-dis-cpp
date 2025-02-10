@@ -1,15 +1,15 @@
-#include <dis7/ExpendableReload.h>
+#include "ExpendableReload.h"
 
 using namespace DIS;
 
 
 ExpendableReload::ExpendableReload():
-   _expendable(), 
-   _station(0), 
-   _standardQuantity(0), 
-   _maximumQuantity(0), 
-   _standardQuantityReloadTime(0), 
-   _maximumQuantityReloadTime(0)
+   expendable(), 
+   station(0), 
+   standardQuantity(0), 
+   maximumQuantity(0), 
+   standardQuantityReloadTime(0), 
+   maximumQuantityReloadTime(0)
 {
 }
 
@@ -17,89 +17,24 @@ ExpendableReload::~ExpendableReload()
 {
 }
 
-EntityType& ExpendableReload::getExpendable() 
-{
-    return _expendable;
-}
-
-const EntityType& ExpendableReload::getExpendable() const
-{
-    return _expendable;
-}
-
-void ExpendableReload::setExpendable(const EntityType &pX)
-{
-    _expendable = pX;
-}
-
-unsigned int ExpendableReload::getStation() const
-{
-    return _station;
-}
-
-void ExpendableReload::setStation(unsigned int pX)
-{
-    _station = pX;
-}
-
-unsigned short ExpendableReload::getStandardQuantity() const
-{
-    return _standardQuantity;
-}
-
-void ExpendableReload::setStandardQuantity(unsigned short pX)
-{
-    _standardQuantity = pX;
-}
-
-unsigned short ExpendableReload::getMaximumQuantity() const
-{
-    return _maximumQuantity;
-}
-
-void ExpendableReload::setMaximumQuantity(unsigned short pX)
-{
-    _maximumQuantity = pX;
-}
-
-unsigned int ExpendableReload::getStandardQuantityReloadTime() const
-{
-    return _standardQuantityReloadTime;
-}
-
-void ExpendableReload::setStandardQuantityReloadTime(unsigned int pX)
-{
-    _standardQuantityReloadTime = pX;
-}
-
-unsigned int ExpendableReload::getMaximumQuantityReloadTime() const
-{
-    return _maximumQuantityReloadTime;
-}
-
-void ExpendableReload::setMaximumQuantityReloadTime(unsigned int pX)
-{
-    _maximumQuantityReloadTime = pX;
-}
-
 void ExpendableReload::marshal(DataStream& dataStream) const
 {
-    _expendable.marshal(dataStream);
-    dataStream << _station;
-    dataStream << _standardQuantity;
-    dataStream << _maximumQuantity;
-    dataStream << _standardQuantityReloadTime;
-    dataStream << _maximumQuantityReloadTime;
+    expendable.marshal(dataStream);
+    dataStream << station;
+    dataStream << standardQuantity;
+    dataStream << maximumQuantity;
+    dataStream << standardQuantityReloadTime;
+    dataStream << maximumQuantityReloadTime;
 }
 
 void ExpendableReload::unmarshal(DataStream& dataStream)
 {
-    _expendable.unmarshal(dataStream);
-    dataStream >> _station;
-    dataStream >> _standardQuantity;
-    dataStream >> _maximumQuantity;
-    dataStream >> _standardQuantityReloadTime;
-    dataStream >> _maximumQuantityReloadTime;
+    expendable.unmarshal(dataStream);
+    dataStream >> station;
+    dataStream >> standardQuantity;
+    dataStream >> maximumQuantity;
+    dataStream >> standardQuantityReloadTime;
+    dataStream >> maximumQuantityReloadTime;
 }
 
 
@@ -107,12 +42,12 @@ bool ExpendableReload::operator ==(const ExpendableReload& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_expendable == rhs._expendable) ) ivarsEqual = false;
-     if( ! (_station == rhs._station) ) ivarsEqual = false;
-     if( ! (_standardQuantity == rhs._standardQuantity) ) ivarsEqual = false;
-     if( ! (_maximumQuantity == rhs._maximumQuantity) ) ivarsEqual = false;
-     if( ! (_standardQuantityReloadTime == rhs._standardQuantityReloadTime) ) ivarsEqual = false;
-     if( ! (_maximumQuantityReloadTime == rhs._maximumQuantityReloadTime) ) ivarsEqual = false;
+     if( ! (expendable == rhs.expendable) ) ivarsEqual = false;
+     if( ! (station == rhs.station) ) ivarsEqual = false;
+     if( ! (standardQuantity == rhs.standardQuantity) ) ivarsEqual = false;
+     if( ! (maximumQuantity == rhs.maximumQuantity) ) ivarsEqual = false;
+     if( ! (standardQuantityReloadTime == rhs.standardQuantityReloadTime) ) ivarsEqual = false;
+     if( ! (maximumQuantityReloadTime == rhs.maximumQuantityReloadTime) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -121,12 +56,12 @@ int ExpendableReload::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _expendable.getMarshalledSize();  // _expendable
-   marshalSize = marshalSize + 4;  // _station
-   marshalSize = marshalSize + 2;  // _standardQuantity
-   marshalSize = marshalSize + 2;  // _maximumQuantity
-   marshalSize = marshalSize + 4;  // _standardQuantityReloadTime
-   marshalSize = marshalSize + 4;  // _maximumQuantityReloadTime
+   marshalSize = marshalSize + expendable.getMarshalledSize();  // expendable
+   marshalSize = marshalSize + 4;  // station
+   marshalSize = marshalSize + 2;  // standardQuantity
+   marshalSize = marshalSize + 2;  // maximumQuantity
+   marshalSize = marshalSize + 4;  // standardQuantityReloadTime
+   marshalSize = marshalSize + 4;  // maximumQuantityReloadTime
     return marshalSize;
 }
 

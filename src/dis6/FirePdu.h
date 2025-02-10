@@ -1,87 +1,58 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EventID.h>
-#include <dis6/Vector3Double.h>
-#include <dis6/BurstDescriptor.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/WarfareFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityID.h"
+#include "EventID.h"
+#include "Vector3Double.h"
+#include "BurstDescriptor.h"
+#include "Vector3Float.h"
+#include "WarfareFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Sectioin 5.3.4.1. Information about someone firing something. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT FirePdu : public WarfareFamilyPdu
+struct EXPORT_MACRO FirePdu : public WarfareFamilyPdu
 {
-protected:
   /** ID of the munition that is being shot */
-  EntityID _munitionID; 
+  EntityID munitionID;
 
   /** ID of event */
-  EventID _eventID; 
+  EventID eventID;
 
-  int _fireMissionIndex; 
+  int fireMissionIndex;
 
   /** location of the firing event */
-  Vector3Double _locationInWorldCoordinates; 
+  Vector3Double locationInWorldCoordinates;
 
   /** Describes munitions used in the firing event */
-  BurstDescriptor _burstDescriptor; 
+  BurstDescriptor burstDescriptor;
 
   /** Velocity of the ammunition */
-  Vector3Float _velocity; 
+  Vector3Float velocity;
 
-  /** range to the target */
-  float _range; 
+  /** range to the target. Note the word range is a SQL reserved word. */
+  float rangeToTarget;
 
-
- public:
     FirePdu();
     virtual ~FirePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getMunitionID(); 
-    const EntityID&  getMunitionID() const; 
-    void setMunitionID(const EntityID    &pX);
 
-    EventID& getEventID(); 
-    const EventID&  getEventID() const; 
-    void setEventID(const EventID    &pX);
+     virtual int getMarshalledSize() const;
 
-    int getFireMissionIndex() const; 
-    void setFireMissionIndex(int pX); 
-
-    Vector3Double& getLocationInWorldCoordinates(); 
-    const Vector3Double&  getLocationInWorldCoordinates() const; 
-    void setLocationInWorldCoordinates(const Vector3Double    &pX);
-
-    BurstDescriptor& getBurstDescriptor(); 
-    const BurstDescriptor&  getBurstDescriptor() const; 
-    void setBurstDescriptor(const BurstDescriptor    &pX);
-
-    Vector3Float& getVelocity(); 
-    const Vector3Float&  getVelocity() const; 
-    void setVelocity(const Vector3Float    &pX);
-
-    float getRange() const; 
-    void setRange(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const FirePdu& rhs) const;
+     bool operator ==(const FirePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

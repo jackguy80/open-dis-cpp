@@ -1,11 +1,11 @@
-#include <dis7/SimulationIdentifier.h>
+#include "SimulationIdentifier.h"
 
 using namespace DIS;
 
 
 SimulationIdentifier::SimulationIdentifier():
-   _simulationAddress(), 
-   _referenceNumber(0)
+   simulationAddress(), 
+   referenceNumber(0)
 {
 }
 
@@ -13,41 +13,16 @@ SimulationIdentifier::~SimulationIdentifier()
 {
 }
 
-SimulationAddress& SimulationIdentifier::getSimulationAddress() 
-{
-    return _simulationAddress;
-}
-
-const SimulationAddress& SimulationIdentifier::getSimulationAddress() const
-{
-    return _simulationAddress;
-}
-
-void SimulationIdentifier::setSimulationAddress(const SimulationAddress &pX)
-{
-    _simulationAddress = pX;
-}
-
-unsigned short SimulationIdentifier::getReferenceNumber() const
-{
-    return _referenceNumber;
-}
-
-void SimulationIdentifier::setReferenceNumber(unsigned short pX)
-{
-    _referenceNumber = pX;
-}
-
 void SimulationIdentifier::marshal(DataStream& dataStream) const
 {
-    _simulationAddress.marshal(dataStream);
-    dataStream << _referenceNumber;
+    simulationAddress.marshal(dataStream);
+    dataStream << referenceNumber;
 }
 
 void SimulationIdentifier::unmarshal(DataStream& dataStream)
 {
-    _simulationAddress.unmarshal(dataStream);
-    dataStream >> _referenceNumber;
+    simulationAddress.unmarshal(dataStream);
+    dataStream >> referenceNumber;
 }
 
 
@@ -55,8 +30,8 @@ bool SimulationIdentifier::operator ==(const SimulationIdentifier& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_simulationAddress == rhs._simulationAddress) ) ivarsEqual = false;
-     if( ! (_referenceNumber == rhs._referenceNumber) ) ivarsEqual = false;
+     if( ! (simulationAddress == rhs.simulationAddress) ) ivarsEqual = false;
+     if( ! (referenceNumber == rhs.referenceNumber) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +40,8 @@ int SimulationIdentifier::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _simulationAddress.getMarshalledSize();  // _simulationAddress
-   marshalSize = marshalSize + 2;  // _referenceNumber
+   marshalSize = marshalSize + simulationAddress.getMarshalledSize();  // simulationAddress
+   marshalSize = marshalSize + 2;  // referenceNumber
     return marshalSize;
 }
 

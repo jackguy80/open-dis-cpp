@@ -1,77 +1,56 @@
 #pragma once
 
-#include <dis6/AcousticEmitterSystem.h>
-#include <dis6/Vector3Float.h>
-#include <dis6/AcousticBeamData.h>
+#include "AcousticEmitterSystem.h"
+#include "Vector3Float.h"
+#include "AcousticBeamData.h"
 #include <vector>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Used in the UA pdu; ties together an emmitter and a location. This requires manual cleanup; the beam data should not be attached to each emitter system.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT AcousticEmitterSystemData
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO AcousticEmitterSystemData
 {
-protected:
   /** Length of emitter system data */
-  unsigned char _emitterSystemDataLength; 
+  unsigned char emitterSystemDataLength;
 
   /** Number of beams */
-  unsigned char _numberOfBeams; 
+  unsigned char numberOfBeams;
 
   /** padding */
-  unsigned short _pad2; 
+  unsigned short pad2;
 
   /** This field shall specify the system for a particular UA emitter. */
-  AcousticEmitterSystem _acousticEmitterSystem; 
+  AcousticEmitterSystem acousticEmitterSystem;
 
   /** Represents the location wrt the entity */
-  Vector3Float _emitterLocation; 
+  Vector3Float emitterLocation;
 
   /** For each beam in numberOfBeams, an emitter system. This is not right--the beam records need to be at the end of the PDU, rather than attached to each system. */
-  std::vector<AcousticBeamData> _beamRecords; 
+  std::vector<AcousticBeamData> beamRecords;
 
-
- public:
     AcousticEmitterSystemData();
     virtual ~AcousticEmitterSystemData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getEmitterSystemDataLength() const; 
-    void setEmitterSystemDataLength(unsigned char pX); 
 
-    unsigned char getNumberOfBeams() const; 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPad2() const; 
-    void setPad2(unsigned short pX); 
-
-    AcousticEmitterSystem& getAcousticEmitterSystem(); 
-    const AcousticEmitterSystem&  getAcousticEmitterSystem() const; 
-    void setAcousticEmitterSystem(const AcousticEmitterSystem    &pX);
-
-    Vector3Float& getEmitterLocation(); 
-    const Vector3Float&  getEmitterLocation() const; 
-    void setEmitterLocation(const Vector3Float    &pX);
-
-    std::vector<AcousticBeamData>& getBeamRecords(); 
-    const std::vector<AcousticBeamData>& getBeamRecords() const; 
-    void setBeamRecords(const std::vector<AcousticBeamData>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AcousticEmitterSystemData& rhs) const;
+     bool operator ==(const AcousticEmitterSystemData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

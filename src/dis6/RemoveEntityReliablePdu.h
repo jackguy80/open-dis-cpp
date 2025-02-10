@@ -1,60 +1,45 @@
 #pragma once
 
-#include <dis6/SimulationManagementWithReliabilityFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "SimulationManagementWithReliabilityFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.12.2: Removal of an entity , reliable. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT RemoveEntityReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
+struct EXPORT_MACRO RemoveEntityReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
 {
-protected:
   /** level of reliability service used for this transaction */
-  unsigned char _requiredReliabilityService; 
+  unsigned char requiredReliabilityService;
 
   /** padding */
-  unsigned short _pad1; 
+  unsigned short pad1;
 
   /** padding */
-  unsigned char _pad2; 
+  unsigned char pad2;
 
   /** Request ID */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     RemoveEntityReliablePdu();
     virtual ~RemoveEntityReliablePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getRequiredReliabilityService() const; 
-    void setRequiredReliabilityService(unsigned char pX); 
 
-    unsigned short getPad1() const; 
-    void setPad1(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getPad2() const; 
-    void setPad2(unsigned char pX); 
-
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RemoveEntityReliablePdu& rhs) const;
+     bool operator ==(const RemoveEntityReliablePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

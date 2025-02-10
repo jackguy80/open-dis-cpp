@@ -1,115 +1,79 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The Angle Deception attribute record may be used to communicate discrete values that are associated with angle deception jamming that cannot be referenced to an emitter mode. The values provided in the record records (provided in the associated Electromagnetic Emission PDU). (The victim radar beams are those that are targeted by the jammer.) Section 6.2.12.2
+// The Angle Deception attribute record may be used to communicate discrete values that are associated with angle deception jamming that cannot be referenced to an emitter mode. The values provided in the record records (provided in the associated Electromagnetic Emission PDU). (The victim radar beams are those that are targeted by the jammer.) Section 6.2.21.2.2
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT AngleDeception
+struct EXPORT_MACRO AngleDeception
 {
-protected:
-  unsigned int _recordType; 
+  /** record type */
+  unsigned int recordType;
 
-  unsigned short _recordLength; 
+  /** the length of the record in octets. */
+  unsigned short recordLength;
 
-  unsigned short _padding; 
+  /** padding */
+  unsigned short padding;
 
-  unsigned char _emitterNumber; 
+  /** indicates the emitter system for which the angle deception values are applicable.  */
+  unsigned char emitterNumber;
 
-  unsigned char _beamNumber; 
+  /** indicates the jamming beam for which the angle deception values are applicable. */
+  unsigned char beamNumber;
 
-  unsigned char _stateIndicator; 
+  /** This field shall be used to indicate if angle deception data have changed since issuance of the last Angle Deception attribute record for this beam, if the Angle Deception attribute record is part of a heartbeat update to meet periodic update requirements or if the angle deception data for the beam has ceased. */
+  unsigned char stateIndicator;
 
-  unsigned int _padding2; 
+  /** padding */
+  unsigned char padding2;
 
-  float _azimuthOffset; 
+  /** This field indicates the relative azimuth angle at which the deceptive radar returns are centered. This angle is measured in the X-Y plane of the victim radar's entity coordinate system (see 1.4.3). This angle is measured in radians from the victim radar entity's azimuth for the true jam- mer position to the center of the range of azimuths in which deceptive radar returns are perceived as shown in Figure 43. Positive and negative values indicate that the perceived positions of the jammer are right and left of the true position of the jammer, respectively. The range of permissible values is -PI to PI */
+  float azimuthOffset;
 
-  float _azimuthWidth; 
+  /** indicates the range of azimuths (in radians) through which the deceptive radar returns are perceived, centered on the azimuth offset as shown in Figure 43. The range of permissible values is 0 to 2PI radians */
+  float azimuthWidth;
 
-  float _azimuthPullRate; 
+  /** This field indicates the rate (in radians per second) at which the Azimuth Offset value is changing. Positive and negative values indicate that the Azimuth Offset is moving to the right or left, respectively. */
+  float azimuthPullRate;
 
-  float _azimuthPullAcceleration; 
+  /** This field indicates the rate (in radians per second squared) at which the Azimuth Pull Rate value is changing. Azimuth Pull Acceleration is defined as positive to the right and negative to the left. */
+  float azimuthPullAcceleration;
 
-  float _elevationOffset; 
+  /** This field indicates the relative elevation angle at which the deceptive radar returns begin. This angle is measured as an angle with respect to the X-Y plane of the victim radar's entity coordinate system (see 1.4.3). This angle is measured in radians from the victim radar entity's eleva- tion for the true jammer position to the center of the range of elevations in which deceptive radar returns are perceived as shown in Figure 44. Positive and negative values indicate that the perceived positions of the jammer are above and below the true position of the jammer, respectively. The range of permissible values is -PI/2 to PI/2 */
+  float elevationOffset;
 
-  float _elevationWidth; 
+  /** This field indicates the range of elevations (in radians) through which the decep- tive radar returns are perceived, centered on the elevation offset as shown in Figure 44. The range of permissible values is 0 to PI radians */
+  float elevationWidth;
 
-  float _elevationPullRate; 
+  /** This field indicates the rate (in radians per second) at which the Elevation Off- set value is changing. Positive and negative values indicate that the Elevation Offset is moving up or down, respectively.  */
+  float elevationPullRate;
 
-  float _elevationPullAcceleration; 
+  /** This field indicates the rate (in radians per second squared) at which the Elevation Pull Rate value is changing. Elevation Pull Acceleration is defined as positive to upward and negative downward.  */
+  float elevationPullAcceleration;
 
-  unsigned int _padding3; 
+  unsigned int padding3;
 
-
- public:
     AngleDeception();
     virtual ~AngleDeception();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRecordType() const; 
-    void setRecordType(unsigned int pX); 
 
-    unsigned short getRecordLength() const; 
-    void setRecordLength(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getPadding() const; 
-    void setPadding(unsigned short pX); 
-
-    unsigned char getEmitterNumber() const; 
-    void setEmitterNumber(unsigned char pX); 
-
-    unsigned char getBeamNumber() const; 
-    void setBeamNumber(unsigned char pX); 
-
-    unsigned char getStateIndicator() const; 
-    void setStateIndicator(unsigned char pX); 
-
-    unsigned int getPadding2() const; 
-    void setPadding2(unsigned int pX); 
-
-    float getAzimuthOffset() const; 
-    void setAzimuthOffset(float pX); 
-
-    float getAzimuthWidth() const; 
-    void setAzimuthWidth(float pX); 
-
-    float getAzimuthPullRate() const; 
-    void setAzimuthPullRate(float pX); 
-
-    float getAzimuthPullAcceleration() const; 
-    void setAzimuthPullAcceleration(float pX); 
-
-    float getElevationOffset() const; 
-    void setElevationOffset(float pX); 
-
-    float getElevationWidth() const; 
-    void setElevationWidth(float pX); 
-
-    float getElevationPullRate() const; 
-    void setElevationPullRate(float pX); 
-
-    float getElevationPullAcceleration() const; 
-    void setElevationPullAcceleration(float pX); 
-
-    unsigned int getPadding3() const; 
-    void setPadding3(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AngleDeception& rhs) const;
+     bool operator ==(const AngleDeception& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

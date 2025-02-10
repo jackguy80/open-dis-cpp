@@ -1,71 +1,50 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Used in UaPdu
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT AcousticBeamFundamentalParameter
+struct EXPORT_MACRO AcousticBeamFundamentalParameter
 {
-protected:
   /** parameter index */
-  unsigned short _activeEmissionParameterIndex; 
+  unsigned short activeEmissionParameterIndex;
 
   /** scan pattern */
-  unsigned short _scanPattern; 
+  unsigned short scanPattern;
 
   /** beam center azimuth */
-  float _beamCenterAzimuth; 
+  float beamCenterAzimuth;
 
   /** azimuthal beamwidth */
-  float _azimuthalBeamwidth; 
+  float azimuthalBeamwidth;
 
   /** beam center */
-  float _beamCenterDE; 
+  float beamCenterDE;
 
   /** DE beamwidth (vertical beamwidth) */
-  float _deBeamwidth; 
+  float deBeamwidth;
 
-
- public:
     AcousticBeamFundamentalParameter();
     virtual ~AcousticBeamFundamentalParameter();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getActiveEmissionParameterIndex() const; 
-    void setActiveEmissionParameterIndex(unsigned short pX); 
 
-    unsigned short getScanPattern() const; 
-    void setScanPattern(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-    float getBeamCenterAzimuth() const; 
-    void setBeamCenterAzimuth(float pX); 
-
-    float getAzimuthalBeamwidth() const; 
-    void setAzimuthalBeamwidth(float pX); 
-
-    float getBeamCenterDE() const; 
-    void setBeamCenterDE(float pX); 
-
-    float getDeBeamwidth() const; 
-    void setDeBeamwidth(float pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AcousticBeamFundamentalParameter& rhs) const;
+     bool operator ==(const AcousticBeamFundamentalParameter& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,11 +1,11 @@
-#include <dis7/Pdu.h>
+#include "Pdu.h"
 
 using namespace DIS;
 
 
 Pdu::Pdu() : PduSuperclass(),
-   _pduStatus(0), 
-   _padding(0)
+   pduStatus(0), 
+   padding(0)
 {
 }
 
@@ -13,38 +13,18 @@ Pdu::~Pdu()
 {
 }
 
-unsigned char Pdu::getPduStatus() const
-{
-    return _pduStatus;
-}
-
-void Pdu::setPduStatus(unsigned char pX)
-{
-    _pduStatus = pX;
-}
-
-unsigned char Pdu::getPadding() const
-{
-    return _padding;
-}
-
-void Pdu::setPadding(unsigned char pX)
-{
-    _padding = pX;
-}
-
 void Pdu::marshal(DataStream& dataStream) const
 {
     PduSuperclass::marshal(dataStream); // Marshal information in superclass first
-    dataStream << _pduStatus;
-    dataStream << _padding;
+    dataStream << pduStatus;
+    dataStream << padding;
 }
 
 void Pdu::unmarshal(DataStream& dataStream)
 {
     PduSuperclass::unmarshal(dataStream); // unmarshal information in superclass first
-    dataStream >> _pduStatus;
-    dataStream >> _padding;
+    dataStream >> pduStatus;
+    dataStream >> padding;
 }
 
 
@@ -54,8 +34,8 @@ bool Pdu::operator ==(const Pdu& rhs) const
 
      ivarsEqual = PduSuperclass::operator==(rhs);
 
-     if( ! (_pduStatus == rhs._pduStatus) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (pduStatus == rhs.pduStatus) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -65,8 +45,8 @@ int Pdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = PduSuperclass::getMarshalledSize();
-   marshalSize = marshalSize + 1;  // _pduStatus
-   marshalSize = marshalSize + 1;  // _padding
+   marshalSize = marshalSize + 1;  // pduStatus
+   marshalSize = marshalSize + 1;  // padding
     return marshalSize;
 }
 

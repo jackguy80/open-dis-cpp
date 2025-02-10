@@ -1,92 +1,64 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/RecordSet.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "EntityID.h"
+#include "RecordSet.h"
 #include <vector>
-#include <dis6/EntityManagementFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "EntityManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.9.3 Information initiating the dyanic allocation and control of simulation entities         between two simulation applications. Requires manual cleanup. The padding between record sets is variable. UNFINISHED
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT TransferControlRequestPdu : public EntityManagementFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO TransferControlRequestPdu : public EntityManagementFamilyPdu
 {
-protected:
   /** ID of entity originating request */
-  EntityID _orginatingEntityID; 
+  EntityID orginatingEntityID;
 
   /** ID of entity receiving request */
-  EntityID _recevingEntityID; 
+  EntityID recevingEntityID;
 
   /** ID ofrequest */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
   /** required level of reliabliity service. */
-  unsigned char _requiredReliabilityService; 
+  unsigned char requiredReliabilityService;
 
   /** type of transfer desired */
-  unsigned char _tranferType; 
+  unsigned char tranferType;
 
   /** The entity for which control is being requested to transfer */
-  EntityID _transferEntityID; 
+  EntityID transferEntityID;
 
   /** number of record sets to transfer */
-  unsigned char _numberOfRecordSets; 
+  unsigned char numberOfRecordSets;
 
   /** ^^^This is wrong--the RecordSet class needs more work */
-  std::vector<RecordSet> _recordSets; 
+  std::vector<RecordSet> recordSets;
 
-
- public:
     TransferControlRequestPdu();
     virtual ~TransferControlRequestPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getOrginatingEntityID(); 
-    const EntityID&  getOrginatingEntityID() const; 
-    void setOrginatingEntityID(const EntityID    &pX);
 
-    EntityID& getRecevingEntityID(); 
-    const EntityID&  getRecevingEntityID() const; 
-    void setRecevingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-    unsigned char getRequiredReliabilityService() const; 
-    void setRequiredReliabilityService(unsigned char pX); 
-
-    unsigned char getTranferType() const; 
-    void setTranferType(unsigned char pX); 
-
-    EntityID& getTransferEntityID(); 
-    const EntityID&  getTransferEntityID() const; 
-    void setTransferEntityID(const EntityID    &pX);
-
-    unsigned char getNumberOfRecordSets() const; 
-
-    std::vector<RecordSet>& getRecordSets(); 
-    const std::vector<RecordSet>& getRecordSets() const; 
-    void setRecordSets(const std::vector<RecordSet>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const TransferControlRequestPdu& rhs) const;
+     bool operator ==(const TransferControlRequestPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

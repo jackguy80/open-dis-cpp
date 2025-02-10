@@ -1,76 +1,53 @@
 #pragma once
 
-#include <dis7/ClockTime.h>
-#include <dis7/ClockTime.h>
-#include <dis7/SimulationManagementWithReliabilityFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "ClockTime.h"
+#include "ClockTime.h"
+#include "SimulationManagementWithReliabilityFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.12.3: Start resume simulation, relaible. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT StartResumeReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
+struct EXPORT_MACRO StartResumeReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
 {
-protected:
   /** time in real world for this operation to happen */
-  ClockTime _realWorldTime; 
+  ClockTime realWorldTime;
 
   /** time in simulation for the simulation to resume */
-  ClockTime _simulationTime; 
+  ClockTime simulationTime;
 
   /** level of reliability service used for this transaction */
-  unsigned char _requiredReliabilityService; 
+  unsigned char requiredReliabilityService;
 
   /** padding */
-  unsigned short _pad1; 
+  unsigned short pad1;
 
   /** padding */
-  unsigned char _pad2; 
+  unsigned char pad2;
 
   /** Request ID */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     StartResumeReliablePdu();
     virtual ~StartResumeReliablePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    ClockTime& getRealWorldTime(); 
-    const ClockTime&  getRealWorldTime() const; 
-    void setRealWorldTime(const ClockTime    &pX);
 
-    ClockTime& getSimulationTime(); 
-    const ClockTime&  getSimulationTime() const; 
-    void setSimulationTime(const ClockTime    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned char getRequiredReliabilityService() const; 
-    void setRequiredReliabilityService(unsigned char pX); 
-
-    unsigned short getPad1() const; 
-    void setPad1(unsigned short pX); 
-
-    unsigned char getPad2() const; 
-    void setPad2(unsigned char pX); 
-
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StartResumeReliablePdu& rhs) const;
+     bool operator ==(const StartResumeReliablePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

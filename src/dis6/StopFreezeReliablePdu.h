@@ -1,74 +1,52 @@
 #pragma once
 
-#include <dis6/ClockTime.h>
-#include <dis6/SimulationManagementWithReliabilityFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "ClockTime.h"
+#include "SimulationManagementWithReliabilityFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.12.4: Stop freeze simulation, relaible. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT StopFreezeReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
+struct EXPORT_MACRO StopFreezeReliablePdu : public SimulationManagementWithReliabilityFamilyPdu
 {
-protected:
   /** time in real world for this operation to happen */
-  ClockTime _realWorldTime; 
+  ClockTime realWorldTime;
 
   /** Reason for stopping/freezing simulation */
-  unsigned char _reason; 
+  unsigned char reason;
 
   /** internal behvior of the simulation while frozen */
-  unsigned char _frozenBehavior; 
+  unsigned char frozenBehavior;
 
   /** reliablity level */
-  unsigned char _requiredReliablityService; 
+  unsigned char requiredReliablityService;
 
   /** padding */
-  unsigned char _pad1; 
+  unsigned char pad1;
 
   /** Request ID */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     StopFreezeReliablePdu();
     virtual ~StopFreezeReliablePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    ClockTime& getRealWorldTime(); 
-    const ClockTime&  getRealWorldTime() const; 
-    void setRealWorldTime(const ClockTime    &pX);
 
-    unsigned char getReason() const; 
-    void setReason(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getFrozenBehavior() const; 
-    void setFrozenBehavior(unsigned char pX); 
-
-    unsigned char getRequiredReliablityService() const; 
-    void setRequiredReliablityService(unsigned char pX); 
-
-    unsigned char getPad1() const; 
-    void setPad1(unsigned char pX); 
-
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StopFreezeReliablePdu& rhs) const;
+     bool operator ==(const StopFreezeReliablePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,189 +1,62 @@
-#include <dis6/UaPdu.h>
+#include "UaPdu.h"
 
 using namespace DIS;
 
 
 UaPdu::UaPdu() : DistributedEmissionsFamilyPdu(),
-   _emittingEntityID(), 
-   _eventID(), 
-   _stateChangeIndicator(0), 
-   _pad(0), 
-   _passiveParameterIndex(0), 
-   _propulsionPlantConfiguration(0), 
-   _numberOfShafts(0), 
-   _numberOfAPAs(0), 
-   _numberOfUAEmitterSystems(0)
+   emittingEntityID(), 
+   eventID(), 
+   stateChangeIndicator(0), 
+   pad(0), 
+   passiveParameterIndex(0), 
+   propulsionPlantConfiguration(0), 
+   numberOfShafts(0), 
+   numberOfAPAs(0), 
+   numberOfUAEmitterSystems(0), 
+   shaftRPMs(0), 
+   apaData(0), 
+   emitterSystems(0)
 {
-    setPduType( 29 );
+    pduType = 29;
 }
 
 UaPdu::~UaPdu()
 {
-    _shaftRPMs.clear();
-    _apaData.clear();
-    _emitterSystems.clear();
-}
-
-EntityID& UaPdu::getEmittingEntityID() 
-{
-    return _emittingEntityID;
-}
-
-const EntityID& UaPdu::getEmittingEntityID() const
-{
-    return _emittingEntityID;
-}
-
-void UaPdu::setEmittingEntityID(const EntityID &pX)
-{
-    _emittingEntityID = pX;
-}
-
-EventID& UaPdu::getEventID() 
-{
-    return _eventID;
-}
-
-const EventID& UaPdu::getEventID() const
-{
-    return _eventID;
-}
-
-void UaPdu::setEventID(const EventID &pX)
-{
-    _eventID = pX;
-}
-
-char UaPdu::getStateChangeIndicator() const
-{
-    return _stateChangeIndicator;
-}
-
-void UaPdu::setStateChangeIndicator(char pX)
-{
-    _stateChangeIndicator = pX;
-}
-
-char UaPdu::getPad() const
-{
-    return _pad;
-}
-
-void UaPdu::setPad(char pX)
-{
-    _pad = pX;
-}
-
-unsigned short UaPdu::getPassiveParameterIndex() const
-{
-    return _passiveParameterIndex;
-}
-
-void UaPdu::setPassiveParameterIndex(unsigned short pX)
-{
-    _passiveParameterIndex = pX;
-}
-
-unsigned char UaPdu::getPropulsionPlantConfiguration() const
-{
-    return _propulsionPlantConfiguration;
-}
-
-void UaPdu::setPropulsionPlantConfiguration(unsigned char pX)
-{
-    _propulsionPlantConfiguration = pX;
-}
-
-unsigned char UaPdu::getNumberOfShafts() const
-{
-   return _shaftRPMs.size();
-}
-
-unsigned char UaPdu::getNumberOfAPAs() const
-{
-   return _apaData.size();
-}
-
-unsigned char UaPdu::getNumberOfUAEmitterSystems() const
-{
-   return _emitterSystems.size();
-}
-
-std::vector<ShaftRPMs>& UaPdu::getShaftRPMs() 
-{
-    return _shaftRPMs;
-}
-
-const std::vector<ShaftRPMs>& UaPdu::getShaftRPMs() const
-{
-    return _shaftRPMs;
-}
-
-void UaPdu::setShaftRPMs(const std::vector<ShaftRPMs>& pX)
-{
-     _shaftRPMs = pX;
-}
-
-std::vector<ApaData>& UaPdu::getApaData() 
-{
-    return _apaData;
-}
-
-const std::vector<ApaData>& UaPdu::getApaData() const
-{
-    return _apaData;
-}
-
-void UaPdu::setApaData(const std::vector<ApaData>& pX)
-{
-     _apaData = pX;
-}
-
-std::vector<AcousticEmitterSystemData>& UaPdu::getEmitterSystems() 
-{
-    return _emitterSystems;
-}
-
-const std::vector<AcousticEmitterSystemData>& UaPdu::getEmitterSystems() const
-{
-    return _emitterSystems;
-}
-
-void UaPdu::setEmitterSystems(const std::vector<AcousticEmitterSystemData>& pX)
-{
-     _emitterSystems = pX;
+    shaftRPMs.clear();
+    apaData.clear();
+    emitterSystems.clear();
 }
 
 void UaPdu::marshal(DataStream& dataStream) const
 {
     DistributedEmissionsFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _emittingEntityID.marshal(dataStream);
-    _eventID.marshal(dataStream);
-    dataStream << _stateChangeIndicator;
-    dataStream << _pad;
-    dataStream << _passiveParameterIndex;
-    dataStream << _propulsionPlantConfiguration;
-    dataStream << ( unsigned char )_shaftRPMs.size();
-    dataStream << ( unsigned char )_apaData.size();
-    dataStream << ( unsigned char )_emitterSystems.size();
+    emittingEntityID.marshal(dataStream);
+    eventID.marshal(dataStream);
+    dataStream << stateChangeIndicator;
+    dataStream << pad;
+    dataStream << passiveParameterIndex;
+    dataStream << propulsionPlantConfiguration;
+    dataStream << ( unsigned char )shaftRPMs.size();
+    dataStream << ( unsigned char )apaData.size();
+    dataStream << ( unsigned char )emitterSystems.size();
 
-     for(size_t idx = 0; idx < _shaftRPMs.size(); idx++)
+     for(size_t idx = 0; idx < shaftRPMs.size(); idx++)
      {
-        ShaftRPMs x = _shaftRPMs[idx];
+        ShaftRPMs x = shaftRPMs[idx];
         x.marshal(dataStream);
      }
 
 
-     for(size_t idx = 0; idx < _apaData.size(); idx++)
+     for(size_t idx = 0; idx < apaData.size(); idx++)
      {
-        ApaData x = _apaData[idx];
+        ApaData x = apaData[idx];
         x.marshal(dataStream);
      }
 
 
-     for(size_t idx = 0; idx < _emitterSystems.size(); idx++)
+     for(size_t idx = 0; idx < emitterSystems.size(); idx++)
      {
-        AcousticEmitterSystemData x = _emitterSystems[idx];
+        AcousticEmitterSystemData x = emitterSystems[idx];
         x.marshal(dataStream);
      }
 
@@ -192,38 +65,38 @@ void UaPdu::marshal(DataStream& dataStream) const
 void UaPdu::unmarshal(DataStream& dataStream)
 {
     DistributedEmissionsFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _emittingEntityID.unmarshal(dataStream);
-    _eventID.unmarshal(dataStream);
-    dataStream >> _stateChangeIndicator;
-    dataStream >> _pad;
-    dataStream >> _passiveParameterIndex;
-    dataStream >> _propulsionPlantConfiguration;
-    dataStream >> _numberOfShafts;
-    dataStream >> _numberOfAPAs;
-    dataStream >> _numberOfUAEmitterSystems;
+    emittingEntityID.unmarshal(dataStream);
+    eventID.unmarshal(dataStream);
+    dataStream >> stateChangeIndicator;
+    dataStream >> pad;
+    dataStream >> passiveParameterIndex;
+    dataStream >> propulsionPlantConfiguration;
+    dataStream >> numberOfShafts;
+    dataStream >> numberOfAPAs;
+    dataStream >> numberOfUAEmitterSystems;
 
-     _shaftRPMs.clear();
-     for(size_t idx = 0; idx < _numberOfShafts; idx++)
+     shaftRPMs.clear();
+     for(size_t idx = 0; idx < numberOfShafts; idx++)
      {
         ShaftRPMs x;
         x.unmarshal(dataStream);
-        _shaftRPMs.push_back(x);
+        shaftRPMs.push_back(x);
      }
 
-     _apaData.clear();
-     for(size_t idx = 0; idx < _numberOfAPAs; idx++)
+     apaData.clear();
+     for(size_t idx = 0; idx < numberOfAPAs; idx++)
      {
         ApaData x;
         x.unmarshal(dataStream);
-        _apaData.push_back(x);
+        apaData.push_back(x);
      }
 
-     _emitterSystems.clear();
-     for(size_t idx = 0; idx < _numberOfUAEmitterSystems; idx++)
+     emitterSystems.clear();
+     for(size_t idx = 0; idx < numberOfUAEmitterSystems; idx++)
      {
         AcousticEmitterSystemData x;
         x.unmarshal(dataStream);
-        _emitterSystems.push_back(x);
+        emitterSystems.push_back(x);
      }
 }
 
@@ -234,28 +107,28 @@ bool UaPdu::operator ==(const UaPdu& rhs) const
 
      ivarsEqual = DistributedEmissionsFamilyPdu::operator==(rhs);
 
-     if( ! (_emittingEntityID == rhs._emittingEntityID) ) ivarsEqual = false;
-     if( ! (_eventID == rhs._eventID) ) ivarsEqual = false;
-     if( ! (_stateChangeIndicator == rhs._stateChangeIndicator) ) ivarsEqual = false;
-     if( ! (_pad == rhs._pad) ) ivarsEqual = false;
-     if( ! (_passiveParameterIndex == rhs._passiveParameterIndex) ) ivarsEqual = false;
-     if( ! (_propulsionPlantConfiguration == rhs._propulsionPlantConfiguration) ) ivarsEqual = false;
+     if( ! (emittingEntityID == rhs.emittingEntityID) ) ivarsEqual = false;
+     if( ! (eventID == rhs.eventID) ) ivarsEqual = false;
+     if( ! (stateChangeIndicator == rhs.stateChangeIndicator) ) ivarsEqual = false;
+     if( ! (pad == rhs.pad) ) ivarsEqual = false;
+     if( ! (passiveParameterIndex == rhs.passiveParameterIndex) ) ivarsEqual = false;
+     if( ! (propulsionPlantConfiguration == rhs.propulsionPlantConfiguration) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _shaftRPMs.size(); idx++)
+     for(size_t idx = 0; idx < shaftRPMs.size(); idx++)
      {
-        if( ! ( _shaftRPMs[idx] == rhs._shaftRPMs[idx]) ) ivarsEqual = false;
+        if( ! ( shaftRPMs[idx] == rhs.shaftRPMs[idx]) ) ivarsEqual = false;
      }
 
 
-     for(size_t idx = 0; idx < _apaData.size(); idx++)
+     for(size_t idx = 0; idx < apaData.size(); idx++)
      {
-        if( ! ( _apaData[idx] == rhs._apaData[idx]) ) ivarsEqual = false;
+        if( ! ( apaData[idx] == rhs.apaData[idx]) ) ivarsEqual = false;
      }
 
 
-     for(size_t idx = 0; idx < _emitterSystems.size(); idx++)
+     for(size_t idx = 0; idx < emitterSystems.size(); idx++)
      {
-        if( ! ( _emitterSystems[idx] == rhs._emitterSystems[idx]) ) ivarsEqual = false;
+        if( ! ( emitterSystems[idx] == rhs.emitterSystems[idx]) ) ivarsEqual = false;
      }
 
 
@@ -267,33 +140,33 @@ int UaPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = DistributedEmissionsFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _emittingEntityID.getMarshalledSize();  // _emittingEntityID
-   marshalSize = marshalSize + _eventID.getMarshalledSize();  // _eventID
-   marshalSize = marshalSize + 1;  // _stateChangeIndicator
-   marshalSize = marshalSize + 1;  // _pad
-   marshalSize = marshalSize + 2;  // _passiveParameterIndex
-   marshalSize = marshalSize + 1;  // _propulsionPlantConfiguration
-   marshalSize = marshalSize + 1;  // _numberOfShafts
-   marshalSize = marshalSize + 1;  // _numberOfAPAs
-   marshalSize = marshalSize + 1;  // _numberOfUAEmitterSystems
+   marshalSize = marshalSize + emittingEntityID.getMarshalledSize();  // emittingEntityID
+   marshalSize = marshalSize + eventID.getMarshalledSize();  // eventID
+   marshalSize = marshalSize + 1;  // stateChangeIndicator
+   marshalSize = marshalSize + 1;  // pad
+   marshalSize = marshalSize + 2;  // passiveParameterIndex
+   marshalSize = marshalSize + 1;  // propulsionPlantConfiguration
+   marshalSize = marshalSize + 1;  // numberOfShafts
+   marshalSize = marshalSize + 1;  // numberOfAPAs
+   marshalSize = marshalSize + 1;  // numberOfUAEmitterSystems
 
-   for(unsigned long long idx=0; idx < _shaftRPMs.size(); idx++)
+   for(int idx=0; idx < shaftRPMs.size(); idx++)
    {
-        ShaftRPMs listElement = _shaftRPMs[idx];
+        ShaftRPMs listElement = shaftRPMs[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 
 
-   for(unsigned long long idx=0; idx < _apaData.size(); idx++)
+   for(int idx=0; idx < apaData.size(); idx++)
    {
-        ApaData listElement = _apaData[idx];
+        ApaData listElement = apaData[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 
 
-   for(unsigned long long idx=0; idx < _emitterSystems.size(); idx++)
+   for(int idx=0; idx < emitterSystems.size(); idx++)
    {
-        AcousticEmitterSystemData listElement = _emitterSystems[idx];
+        AcousticEmitterSystemData listElement = emitterSystems[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

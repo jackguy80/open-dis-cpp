@@ -1,102 +1,69 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/SimulationAddress.h>
-#include <dis6/SimulationAddress.h>
-#include <dis6/ObjectType.h>
-#include <dis6/LinearSegmentParameter.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "SimulationAddress.h"
+#include "SimulationAddress.h"
+#include "ObjectType.h"
+#include "LinearSegmentParameter.h"
 #include <vector>
-#include <dis6/SyntheticEnvironmentFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "SyntheticEnvironmentFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.11.4: Information abut the addition or modification of a synthecic enviroment object that      is anchored to the terrain with a single point and has size or orientation. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT LinearObjectStatePdu : public SyntheticEnvironmentFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO LinearObjectStatePdu : public SyntheticEnvironmentFamilyPdu
 {
-protected:
   /** Object in synthetic environment */
-  EntityID _objectID; 
+  EntityID objectID;
 
   /** Object with which this point object is associated */
-  EntityID _referencedObjectID; 
+  EntityID referencedObjectID;
 
   /** unique update number of each state transition of an object */
-  unsigned short _updateNumber; 
+  unsigned short updateNumber;
 
   /** force ID */
-  unsigned char _forceID; 
+  unsigned char forceID;
 
   /** number of linear segment parameters */
-  unsigned char _numberOfSegments; 
+  unsigned char numberOfSegments;
 
   /** requesterID */
-  SimulationAddress _requesterID; 
+  SimulationAddress requesterID;
 
   /** receiver ID */
-  SimulationAddress _receivingID; 
+  SimulationAddress receivingID;
 
   /** Object type */
-  ObjectType _objectType; 
+  ObjectType objectType;
 
   /** Linear segment parameters */
-  std::vector<LinearSegmentParameter> _linearSegmentParameters; 
+  std::vector<LinearSegmentParameter> linearSegmentParameters;
 
-
- public:
     LinearObjectStatePdu();
     virtual ~LinearObjectStatePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getObjectID(); 
-    const EntityID&  getObjectID() const; 
-    void setObjectID(const EntityID    &pX);
 
-    EntityID& getReferencedObjectID(); 
-    const EntityID&  getReferencedObjectID() const; 
-    void setReferencedObjectID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned short getUpdateNumber() const; 
-    void setUpdateNumber(unsigned short pX); 
-
-    unsigned char getForceID() const; 
-    void setForceID(unsigned char pX); 
-
-    unsigned char getNumberOfSegments() const; 
-
-    SimulationAddress& getRequesterID(); 
-    const SimulationAddress&  getRequesterID() const; 
-    void setRequesterID(const SimulationAddress    &pX);
-
-    SimulationAddress& getReceivingID(); 
-    const SimulationAddress&  getReceivingID() const; 
-    void setReceivingID(const SimulationAddress    &pX);
-
-    ObjectType& getObjectType(); 
-    const ObjectType&  getObjectType() const; 
-    void setObjectType(const ObjectType    &pX);
-
-    std::vector<LinearSegmentParameter>& getLinearSegmentParameters(); 
-    const std::vector<LinearSegmentParameter>& getLinearSegmentParameters() const; 
-    void setLinearSegmentParameters(const std::vector<LinearSegmentParameter>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const LinearObjectStatePdu& rhs) const;
+     bool operator ==(const LinearObjectStatePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

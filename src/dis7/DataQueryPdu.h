@@ -1,75 +1,53 @@
 #pragma once
 
-#include <dis7/FixedDatum.h>
-#include <dis7/VariableDatum.h>
-#include <vector>
-#include <dis7/SimulationManagementFamilyPdu.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "FixedDatum.h"
+#include "VariableDatum.h"
+#include "SimulationManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 7.5.9. Request for data from an entity. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT DataQueryPdu : public SimulationManagementFamilyPdu
+struct EXPORT_MACRO DataQueryPdu : public SimulationManagementFamilyPdu
 {
-protected:
   /** ID of request */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
   /** time issues between issues of Data PDUs. Zero means send once only. */
-  unsigned int _timeInterval; 
+  unsigned int timeInterval;
 
   /** Number of fixed datum records */
-  unsigned int _numberOfFixedDatumRecords; 
+  unsigned int numberOfFixedDatumRecords;
 
   /** Number of variable datum records */
-  unsigned int _numberOfVariableDatumRecords; 
+  unsigned int numberOfVariableDatumRecords;
 
   /** variable length list of fixed datums */
-  std::vector<FixedDatum> _fixedDatums; 
+  FixedDatum fixedDatums;
 
   /** variable length list of variable length datums */
-  std::vector<VariableDatum> _variableDatums; 
+  VariableDatum variableDatums;
 
-
- public:
     DataQueryPdu();
     virtual ~DataQueryPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
 
-    unsigned int getTimeInterval() const; 
-    void setTimeInterval(unsigned int pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned int getNumberOfFixedDatumRecords() const; 
-
-    unsigned int getNumberOfVariableDatumRecords() const; 
-
-    std::vector<FixedDatum>& getFixedDatums(); 
-    const std::vector<FixedDatum>& getFixedDatums() const; 
-    void setFixedDatums(const std::vector<FixedDatum>&    pX);
-
-    std::vector<VariableDatum>& getVariableDatums(); 
-    const std::vector<VariableDatum>& getVariableDatums() const; 
-    void setVariableDatums(const std::vector<VariableDatum>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const DataQueryPdu& rhs) const;
+     bool operator ==(const DataQueryPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

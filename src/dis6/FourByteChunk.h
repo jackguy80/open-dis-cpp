@@ -1,42 +1,35 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 32 bit piece of data
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT FourByteChunk
+struct EXPORT_MACRO FourByteChunk
 {
-protected:
   /** four bytes of arbitrary data */
-  char _otherParameters[4]; 
+  char otherParameters[4];
 
-
- public:
     FourByteChunk();
     virtual ~FourByteChunk();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    char*  getOtherParameters(); 
-    const char*  getOtherParameters() const; 
-    void setOtherParameters( const char*    pX);
 
+     virtual int getMarshalledSize() const;
 
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const FourByteChunk& rhs) const;
+     bool operator ==(const FourByteChunk& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

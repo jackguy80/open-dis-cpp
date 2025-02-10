@@ -1,277 +1,73 @@
-#include <dis6/TransmitterPdu.h>
+#include "TransmitterPdu.h"
 
 using namespace DIS;
 
 
 TransmitterPdu::TransmitterPdu() : RadioCommunicationsFamilyPdu(),
-   _radioEntityType(), 
-   _transmitState(0), 
-   _inputSource(0), 
-   _padding1(0), 
-   _antennaLocation(), 
-   _relativeAntennaLocation(), 
-   _antennaPatternType(0), 
-   _antennaPatternCount(0), 
-   _frequency(0), 
-   _transmitFrequencyBandwidth(0.0), 
-   _power(0.0), 
-   _modulationType(), 
-   _cryptoSystem(0), 
-   _cryptoKeyId(0), 
-   _modulationParameterCount(0), 
-   _padding2(0), 
-   _padding3(0)
+   entityId(), 
+   radioId(0), 
+   radioEntityType(), 
+   transmitState(0), 
+   inputSource(0), 
+   padding1(0), 
+   antennaLocation(), 
+   relativeAntennaLocation(), 
+   antennaPatternType(0), 
+   antennaPatternCount(0), 
+   frequency(0), 
+   transmitFrequencyBandwidth(0.0), 
+   power(0.0), 
+   modulationType(), 
+   cryptoSystem(0), 
+   cryptoKeyId(0), 
+   modulationParameterCount(0), 
+   padding2(0), 
+   padding3(0), 
+   modulationParametersList(0), 
+   antennaPatternList(0)
 {
-    setPduType( 25 );
+    pduType = 25;
 }
 
 TransmitterPdu::~TransmitterPdu()
 {
-    _modulationParametersList.clear();
-    _antennaPatternList.clear();
-}
-
-RadioEntityType& TransmitterPdu::getRadioEntityType() 
-{
-    return _radioEntityType;
-}
-
-const RadioEntityType& TransmitterPdu::getRadioEntityType() const
-{
-    return _radioEntityType;
-}
-
-void TransmitterPdu::setRadioEntityType(const RadioEntityType &pX)
-{
-    _radioEntityType = pX;
-}
-
-unsigned char TransmitterPdu::getTransmitState() const
-{
-    return _transmitState;
-}
-
-void TransmitterPdu::setTransmitState(unsigned char pX)
-{
-    _transmitState = pX;
-}
-
-unsigned char TransmitterPdu::getInputSource() const
-{
-    return _inputSource;
-}
-
-void TransmitterPdu::setInputSource(unsigned char pX)
-{
-    _inputSource = pX;
-}
-
-unsigned short TransmitterPdu::getPadding1() const
-{
-    return _padding1;
-}
-
-void TransmitterPdu::setPadding1(unsigned short pX)
-{
-    _padding1 = pX;
-}
-
-Vector3Double& TransmitterPdu::getAntennaLocation() 
-{
-    return _antennaLocation;
-}
-
-const Vector3Double& TransmitterPdu::getAntennaLocation() const
-{
-    return _antennaLocation;
-}
-
-void TransmitterPdu::setAntennaLocation(const Vector3Double &pX)
-{
-    _antennaLocation = pX;
-}
-
-Vector3Float& TransmitterPdu::getRelativeAntennaLocation() 
-{
-    return _relativeAntennaLocation;
-}
-
-const Vector3Float& TransmitterPdu::getRelativeAntennaLocation() const
-{
-    return _relativeAntennaLocation;
-}
-
-void TransmitterPdu::setRelativeAntennaLocation(const Vector3Float &pX)
-{
-    _relativeAntennaLocation = pX;
-}
-
-unsigned short TransmitterPdu::getAntennaPatternType() const
-{
-    return _antennaPatternType;
-}
-
-void TransmitterPdu::setAntennaPatternType(unsigned short pX)
-{
-    _antennaPatternType = pX;
-}
-
-unsigned short TransmitterPdu::getAntennaPatternCount() const
-{
-   return _antennaPatternList.size();
-}
-
-unsigned long long TransmitterPdu::getFrequency() const
-{
-    return _frequency;
-}
-
-void TransmitterPdu::setFrequency(unsigned long long pX)
-{
-    _frequency = pX;
-}
-
-float TransmitterPdu::getTransmitFrequencyBandwidth() const
-{
-    return _transmitFrequencyBandwidth;
-}
-
-void TransmitterPdu::setTransmitFrequencyBandwidth(float pX)
-{
-    _transmitFrequencyBandwidth = pX;
-}
-
-float TransmitterPdu::getPower() const
-{
-    return _power;
-}
-
-void TransmitterPdu::setPower(float pX)
-{
-    _power = pX;
-}
-
-ModulationType& TransmitterPdu::getModulationType() 
-{
-    return _modulationType;
-}
-
-const ModulationType& TransmitterPdu::getModulationType() const
-{
-    return _modulationType;
-}
-
-void TransmitterPdu::setModulationType(const ModulationType &pX)
-{
-    _modulationType = pX;
-}
-
-unsigned short TransmitterPdu::getCryptoSystem() const
-{
-    return _cryptoSystem;
-}
-
-void TransmitterPdu::setCryptoSystem(unsigned short pX)
-{
-    _cryptoSystem = pX;
-}
-
-unsigned short TransmitterPdu::getCryptoKeyId() const
-{
-    return _cryptoKeyId;
-}
-
-void TransmitterPdu::setCryptoKeyId(unsigned short pX)
-{
-    _cryptoKeyId = pX;
-}
-
-unsigned char TransmitterPdu::getModulationParameterCount() const
-{
-   return _modulationParametersList.size();
-}
-
-unsigned short TransmitterPdu::getPadding2() const
-{
-    return _padding2;
-}
-
-void TransmitterPdu::setPadding2(unsigned short pX)
-{
-    _padding2 = pX;
-}
-
-unsigned char TransmitterPdu::getPadding3() const
-{
-    return _padding3;
-}
-
-void TransmitterPdu::setPadding3(unsigned char pX)
-{
-    _padding3 = pX;
-}
-
-std::vector<Vector3Float>& TransmitterPdu::getModulationParametersList() 
-{
-    return _modulationParametersList;
-}
-
-const std::vector<Vector3Float>& TransmitterPdu::getModulationParametersList() const
-{
-    return _modulationParametersList;
-}
-
-void TransmitterPdu::setModulationParametersList(const std::vector<Vector3Float>& pX)
-{
-     _modulationParametersList = pX;
-}
-
-std::vector<Vector3Float>& TransmitterPdu::getAntennaPatternList() 
-{
-    return _antennaPatternList;
-}
-
-const std::vector<Vector3Float>& TransmitterPdu::getAntennaPatternList() const
-{
-    return _antennaPatternList;
-}
-
-void TransmitterPdu::setAntennaPatternList(const std::vector<Vector3Float>& pX)
-{
-     _antennaPatternList = pX;
+    modulationParametersList.clear();
+    antennaPatternList.clear();
 }
 
 void TransmitterPdu::marshal(DataStream& dataStream) const
 {
     RadioCommunicationsFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _radioEntityType.marshal(dataStream);
-    dataStream << _transmitState;
-    dataStream << _inputSource;
-    dataStream << _padding1;
-    _antennaLocation.marshal(dataStream);
-    _relativeAntennaLocation.marshal(dataStream);
-    dataStream << _antennaPatternType;
-    dataStream << ( unsigned short )_antennaPatternList.size();
-    dataStream << _frequency;
-    dataStream << _transmitFrequencyBandwidth;
-    dataStream << _power;
-    _modulationType.marshal(dataStream);
-    dataStream << _cryptoSystem;
-    dataStream << _cryptoKeyId;
-    dataStream << ( unsigned char )_modulationParametersList.size();
-    dataStream << _padding2;
-    dataStream << _padding3;
+    entityId.marshal(dataStream);
+    dataStream << radioId;
+    radioEntityType.marshal(dataStream);
+    dataStream << transmitState;
+    dataStream << inputSource;
+    dataStream << padding1;
+    antennaLocation.marshal(dataStream);
+    relativeAntennaLocation.marshal(dataStream);
+    dataStream << antennaPatternType;
+    dataStream << ( unsigned short )antennaPatternList.size();
+    dataStream << frequency;
+    dataStream << transmitFrequencyBandwidth;
+    dataStream << power;
+    modulationType.marshal(dataStream);
+    dataStream << cryptoSystem;
+    dataStream << cryptoKeyId;
+    dataStream << ( unsigned char )modulationParametersList.size();
+    dataStream << padding2;
+    dataStream << padding3;
 
-     for(size_t idx = 0; idx < _modulationParametersList.size(); idx++)
+     for(size_t idx = 0; idx < modulationParametersList.size(); idx++)
      {
-        Vector3Float x = _modulationParametersList[idx];
-        x.marshal(dataStream);
+        unsigned short x = modulationParametersList[idx];
+        dataStream <<  x;
      }
 
 
-     for(size_t idx = 0; idx < _antennaPatternList.size(); idx++)
+     for(size_t idx = 0; idx < antennaPatternList.size(); idx++)
      {
-        Vector3Float x = _antennaPatternList[idx];
+        BeamAntennaPattern x = antennaPatternList[idx];
         x.marshal(dataStream);
      }
 
@@ -280,38 +76,39 @@ void TransmitterPdu::marshal(DataStream& dataStream) const
 void TransmitterPdu::unmarshal(DataStream& dataStream)
 {
     RadioCommunicationsFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _radioEntityType.unmarshal(dataStream);
-    dataStream >> _transmitState;
-    dataStream >> _inputSource;
-    dataStream >> _padding1;
-    _antennaLocation.unmarshal(dataStream);
-    _relativeAntennaLocation.unmarshal(dataStream);
-    dataStream >> _antennaPatternType;
-    dataStream >> _antennaPatternCount;
-    dataStream >> _frequency;
-    dataStream >> _transmitFrequencyBandwidth;
-    dataStream >> _power;
-    _modulationType.unmarshal(dataStream);
-    dataStream >> _cryptoSystem;
-    dataStream >> _cryptoKeyId;
-    dataStream >> _modulationParameterCount;
-    dataStream >> _padding2;
-    dataStream >> _padding3;
+    entityId.unmarshal(dataStream);
+    dataStream >> radioId;
+    radioEntityType.unmarshal(dataStream);
+    dataStream >> transmitState;
+    dataStream >> inputSource;
+    dataStream >> padding1;
+    antennaLocation.unmarshal(dataStream);
+    relativeAntennaLocation.unmarshal(dataStream);
+    dataStream >> antennaPatternType;
+    dataStream >> antennaPatternCount;
+    dataStream >> frequency;
+    dataStream >> transmitFrequencyBandwidth;
+    dataStream >> power;
+    modulationType.unmarshal(dataStream);
+    dataStream >> cryptoSystem;
+    dataStream >> cryptoKeyId;
+    dataStream >> modulationParameterCount;
+    dataStream >> padding2;
+    dataStream >> padding3;
 
-     _modulationParametersList.clear();
-     for(size_t idx = 0; idx < _modulationParameterCount; idx++)
+     modulationParametersList.clear();
+     modulationParametersList.resize(modulationParameterCount);
+     for(size_t idx = 0; idx < modulationParameterCount; idx++)
      {
-        Vector3Float x;
-        x.unmarshal(dataStream);
-        _modulationParametersList.push_back(x);
+       dataStream >> modulationParametersList[idx];
      }
 
-     _antennaPatternList.clear();
-     for(size_t idx = 0; idx < _antennaPatternCount; idx++)
+     antennaPatternList.clear();
+     for(size_t idx = 0; idx < antennaPatternCount; idx++)
      {
-        Vector3Float x;
+        BeamAntennaPattern x;
         x.unmarshal(dataStream);
-        _antennaPatternList.push_back(x);
+        antennaPatternList.push_back(x);
      }
 }
 
@@ -322,31 +119,33 @@ bool TransmitterPdu::operator ==(const TransmitterPdu& rhs) const
 
      ivarsEqual = RadioCommunicationsFamilyPdu::operator==(rhs);
 
-     if( ! (_radioEntityType == rhs._radioEntityType) ) ivarsEqual = false;
-     if( ! (_transmitState == rhs._transmitState) ) ivarsEqual = false;
-     if( ! (_inputSource == rhs._inputSource) ) ivarsEqual = false;
-     if( ! (_padding1 == rhs._padding1) ) ivarsEqual = false;
-     if( ! (_antennaLocation == rhs._antennaLocation) ) ivarsEqual = false;
-     if( ! (_relativeAntennaLocation == rhs._relativeAntennaLocation) ) ivarsEqual = false;
-     if( ! (_antennaPatternType == rhs._antennaPatternType) ) ivarsEqual = false;
-     if( ! (_frequency == rhs._frequency) ) ivarsEqual = false;
-     if( ! (_transmitFrequencyBandwidth == rhs._transmitFrequencyBandwidth) ) ivarsEqual = false;
-     if( ! (_power == rhs._power) ) ivarsEqual = false;
-     if( ! (_modulationType == rhs._modulationType) ) ivarsEqual = false;
-     if( ! (_cryptoSystem == rhs._cryptoSystem) ) ivarsEqual = false;
-     if( ! (_cryptoKeyId == rhs._cryptoKeyId) ) ivarsEqual = false;
-     if( ! (_padding2 == rhs._padding2) ) ivarsEqual = false;
-     if( ! (_padding3 == rhs._padding3) ) ivarsEqual = false;
+     if( ! (entityId == rhs.entityId) ) ivarsEqual = false;
+     if( ! (radioId == rhs.radioId) ) ivarsEqual = false;
+     if( ! (radioEntityType == rhs.radioEntityType) ) ivarsEqual = false;
+     if( ! (transmitState == rhs.transmitState) ) ivarsEqual = false;
+     if( ! (inputSource == rhs.inputSource) ) ivarsEqual = false;
+     if( ! (padding1 == rhs.padding1) ) ivarsEqual = false;
+     if( ! (antennaLocation == rhs.antennaLocation) ) ivarsEqual = false;
+     if( ! (relativeAntennaLocation == rhs.relativeAntennaLocation) ) ivarsEqual = false;
+     if( ! (antennaPatternType == rhs.antennaPatternType) ) ivarsEqual = false;
+     if( ! (frequency == rhs.frequency) ) ivarsEqual = false;
+     if( ! (transmitFrequencyBandwidth == rhs.transmitFrequencyBandwidth) ) ivarsEqual = false;
+     if( ! (power == rhs.power) ) ivarsEqual = false;
+     if( ! (modulationType == rhs.modulationType) ) ivarsEqual = false;
+     if( ! (cryptoSystem == rhs.cryptoSystem) ) ivarsEqual = false;
+     if( ! (cryptoKeyId == rhs.cryptoKeyId) ) ivarsEqual = false;
+     if( ! (padding2 == rhs.padding2) ) ivarsEqual = false;
+     if( ! (padding3 == rhs.padding3) ) ivarsEqual = false;
 
-     for(size_t idx = 0; idx < _modulationParametersList.size(); idx++)
+     for(size_t idx = 0; idx < modulationParametersList.size(); idx++)
      {
-        if( ! ( _modulationParametersList[idx] == rhs._modulationParametersList[idx]) ) ivarsEqual = false;
+        if( ! ( modulationParametersList[idx] == rhs.modulationParametersList[idx]) ) ivarsEqual = false;
      }
 
 
-     for(size_t idx = 0; idx < _antennaPatternList.size(); idx++)
+     for(size_t idx = 0; idx < antennaPatternList.size(); idx++)
      {
-        if( ! ( _antennaPatternList[idx] == rhs._antennaPatternList[idx]) ) ivarsEqual = false;
+        if( ! ( antennaPatternList[idx] == rhs.antennaPatternList[idx]) ) ivarsEqual = false;
      }
 
 
@@ -358,34 +157,36 @@ int TransmitterPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = RadioCommunicationsFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _radioEntityType.getMarshalledSize();  // _radioEntityType
-   marshalSize = marshalSize + 1;  // _transmitState
-   marshalSize = marshalSize + 1;  // _inputSource
-   marshalSize = marshalSize + 2;  // _padding1
-   marshalSize = marshalSize + _antennaLocation.getMarshalledSize();  // _antennaLocation
-   marshalSize = marshalSize + _relativeAntennaLocation.getMarshalledSize();  // _relativeAntennaLocation
-   marshalSize = marshalSize + 2;  // _antennaPatternType
-   marshalSize = marshalSize + 2;  // _antennaPatternCount
-   marshalSize = marshalSize + 8;  // _frequency
-   marshalSize = marshalSize + 4;  // _transmitFrequencyBandwidth
-   marshalSize = marshalSize + 4;  // _power
-   marshalSize = marshalSize + _modulationType.getMarshalledSize();  // _modulationType
-   marshalSize = marshalSize + 2;  // _cryptoSystem
-   marshalSize = marshalSize + 2;  // _cryptoKeyId
-   marshalSize = marshalSize + 1;  // _modulationParameterCount
-   marshalSize = marshalSize + 2;  // _padding2
-   marshalSize = marshalSize + 1;  // _padding3
+   marshalSize = marshalSize + entityId.getMarshalledSize();  // entityId
+   marshalSize = marshalSize + 2;  // radioId
+   marshalSize = marshalSize + radioEntityType.getMarshalledSize();  // radioEntityType
+   marshalSize = marshalSize + 1;  // transmitState
+   marshalSize = marshalSize + 1;  // inputSource
+   marshalSize = marshalSize + 2;  // padding1
+   marshalSize = marshalSize + antennaLocation.getMarshalledSize();  // antennaLocation
+   marshalSize = marshalSize + relativeAntennaLocation.getMarshalledSize();  // relativeAntennaLocation
+   marshalSize = marshalSize + 2;  // antennaPatternType
+   marshalSize = marshalSize + 2;  // antennaPatternCount
+   marshalSize = marshalSize + 8;  // frequency
+   marshalSize = marshalSize + 4;  // transmitFrequencyBandwidth
+   marshalSize = marshalSize + 4;  // power
+   marshalSize = marshalSize + modulationType.getMarshalledSize();  // modulationType
+   marshalSize = marshalSize + 2;  // cryptoSystem
+   marshalSize = marshalSize + 2;  // cryptoKeyId
+   marshalSize = marshalSize + 1;  // modulationParameterCount
+   marshalSize = marshalSize + 2;  // padding2
+   marshalSize = marshalSize + 1;  // padding3
 
-   for(unsigned long long idx=0; idx < _modulationParametersList.size(); idx++)
+   for(int idx=0; idx < modulationParametersList.size(); idx++)
    {
-        Vector3Float listElement = _modulationParametersList[idx];
-        marshalSize = marshalSize + listElement.getMarshalledSize();
+        unsigned short listElement = modulationParametersList[idx];
+        marshalSize = marshalSize + sizeof(listElement);
     }
 
 
-   for(unsigned long long idx=0; idx < _antennaPatternList.size(); idx++)
+   for(int idx=0; idx < antennaPatternList.size(); idx++)
    {
-        Vector3Float listElement = _antennaPatternList[idx];
+        BeamAntennaPattern listElement = antennaPatternList[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 

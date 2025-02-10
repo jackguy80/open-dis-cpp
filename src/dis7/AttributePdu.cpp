@@ -1,18 +1,18 @@
-#include <dis7/AttributePdu.h>
+#include "AttributePdu.h"
 
 using namespace DIS;
 
 
 AttributePdu::AttributePdu() : EntityInformationFamilyPdu(),
-   _originatingSimulationAddress(), 
-   _padding1(0), 
-   _padding2(0), 
-   _attributeRecordPduType(0), 
-   _attributeRecordProtocolVersion(0), 
-   _masterAttributeRecordType(0), 
-   _actionCode(0), 
-   _padding3(0), 
-   _numberAttributeRecordSet(0)
+   originatingSimulationAddress(), 
+   padding1(0), 
+   padding2(0), 
+   attributeRecordPduType(0), 
+   attributeRecordProtocolVersion(0), 
+   masterAttributeRecordType(0), 
+   actionCode(0), 
+   padding3(0), 
+   numberAttributeRecordSet(0)
 {
 }
 
@@ -20,127 +20,32 @@ AttributePdu::~AttributePdu()
 {
 }
 
-SimulationAddress& AttributePdu::getOriginatingSimulationAddress() 
-{
-    return _originatingSimulationAddress;
-}
-
-const SimulationAddress& AttributePdu::getOriginatingSimulationAddress() const
-{
-    return _originatingSimulationAddress;
-}
-
-void AttributePdu::setOriginatingSimulationAddress(const SimulationAddress &pX)
-{
-    _originatingSimulationAddress = pX;
-}
-
-int AttributePdu::getPadding1() const
-{
-    return _padding1;
-}
-
-void AttributePdu::setPadding1(int pX)
-{
-    _padding1 = pX;
-}
-
-short AttributePdu::getPadding2() const
-{
-    return _padding2;
-}
-
-void AttributePdu::setPadding2(short pX)
-{
-    _padding2 = pX;
-}
-
-unsigned char AttributePdu::getAttributeRecordPduType() const
-{
-    return _attributeRecordPduType;
-}
-
-void AttributePdu::setAttributeRecordPduType(unsigned char pX)
-{
-    _attributeRecordPduType = pX;
-}
-
-unsigned char AttributePdu::getAttributeRecordProtocolVersion() const
-{
-    return _attributeRecordProtocolVersion;
-}
-
-void AttributePdu::setAttributeRecordProtocolVersion(unsigned char pX)
-{
-    _attributeRecordProtocolVersion = pX;
-}
-
-unsigned int AttributePdu::getMasterAttributeRecordType() const
-{
-    return _masterAttributeRecordType;
-}
-
-void AttributePdu::setMasterAttributeRecordType(unsigned int pX)
-{
-    _masterAttributeRecordType = pX;
-}
-
-unsigned char AttributePdu::getActionCode() const
-{
-    return _actionCode;
-}
-
-void AttributePdu::setActionCode(unsigned char pX)
-{
-    _actionCode = pX;
-}
-
-char AttributePdu::getPadding3() const
-{
-    return _padding3;
-}
-
-void AttributePdu::setPadding3(char pX)
-{
-    _padding3 = pX;
-}
-
-unsigned short AttributePdu::getNumberAttributeRecordSet() const
-{
-    return _numberAttributeRecordSet;
-}
-
-void AttributePdu::setNumberAttributeRecordSet(unsigned short pX)
-{
-    _numberAttributeRecordSet = pX;
-}
-
 void AttributePdu::marshal(DataStream& dataStream) const
 {
     EntityInformationFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _originatingSimulationAddress.marshal(dataStream);
-    dataStream << _padding1;
-    dataStream << _padding2;
-    dataStream << _attributeRecordPduType;
-    dataStream << _attributeRecordProtocolVersion;
-    dataStream << _masterAttributeRecordType;
-    dataStream << _actionCode;
-    dataStream << _padding3;
-    dataStream << _numberAttributeRecordSet;
+    originatingSimulationAddress.marshal(dataStream);
+    dataStream << padding1;
+    dataStream << padding2;
+    dataStream << attributeRecordPduType;
+    dataStream << attributeRecordProtocolVersion;
+    dataStream << masterAttributeRecordType;
+    dataStream << actionCode;
+    dataStream << padding3;
+    dataStream << numberAttributeRecordSet;
 }
 
 void AttributePdu::unmarshal(DataStream& dataStream)
 {
     EntityInformationFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _originatingSimulationAddress.unmarshal(dataStream);
-    dataStream >> _padding1;
-    dataStream >> _padding2;
-    dataStream >> _attributeRecordPduType;
-    dataStream >> _attributeRecordProtocolVersion;
-    dataStream >> _masterAttributeRecordType;
-    dataStream >> _actionCode;
-    dataStream >> _padding3;
-    dataStream >> _numberAttributeRecordSet;
+    originatingSimulationAddress.unmarshal(dataStream);
+    dataStream >> padding1;
+    dataStream >> padding2;
+    dataStream >> attributeRecordPduType;
+    dataStream >> attributeRecordProtocolVersion;
+    dataStream >> masterAttributeRecordType;
+    dataStream >> actionCode;
+    dataStream >> padding3;
+    dataStream >> numberAttributeRecordSet;
 }
 
 
@@ -150,15 +55,15 @@ bool AttributePdu::operator ==(const AttributePdu& rhs) const
 
      ivarsEqual = EntityInformationFamilyPdu::operator==(rhs);
 
-     if( ! (_originatingSimulationAddress == rhs._originatingSimulationAddress) ) ivarsEqual = false;
-     if( ! (_padding1 == rhs._padding1) ) ivarsEqual = false;
-     if( ! (_padding2 == rhs._padding2) ) ivarsEqual = false;
-     if( ! (_attributeRecordPduType == rhs._attributeRecordPduType) ) ivarsEqual = false;
-     if( ! (_attributeRecordProtocolVersion == rhs._attributeRecordProtocolVersion) ) ivarsEqual = false;
-     if( ! (_masterAttributeRecordType == rhs._masterAttributeRecordType) ) ivarsEqual = false;
-     if( ! (_actionCode == rhs._actionCode) ) ivarsEqual = false;
-     if( ! (_padding3 == rhs._padding3) ) ivarsEqual = false;
-     if( ! (_numberAttributeRecordSet == rhs._numberAttributeRecordSet) ) ivarsEqual = false;
+     if( ! (originatingSimulationAddress == rhs.originatingSimulationAddress) ) ivarsEqual = false;
+     if( ! (padding1 == rhs.padding1) ) ivarsEqual = false;
+     if( ! (padding2 == rhs.padding2) ) ivarsEqual = false;
+     if( ! (attributeRecordPduType == rhs.attributeRecordPduType) ) ivarsEqual = false;
+     if( ! (attributeRecordProtocolVersion == rhs.attributeRecordProtocolVersion) ) ivarsEqual = false;
+     if( ! (masterAttributeRecordType == rhs.masterAttributeRecordType) ) ivarsEqual = false;
+     if( ! (actionCode == rhs.actionCode) ) ivarsEqual = false;
+     if( ! (padding3 == rhs.padding3) ) ivarsEqual = false;
+     if( ! (numberAttributeRecordSet == rhs.numberAttributeRecordSet) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -168,15 +73,15 @@ int AttributePdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = EntityInformationFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _originatingSimulationAddress.getMarshalledSize();  // _originatingSimulationAddress
-   marshalSize = marshalSize + 4;  // _padding1
-   marshalSize = marshalSize + 2;  // _padding2
-   marshalSize = marshalSize + 1;  // _attributeRecordPduType
-   marshalSize = marshalSize + 1;  // _attributeRecordProtocolVersion
-   marshalSize = marshalSize + 4;  // _masterAttributeRecordType
-   marshalSize = marshalSize + 1;  // _actionCode
-   marshalSize = marshalSize + 1;  // _padding3
-   marshalSize = marshalSize + 2;  // _numberAttributeRecordSet
+   marshalSize = marshalSize + originatingSimulationAddress.getMarshalledSize();  // originatingSimulationAddress
+   marshalSize = marshalSize + 4;  // padding1
+   marshalSize = marshalSize + 2;  // padding2
+   marshalSize = marshalSize + 1;  // attributeRecordPduType
+   marshalSize = marshalSize + 1;  // attributeRecordProtocolVersion
+   marshalSize = marshalSize + 4;  // masterAttributeRecordType
+   marshalSize = marshalSize + 1;  // actionCode
+   marshalSize = marshalSize + 1;  // padding3
+   marshalSize = marshalSize + 2;  // numberAttributeRecordSet
     return marshalSize;
 }
 

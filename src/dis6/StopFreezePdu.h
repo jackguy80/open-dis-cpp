@@ -1,68 +1,49 @@
 #pragma once
 
-#include <dis6/ClockTime.h>
-#include <dis6/SimulationManagementFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "ClockTime.h"
+#include "SimulationManagementFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.3.4. Stop or freeze an exercise. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT StopFreezePdu : public SimulationManagementFamilyPdu
+struct EXPORT_MACRO StopFreezePdu : public SimulationManagementFamilyPdu
 {
-protected:
   /** UTC time at which the simulation shall stop or freeze */
-  ClockTime _realWorldTime; 
+  ClockTime realWorldTime;
 
   /** Reason the simulation was stopped or frozen */
-  unsigned char _reason; 
+  unsigned char reason;
 
   /** Internal behavior of the simulation and its appearance while frozento the other participants */
-  unsigned char _frozenBehavior; 
+  unsigned char frozenBehavior;
 
   /** padding */
-  short _padding1; 
+  short padding1;
 
   /** Request ID that is unique */
-  unsigned int _requestID; 
+  unsigned int requestID;
 
-
- public:
     StopFreezePdu();
     virtual ~StopFreezePdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    ClockTime& getRealWorldTime(); 
-    const ClockTime&  getRealWorldTime() const; 
-    void setRealWorldTime(const ClockTime    &pX);
 
-    unsigned char getReason() const; 
-    void setReason(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getFrozenBehavior() const; 
-    void setFrozenBehavior(unsigned char pX); 
-
-    short getPadding1() const; 
-    void setPadding1(short pX); 
-
-    unsigned int getRequestID() const; 
-    void setRequestID(unsigned int pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const StopFreezePdu& rhs) const;
+     bool operator ==(const StopFreezePdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

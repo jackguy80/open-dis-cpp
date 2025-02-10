@@ -1,12 +1,12 @@
-#include <dis7/IntercomCommunicationsParameters.h>
+#include "IntercomCommunicationsParameters.h"
 
 using namespace DIS;
 
 
 IntercomCommunicationsParameters::IntercomCommunicationsParameters():
-   _recordType(0), 
-   _recordLength(0), 
-   _recordSpecificField(0)
+   recordType(0), 
+   recordLength(0), 
+   recordSpecificField(0)
 {
 }
 
@@ -14,48 +14,18 @@ IntercomCommunicationsParameters::~IntercomCommunicationsParameters()
 {
 }
 
-unsigned short IntercomCommunicationsParameters::getRecordType() const
-{
-    return _recordType;
-}
-
-void IntercomCommunicationsParameters::setRecordType(unsigned short pX)
-{
-    _recordType = pX;
-}
-
-unsigned short IntercomCommunicationsParameters::getRecordLength() const
-{
-    return _recordLength;
-}
-
-void IntercomCommunicationsParameters::setRecordLength(unsigned short pX)
-{
-    _recordLength = pX;
-}
-
-unsigned int IntercomCommunicationsParameters::getRecordSpecificField() const
-{
-    return _recordSpecificField;
-}
-
-void IntercomCommunicationsParameters::setRecordSpecificField(unsigned int pX)
-{
-    _recordSpecificField = pX;
-}
-
 void IntercomCommunicationsParameters::marshal(DataStream& dataStream) const
 {
-    dataStream << _recordType;
-    dataStream << _recordLength;
-    dataStream << _recordSpecificField;
+    dataStream << recordType;
+    dataStream << recordLength;
+    dataStream << recordSpecificField;
 }
 
 void IntercomCommunicationsParameters::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _recordType;
-    dataStream >> _recordLength;
-    dataStream >> _recordSpecificField;
+    dataStream >> recordType;
+    dataStream >> recordLength;
+    dataStream >> recordSpecificField;
 }
 
 
@@ -63,9 +33,9 @@ bool IntercomCommunicationsParameters::operator ==(const IntercomCommunicationsP
  {
      bool ivarsEqual = true;
 
-     if( ! (_recordType == rhs._recordType) ) ivarsEqual = false;
-     if( ! (_recordLength == rhs._recordLength) ) ivarsEqual = false;
-     if( ! (_recordSpecificField == rhs._recordSpecificField) ) ivarsEqual = false;
+     if( ! (recordType == rhs.recordType) ) ivarsEqual = false;
+     if( ! (recordLength == rhs.recordLength) ) ivarsEqual = false;
+     if( ! (recordSpecificField == rhs.recordSpecificField) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -74,9 +44,9 @@ int IntercomCommunicationsParameters::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _recordType
-   marshalSize = marshalSize + 2;  // _recordLength
-   marshalSize = marshalSize + 4;  // _recordSpecificField
+   marshalSize = marshalSize + 2;  // recordType
+   marshalSize = marshalSize + 2;  // recordLength
+   marshalSize = marshalSize + 4;  // recordSpecificField
     return marshalSize;
 }
 

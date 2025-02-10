@@ -1,89 +1,64 @@
 #pragma once
 
-#include <cstdint>
-#include <dis7/EntityID.h>
-#include <dis7/RadioCommunicationsFamilyPdu.h>
-#include <dis7/opendis7_export.h>
-#include <dis7/utils/DataStream.h>
-#include <vector>
+#include "EntityID.h"
+#include "OneByteChunk.h"
+#include "RadioCommunicationsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
-namespace DIS {
+
+namespace DIS
+{
 //  Actual transmission of intercome voice data. Section 7.7.5. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All
-// rights reserved.
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT IntercomSignalPdu : public RadioCommunicationsFamilyPdu {
-protected:
+struct EXPORT_MACRO IntercomSignalPdu : public RadioCommunicationsFamilyPdu
+{
   /** entity ID */
-  EntityID _entityID;
+  EntityID entityID;
 
   /** ID of communications device */
-  unsigned short _communicationsDeviceID;
+  unsigned short communicationsDeviceID;
 
   /** encoding scheme */
-  unsigned short _encodingScheme;
+  unsigned short encodingScheme;
 
   /** tactical data link type */
-  unsigned short _tdlType;
+  unsigned short tdlType;
 
   /** sample rate */
-  unsigned int _sampleRate;
+  unsigned int sampleRate;
 
   /** data length */
-  unsigned short _dataLength;
+  unsigned short dataLength;
 
   /** samples */
-  unsigned short _samples;
+  unsigned short samples;
 
   /** data bytes */
-  std::vector<uint8_t> _data;
+  OneByteChunk data;
 
-public:
-  IntercomSignalPdu();
-  virtual ~IntercomSignalPdu();
+    IntercomSignalPdu();
+    virtual ~IntercomSignalPdu();
 
-  virtual void marshal(DataStream &dataStream) const;
-  virtual void unmarshal(DataStream &dataStream);
+    virtual void marshal(DataStream& dataStream) const;
+    virtual void unmarshal(DataStream& dataStream);
 
-  EntityID &getEntityID();
-  const EntityID &getEntityID() const;
-  void setEntityID(const EntityID &pX);
 
-  unsigned short getCommunicationsDeviceID() const;
-  void setCommunicationsDeviceID(unsigned short pX);
+     virtual int getMarshalledSize() const;
 
-  unsigned short getEncodingScheme() const;
-  void setEncodingScheme(unsigned short pX);
-
-  unsigned short getTdlType() const;
-  void setTdlType(unsigned short pX);
-
-  unsigned int getSampleRate() const;
-  void setSampleRate(unsigned int pX);
-
-  unsigned short getDataLength() const;
-
-  unsigned short getSamples() const;
-  void setSamples(unsigned short pX);
-
-  std::vector<uint8_t> &getData();
-  const std::vector<uint8_t> &getData() const;
-  void setData(const std::vector<uint8_t> &pX);
-
-  virtual int getMarshalledSize() const;
-
-  bool operator==(const IntercomSignalPdu &rhs) const;
+     bool operator ==(const IntercomSignalPdu& rhs) const;
 };
-} // namespace DIS
-
+}
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
 //  are met:
-//
+// 
 //  * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 // * Redistributions in binary form must reproduce the above copyright
@@ -96,7 +71,7 @@ public:
 // nor the names of its contributors may be used to endorse or
 //  promote products derived from this software without specific
 // prior written permission.
-//
+// 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS

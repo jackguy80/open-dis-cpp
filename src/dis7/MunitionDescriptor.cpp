@@ -1,14 +1,14 @@
-#include <dis7/MunitionDescriptor.h>
+#include "MunitionDescriptor.h"
 
 using namespace DIS;
 
 
 MunitionDescriptor::MunitionDescriptor():
-   _munitionType(), 
-   _warhead(0), 
-   _fuse(0), 
-   _quantity(0), 
-   _rate(0)
+   munitionType(), 
+   warhead(0), 
+   fuse(0), 
+   quantity(0), 
+   rate(0)
 {
 }
 
@@ -16,77 +16,22 @@ MunitionDescriptor::~MunitionDescriptor()
 {
 }
 
-EntityType& MunitionDescriptor::getMunitionType() 
-{
-    return _munitionType;
-}
-
-const EntityType& MunitionDescriptor::getMunitionType() const
-{
-    return _munitionType;
-}
-
-void MunitionDescriptor::setMunitionType(const EntityType &pX)
-{
-    _munitionType = pX;
-}
-
-unsigned short MunitionDescriptor::getWarhead() const
-{
-    return _warhead;
-}
-
-void MunitionDescriptor::setWarhead(unsigned short pX)
-{
-    _warhead = pX;
-}
-
-unsigned short MunitionDescriptor::getFuse() const
-{
-    return _fuse;
-}
-
-void MunitionDescriptor::setFuse(unsigned short pX)
-{
-    _fuse = pX;
-}
-
-unsigned short MunitionDescriptor::getQuantity() const
-{
-    return _quantity;
-}
-
-void MunitionDescriptor::setQuantity(unsigned short pX)
-{
-    _quantity = pX;
-}
-
-unsigned short MunitionDescriptor::getRate() const
-{
-    return _rate;
-}
-
-void MunitionDescriptor::setRate(unsigned short pX)
-{
-    _rate = pX;
-}
-
 void MunitionDescriptor::marshal(DataStream& dataStream) const
 {
-    _munitionType.marshal(dataStream);
-    dataStream << _warhead;
-    dataStream << _fuse;
-    dataStream << _quantity;
-    dataStream << _rate;
+    munitionType.marshal(dataStream);
+    dataStream << warhead;
+    dataStream << fuse;
+    dataStream << quantity;
+    dataStream << rate;
 }
 
 void MunitionDescriptor::unmarshal(DataStream& dataStream)
 {
-    _munitionType.unmarshal(dataStream);
-    dataStream >> _warhead;
-    dataStream >> _fuse;
-    dataStream >> _quantity;
-    dataStream >> _rate;
+    munitionType.unmarshal(dataStream);
+    dataStream >> warhead;
+    dataStream >> fuse;
+    dataStream >> quantity;
+    dataStream >> rate;
 }
 
 
@@ -94,11 +39,11 @@ bool MunitionDescriptor::operator ==(const MunitionDescriptor& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_munitionType == rhs._munitionType) ) ivarsEqual = false;
-     if( ! (_warhead == rhs._warhead) ) ivarsEqual = false;
-     if( ! (_fuse == rhs._fuse) ) ivarsEqual = false;
-     if( ! (_quantity == rhs._quantity) ) ivarsEqual = false;
-     if( ! (_rate == rhs._rate) ) ivarsEqual = false;
+     if( ! (munitionType == rhs.munitionType) ) ivarsEqual = false;
+     if( ! (warhead == rhs.warhead) ) ivarsEqual = false;
+     if( ! (fuse == rhs.fuse) ) ivarsEqual = false;
+     if( ! (quantity == rhs.quantity) ) ivarsEqual = false;
+     if( ! (rate == rhs.rate) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -107,11 +52,11 @@ int MunitionDescriptor::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _munitionType.getMarshalledSize();  // _munitionType
-   marshalSize = marshalSize + 2;  // _warhead
-   marshalSize = marshalSize + 2;  // _fuse
-   marshalSize = marshalSize + 2;  // _quantity
-   marshalSize = marshalSize + 2;  // _rate
+   marshalSize = marshalSize + munitionType.getMarshalledSize();  // munitionType
+   marshalSize = marshalSize + 2;  // warhead
+   marshalSize = marshalSize + 2;  // fuse
+   marshalSize = marshalSize + 2;  // quantity
+   marshalSize = marshalSize + 2;  // rate
     return marshalSize;
 }
 

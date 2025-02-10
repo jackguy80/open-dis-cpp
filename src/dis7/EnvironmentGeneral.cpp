@@ -1,15 +1,15 @@
-#include <dis7/EnvironmentGeneral.h>
+#include "EnvironmentGeneral.h"
 
 using namespace DIS;
 
 
 EnvironmentGeneral::EnvironmentGeneral():
-   _environmentType(0), 
-   _length(0), 
-   _index(0), 
-   _padding1(0), 
-   _geometry(0), 
-   _padding2(0)
+   environmentType(0), 
+   length(0), 
+   index(0), 
+   padding1(0), 
+   geometry(0), 
+   padding2(0)
 {
 }
 
@@ -17,84 +17,24 @@ EnvironmentGeneral::~EnvironmentGeneral()
 {
 }
 
-unsigned int EnvironmentGeneral::getEnvironmentType() const
-{
-    return _environmentType;
-}
-
-void EnvironmentGeneral::setEnvironmentType(unsigned int pX)
-{
-    _environmentType = pX;
-}
-
-unsigned char EnvironmentGeneral::getLength() const
-{
-    return _length;
-}
-
-void EnvironmentGeneral::setLength(unsigned char pX)
-{
-    _length = pX;
-}
-
-unsigned char EnvironmentGeneral::getIndex() const
-{
-    return _index;
-}
-
-void EnvironmentGeneral::setIndex(unsigned char pX)
-{
-    _index = pX;
-}
-
-unsigned char EnvironmentGeneral::getPadding1() const
-{
-    return _padding1;
-}
-
-void EnvironmentGeneral::setPadding1(unsigned char pX)
-{
-    _padding1 = pX;
-}
-
-unsigned char EnvironmentGeneral::getGeometry() const
-{
-    return _geometry;
-}
-
-void EnvironmentGeneral::setGeometry(unsigned char pX)
-{
-    _geometry = pX;
-}
-
-unsigned char EnvironmentGeneral::getPadding2() const
-{
-    return _padding2;
-}
-
-void EnvironmentGeneral::setPadding2(unsigned char pX)
-{
-    _padding2 = pX;
-}
-
 void EnvironmentGeneral::marshal(DataStream& dataStream) const
 {
-    dataStream << _environmentType;
-    dataStream << _length;
-    dataStream << _index;
-    dataStream << _padding1;
-    dataStream << _geometry;
-    dataStream << _padding2;
+    dataStream << environmentType;
+    dataStream << length;
+    dataStream << index;
+    dataStream << padding1;
+    dataStream << geometry;
+    dataStream << padding2;
 }
 
 void EnvironmentGeneral::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _environmentType;
-    dataStream >> _length;
-    dataStream >> _index;
-    dataStream >> _padding1;
-    dataStream >> _geometry;
-    dataStream >> _padding2;
+    dataStream >> environmentType;
+    dataStream >> length;
+    dataStream >> index;
+    dataStream >> padding1;
+    dataStream >> geometry;
+    dataStream >> padding2;
 }
 
 
@@ -102,12 +42,12 @@ bool EnvironmentGeneral::operator ==(const EnvironmentGeneral& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_environmentType == rhs._environmentType) ) ivarsEqual = false;
-     if( ! (_length == rhs._length) ) ivarsEqual = false;
-     if( ! (_index == rhs._index) ) ivarsEqual = false;
-     if( ! (_padding1 == rhs._padding1) ) ivarsEqual = false;
-     if( ! (_geometry == rhs._geometry) ) ivarsEqual = false;
-     if( ! (_padding2 == rhs._padding2) ) ivarsEqual = false;
+     if( ! (environmentType == rhs.environmentType) ) ivarsEqual = false;
+     if( ! (length == rhs.length) ) ivarsEqual = false;
+     if( ! (index == rhs.index) ) ivarsEqual = false;
+     if( ! (padding1 == rhs.padding1) ) ivarsEqual = false;
+     if( ! (geometry == rhs.geometry) ) ivarsEqual = false;
+     if( ! (padding2 == rhs.padding2) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -116,12 +56,12 @@ int EnvironmentGeneral::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 4;  // _environmentType
-   marshalSize = marshalSize + 1;  // _length
-   marshalSize = marshalSize + 1;  // _index
-   marshalSize = marshalSize + 1;  // _padding1
-   marshalSize = marshalSize + 1;  // _geometry
-   marshalSize = marshalSize + 1;  // _padding2
+   marshalSize = marshalSize + 4;  // environmentType
+   marshalSize = marshalSize + 1;  // length
+   marshalSize = marshalSize + 1;  // index
+   marshalSize = marshalSize + 1;  // padding1
+   marshalSize = marshalSize + 1;  // geometry
+   marshalSize = marshalSize + 1;  // padding2
     return marshalSize;
 }
 

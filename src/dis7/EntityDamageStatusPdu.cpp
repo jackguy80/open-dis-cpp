@@ -1,108 +1,40 @@
-#include <dis7/EntityDamageStatusPdu.h>
+#include "EntityDamageStatusPdu.h"
 
 using namespace DIS;
 
 
 EntityDamageStatusPdu::EntityDamageStatusPdu() : WarfareFamilyPdu(),
-   _damagedEntityID(), 
-   _padding1(0), 
-   _padding2(0), 
-   _numberOfDamageDescription(0)
+   damagedEntityID(), 
+   padding1(0), 
+   padding2(0), 
+   numberOfDamageDescription(0), 
+   damageDescriptionRecords()
 {
-    setPduType( 69 );
+    pduType = 69;
 }
 
 EntityDamageStatusPdu::~EntityDamageStatusPdu()
 {
-    _damageDescriptionRecords.clear();
-}
-
-EntityID& EntityDamageStatusPdu::getDamagedEntityID() 
-{
-    return _damagedEntityID;
-}
-
-const EntityID& EntityDamageStatusPdu::getDamagedEntityID() const
-{
-    return _damagedEntityID;
-}
-
-void EntityDamageStatusPdu::setDamagedEntityID(const EntityID &pX)
-{
-    _damagedEntityID = pX;
-}
-
-unsigned short EntityDamageStatusPdu::getPadding1() const
-{
-    return _padding1;
-}
-
-void EntityDamageStatusPdu::setPadding1(unsigned short pX)
-{
-    _padding1 = pX;
-}
-
-unsigned short EntityDamageStatusPdu::getPadding2() const
-{
-    return _padding2;
-}
-
-void EntityDamageStatusPdu::setPadding2(unsigned short pX)
-{
-    _padding2 = pX;
-}
-
-unsigned short EntityDamageStatusPdu::getNumberOfDamageDescription() const
-{
-   return _damageDescriptionRecords.size();
-}
-
-std::vector<DirectedEnergyDamage>& EntityDamageStatusPdu::getDamageDescriptionRecords() 
-{
-    return _damageDescriptionRecords;
-}
-
-const std::vector<DirectedEnergyDamage>& EntityDamageStatusPdu::getDamageDescriptionRecords() const
-{
-    return _damageDescriptionRecords;
-}
-
-void EntityDamageStatusPdu::setDamageDescriptionRecords(const std::vector<DirectedEnergyDamage>& pX)
-{
-     _damageDescriptionRecords = pX;
 }
 
 void EntityDamageStatusPdu::marshal(DataStream& dataStream) const
 {
     WarfareFamilyPdu::marshal(dataStream); // Marshal information in superclass first
-    _damagedEntityID.marshal(dataStream);
-    dataStream << _padding1;
-    dataStream << _padding2;
-    dataStream << ( unsigned short )_damageDescriptionRecords.size();
-
-     for(size_t idx = 0; idx < _damageDescriptionRecords.size(); idx++)
-     {
-        DirectedEnergyDamage x = _damageDescriptionRecords[idx];
-        x.marshal(dataStream);
-     }
-
+    damagedEntityID.marshal(dataStream);
+    dataStream << padding1;
+    dataStream << padding2;
+    dataStream << numberOfDamageDescription;
+    damageDescriptionRecords.marshal(dataStream);
 }
 
 void EntityDamageStatusPdu::unmarshal(DataStream& dataStream)
 {
     WarfareFamilyPdu::unmarshal(dataStream); // unmarshal information in superclass first
-    _damagedEntityID.unmarshal(dataStream);
-    dataStream >> _padding1;
-    dataStream >> _padding2;
-    dataStream >> _numberOfDamageDescription;
-
-     _damageDescriptionRecords.clear();
-     for(size_t idx = 0; idx < _numberOfDamageDescription; idx++)
-     {
-        DirectedEnergyDamage x;
-        x.unmarshal(dataStream);
-        _damageDescriptionRecords.push_back(x);
-     }
+    damagedEntityID.unmarshal(dataStream);
+    dataStream >> padding1;
+    dataStream >> padding2;
+    dataStream >> numberOfDamageDescription;
+    damageDescriptionRecords.unmarshal(dataStream);
 }
 
 
@@ -112,15 +44,11 @@ bool EntityDamageStatusPdu::operator ==(const EntityDamageStatusPdu& rhs) const
 
      ivarsEqual = WarfareFamilyPdu::operator==(rhs);
 
-     if( ! (_damagedEntityID == rhs._damagedEntityID) ) ivarsEqual = false;
-     if( ! (_padding1 == rhs._padding1) ) ivarsEqual = false;
-     if( ! (_padding2 == rhs._padding2) ) ivarsEqual = false;
-
-     for(size_t idx = 0; idx < _damageDescriptionRecords.size(); idx++)
-     {
-        if( ! ( _damageDescriptionRecords[idx] == rhs._damageDescriptionRecords[idx]) ) ivarsEqual = false;
-     }
-
+     if( ! (damagedEntityID == rhs.damagedEntityID) ) ivarsEqual = false;
+     if( ! (padding1 == rhs.padding1) ) ivarsEqual = false;
+     if( ! (padding2 == rhs.padding2) ) ivarsEqual = false;
+     if( ! (numberOfDamageDescription == rhs.numberOfDamageDescription) ) ivarsEqual = false;
+     if( ! (damageDescriptionRecords == rhs.damageDescriptionRecords) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -130,17 +58,11 @@ int EntityDamageStatusPdu::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = WarfareFamilyPdu::getMarshalledSize();
-   marshalSize = marshalSize + _damagedEntityID.getMarshalledSize();  // _damagedEntityID
-   marshalSize = marshalSize + 2;  // _padding1
-   marshalSize = marshalSize + 2;  // _padding2
-   marshalSize = marshalSize + 2;  // _numberOfDamageDescription
-
-   for(unsigned long long idx=0; idx < _damageDescriptionRecords.size(); idx++)
-   {
-        DirectedEnergyDamage listElement = _damageDescriptionRecords[idx];
-        marshalSize = marshalSize + listElement.getMarshalledSize();
-    }
-
+   marshalSize = marshalSize + damagedEntityID.getMarshalledSize();  // damagedEntityID
+   marshalSize = marshalSize + 2;  // padding1
+   marshalSize = marshalSize + 2;  // padding2
+   marshalSize = marshalSize + 2;  // numberOfDamageDescription
+   marshalSize = marshalSize + damageDescriptionRecords.getMarshalledSize();  // damageDescriptionRecords
     return marshalSize;
 }
 

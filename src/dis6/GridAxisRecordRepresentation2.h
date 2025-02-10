@@ -1,50 +1,43 @@
 #pragma once
 
-#include <dis6/FourByteChunk.h>
+#include "FourByteChunk.h"
 #include <vector>
-#include <dis6/GridAxisRecord.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "GridAxisRecord.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // 5.2.44: Grid data record, representation 1
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT GridAxisRecordRepresentation2 : public GridAxisRecord
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO GridAxisRecordRepresentation2 : public GridAxisRecord
 {
-protected:
   /** number of values */
-  unsigned short _numberOfValues; 
+  unsigned short numberOfValues;
 
   /** variable length list of data parameters ^^^this is wrong--need padding as well */
-  std::vector<FourByteChunk> _dataValues; 
+  std::vector<FourByteChunk> dataValues;
 
-
- public:
     GridAxisRecordRepresentation2();
     virtual ~GridAxisRecordRepresentation2();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getNumberOfValues() const; 
 
-    std::vector<FourByteChunk>& getDataValues(); 
-    const std::vector<FourByteChunk>& getDataValues() const; 
-    void setDataValues(const std::vector<FourByteChunk>&    pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const GridAxisRecordRepresentation2& rhs) const;
+     bool operator ==(const GridAxisRecordRepresentation2& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

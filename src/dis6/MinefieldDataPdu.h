@@ -1,129 +1,83 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/EntityType.h>
-#include <dis6/TwoByteChunk.h>
-#include <dis6/Vector3Float.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "EntityType.h"
+#include "TwoByteChunk.h"
+#include "Vector3Float.h"
 #include <vector>
-#include <dis6/MinefieldFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "MinefieldFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.10.3 Information about individual mines within a minefield. This is very, very wrong. UNFINISHED
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT MinefieldDataPdu : public MinefieldFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO MinefieldDataPdu : public MinefieldFamilyPdu
 {
-protected:
   /** Minefield ID */
-  EntityID _minefieldID; 
+  EntityID minefieldID;
 
   /** ID of entity making request */
-  EntityID _requestingEntityID; 
+  EntityID requestingEntityID;
 
   /** Minefield sequence number */
-  unsigned short _minefieldSequenceNumbeer; 
+  unsigned short minefieldSequenceNumbeer;
 
   /** request ID */
-  unsigned char _requestID; 
+  unsigned char requestID;
 
   /** pdu sequence number */
-  unsigned char _pduSequenceNumber; 
+  unsigned char pduSequenceNumber;
 
   /** number of pdus in response */
-  unsigned char _numberOfPdus; 
+  unsigned char numberOfPdus;
 
   /** how many mines are in this PDU */
-  unsigned char _numberOfMinesInThisPdu; 
+  unsigned char numberOfMinesInThisPdu;
 
   /** how many sensor type are in this PDU */
-  unsigned char _numberOfSensorTypes; 
+  unsigned char numberOfSensorTypes;
 
   /** padding */
-  unsigned char _pad2; 
+  unsigned char pad2;
 
   /** 32 boolean fields */
-  unsigned int _dataFilter; 
+  unsigned int dataFilter;
 
   /** Mine type */
-  EntityType _mineType; 
+  EntityType mineType;
 
   /** Sensor types, each 16 bits long */
-  std::vector<TwoByteChunk> _sensorTypes; 
+  std::vector<TwoByteChunk> sensorTypes;
 
   /** Padding to get things 32-bit aligned. ^^^this is wrong--dyanmically sized padding needed */
-  unsigned char _pad3; 
+  unsigned char pad3;
 
   /** Mine locations */
-  std::vector<Vector3Float> _mineLocation; 
+  std::vector<Vector3Float> mineLocation;
 
-
- public:
     MinefieldDataPdu();
     virtual ~MinefieldDataPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getMinefieldID(); 
-    const EntityID&  getMinefieldID() const; 
-    void setMinefieldID(const EntityID    &pX);
 
-    EntityID& getRequestingEntityID(); 
-    const EntityID&  getRequestingEntityID() const; 
-    void setRequestingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned short getMinefieldSequenceNumbeer() const; 
-    void setMinefieldSequenceNumbeer(unsigned short pX); 
-
-    unsigned char getRequestID() const; 
-    void setRequestID(unsigned char pX); 
-
-    unsigned char getPduSequenceNumber() const; 
-    void setPduSequenceNumber(unsigned char pX); 
-
-    unsigned char getNumberOfPdus() const; 
-    void setNumberOfPdus(unsigned char pX); 
-
-    unsigned char getNumberOfMinesInThisPdu() const; 
-
-    unsigned char getNumberOfSensorTypes() const; 
-
-    unsigned char getPad2() const; 
-    void setPad2(unsigned char pX); 
-
-    unsigned int getDataFilter() const; 
-    void setDataFilter(unsigned int pX); 
-
-    EntityType& getMineType(); 
-    const EntityType&  getMineType() const; 
-    void setMineType(const EntityType    &pX);
-
-    std::vector<TwoByteChunk>& getSensorTypes(); 
-    const std::vector<TwoByteChunk>& getSensorTypes() const; 
-    void setSensorTypes(const std::vector<TwoByteChunk>&    pX);
-
-    unsigned char getPad3() const; 
-    void setPad3(unsigned char pX); 
-
-    std::vector<Vector3Float>& getMineLocation(); 
-    const std::vector<Vector3Float>& getMineLocation() const; 
-    void setMineLocation(const std::vector<Vector3Float>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const MinefieldDataPdu& rhs) const;
+     bool operator ==(const MinefieldDataPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

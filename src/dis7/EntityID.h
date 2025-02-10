@@ -1,49 +1,41 @@
 #pragma once
 
-#include <dis7/SimulationAddress.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// Entity Identifier. Unique ID for entities in the world. Consists of an simulation address and a entity number. Section 6.2.28.
+// more laconically named EntityIdentifier
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT EntityID
+struct EXPORT_MACRO EntityID
 {
-protected:
-  /** Site and application IDs */
-  SimulationAddress _simulationAddress; 
+  /** Site ID */
+  unsigned short siteID;
 
-  /** Entity number */
-  unsigned short _entityNumber; 
+  /** application number ID */
+  unsigned short applicationID;
 
+  /** Entity number ID */
+  unsigned short entityID;
 
- public:
     EntityID();
     virtual ~EntityID();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    SimulationAddress& getSimulationAddress(); 
-    const SimulationAddress&  getSimulationAddress() const; 
-    void setSimulationAddress(const SimulationAddress    &pX);
 
-    unsigned short getEntityNumber() const; 
-    void setEntityNumber(unsigned short pX); 
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const EntityID& rhs) const;
+     bool operator ==(const EntityID& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

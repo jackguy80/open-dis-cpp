@@ -1,77 +1,53 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Grid axis record for fixed data. Section 6.2.41
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT GridAxis
+struct EXPORT_MACRO GridAxis
 {
-protected:
   /** coordinate of the grid origin or initial value */
-  double _domainInitialXi; 
+  double domainInitialXi;
 
   /** coordinate of the endpoint or final value */
-  double _domainFinalXi; 
+  double domainFinalXi;
 
   /** The number of grid points along the Xi domain axis for the enviornmental state data */
-  unsigned short _domainPointsXi; 
+  unsigned short domainPointsXi;
 
   /** interleaf factor along the domain axis. */
-  unsigned char _interleafFactor; 
+  unsigned char interleafFactor;
 
   /** type of grid axis */
-  unsigned char _axisType; 
+  unsigned char axisType;
 
   /** Number of grid locations along Xi axis */
-  unsigned short _numberOfPointsOnXiAxis; 
+  unsigned short numberOfPointsOnXiAxis;
 
   /** initial grid point for the current pdu */
-  unsigned short _initialIndex; 
+  unsigned short initialIndex;
 
-
- public:
     GridAxis();
     virtual ~GridAxis();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    double getDomainInitialXi() const; 
-    void setDomainInitialXi(double pX); 
 
-    double getDomainFinalXi() const; 
-    void setDomainFinalXi(double pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned short getDomainPointsXi() const; 
-    void setDomainPointsXi(unsigned short pX); 
-
-    unsigned char getInterleafFactor() const; 
-    void setInterleafFactor(unsigned char pX); 
-
-    unsigned char getAxisType() const; 
-    void setAxisType(unsigned char pX); 
-
-    unsigned short getNumberOfPointsOnXiAxis() const; 
-    void setNumberOfPointsOnXiAxis(unsigned short pX); 
-
-    unsigned short getInitialIndex() const; 
-    void setInitialIndex(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const GridAxis& rhs) const;
+     bool operator ==(const GridAxis& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

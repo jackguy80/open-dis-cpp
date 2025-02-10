@@ -1,77 +1,56 @@
 #pragma once
 
-#include <dis6/EntityID.h>
-#include <dis6/EntityID.h>
-#include <dis6/SupplyQuantity.h>
+#include "EntityID.h"
+#include "EntityID.h"
+#include "SupplyQuantity.h"
 #include <vector>
-#include <dis6/LogisticsFamilyPdu.h>
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "LogisticsFamilyPdu.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.3.5.1. Information about a request for supplies. COMPLETE
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT ServiceRequestPdu : public LogisticsFamilyPdu
+#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc
+
+struct EXPORT_MACRO ServiceRequestPdu : public LogisticsFamilyPdu
 {
-protected:
   /** Entity that is requesting service */
-  EntityID _requestingEntityID; 
+  EntityID requestingEntityID;
 
   /** Entity that is providing the service */
-  EntityID _servicingEntityID; 
+  EntityID servicingEntityID;
 
   /** type of service requested */
-  unsigned char _serviceTypeRequested; 
+  unsigned char serviceTypeRequested;
 
   /** How many requested */
-  unsigned char _numberOfSupplyTypes; 
+  unsigned char numberOfSupplyTypes;
 
   /** padding */
-  short _serviceRequestPadding; 
+  short serviceRequestPadding;
 
-  std::vector<SupplyQuantity> _supplies; 
+  std::vector<SupplyQuantity> supplies;
 
-
- public:
     ServiceRequestPdu();
     virtual ~ServiceRequestPdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    EntityID& getRequestingEntityID(); 
-    const EntityID&  getRequestingEntityID() const; 
-    void setRequestingEntityID(const EntityID    &pX);
 
-    EntityID& getServicingEntityID(); 
-    const EntityID&  getServicingEntityID() const; 
-    void setServicingEntityID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    unsigned char getServiceTypeRequested() const; 
-    void setServiceTypeRequested(unsigned char pX); 
-
-    unsigned char getNumberOfSupplyTypes() const; 
-
-    short getServiceRequestPadding() const; 
-    void setServiceRequestPadding(short pX); 
-
-    std::vector<SupplyQuantity>& getSupplies(); 
-    const std::vector<SupplyQuantity>& getSupplies() const; 
-    void setSupplies(const std::vector<SupplyQuantity>&    pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const ServiceRequestPdu& rhs) const;
+     bool operator ==(const ServiceRequestPdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

@@ -1,95 +1,62 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Basic operational data for IFF. Section 6.2.40.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT FundamentalOperationalData
+struct EXPORT_MACRO FundamentalOperationalData
 {
-protected:
   /** system status */
-  unsigned char _systemStatus; 
+  unsigned char systemStatus;
 
   /** data field 1 */
-  unsigned char _dataField1; 
+  unsigned char dataField1;
 
   /** eight boolean fields */
-  unsigned char _informationLayers; 
+  unsigned char informationLayers;
 
   /** enumeration */
-  unsigned char _dataField2; 
+  unsigned char dataField2;
 
   /** parameter, enumeration */
-  unsigned short _parameter1; 
+  unsigned short parameter1;
 
   /** parameter, enumeration */
-  unsigned short _parameter2; 
+  unsigned short parameter2;
 
   /** parameter, enumeration */
-  unsigned short _parameter3; 
+  unsigned short parameter3;
 
   /** parameter, enumeration */
-  unsigned short _parameter4; 
+  unsigned short parameter4;
 
   /** parameter, enumeration */
-  unsigned short _parameter5; 
+  unsigned short parameter5;
 
   /** parameter, enumeration */
-  unsigned short _parameter6; 
+  unsigned short parameter6;
 
-
- public:
     FundamentalOperationalData();
     virtual ~FundamentalOperationalData();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getSystemStatus() const; 
-    void setSystemStatus(unsigned char pX); 
 
-    unsigned char getDataField1() const; 
-    void setDataField1(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getInformationLayers() const; 
-    void setInformationLayers(unsigned char pX); 
-
-    unsigned char getDataField2() const; 
-    void setDataField2(unsigned char pX); 
-
-    unsigned short getParameter1() const; 
-    void setParameter1(unsigned short pX); 
-
-    unsigned short getParameter2() const; 
-    void setParameter2(unsigned short pX); 
-
-    unsigned short getParameter3() const; 
-    void setParameter3(unsigned short pX); 
-
-    unsigned short getParameter4() const; 
-    void setParameter4(unsigned short pX); 
-
-    unsigned short getParameter5() const; 
-    void setParameter5(unsigned short pX); 
-
-    unsigned short getParameter6() const; 
-    void setParameter6(unsigned short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const FundamentalOperationalData& rhs) const;
+     bool operator ==(const FundamentalOperationalData& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

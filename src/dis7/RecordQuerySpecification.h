@@ -1,48 +1,38 @@
 #pragma once
 
-#include <dis7/FourByteChunk.h>
-#include <vector>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "FourByteChunk.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
-// The identification of the records being queried 6.2.71
+// The identification of the records being queried 6.2.72
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT RecordQuerySpecification
+struct EXPORT_MACRO RecordQuerySpecification
 {
-protected:
-  unsigned int _numberOfRecords; 
+  unsigned int numberOfRecords;
 
   /** variable length list of 32 bit records */
-  std::vector<FourByteChunk> _records; 
+  FourByteChunk records;
 
-
- public:
     RecordQuerySpecification();
     virtual ~RecordQuerySpecification();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned int getNumberOfRecords() const; 
 
-    std::vector<FourByteChunk>& getRecords(); 
-    const std::vector<FourByteChunk>& getRecords() const; 
-    void setRecords(const std::vector<FourByteChunk>&    pX);
+     virtual int getMarshalledSize() const;
 
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const RecordQuerySpecification& rhs) const;
+     bool operator ==(const RecordQuerySpecification& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

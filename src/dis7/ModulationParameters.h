@@ -1,22 +1,20 @@
 #pragma once
 
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Modulation parameters associated with a specific radio system. INCOMPLETE. 6.2.58 
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT ModulationParameters
+struct EXPORT_MACRO ModulationParameters
 {
-protected:
-
- public:
     ModulationParameters();
     virtual ~ModulationParameters();
 
@@ -24,12 +22,11 @@ protected:
     virtual void unmarshal(DataStream& dataStream);
 
 
-virtual int getMarshalledSize() const;
+     virtual int getMarshalledSize() const;
 
-     bool operator  ==(const ModulationParameters& rhs) const;
+     bool operator ==(const ModulationParameters& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

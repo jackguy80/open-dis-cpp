@@ -1,53 +1,41 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // Section 5.2.35. information about a specific UA emmtter
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT AcousticEmitter
+struct EXPORT_MACRO AcousticEmitter
 {
-protected:
   /** the system for a particular UA emitter, and an enumeration */
-  unsigned short _acousticName; 
+  unsigned short acousticName;
 
   /** The function of the acoustic system */
-  unsigned char _function; 
+  unsigned char function;
 
   /** The UA emitter identification number relative to a specific system */
-  unsigned char _acousticIdNumber; 
+  unsigned char acousticIdNumber;
 
-
- public:
     AcousticEmitter();
     virtual ~AcousticEmitter();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned short getAcousticName() const; 
-    void setAcousticName(unsigned short pX); 
 
-    unsigned char getFunction() const; 
-    void setFunction(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getAcousticIdNumber() const; 
-    void setAcousticIdNumber(unsigned char pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const AcousticEmitter& rhs) const;
+     bool operator ==(const AcousticEmitter& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

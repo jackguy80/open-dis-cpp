@@ -20,7 +20,6 @@
 #include <dis6/EventReportPdu.h>
 #include <dis6/CommentPdu.h>
 #include <dis6/StopFreezePdu.h>
-#include <dis6/ElectromagneticEmissionsPdu.h>
 #include <dis6/DesignatorPdu.h>
 #include <dis6/TransmitterPdu.h>
 #include <dis6/SignalPdu.h>
@@ -56,7 +55,6 @@ Pdu* PduBank::GetStaticPDU( DIS::PDUType pdu_type )
    static EventReportPdu      eventReportPdu;
    static CommentPdu          commentPdu;
    static StopFreezePdu       stopFreezePdu;
-   static ElectromagneticEmissionsPdu    electromagneticEmissionsPdu;
    static DesignatorPdu       designatorPdu;
    static TransmitterPdu      transmitterPdu;
    static SignalPdu           signalPdu;
@@ -90,7 +88,6 @@ Pdu* PduBank::GetStaticPDU( DIS::PDUType pdu_type )
       case PDU_EVENT_REPORT:      return &eventReportPdu;      break; 
       case PDU_COMMENT:           return &commentPdu;          break; 
       case PDU_STOP_FREEZE:       return &stopFreezePdu;       break;
-      case PDU_ELECTRONIC_EMMISIONS:    return &electromagneticEmissionsPdu; break;
       case PDU_DESIGNATOR:              return &designatorPdu;          break;
       case PDU_TRANSMITTER:             return &transmitterPdu;         break;
       case PDU_SIGNAL:            return &signalPdu;       break;

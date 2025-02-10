@@ -1,77 +1,53 @@
 #pragma once
 
-#include <dis6/utils/DataStream.h>
-#include <dis6/opendis6_export.h>
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // The superclass for all PDUs. This incorporates the PduHeader record, section 5.2.29.
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS6_EXPORT Pdu
+struct EXPORT_MACRO Pdu
 {
-protected:
   /** The version of the protocol. 5=DIS-1995, 6=DIS-1998. */
-  unsigned char _protocolVersion; 
+  unsigned char protocolVersion;
 
   /** Exercise ID */
-  unsigned char _exerciseID; 
+  unsigned char exerciseID;
 
   /** Type of pdu, unique for each PDU class */
-  unsigned char _pduType; 
+  unsigned char pduType;
 
   /** value that refers to the protocol family, eg SimulationManagement, et */
-  unsigned char _protocolFamily; 
+  unsigned char protocolFamily;
 
   /** Timestamp value */
-  unsigned int _timestamp; 
+  unsigned int timestamp;
 
-  /** Length, in bytes, of the PDU */
-  unsigned short _length; 
+  /** Length, in bytes, of the PDU. Changed name from length to avoid use of Hibernate QL reserved word */
+  unsigned short pduLength;
 
   /** zero-filled array of padding */
-  short _padding; 
+  short padding;
 
-
- public:
     Pdu();
     virtual ~Pdu();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    unsigned char getProtocolVersion() const; 
-    void setProtocolVersion(unsigned char pX); 
 
-    unsigned char getExerciseID() const; 
-    void setExerciseID(unsigned char pX); 
+     virtual int getMarshalledSize() const;
 
-    unsigned char getPduType() const; 
-    void setPduType(unsigned char pX); 
-
-    unsigned char getProtocolFamily() const; 
-    void setProtocolFamily(unsigned char pX); 
-
-    unsigned int getTimestamp() const; 
-    void setTimestamp(unsigned int pX); 
-
-    unsigned short getLength() const; 
-    void setLength(unsigned short pX); 
-
-    short getPadding() const; 
-    void setPadding(short pX); 
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const Pdu& rhs) const;
+     bool operator ==(const Pdu& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

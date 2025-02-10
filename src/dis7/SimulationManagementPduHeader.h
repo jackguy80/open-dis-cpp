@@ -1,59 +1,44 @@
 #pragma once
 
-#include <dis7/PduHeader.h>
-#include <dis7/EntityID.h>
-#include <dis7/EntityID.h>
-#include <dis7/utils/DataStream.h>
-#include <dis7/opendis7_export.h>
+#include "PduHeader.h"
+#include "SimulationIdentifier.h"
+#include "SimulationIdentifier.h"
+#include "utils/DataStream.h"
+#include "dis6/msLibMacro.h"
 
 
 namespace DIS
 {
 // First part of a simulation management (SIMAN) PDU and SIMAN-Reliability (SIMAN-R) PDU. Sectionn 6.2.81
 
-// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. 
+// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html
 //
 // @author DMcG, jkg
 
-class OPENDIS7_EXPORT SimulationManagementPduHeader
+struct EXPORT_MACRO SimulationManagementPduHeader
 {
-protected:
   /** Conventional PDU header */
-  PduHeader _pduHeader; 
+  PduHeader pduHeader;
 
   /** IDs the simulation or entity, etiehr a simulation or an entity. Either 6.2.80 or 6.2.28 */
-  EntityID _originatingID; 
+  SimulationIdentifier originatingID;
 
   /** simulation, all simulations, a special ID, or an entity. See 5.6.5 and 5.12.4 */
-  EntityID _recevingID; 
+  SimulationIdentifier receivingID;
 
-
- public:
     SimulationManagementPduHeader();
     virtual ~SimulationManagementPduHeader();
 
     virtual void marshal(DataStream& dataStream) const;
     virtual void unmarshal(DataStream& dataStream);
 
-    PduHeader& getPduHeader(); 
-    const PduHeader&  getPduHeader() const; 
-    void setPduHeader(const PduHeader    &pX);
 
-    EntityID& getOriginatingID(); 
-    const EntityID&  getOriginatingID() const; 
-    void setOriginatingID(const EntityID    &pX);
+     virtual int getMarshalledSize() const;
 
-    EntityID& getRecevingID(); 
-    const EntityID&  getRecevingID() const; 
-    void setRecevingID(const EntityID    &pX);
-
-
-virtual int getMarshalledSize() const;
-
-     bool operator  ==(const SimulationManagementPduHeader& rhs) const;
+     bool operator ==(const SimulationManagementPduHeader& rhs) const;
 };
 }
-
 // Copyright (c) 1995-2009 held by the author(s).  All rights reserved.
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions

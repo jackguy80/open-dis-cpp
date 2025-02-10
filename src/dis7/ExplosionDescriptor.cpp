@@ -1,13 +1,13 @@
-#include <dis7/ExplosionDescriptor.h>
+#include "ExplosionDescriptor.h"
 
 using namespace DIS;
 
 
 ExplosionDescriptor::ExplosionDescriptor():
-   _explodingObject(), 
-   _explosiveMaterial(0), 
-   _padding(0), 
-   _explosiveForce(0.0)
+   explodingObject(), 
+   explosiveMaterial(0), 
+   padding(0), 
+   explosiveForce(0.0)
 {
 }
 
@@ -15,65 +15,20 @@ ExplosionDescriptor::~ExplosionDescriptor()
 {
 }
 
-EntityType& ExplosionDescriptor::getExplodingObject() 
-{
-    return _explodingObject;
-}
-
-const EntityType& ExplosionDescriptor::getExplodingObject() const
-{
-    return _explodingObject;
-}
-
-void ExplosionDescriptor::setExplodingObject(const EntityType &pX)
-{
-    _explodingObject = pX;
-}
-
-unsigned short ExplosionDescriptor::getExplosiveMaterial() const
-{
-    return _explosiveMaterial;
-}
-
-void ExplosionDescriptor::setExplosiveMaterial(unsigned short pX)
-{
-    _explosiveMaterial = pX;
-}
-
-unsigned short ExplosionDescriptor::getPadding() const
-{
-    return _padding;
-}
-
-void ExplosionDescriptor::setPadding(unsigned short pX)
-{
-    _padding = pX;
-}
-
-float ExplosionDescriptor::getExplosiveForce() const
-{
-    return _explosiveForce;
-}
-
-void ExplosionDescriptor::setExplosiveForce(float pX)
-{
-    _explosiveForce = pX;
-}
-
 void ExplosionDescriptor::marshal(DataStream& dataStream) const
 {
-    _explodingObject.marshal(dataStream);
-    dataStream << _explosiveMaterial;
-    dataStream << _padding;
-    dataStream << _explosiveForce;
+    explodingObject.marshal(dataStream);
+    dataStream << explosiveMaterial;
+    dataStream << padding;
+    dataStream << explosiveForce;
 }
 
 void ExplosionDescriptor::unmarshal(DataStream& dataStream)
 {
-    _explodingObject.unmarshal(dataStream);
-    dataStream >> _explosiveMaterial;
-    dataStream >> _padding;
-    dataStream >> _explosiveForce;
+    explodingObject.unmarshal(dataStream);
+    dataStream >> explosiveMaterial;
+    dataStream >> padding;
+    dataStream >> explosiveForce;
 }
 
 
@@ -81,10 +36,10 @@ bool ExplosionDescriptor::operator ==(const ExplosionDescriptor& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_explodingObject == rhs._explodingObject) ) ivarsEqual = false;
-     if( ! (_explosiveMaterial == rhs._explosiveMaterial) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
-     if( ! (_explosiveForce == rhs._explosiveForce) ) ivarsEqual = false;
+     if( ! (explodingObject == rhs.explodingObject) ) ivarsEqual = false;
+     if( ! (explosiveMaterial == rhs.explosiveMaterial) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
+     if( ! (explosiveForce == rhs.explosiveForce) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -93,10 +48,10 @@ int ExplosionDescriptor::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + _explodingObject.getMarshalledSize();  // _explodingObject
-   marshalSize = marshalSize + 2;  // _explosiveMaterial
-   marshalSize = marshalSize + 2;  // _padding
-   marshalSize = marshalSize + 4;  // _explosiveForce
+   marshalSize = marshalSize + explodingObject.getMarshalledSize();  // explodingObject
+   marshalSize = marshalSize + 2;  // explosiveMaterial
+   marshalSize = marshalSize + 2;  // padding
+   marshalSize = marshalSize + 4;  // explosiveForce
     return marshalSize;
 }
 

@@ -1,11 +1,11 @@
-#include <dis7/TotalRecordSets.h>
+#include "TotalRecordSets.h"
 
 using namespace DIS;
 
 
 TotalRecordSets::TotalRecordSets():
-   _totalRecordSets(0), 
-   _padding(0)
+   totalRecordSets(0), 
+   padding(0)
 {
 }
 
@@ -13,36 +13,16 @@ TotalRecordSets::~TotalRecordSets()
 {
 }
 
-unsigned short TotalRecordSets::getTotalRecordSets() const
-{
-    return _totalRecordSets;
-}
-
-void TotalRecordSets::setTotalRecordSets(unsigned short pX)
-{
-    _totalRecordSets = pX;
-}
-
-unsigned short TotalRecordSets::getPadding() const
-{
-    return _padding;
-}
-
-void TotalRecordSets::setPadding(unsigned short pX)
-{
-    _padding = pX;
-}
-
 void TotalRecordSets::marshal(DataStream& dataStream) const
 {
-    dataStream << _totalRecordSets;
-    dataStream << _padding;
+    dataStream << totalRecordSets;
+    dataStream << padding;
 }
 
 void TotalRecordSets::unmarshal(DataStream& dataStream)
 {
-    dataStream >> _totalRecordSets;
-    dataStream >> _padding;
+    dataStream >> totalRecordSets;
+    dataStream >> padding;
 }
 
 
@@ -50,8 +30,8 @@ bool TotalRecordSets::operator ==(const TotalRecordSets& rhs) const
  {
      bool ivarsEqual = true;
 
-     if( ! (_totalRecordSets == rhs._totalRecordSets) ) ivarsEqual = false;
-     if( ! (_padding == rhs._padding) ) ivarsEqual = false;
+     if( ! (totalRecordSets == rhs.totalRecordSets) ) ivarsEqual = false;
+     if( ! (padding == rhs.padding) ) ivarsEqual = false;
 
     return ivarsEqual;
  }
@@ -60,8 +40,8 @@ int TotalRecordSets::getMarshalledSize() const
 {
    int marshalSize = 0;
 
-   marshalSize = marshalSize + 2;  // _totalRecordSets
-   marshalSize = marshalSize + 2;  // _padding
+   marshalSize = marshalSize + 2;  // totalRecordSets
+   marshalSize = marshalSize + 2;  // padding
     return marshalSize;
 }
 

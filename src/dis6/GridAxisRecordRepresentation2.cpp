@@ -1,46 +1,27 @@
-#include <dis6/GridAxisRecordRepresentation2.h>
+#include "GridAxisRecordRepresentation2.h"
 
 using namespace DIS;
 
 
 GridAxisRecordRepresentation2::GridAxisRecordRepresentation2() : GridAxisRecord(),
-   _numberOfValues(0)
+   numberOfValues(0), 
+   dataValues(0)
 {
 }
 
 GridAxisRecordRepresentation2::~GridAxisRecordRepresentation2()
 {
-    _dataValues.clear();
-}
-
-unsigned short GridAxisRecordRepresentation2::getNumberOfValues() const
-{
-   return _dataValues.size();
-}
-
-std::vector<FourByteChunk>& GridAxisRecordRepresentation2::getDataValues() 
-{
-    return _dataValues;
-}
-
-const std::vector<FourByteChunk>& GridAxisRecordRepresentation2::getDataValues() const
-{
-    return _dataValues;
-}
-
-void GridAxisRecordRepresentation2::setDataValues(const std::vector<FourByteChunk>& pX)
-{
-     _dataValues = pX;
+    dataValues.clear();
 }
 
 void GridAxisRecordRepresentation2::marshal(DataStream& dataStream) const
 {
     GridAxisRecord::marshal(dataStream); // Marshal information in superclass first
-    dataStream << ( unsigned short )_dataValues.size();
+    dataStream << ( unsigned short )dataValues.size();
 
-     for(size_t idx = 0; idx < _dataValues.size(); idx++)
+     for(size_t idx = 0; idx < dataValues.size(); idx++)
      {
-        FourByteChunk x = _dataValues[idx];
+        FourByteChunk x = dataValues[idx];
         x.marshal(dataStream);
      }
 
@@ -49,14 +30,14 @@ void GridAxisRecordRepresentation2::marshal(DataStream& dataStream) const
 void GridAxisRecordRepresentation2::unmarshal(DataStream& dataStream)
 {
     GridAxisRecord::unmarshal(dataStream); // unmarshal information in superclass first
-    dataStream >> _numberOfValues;
+    dataStream >> numberOfValues;
 
-     _dataValues.clear();
-     for(size_t idx = 0; idx < _numberOfValues; idx++)
+     dataValues.clear();
+     for(size_t idx = 0; idx < numberOfValues; idx++)
      {
         FourByteChunk x;
         x.unmarshal(dataStream);
-        _dataValues.push_back(x);
+        dataValues.push_back(x);
      }
 }
 
@@ -68,9 +49,9 @@ bool GridAxisRecordRepresentation2::operator ==(const GridAxisRecordRepresentati
      ivarsEqual = GridAxisRecord::operator==(rhs);
 
 
-     for(size_t idx = 0; idx < _dataValues.size(); idx++)
+     for(size_t idx = 0; idx < dataValues.size(); idx++)
      {
-        if( ! ( _dataValues[idx] == rhs._dataValues[idx]) ) ivarsEqual = false;
+        if( ! ( dataValues[idx] == rhs.dataValues[idx]) ) ivarsEqual = false;
      }
 
 
@@ -82,11 +63,11 @@ int GridAxisRecordRepresentation2::getMarshalledSize() const
    int marshalSize = 0;
 
    marshalSize = GridAxisRecord::getMarshalledSize();
-   marshalSize = marshalSize + 2;  // _numberOfValues
+   marshalSize = marshalSize + 2;  // numberOfValues
 
-   for(unsigned long long idx=0; idx < _dataValues.size(); idx++)
+   for(int idx=0; idx < dataValues.size(); idx++)
    {
-        FourByteChunk listElement = _dataValues[idx];
+        FourByteChunk listElement = dataValues[idx];
         marshalSize = marshalSize + listElement.getMarshalledSize();
     }
 
